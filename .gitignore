@@ -8,3 +8,7 @@ releases/
 **/.env.local
 **/demo_api_config.json
 **/uploads/
+
+.playwright-cli/
+
+/output/
