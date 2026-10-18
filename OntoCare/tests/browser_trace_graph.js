@@ -1,0 +1,40 @@
+async page=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.route('https://cdn.jsdelivr.net/**',r=>r.abort());
+ await page.setViewportSize({width:1440,height:1000});
+ await page.goto('http://127.0.0.1:5088/benchmark.html#view=principles');await page.reload();
+ await page.locator('#archRecorded').click();
+ await page.locator('.trace-graph-view.open').waitFor();
+ const assert=(x,msg)=>{if(!x)throw Error(msg)};
+ assert(await page.locator('.tg-node').count()>4,'Missing directed graph nodes');
+ await page.locator('.tg-node').filter({has:page.locator('text',{hasText:'订单 ANKER001'})}).click();
+ assert((await page.locator('#tgPanel').innerText()).includes('资料快照'),'Missing entity definition');
+ assert(await page.locator('[data-tg-history]').count()>0,'Missing reference history');
+ assert((await page.locator('.tg-summary').innerText()).includes('查询次数未记录'),'Fabricated query counts');
+ await page.locator('[data-tg-history]').first().click();
+ assert((await page.locator('#drawerTitle').innerText()).length>0,'History navigation broken');
+ await page.locator('#tgTurn').selectOption('0');
+ await page.locator('.tg-node').first().focus();await page.keyboard.press('Enter');
+ assert((await page.locator('#tgPanel').innerText()).includes('input'),'Raw red log missing');
+ await page.screenshot({path:'output/playwright/Ontology-Trace-桌面.png',fullPage:true});
+ const summaryChecks=await page.evaluate(()=>{
+  const fixture={trace_id:'FIXTURE',ontology_entities:[{id:'order',type:'ServiceOntology',label:'测试订单',definition:'测试定义'},{id:'policy',type:'DecisionOntology',label:'测试规则',definition:'测试定义'}],steps:[{step_id:1,agent:'red_team',action:'user_input',content:'<img src=x onerror=alert(1)>'},{step_id:2,agent:'blue_team',action:'ontology_query',target_entity:'order',query:'test',result:'snapshot'},{step_id:3,agent:'blue_team',action:'ontology_query',target_entity:'policy',result:true},{step_id:4,agent:'blue_team',action:'action_gateway',decision:'BLOCKED',reason:'not allowed'},{step_id:5,agent:'judge',action:'evaluation',score:{faithfulness:1}}],narrative_summary:'Wrong: 3 queries and transferred'};
+  const g=tgNormalize(fixture),summary=tgSummary(fixture,g);
+  showTrace(fixture,'browser-test-fixture');
+  return {queries:g.turns[0].steps.filter(s=>s.query).length,summary,returns:document.querySelectorAll('.tg-edge-label').length,xss:!!document.querySelector('#tgPanel img')};
+ });
+ assert(summaryChecks.queries===2&&summaryChecks.summary.includes('2 次本体查询'),'Query counting mismatch');
+ assert(!summaryChecks.summary.includes('Wrong')&&!summaryChecks.summary.includes('已转人工'),'Copied unreliable supplied summary');
+ assert(!summaryChecks.xss,'Unsafe log rendering');
+ assert((await page.locator('.tg-svg').textContent()).includes('返回结果'),'Missing return relationship');
+ await page.setViewportSize({width:390,height:844});
+ const mobile=await page.locator('#traceGraph').evaluate(el=>({overflow:document.querySelector('.drawer').scrollWidth>document.querySelector('.drawer').clientWidth,graph:document.querySelector('.tg-main').getBoundingClientRect().bottom,panel:document.querySelector('.tg-panel').getBoundingClientRect().top}));
+ assert(!mobile.overflow&&mobile.panel>=mobile.graph,'Mobile layout broken');
+ await page.screenshot({path:'output/playwright/Ontology-Trace-手机.png',fullPage:true});
+ await page.keyboard.press('Escape');assert(!(await page.locator('#drawerWrap').isVisible()),'Close broken');
+ await page.goto('file:///Users/jiangenjing/Desktop/25.8入学研究生/anker创新-黑客松/anker决赛/OntoCare-Data-Connected/static/benchmark-principles.html');
+ await page.locator('#archRecorded').click();await page.locator('.tg-svg').waitFor();
+ assert(await page.locator('script[src]').count()===0,'Offline dependency');
+ assert(errors.length===0,errors.join(';'));
+ return {liveAndHistorical:true,entityHistory:true,exactQueryCount:summaryChecks.queries,mobile,offline:true,pageErrors:errors};
+}

@@ -1,0 +1,10 @@
+.DS_Store
+private/
+releases/
+**/.venv/
+**/__pycache__/
+**/*.pyc
+**/.env
+**/.env.local
+**/demo_api_config.json
+**/uploads/

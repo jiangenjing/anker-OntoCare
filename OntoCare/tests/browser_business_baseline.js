@@ -1,0 +1,47 @@
+async page=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.route('https://cdn.jsdelivr.net/**',r=>r.abort());
+ await page.setViewportSize({width:1440,height:1080});
+ await page.goto('http://127.0.0.1:5088/benchmark.html#view=business');
+ await page.locator('#business.active').waitFor();
+ const assert=(ok,message)=>{if(!ok)throw Error(message)};
+ assert(await page.locator('.business-card').count()===4,'Expected four cards');
+ assert(await page.locator('.business-metric').count()===20,'Expected 20 metrics');
+ assert(await page.locator('.business-status.pass').count()===18,'Expected 18 mock pass tags');
+ assert(await page.locator('.business-status.block').count()===2,'Expected two prohibited actions/data tags');
+ assert(await page.locator('.business-mock').isVisible(),'Mock label absent');
+ assert(!(await page.locator('#repairValidation').isVisible()),'Measured result banner leaked into mock view');
+ const expected=['76%','34%','$0.008','支持批量导入','1.2s','320ms','P50 1.8s / P95 5.2s','6s','8min'];
+ const currents=await page.locator('.business-current').allTextContents();
+ expected.forEach((value,i)=>assert(currents[i]==='当前 '+value,'Incorrect mock value: '+value));
+ const layout=await page.locator('.business-card').evaluateAll(es=>es.map(e=>({x:e.getBoundingClientRect().x,y:e.getBoundingClientRect().y})));
+ assert(layout[0].y===layout[1].y&&layout[2].y===layout[3].y&&layout[0].x===layout[2].x,'Expected 2 × 2 desktop layout');
+ await page.locator('.business-metric').first().hover();
+ assert(await page.locator('#archTooltip').isVisible(),'Hover tooltip missing');
+ assert((await page.locator('#archTooltip').innerText()).includes('安克客服业务规范 2026 · 演示数据'),'Tooltip source missing');
+ await page.locator('.business-metric').nth(1).focus();
+ assert(await page.locator('#archTooltip').isVisible(),'Keyboard tooltip missing');
+ await page.keyboard.press('Escape');assert(!(await page.locator('#archTooltip').isVisible()),'Escape did not dismiss tooltip');
+ await page.mouse.move(0,0);
+ await page.screenshot({path:'output/playwright/业务约束基线-桌面.png',fullPage:true});
+ // All four status variants render after replacing fields; no event rebinding needed.
+ await page.evaluate(()=>{BUSINESS_BASELINE.cost.metrics[0].status='warn';BUSINESS_BASELINE.cost.metrics[1].status='fail';renderBusinessBaseline()});
+ assert(await page.locator('.business-status.warn').innerText()==='⚠️ 接近','Warn tag missing');
+ assert(await page.locator('.business-status.fail').innerText()==='❌ 未达标','Fail tag missing');
+ await page.locator('.business-metric').first().focus();assert(await page.locator('#archTooltip').isVisible(),'Updated metric tooltip missing');
+ await page.reload();
+ await page.getByRole('tab',{name:'评测原理',exact:true}).click();await page.locator('#principles.active').waitFor();
+ await page.getByRole('tab',{name:'主报告',exact:true}).click();assert(await page.locator('#repairValidation').isVisible(),'Real reports hidden after tab switching');
+ await page.getByRole('tab',{name:'业务约束基线',exact:true}).click();
+ await page.setViewportSize({width:390,height:844});
+ const mobile=await page.locator('.business-card').evaluateAll(es=>({overflow:document.documentElement.scrollWidth>innerWidth,rects:es.map(e=>({x:e.getBoundingClientRect().x,top:e.getBoundingClientRect().top,bottom:e.getBoundingClientRect().bottom}))}));
+ assert(!mobile.overflow,'Mobile horizontal overflow');
+ mobile.rects.slice(1).forEach((r,i)=>assert(r.top>mobile.rects[i].bottom&&r.x===mobile.rects[0].x,'Mobile cards not stacked'));
+ await page.screenshot({path:'output/playwright/业务约束基线-手机.png',fullPage:true});
+ await page.goto('file:///Users/jiangenjing/Desktop/25.8入学研究生/anker创新-黑客松/anker决赛/OntoCare-Data-Connected/static/benchmark-business.html');
+ await page.locator('#business.active').waitFor();
+ assert(await page.locator('script[src],link[rel="stylesheet"]').count()===0,'Offline edition depends on external libraries');
+ assert(await page.locator('.business-metric').count()===20,'Offline metrics absent');
+ assert(errors.length===0,errors.join(';'));
+ return {cards:4,metrics:20,pass:18,block:2,statusVariants:4,desktop:'2x2',mobile:'single column',offline:'PASS',pageErrors:errors};
+}

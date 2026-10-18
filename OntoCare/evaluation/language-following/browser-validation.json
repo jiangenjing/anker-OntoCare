@@ -1,0 +1,93 @@
+{
+  "passed": true,
+  "turns": [
+    {
+      "input": "T2080 EB1L 加水异常，应该怎么办？",
+      "language": "zh",
+      "model_status": "OK",
+      "route": "GROUNDED_LLM",
+      "questions": [
+        "请解释第1步：怎么做？",
+        "请解释第2步：怎么做？",
+        "请解释第3步：怎么做？",
+        "T2080 出现错误码 EB1L，应该如何排查？",
+        "T2080 出现错误码 EB1K，应该如何排查？",
+        "T2080 出现错误码 E23，应该如何排查？"
+      ],
+      "quick": [
+        "试过了，还是不行",
+        "解决了",
+        "这一步怎么做？"
+      ],
+      "citations": [
+        "r-482"
+      ]
+    },
+    {
+      "input": "Please explain step 1.",
+      "language": "en",
+      "model_status": "OK",
+      "route": "GROUNDED_LLM",
+      "questions": [
+        "Please explain step 2.",
+        "Please explain step 3.",
+        "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?",
+        "what should I do when T2080 S1 Pro has EB1K: Robot adding clean water error, task paused. Click to view the error reason/Error when refilling robot with clean water/Robot injecting clean water abnormally? ",
+        "what should I do when T2080/S1 Pro has E23: Robot clean water level abnormal, task ended/Robot clean water capacity meter error/Robot clean water level sensor malfunction?",
+        "What purchase evidence is needed?"
+      ],
+      "quick": [
+        "I tried it, but it didn't work.",
+        "Resolved",
+        "Please explain this step."
+      ],
+      "citations": [
+        "r-482"
+      ]
+    },
+    {
+      "input": "T2080",
+      "language": "en",
+      "model_status": "OK",
+      "route": "GROUNDED_LLM",
+      "questions": [
+        "Please explain step 2.",
+        "Please explain step 3.",
+        "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?",
+        "what should I do when T2080 S1 Pro has EB1K: Robot adding clean water error, task paused. Click to view the error reason/Error when refilling robot with clean water/Robot injecting clean water abnormally? ",
+        "what should I do when T2080/S1 Pro has E23: Robot clean water level abnormal, task ended/Robot clean water capacity meter error/Robot clean water level sensor malfunction?",
+        "What purchase evidence is needed?"
+      ],
+      "quick": [
+        "I tried it, but it didn't work.",
+        "Resolved",
+        "Please explain this step."
+      ],
+      "citations": [
+        "r-482"
+      ]
+    },
+    {
+      "input": "这一步怎么做？请用简单的话解释。",
+      "language": "zh",
+      "model_status": "OK",
+      "route": "GROUNDED_LLM",
+      "questions": [
+        "请解释第2步：怎么做？",
+        "请解释第3步：怎么做？",
+        "T2080 出现错误码 EB1L，应该如何排查？",
+        "T2080 出现错误码 EB1K，应该如何排查？",
+        "T2080 出现错误码 E23，应该如何排查？",
+        "售后核查需要哪些购买凭证？"
+      ],
+      "quick": [
+        "试过了，还是不行",
+        "解决了",
+        "这一步怎么做？"
+      ],
+      "citations": [
+        "r-482"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ontocare-judges
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/judge-health
+    envVars:
+      - key: COMPETITION_API_KEY
+        sync: false
+      - key: LLM_MODEL
+        value: hackathon/v_model/nova-pro
+      - key: VISION_MODEL
+        value: hackathon/v_model/deepseek-v4.1-flash

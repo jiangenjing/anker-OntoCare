@@ -1,0 +1,636 @@
+{
+  "source_file": "客诉工单信息.xlsx",
+  "sheet": "客诉工单信息",
+  "rows": [
+    {
+      "产品线": "Anker eufy",
+      "产品名": "E25",
+      "客户首封邮件内容": "The vacuum did not arrive. Only the replacement parts kit. Was the vacuum shipped? What should I do？My order is Anker001",
+      "订单号": "Anker001",
+      "SKU": "E235311B",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Shipping inquiry",
+      "source_row": 2
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro",
+      "客户首封邮件内容": "Hi Team,\n\n I am reaching out to you regarding my order Anker002. I have received ine package today with tracking number \nAnker1234567-2. The package only contains the replacement accessories kit. I have not received the Eufy S1 robot vacuum yet. When trying to track the shipment Anker1234567-3, UPS website says that the label has been created, but there is no further information. Could you please let me know when I should expect the robot vacuum to arrive?\n\nThanks in advance",
+      "订单号": "Anker002",
+      "SKU": "T2080GA1",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Shipping inquiry",
+      "source_row": 3
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "X10 Pro",
+      "客户首封邮件内容": "Item Title: eufy X10 Pro Omni Robot Vacuum Cleaner & Dual Mops 8000Pa Acceptable Condition\nProblem Description: Can u please tell me when you will post this item. order number is Anker003",
+      "订单号": "Anker003",
+      "SKU": "T2351V11-F",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Shipping inquiry",
+      "source_row": 4
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "X10 Pro",
+      "客户首封邮件内容": "Hi Eufy,\n\nI ordered your omni robot with 1-3 business day delivery on 14 September.  It is with Australia post at present and they say that they won't follow up the tracking until 30 September.  I love your little eufy robot and previously had got one from good guys and now wishing i had gone and got it there rather than via your store.  Can you please look into this as i particularly checked the delivery when ordering so i wouldn't be without a vacuum for too long. Order number is Anker004. Thanks eufy people.!",
+      "订单号": "Anker004",
+      "SKU": "T2353T11",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Shipping inquiry",
+      "source_row": 5
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "E25",
+      "客户首封邮件内容": "Can you give me an update on the delivery of the above number from your company. Thank you.Order Number Anker005",
+      "订单号": "Anker005",
+      "SKU": "T2353111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Shipping inquiry",
+      "source_row": 6
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "E25",
+      "客户首封邮件内容": "FW: Uw bestelling Anker006 is al verzonden.Dag!\nHeb vorige week de robot stofzuiger besteld. Deze is nog steeds niet binnen!\nMet vriendelijke groet,\nKind Regards,",
+      "订单号": "Anker006",
+      "SKU": "T2353G11",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Shipping inquiry",
+      "source_row": 7
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "X10 Pro",
+      "客户首封邮件内容": "I’ve tried to put my tracking number in to look for my order and it is not working. Do you know when I will be getting my order?",
+      "订单号": "用户未提供需询问",
+      "SKU": "/",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Shipping inquiry",
+      "source_row": 8
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "C10",
+      "客户首封邮件内容": "I am writing concerning order number \nAnker007. I have not received this vacuum. Please tell me when this will arrive.\n\nThanks,",
+      "订单号": "Anker007",
+      "SKU": "T2292111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Shipping inquiry",
+      "source_row": 9
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "C10",
+      "客户首封邮件内容": "Hello, \n\nI am writing to inquire about the shipping of the vacuum I purchased in the 7th. Order Anker008\n\nI only received the filters.\n\nIf you have not shipped, don’t and let’s first talk about your other products. I still find it odd that I have not had any communication from you regarding the delay. \n\nThank you very much,",
+      "订单号": "Anker008",
+      "SKU": "T2292111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Shipping inquiry",
+      "source_row": 10
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "C10",
+      "客户首封邮件内容": "Hello,\n\nI still have not received my C10 robot vac from order # Anker009.\n\nWhen will it arrive?\n\nRegards,",
+      "订单号": "Anker009",
+      "SKU": "T2292111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Shipping inquiry",
+      "source_row": 11
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro",
+      "客户首封邮件内容": "Product Name: S1 Pro\nProduct PN: T2080A\nProduct SN: 12345678A\nProblem Type: ERROR\nProblem Code: 21037332-\nProblem Push: EB1L: The robot encountered an error while adding clean water. Task ended. Click to contact customer service for assistance.\nProblem Description: EB1L: The robot encountered an error while adding clean water. Task ended. Click to contact customer service for assistance.\nProblem Upload Images: []",
+      "订单号": "/",
+      "SKU": "T2080111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 12
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "E25",
+      "客户首封邮件内容": "Product Name: Omni E25\nProduct PN: T2353\nProblem Type: Issue\nProblem Description: Due to insufficient clean water, cleaning has been switched to Vacuum-Only mode to complete the task.\nProblem Upload Images: []",
+      "订单号": "/",
+      "SKU": "T2353111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 13
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "E25",
+      "客户首封邮件内容": "Productnaam: Omni E25\nProduct PN: T2353\nProduct-SN:\nProbleemtype: ERROR\nProbleemcode: 5116-Communicatieafwijking\nProbleempush: Er is een communicatiefout tussen de robot en het station. Neem contact op met de klantenservice.\nProbleembeschrijving: Er is een communicatiefout tussen de robot en het station. Neem\ncontact op met de klantenservice.\nGeüploade afbeeldingen van probleem: []",
+      "订单号": "/",
+      "SKU": "T2353111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 14
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "E28",
+      "客户首封邮件内容": "Product Name: Omni E28\nProduct PN: T2352\nProduct SN:\nProblem Type: warning\nProblem Code: 4090-Sensor anomaly\nProblem Push: Wall sensor not working, please check.\nProblem Description: Wall sensor not working, please check.\nProblem Upload Images: [\"https://appliances-ohi-pr.s3.us-east-2.amazonaws.com/feedback/35fea813d7f926010044edb80e5584839d5be3bc-YTI0NzM5MWEtY2U1Ni00ODFiLTlmMTgtYWJkN2JmNWRjOWRl\",\"https://appliances-ohi-pr.s3.us-east-2.amazonaws.com/feedback/35fea813d7f926010044edb80e5584839d5be3bc-NTI0NmIyODktYzc3MS00ZjNmLTkwOGEtYzUzNGQyOWJiNTky\"]",
+      "订单号": "/",
+      "SKU": "T2352111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 15
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro",
+      "客户首封邮件内容": "Product Name: S1 Pro\nProduct PN: T2080A\nProduct SN: 12345678D\nProblem Type: ERROR\nProblem Code: 21037059-\nProblem Push: EB03: Base station dust emptying duct blocked, task ended.\nProblem Description: EB03: Base station dust emptying duct blocked, task ended.\nProblem Upload Images: []",
+      "订单号": "/",
+      "SKU": "T2080111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 16
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "X10 Pro",
+      "客户首封邮件内容": "Product Name: X10 Pro Omni\nProduct PN: T2351\nProduct SN:\nProblem Type: WARNING\nProblem Code: 2310-The dust box or filter is not in place.\nProblem Push: Please insert dustbin and filter.\nProblem Description: The dustbin or filter is not installed. It is fully installed and clean\nProblem Upload Images: []",
+      "订单号": "/",
+      "SKU": "T2351111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 17
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "E28",
+      "客户首封邮件内容": "Product Name: Omni E28\nProduct PN: T2352\nProduct SN:\nProblem Type: warning\nProblem Code: 6063-The portable deep cleaning machine is incorrectly positioned.\nProblem Push: The portable deep cleaning machine is incorrectly positioned.\nProblem Description: The portable deep cleaning machine is incorrectly positioned.\nProblem Upload Images: null",
+      "订单号": "/",
+      "SKU": "T2352111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 18
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "E28",
+      "客户首封邮件内容": "Productnaam: Omni E28\nProduct-PN: T2352\nProduct-SN:\nProbleemtype: WARNING\nProbleemcode: 3212-De mop is vastgezet.\nProbleempush: De mop met rol is verstopt, gelieve schoon te maken. Klik hier om de stappen te bekijken.\nProbleembeschrijving: Nieuw uit de doos. Alle beschermingsstickers verwijderd. Toch de melding “mop obstructed”. Hoe los ik dit op?\nGeüploade afbeeldingen van het probleem:[]",
+      "订单号": "/",
+      "SKU": "T2352111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 19
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "X10 Pro",
+      "客户首封邮件内容": "Product Name: X10 Pro Omni\nProduct PN: T2351\nProduct SN:\nProblem Type: WARNING\nProblem Code: 6011-The water in the clean water tank is insufficient.\nProblem Push: Please fill the base station water tank with water and put it back.\nProblem Description: The water in the clean water tank in the station is insufficient.\nProblem Upload Images: []",
+      "订单号": "/",
+      "SKU": "T2351111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 20
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "X10 Pro",
+      "客户首封邮件内容": "Productnaam: X10 Pro Omni\nProduct-PN: T2351\nProbleemtype: Probleem met het toestel\nProbleemomschrijving: Kan positie niet bepalen. Taak wordt beëindigd en robot gaat naar thuisbasis.\nGeüploade afbeeldingen van het probleem: [\"https://appliances-fra-pr.s3.eu-central-1.amazonaws.com/feedback/1fa2526a06addbbe7ba07740bbb78c1b61ffbbd8-NGM5NjE3NjUtMjYzZi00MjE4LTg4ZDktZDg4MmYzZDQ2NTk4\",\"https://appliances-fra-pr.s3.eu-central-1.amazonaws.com/feedback/1fa2526a06addbbe7ba07740bbb78c1b61ffbbd8-YTEwOWE0NTQtZmNiOC00YWZkLTk5Y2EtNDMxNzA5OTdhZjY3\"]",
+      "订单号": "/",
+      "SKU": "T2351111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 21
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "X10 Pro",
+      "客户首封邮件内容": "Nom du produit : X10 Pro Omni\nRéférence produit :T2351\nType de problème : Autre problème\nDescription du problème : Bonjour depuis 2 semaines je réussi pas à faire fonctionne mon aspirateur il dit tjrs la même chose capteur laser bloquer . Nous avons nettoyé et repartit aspirateur a plusieurs reprise et le même message erreur revient toujours.\nImages téléchargées pour le problème : null",
+      "订单号": "/",
+      "SKU": "T2351111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 22
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "X10 Pro",
+      "客户首封邮件内容": "Bron: eufy_mega\nInzenddatum: 2026-09-03T05:46:35-07:00\nFirmwareversie: v3.4.85\n\nNaam van de klant: Eufy\nMobiel:\nGebruikerstelefoon: android SM-S938B, 16\nInlogland:NL\nLand van accountregistratie: NL\nLand van mobiel systeem: NL\nAPP-versie: ktor-client\nLogstatus: true\n\nProductnaam: X10 Pro Omni\nProduct-PN: T2351\nProduct-SN:\nProbleemtype: WARNING\nProbleemcode: 7002-De robot zweeft in de lucht.\nProbleempush: Wiel raakt de grond niet, verplaats de robot naar een nieuwe positie.\nProbleembeschrijving: Wiel raakt de grond niet.\nGeüploade afbeeldingen van het probleem:null",
+      "订单号": "/",
+      "SKU": "T2351111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 23
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro",
+      "客户首封邮件内容": "Product Name: S1 Pro\nProduct PN: T2080A\nProduct SN: AK7RCN1E15600379\nProblem Type: ERROR\nProblem Code: 20972545-\nProblem Push: E41: Battery abnormal, task ended. Please try restarting or contact customer service for assistance.\nProblem Description: E41: Battery abnormal, task ended. Please try restarting or contact customer service for assistance.\nProblem Upload Images: []",
+      "订单号": "/",
+      "SKU": "T2080111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 24
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "X10 Pro",
+      "客户首封邮件内容": "Product Name: X10 Pro Omni\nProduct PN: T2351\nProduct SN:\nProblem Type: ERROR\nProblem Code: 6013-Water injection device is abnormal\nProblem Push: Error: Sprinkler error, please contact customer service.\nProblem Description: Base station clean water pump error\nProblem Upload Images: []",
+      "订单号": "/",
+      "SKU": "T2351111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 25
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro",
+      "客户首封邮件内容": "Product Name: S1 Pro\nProduct PN: T2080A\nProduct SN: AK7RCN1E47300524\nProblem Type: ERROR\nProblem Code: 20972803-\nProblem Push: E53: TrueAI sensor abnormal, task ended. Please try restarting or contact customer service for assistance.\nProblem Description: E53: TrueAI sensor abnormal, task ended. Please try restarting or contact customer service for assistance.\nProblem Upload Images: []",
+      "订单号": "/",
+      "SKU": "T2080111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 26
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro",
+      "客户首封邮件内容": "Product Name: S1 Pro\nProduct PN: T2080A\nProduct SN: AK7RCN1E14300440\nProblem Type: ERROR\nProblem Code: 20972035-\nProblem Push: E23: Robot clean water level abnormal, task ended. Click to contact customer service for assistance.\nProblem Description: E23: Robot clean water level abnormal, task ended. Click to contact customer service for assistance.\nProblem Upload Images: []",
+      "订单号": "/",
+      "SKU": "T2080111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 27
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "E25",
+      "客户首封邮件内容": "Product Name: Omni E25\nProduct PN: T2353\nProduct SN: AMP3AC0F14201072\nProblem Type: warning\nProblem Code: 3212-The mop is stuck.\nProblem Push: Rolling Mop Blockage. Please clean.\nProblem Description: Rolling Mop Blockage. Please clean.\n\ntried the suggestion solution but error still persist. no blockage seen. roller mop area is clear. a Crack sound kept on repeating everything robots done with mop cleaning process. vacuum cannot start process\nProblem Upload Images: []",
+      "订单号": "/",
+      "SKU": "T2353111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 28
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "X10 Pro",
+      "客户首封邮件内容": "Produktname: X10 Pro Omni\nProduktnummer (PN): T2351\nSeriennummer (SN):\nProblemtyp: ERROR\nFehlercode: 2111-Die Rollbürste funktioniert nicht richtig.\nPush-Benachrichtigung: Fehler: Fehler an der Bürstenrolle. Wenden Sie sich an den Kundendienst.\nProblembeschreibung: Fehler an der Bürstenrolle.\nBilder zum Problem: []",
+      "订单号": "/",
+      "SKU": "T2351G21",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 29
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "X10 Pro",
+      "客户首封邮件内容": "Dear sale-team.Hello!\nThis message come from anker.com ----RMA----,\nSource: amazon\nCustomer's Name: Anker\nOrder No: Anker011\nProduct Name: eufy X10 Pro Omni Robot Vacuum and Mop Combo,Dual Mops with 12 mm Auto-Lift\nProblem Description: Water tray will not empty. I have already cleaned it, insured the hose is not pinched and insured that the connector under the dirty water tank is not pushed down. The dirty water tank is also empty. What else can I do?\nProdcut SN:\nSubmit Date: 2026-09-03T16:11:54.374Z",
+      "订单号": "Anker011",
+      "SKU": "T2351111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 30
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro",
+      "客户首封邮件内容": "Product Name: S1 Pro\nProduct PN: T2080A\nProduct SN: 12345678E\nProblem Type: ERROR\nProblem Code: 20971524-\nProblem Push: E4: Side brush abnormal, task ended. Please try restarting or contact customer service for assistance.\nProblem Description: E4: Side brush abnormal, task ended. Please try restarting or contact customer service for assistance.\nJust changed the side brushes 2 days ago\n\nProblem Upload Images: [\"https://appliances-ohi-pr.s3.us-east-2.amazonaws.com/feedback/9c53c8fbb88c14708c1fc7ff8e08d4045ab9bd7c-MzcxMjg4MjQtZjNhOC00MTVmLWIyZTctNWJhNjhmZjljMzZm\"]",
+      "订单号": "/",
+      "SKU": "T2080111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 31
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro",
+      "客户首封邮件内容": "Product Name: S1 Pro\nProduct PN: T2080A\nProblem Type: Ask Us\nProblem Description: The robot won’t charge when it is at the base station despite wiping clean the electrical connections and the robot can’t get past critical low battery\n\nProblem Upload Images: []",
+      "订单号": "/",
+      "SKU": "T2080111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 32
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "E25",
+      "客户首封邮件内容": "Product Name: Omni E25\nProduct PN: T2353\nProduct SN:\nProblem Type: WARNING\nProblem Code: 3021-The sewage tank of the robot is not in place.\nProblem Push: Please install the dirty water reservoir. [Click here to view installation steps.]\nProblem Description: The dirty water reservoir has been removed or not installed properly.\n\nVictoria (that’s what I call her) was on the base station and out of no where it keeps telling water tank removed, water tank installed. I took out the water tank and reinstalled it. It stopped then started going off again. Went back and reinstalled it again seemed fine but after about 5 minutes it goes off saying\nremoved/installed stops and 5 minutes later does it again.\nProblem Upload Images: []",
+      "订单号": "/",
+      "SKU": "T2353111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 33
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro",
+      "客户首封邮件内容": "Product Name: S1 Pro\nProduct PN: T2080A\nProduct SN: AK7RCN1E15600034\nProblem Type: ERROR\nProblem Code: 20972810-E5A: Gyroscope abnormal, task ended. Click to contact customer service for assistance.\nProblem Push: E5A: Gyroscope abnormal, task ended. Click to contact customer service for assistance.\nProblem Description: E5A: Gyroscope abnormal, task ended. Click to contact customer service for assistance.\nProblem Upload Images: null",
+      "订单号": "/",
+      "SKU": "T2080111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 34
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro",
+      "客户首封邮件内容": "Product Name: S1 Pro\nProduct PN: T2080A\nProblem Type: App usage issue\nProblem Description: i just now tried to use the robot first time after getting it back from your service and siscovered i had lost the maps.\nas they were a lot of work to make i feel very frustrated . also I don't understand why they are visible in the history logs. but i cannot use them.\nreally frustrating\nProblem Upload Images: []",
+      "订单号": "/",
+      "SKU": "T2080111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 35
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "E25",
+      "客户首封邮件内容": "Product Name: Omni E25\nProduct PN: T2353\nProblem Type: Issue\nProblem Description: Low battery, return to recharge. When the power is sufficient it will automatically continue the last incomplete cleaning.\nProblem Upload Images: []",
+      "订单号": "/",
+      "SKU": "T2353111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 36
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro",
+      "客户首封邮件内容": "Productnaam: S1 Pro\nProduct-PN: T2080A\nProbleemtype: Probleem met het toestel\nProbleemomschrijving: Tijdens het stofzuigen maakt de stofzuiger enorm veel geluid. Alle filters en borstels zijn vervangen en alles is schoongemaakt maar het harde geluid blijft. Ik ben bang dat de stofzuigermotor kapot gaat.\nGeüploade afbeeldingen van het probleem: [\"https://appliances-ohi-pr.s3.us-east-2.amazonaws.com/feedback/0ed0adb7b6312f8008f289675b4ba700012896c4-OWJkYTc0ZDgtZTdlYi00YTQyLTk5YTMtMjRlYWZiOGI1MzY1\"]",
+      "订单号": "/",
+      "SKU": "T2080111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 37
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "E28",
+      "客户首封邮件内容": "Productnaam: Omni E28\nProduct-PN: T2352\nProbleemtype: issue\nProbleemomschrijving: Ik krijg steeds de melding in de app “voeg water toe” als de dweil wordt gewassen. Terwijl de schoonwater tank nog vol is. De robot gaat vervolgens over op alleen vegen.\n\nSlang in tank is in orde. Rubbers zijn in orde. Hoe op te lossen?\nGeüploade afbeeldingen van het probleem: []",
+      "订单号": "/",
+      "SKU": "T2352111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 38
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "X10 Pro",
+      "客户首封邮件内容": "Order No: Anker012\nProduct Name: Eufy X10 Pro Omni\nProblem Description: The device contantly says the water tank is i sufficient I have tried repeatedly washing the mop among other things but cannot get rid of the fault\nOrder Receipt: See attached picture\nProdcut SN:\nSubmit Date: 2026-09-06T08:07:04.473Z",
+      "订单号": "Anker012",
+      "SKU": "T2351V11",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 39
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "X10 Pro",
+      "客户首封邮件内容": "Product Name: X10 Pro Omni\nProduct PN: T2351\nProblem Type: Issue\nProblem Description: The robot is offline. a\nProblem Upload Images: null",
+      "订单号": "/",
+      "SKU": "T2351111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 40
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro",
+      "客户首封邮件内容": "Dear Eufy,\n\nHope you are well!\nCan I just say we are absolutely loving your products, from your cctv to our S1 pro!\n\nBut I have noticed recently that the floor detergent level has barley moved…\n\nIs there any way for this to be fixed?\nAs it’s just simply not dispensing.\n\nKind regards,\nSam",
+      "订单号": "/",
+      "SKU": "T2080111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 41
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "E28",
+      "客户首封邮件内容": "Product Name: Omni E28\nProduct PN: T2352\nProblem Type: Issue\nProblem Description: This is the second time Ive received this error message related to failed drying. As the water injection is still malfunctioning we have not run mop cycles and thus havent needed any mop drying so im not sure what is triggering this.\n\nWe are also still waiting on the new plugs and instructions for replacement. is there an update on their arrival?\nProblem Upload Images: null",
+      "订单号": "/",
+      "SKU": "T2352111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 42
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro",
+      "客户首封邮件内容": "Product Name: S1 Pro\nProduct PN: T2080A\nProblem Type: issue\nProblem Description: A plastic piece has come off the vacuum and now it doesn’t swap water and leaks\nProblem Upload Images: [\"https://appliances-ohi-pr.s3.us-east-2.amazonaws.com/feedback/545337-MWM2NDAxZTEtOTkzMy00YjdiLTlkMDAtNmU4NzBmMzM0YzZm\"]",
+      "订单号": "/",
+      "SKU": "T2080111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 43
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "X10 Pro",
+      "客户首封邮件内容": "Nombre del producto: X10 Pro Omni\nNúmero de parte del producto: T2351\nTipo de problema: Problema\nDescripción del problema: El robot está desconectado.\nImágenes cargadas del problema: null",
+      "订单号": "/",
+      "SKU": "T2351111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 44
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro Breast Pump",
+      "客户首封邮件内容": "Hi there,\n\nI’m reaching out because I’ve been absolutely lovely my Eufy pumps but there have been a couple issues with them. The case that they came with one of the pins is jammed in or broken so the pump will no longer charge on one side. Which is very annoying. I’ve kept it dry and clean, and have trouble shorted to no avail. I’d love to talk about options for replacing these items, hoping they are still under warranty.\n\n\nThank you so much.",
+      "订单号": "/",
+      "SKU": "T8D04121",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 45
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro Breast Pump",
+      "客户首封邮件内容": "Order No:\nProduct Name: Eufy S1 Pro Wearable Breast Pump\nProblem Description: Pump isn’t charging anymore and the heating part also burned me and looks tarnished now\nPurchase proof: see attached. Ordered from the reseller Aeroflow\nProdcut SN: Anker1234567E\nCountry: US\nSubmit Date: 2026-08-11T18:54:18.020Z",
+      "订单号": "Reseller（提供12个月质保）",
+      "SKU": "T8D04121",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 46
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro Breast Pump",
+      "客户首封邮件内容": "Dear sale-team.Hello!\nThis message come from anker.com ----RMA----,\nSource: amazon\nOrder No: Anker013\nProduct Name: eufy Heated Wearable Breast Pump S1 Pro\nProblem Description: Motor making awful noise. Less than a month old and it’s not the pump I use daily. It’s been used around 20 times total.\nProdcut SN:\nCountry: US",
+      "订单号": "Anker013",
+      "SKU": "T8D04121",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 47
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro Breast Pump",
+      "客户首封邮件内容": "Is there a tracking number for my shipment yet?\nSKU: T8D02181-80 (S1/S1 Pro Pump Hub Brown)\nQuantity: 1\nOrder: Anker010\nSN: T8D02P20262058EB\nAddress:\nAnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+      "订单号": "Anker010",
+      "SKU": "T8D04121",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Shipping inquiry",
+      "source_row": 48
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro Breast Pump",
+      "客户首封邮件内容": "What does this green light mean",
+      "订单号": "/",
+      "SKU": "T8D04121",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 49
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro Breast Pump",
+      "客户首封邮件内容": "I have the Eufy S1 wearable breast pumps. I partially paid for than and my insurance paid for the rest. I can’t get them to turn on and I am looking to get them replaced bc they are my only pump",
+      "订单号": "/",
+      "SKU": "T8D04121",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 50
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro Breast Pump",
+      "客户首封邮件内容": "I have a S1 pump, the left one does work",
+      "订单号": "/",
+      "SKU": "T8D04121",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 51
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro Breast Pump",
+      "客户首封邮件内容": "I’m need help with possibly a replacement for my breast pump. I’ve charged my pump and it won’t hold the battery. It keeps cutting off while in use. Here’s my order # Anker014\nThank you \n\nSent from my iPhone",
+      "订单号": "Anker014",
+      "SKU": "T8D04121",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 52
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro Breast Pump",
+      "客户首封邮件内容": "My charging case will not charge therefore I cannot charge my pump motors. I am an exclusive pumper",
+      "订单号": "/",
+      "SKU": "T8D04121",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 53
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro Breast Pump",
+      "客户首封邮件内容": "Dear sale-team.Hello!\nOrder No: Anker015\nProduct Name: eufy Wearable Breast Pump S1 Pro\nProblem Description: One side of the pump stoped working. I tried to charge it over and over again but it stoped turning on. It’s been 24 months but this happed within 12 months but I had not known I can put in a claim. I hope I can get a replacement or you can fix it. Thank you\n\nProdcut SN: T8D04121\nSubmit Date: 2026-09-27T14:58:03.850Z",
+      "订单号": "Anker015",
+      "SKU": "T8D04121",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 54
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro Breast Pump",
+      "客户首封邮件内容": "Eufy S1 pro breast pump not suctioning",
+      "订单号": "/",
+      "SKU": "T8D04121",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 55
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "S1 Pro Breast Pump",
+      "客户首封邮件内容": "Dear sale-team.Hello!\nThis message come from anker.com ----RMA----,\nSource: amazon\nOrder No: Anker016\nProduct Name: eufy S1 Pro Wearbale Breast Pump\nProblem Description: I have been using this breast pump for less than three weeks and the left pump will no longer suction. It clicks but does not suction. Troubleshooting articles say it's a diaphragm issue but when I disassemble the pump to check, the diaphragm sits. I've only ever hand washed the pump parts. Now I have to wear the right pump on one breast and then switch it to the other. I'm very disappointed as I loved wearing this pump on the go.\nSubmit Date: 2026-09-27T10:47:59.871Z",
+      "订单号": "Anker016",
+      "SKU": "T8D04121",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 56
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "SoloCam S340",
+      "客户首封邮件内容": "Why is it when I need my SoloCam S340 there offline. Even hooked up for one week. Is that your warranty? I'm sick of this shit",
+      "订单号": "/",
+      "SKU": "T81701W1",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 57
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "SoloCam S340",
+      "客户首封邮件内容": "All of the cameras are not working except one, the system does not record any more. This system is truly terrible. Not sure what you changed but the WiFi is fine and it is clearly an issue with the system.",
+      "订单号": "/",
+      "SKU": "T81701W1",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 58
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "security camera",
+      "客户首封邮件内容": "You’re fucking cameras suck",
+      "订单号": "/",
+      "SKU": "/",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 59
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "SoloCam S340",
+      "客户首封邮件内容": "My 2 SoloCam S340 are always loosing connection and nit reliable junk but . My other ones solo cam c20 which I paid less for has been working pretty good. I wish you could just send me those for the 2 that is junk",
+      "订单号": "/",
+      "SKU": "T81701W1",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 60
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "omni c20 ",
+      "客户首封邮件内容": "This app is shit . I just want my hoover to clean with out all this bullshit",
+      "订单号": "/",
+      "SKU": "\nT2280111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 61
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "omni c20 ",
+      "客户首封邮件内容": "omni c20  isn’t following my schedule it’s going off 2 hours before and the cleans are not being recorded by your dumb app",
+      "订单号": "/",
+      "SKU": "\nT2280111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 62
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "omni c20 ",
+      "客户首封邮件内容": "Why is my eufy omni c 20 not cleaning in a straight line? I bought a small robo vac and it cost pennies but is a much better machine. My eufy has been absolutely rubbish since day one",
+      "订单号": "/",
+      "SKU": "\nT2280111",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 63
+    },
+    {
+      "产品线": "Anker eufy",
+      "产品名": "eufy cleaner",
+      "客户首封邮件内容": "Why is it I can’t get a brush guard anywhere for this model it’s very frustrating I have mine taped together. This is the worst model ever the brush guard just snaps off the clips that hold it in. It doesn’t clean very well. The detangle elements don’t work properly any more. Please help",
+      "订单号": "/",
+      "SKU": "/",
+      "附件（把附件下载下来）": null,
+      "咨询场景": "Troubleshooting/Product usage",
+      "source_row": 64
+    }
+  ]
+}

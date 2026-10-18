@@ -1,0 +1,58 @@
+[
+  {
+    "path": "/",
+    "loaded": true,
+    "natural": [
+      148,
+      59
+    ],
+    "size": [
+      100,
+      39.859375
+    ],
+    "alt": "ANKER",
+    "mobileOverflow": false
+  },
+  {
+    "path": "/merchant",
+    "loaded": true,
+    "natural": [
+      148,
+      59
+    ],
+    "size": [
+      100,
+      39.859375
+    ],
+    "alt": "ANKER",
+    "mobileOverflow": false
+  },
+  {
+    "path": "/analytics",
+    "loaded": true,
+    "natural": [
+      148,
+      59
+    ],
+    "size": [
+      100,
+      39.859375
+    ],
+    "alt": "ANKER",
+    "mobileOverflow": false
+  },
+  {
+    "path": "/benchmark.html",
+    "loaded": true,
+    "natural": [
+      148,
+      59
+    ],
+    "size": [
+      100,
+      39.859375
+    ],
+    "alt": "ANKER",
+    "mobileOverflow": false
+  }
+]

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Reports — Research vault</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+<style>
+:root {
+  --bg:           oklch(0.972 0.012 85);
+  --bg-elevated:  oklch(0.945 0.014 85);
+  --text:         oklch(0.22  0.018 85);
+  --text-muted:   oklch(0.45  0.014 85);
+  --text-subtle:  oklch(0.58  0.012 85);
+  --rule:         oklch(0.86  0.012 85);
+  --rule-strong:  oklch(0.78  0.014 85);
+  --accent:       oklch(0.50  0.135 35);
+  --accent-soft:  oklch(0.92  0.04  35);
+  --accent-ring:  oklch(0.55  0.16  35 / 0.40);
+
+  --font-body:  'Newsreader','Iowan Old Style',Georgia,serif;
+  --font-ui:    'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --font-mono:  'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+}
+[data-theme="dark"] {
+  --bg:           oklch(0.135 0.008 260);
+  --bg-elevated:  oklch(0.175 0.008 260);
+  --text:         oklch(0.94  0.006 260);
+  --text-muted:   oklch(0.72  0.006 260);
+  --text-subtle:  oklch(0.55  0.006 260);
+  --rule:         oklch(0.27  0.008 260);
+  --rule-strong:  oklch(0.38  0.008 260);
+  --accent:       oklch(0.74  0.13  35);
+  --accent-soft:  oklch(0.30  0.08  35);
+  --accent-ring:  oklch(0.74  0.14  35 / 0.45);
+}
+
+*,*::before,*::after { box-sizing: border-box; }
+html,body { margin:0; padding:0; }
+body {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; justify-content: flex-end; gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--rule);
+}
+.topbar__btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.35rem 0.6rem;
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  color: var(--text-muted);
+  font-family: var(--font-ui); font-size: 0.78rem;
+  cursor: pointer;
+}
+.topbar__btn:hover { color: var(--text); border-color: var(--rule-strong); }
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 6rem;
+}
+.eyebrow {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.5rem;
+  font-weight: 500;
+}
+h1 {
+  font-family: var(--font-body);
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.4rem;
+}
+.lede {
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  margin: 0 0 2.5rem;
+  max-width: 56ch;
+}
+
+.filter-row {
+  display: flex; align-items: center; gap: 0.75rem;
+  margin: 0 0 1rem;
+}
+.filter-row label { font-family: var(--font-ui); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-subtle); }
+.filter-input {
+  flex: 1;
+  padding: 0.45rem 0.6rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--text);
+}
+.filter-input:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+
+.reports-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+}
+.reports-table th, .reports-table td {
+  text-align: left;
+  padding: 0.7rem 0.6rem;
+  border-bottom: 1px solid var(--rule);
+  font-weight: 400;
+  vertical-align: baseline;
+}
+.reports-table th {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-subtle);
+  border-bottom: 2px solid var(--rule-strong);
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+.reports-table th[aria-sort="ascending"]::after { content: " ↑"; color: var(--accent); }
+.reports-table th[aria-sort="descending"]::after { content: " ↓"; color: var(--accent); }
+.reports-table tbody tr { cursor: pointer; }
+.reports-table tbody tr:hover { background: var(--bg-elevated); }
+.reports-table tbody tr:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.col-date { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-subtle); width: 6.5rem; }
+.col-title a { color: var(--text); text-decoration: none; }
+.col-title a:hover { color: var(--accent); }
+.col-tags { font-family: var(--font-ui); font-size: 0.72rem; color: var(--text-muted); width: 12rem; }
+.col-read { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-subtle); width: 4.5rem; text-align: right; }
+.col-status { font-family: var(--font-ui); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; width: 7.5rem; color: var(--text-muted); }
+
+.status-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 999px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.status-dot--draft     { background: oklch(0.72 0.010 85); }
+.status-dot--in-review { background: oklch(0.65 0.13  80); }
+.status-dot--reviewed  { background: oklch(0.62 0.08  200); }
+.status-dot--final     { background: oklch(0.65 0.10  160); }
+
+.empty-state {
+  padding: 2rem 0;
+  font-style: italic;
+  color: var(--text-subtle);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .reports-table thead { display: none; }
+  .reports-table, .reports-table tbody, .reports-table tr, .reports-table td { display: block; width: 100%; }
+  .reports-table tr { padding: 0.75rem 0; border-bottom: 1px solid var(--rule); }
+  .reports-table td { padding: 0.15rem 0; border: none; }
+  .col-tags::before { content: "Tags: "; color: var(--text-subtle); }
+  .col-read::before { content: "Reading: "; color: var(--text-subtle); }
+  .col-status::before { content: "Status: "; color: var(--text-subtle); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <button class="topbar__btn" id="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme (T)">Theme</button>
+</div>
+
+<main>
+  <p class="eyebrow">Research vault · 1 report</p>
+  <h1>Reports</h1>
+  <p class="lede">Sortable index. Click a column header to re-sort, or filter to narrow.</p>
+
+  <div class="filter-row">
+    <label for="filter-input">Filter</label>
+    <input type="text" id="filter-input" class="filter-input" placeholder="Filter by title, tag, summary…" />
+  </div>
+
+  <table class="reports-table" id="reports-table">
+    <thead>
+      <tr>
+        <th data-col="date" aria-sort="descending">Date</th>
+        <th data-col="title">Title</th>
+        <th data-col="tags">Tags</th>
+        <th data-col="reading_time_min">Read</th>
+        <th data-col="status">Status</th>
+      </tr>
+    </thead>
+    <tbody id="reports-tbody"><tr tabindex="0" data-href="参赛提交说明-新增补充版本.html"><td class="col-date">2026-10-19</td><td class="col-title"><a href="参赛提交说明-新增补充版本.html">OntoCare 参赛提交说明｜项目总览、成果展示与源码入口</a></td><td class="col-tags"></td><td class="col-read">6m</td><td class="col-status"><span class="status-dot status-dot--final"></span>Final</td></tr></tbody>
+  </table>
+  <p class="empty-state" id="empty-state" hidden>No reports match — clear the filter.</p>
+</main>
+
+<script id="report-index" type="application/json">
+{
+  "generated_at": "2026-10-18T20:25:23.863Z",
+  "report_count": 1,
+  "reports": [
+    {
+      "slug": "参赛提交说明-新增补充版本",
+      "href": "参赛提交说明-新增补充版本.html",
+      "title": "OntoCare 参赛提交说明｜项目总览、成果展示与源码入口",
+      "summary": "OntoCare 本体队 · 决赛作品 · ANKER 首届黑客松挑战赛",
+      "date": "2026-10-19",
+      "status": "final",
+      "reading_time_min": 6,
+      "word_count": 1366,
+      "last_modified": "2026-10-18T20:25:23.861Z",
+      "generated_by": "Codex"
+    }
+  ],
+  "current_slug": "参赛提交说明-新增补充版本"
+}
+</script>
+
+<script>
+(function () {
+  const data = JSON.parse(document.getElementById('report-index').textContent);
+  const tbody = document.getElementById('reports-tbody');
+  const filterInput = document.getElementById('filter-input');
+  const empty = document.getElementById('empty-state');
+  const headers = document.querySelectorAll('th[data-col]');
+
+  let sort = { col: 'date', dir: 'desc' };
+  try {
+    const saved = localStorage.getItem('report-index.sort');
+    if (saved) sort = JSON.parse(saved);
+  } catch (e) {}
+
+  function persistSort() {
+    try { localStorage.setItem('report-index.sort', JSON.stringify(sort)); } catch (e) {}
+  }
+
+  function cmp(a, b, col) {
+    const va = a[col]; const vb = b[col];
+    if (va == null && vb == null) return 0;
+    if (va == null) return 1;
+    if (vb == null) return -1;
+    if (Array.isArray(va) && Array.isArray(vb)) return va.join(',').localeCompare(vb.join(','));
+    if (typeof va === 'number' && typeof vb === 'number') return va - vb;
+    return String(va).localeCompare(String(vb));
+  }
+
+  function sortedReports() {
+    const list = data.reports.slice();
+    list.sort((a, b) => {
+      const r = cmp(a, b, sort.col);
+      return sort.dir === 'asc' ? r : -r;
+    });
+    return list;
+  }
+
+  function statusLabel(s) {
+    return ({ 'draft': 'Draft', 'in-review': 'In review', 'reviewed': 'Reviewed', 'final': 'Final' })[s] || s;
+  }
+
+  function rowHtml(r) {
+    const tags = (r.tags || []).join(' · ');
+    return '<tr tabindex="0" data-href="' + escapeAttr(r.href) + '">' +
+      '<td class="col-date">' + escapeText(r.date) + '</td>' +
+      '<td class="col-title"><a href="' + escapeAttr(r.href) + '">' + escapeText(r.title) + '</a></td>' +
+      '<td class="col-tags">' + escapeText(tags) + '</td>' +
+      '<td class="col-read">' + escapeText(r.reading_time_min + 'm') + '</td>' +
+      '<td class="col-status"><span class="status-dot status-dot--' + escapeAttr(r.status) + '"></span>' + escapeText(statusLabel(r.status)) + '</td>' +
+    '</tr>';
+  }
+
+  function escapeText(s) {
+    return String(s == null ? '' : s).replace(/[&<>]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[c]));
+  }
+  function escapeAttr(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+  }
+
+  function matches(r, q) {
+    if (!q) return true;
+    const hay = (r.title + ' ' + (r.tags || []).join(' ') + ' ' + (r.summary || '') + ' ' + (r.eyebrow || '')).toLowerCase();
+    return hay.includes(q);
+  }
+
+  function render() {
+    const q = filterInput.value.trim().toLowerCase();
+    const rows = sortedReports().filter(r => matches(r, q));
+    tbody.innerHTML = rows.map(rowHtml).join('');
+    empty.hidden = rows.length !== 0;
+    headers.forEach(h => {
+      const c = h.getAttribute('data-col');
+      if (c === sort.col) {
+        h.setAttribute('aria-sort', sort.dir === 'asc' ? 'ascending' : 'descending');
+      } else {
+        h.removeAttribute('aria-sort');
+      }
+    });
+  }
+
+  headers.forEach(h => {
+    h.addEventListener('click', () => {
+      const col = h.getAttribute('data-col');
+      if (sort.col === col) {
+        sort.dir = sort.dir === 'asc' ? 'desc' : 'asc';
+      } else {
+        sort.col = col;
+        sort.dir = col === 'date' || col === 'reading_time_min' ? 'desc' : 'asc';
+      }
+      persistSort();
+      render();
+    });
+  });
+
+  let t = 0;
+  filterInput.addEventListener('input', () => {
+    clearTimeout(t);
+    t = setTimeout(render, 80);
+  });
+
+  tbody.addEventListener('click', (e) => {
+    const tr = e.target.closest('tr[data-href]');
+    if (!tr) return;
+    if (e.target.tagName === 'A') return;
+    window.location.href = tr.getAttribute('data-href');
+  });
+  tbody.addEventListener('keydown', (e) => {
+    const tr = e.target.closest('tr[data-href]');
+    if (!tr) return;
+    if (e.key === 'Enter') {
+      window.location.href = tr.getAttribute('data-href');
+    }
+  });
+
+  const themeBtn = document.getElementById('theme-toggle');
+  const apply = (mode) => {
+    document.documentElement.setAttribute('data-theme', mode);
+    try { localStorage.setItem('report-theme', mode); } catch (e) {}
+  };
+  const initial = (() => {
+    try { return localStorage.getItem('report-theme'); } catch (e) { return null; }
+  })() || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  apply(initial);
+  themeBtn.addEventListener('click', () => {
+    apply(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.key === 't' || e.key === 'T') themeBtn.click();
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>

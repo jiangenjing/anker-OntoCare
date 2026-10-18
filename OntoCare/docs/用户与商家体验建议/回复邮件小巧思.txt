@@ -1,0 +1,9 @@
+请阅读 anker-enhancement-config.json，将其中定义的 15 个功能逐一实现到现有的安克智能客服 index.html 中。
+
+要求：
+1. 按 implementation_order 的顺序实现，P0 优先。
+2. 每个功能的 implementation / data_structure / ui_spec / interaction 字段是硬性要求，必须严格遵守。
+3. 每个功能的 acceptance 字段是验收标准，实现后逐条自查。
+4. 所有数据必须来自源表（黑客松智能服务赛题资料.xlsx），禁止虚构。
+5. 所有 UI 符合 global_requirements.style_guide 中的规范。
+6. 输出完整的 index.html 单文件，不要省略任何代码。

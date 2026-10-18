@@ -1,0 +1,3704 @@
+{
+  "metadata": {
+    "schema_version": "1.0",
+    "source_workbook": "黑客松智能服务赛题资料.xlsx",
+    "reference_date": "2026-10-16",
+    "actual_counts": {
+      "complaints": 63,
+      "unique_order_numbers": 16,
+      "order_item_rows": 24,
+      "robovac_qa": 593,
+      "breast_pump_qa": 282,
+      "dealers": 336
+    },
+    "audit_notes": [
+      "用户描述62工单/23订单与文件不符；按63工单、16订单号、24明细构造。",
+      "原文没有FURIOUS字样的三封邮件，使用真实极端不满原文，禁止补造。",
+      "无效订单、重复长邮件、假定as_of_date明确为测试夹具，不是源表事实。",
+      "质保截止日可计算日期状态，但不是退换货政策授权；政策缺失需人工确认。",
+      "RC1/RC2没有可证实根因标签，采用负向归因测试。",
+      "输入fixture_type为source_derived_question时是基于事实改写的问题，不伪装原始邮件。"
+    ],
+    "source_workbook_sha256": "0279f939182e84526c05dfc5e1b5a694248ab5acfe4bec7ea4857f9504051f94",
+    "source_snapshot_sha256": "f898aef03be9370bf310805d896e3ef4e9a35f75794c2d855a1ffed35dd8f48a",
+    "framework_references": [
+      {
+        "name": "RAGAS",
+        "url": "https://github.com/vibrantlabsai/ragas/blob/main/docs/concepts/metrics/available_metrics/faithfulness.md",
+        "use": "逐条事实的证据支持率，不把字面命中当忠实度。"
+      },
+      {
+        "name": "tau-bench",
+        "url": "https://arxiv.org/abs/2406.12045",
+        "use": "工具状态与动作约束、多轮任务完成，以及k次全部成功的pass^k。"
+      },
+      {
+        "name": "DeepEval",
+        "url": "https://deepeval.com/docs/evaluation-multiturn-test-cases",
+        "use": "保留turns、工具结果、检索证据，结构化用例执行。"
+      },
+      {
+        "name": "MT-Bench",
+        "url": "https://arxiv.org/abs/2306.05685",
+        "use": "多轮一致性和裁判偏差提醒；人工复核语义评分。"
+      }
+    ]
+  },
+  "user_test_cases": [
+    {
+      "id": "U001",
+      "category": "order_query",
+      "input": "Anker003",
+      "language": "zh",
+      "expected_intent": "order_lookup",
+      "expected_entities": {
+        "order_no": "Anker003",
+        "sku": "T2351V11-F"
+      },
+      "expected_response_must_contain": [
+        "Anker003",
+        "T2351V11-F"
+      ],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "订单信息!A5:N5（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "订单信息",
+          "excel_row": 5,
+          "cells": "A5:N5"
+        }
+      ],
+      "difficulty": "easy",
+      "test_rationale": "直接输入真实订单号，确认卡片逐字段正确且金额不混单。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "order_fields",
+          "order_no": "Anker003",
+          "rows": [
+            {
+              "source_row": 5,
+              "fields": {
+                "SKU": "T2351V11-F",
+                "订单金额": 257.5,
+                "物流单号": "Anker 1234567-4"
+              }
+            }
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ]
+    },
+    {
+      "id": "U002",
+      "category": "order_query",
+      "input": "Anker013",
+      "language": "zh",
+      "expected_intent": "order_lookup",
+      "expected_entities": {
+        "order_no": "Anker013",
+        "sku": "T8D04121"
+      },
+      "expected_response_must_contain": [
+        "Anker013",
+        "T8D04121"
+      ],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "订单信息!A22:N22（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "订单信息",
+          "excel_row": 22,
+          "cells": "A22:N22"
+        }
+      ],
+      "difficulty": "easy",
+      "test_rationale": "直接输入真实订单号，确认卡片逐字段正确且金额不混单。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "order_fields",
+          "order_no": "Anker013",
+          "rows": [
+            {
+              "source_row": 22,
+              "fields": {
+                "SKU": "T8D04121",
+                "订单金额": 349.98,
+                "物流单号": "Anker1234567-16"
+              }
+            }
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ]
+    },
+    {
+      "id": "U003",
+      "category": "order_query",
+      "input": "Anker016",
+      "language": "zh",
+      "expected_intent": "order_lookup",
+      "expected_entities": {
+        "order_no": "Anker016",
+        "sku": "T8D04121"
+      },
+      "expected_response_must_contain": [
+        "Anker016",
+        "T8D04121"
+      ],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "订单信息!A25:N25（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "订单信息",
+          "excel_row": 25,
+          "cells": "A25:N25"
+        }
+      ],
+      "difficulty": "easy",
+      "test_rationale": "直接输入真实订单号，确认卡片逐字段正确且金额不混单。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "order_fields",
+          "order_no": "Anker016",
+          "rows": [
+            {
+              "source_row": 25,
+              "fields": {
+                "SKU": "T8D04121",
+                "订单金额": 349.99,
+                "物流单号": "Anker1234567-19"
+              }
+            }
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ]
+    },
+    {
+      "id": "U004",
+      "category": "split_shipping",
+      "input": "The vacuum did not arrive. Only the replacement parts kit. Was the vacuum shipped? What should I do？My order is Anker001",
+      "language": "en",
+      "expected_intent": "shipping",
+      "expected_entities": {
+        "order_no": "Anker001"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "订单信息!A2:N2（Excel含表头行号）；客诉工单信息!A2:G2（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "订单信息",
+          "excel_row": 2,
+          "cells": "A2:N2"
+        },
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 2,
+          "cells": "A2:G2"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "区分订单、商品和包裹；客户描述不能覆盖源表商品与物流对应关系。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "trace",
+          "path": "order",
+          "equals": "ANKER001"
+        },
+        {
+          "type": "citation_any",
+          "ids": [
+            "order-2"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。",
+        "Anker001两条物流按换行顺序保留，不猜哪件包裹是主机。"
+      ],
+      "setup_turns": []
+    },
+    {
+      "id": "U005",
+      "category": "split_shipping",
+      "input": "Hi Team,\n\n I am reaching out to you regarding my order Anker002. I have received ine package today with tracking number \nAnker1234567-2. The package only contains the replacement accessories kit. I have not received the Eufy S1 robot vacuum yet. When trying to track the shipment Anker1234567-3, UPS website says that the label has been created, but there is no further information. Could you please let me know when I should expect the robot vacuum to arrive?\n\nThanks in advance",
+      "language": "en",
+      "expected_intent": "shipping",
+      "expected_entities": {
+        "order_no": "Anker002"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "订单信息!A3:N3（Excel含表头行号）；订单信息!A4:N4（Excel含表头行号）；客诉工单信息!A3:G3（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "订单信息",
+          "excel_row": 3,
+          "cells": "A3:N3"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 4,
+          "cells": "A4:N4"
+        },
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 3,
+          "cells": "A3:G3"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "区分订单、商品和包裹；客户描述不能覆盖源表商品与物流对应关系。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "trace",
+          "path": "order",
+          "equals": "ANKER002"
+        },
+        {
+          "type": "citation_any",
+          "ids": [
+            "order-3",
+            "order-4"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。",
+        "指出邮件说配件已到但源表对应主机，UPS邮件称label created而快照为Delivered on 9/24；不择一当实时事实。"
+      ],
+      "setup_turns": []
+    },
+    {
+      "id": "U006",
+      "category": "split_shipping",
+      "input": "我要查询订单 Anker002 中的商品 SKU T29C2001，物流怎么样？",
+      "language": "zh",
+      "expected_intent": "shipping",
+      "expected_entities": {
+        "order_no": "Anker002"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "订单信息!A3:N3（Excel含表头行号）；订单信息!A4:N4（Excel含表头行号）；客诉工单信息!A3:G3（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "订单信息",
+          "excel_row": 3,
+          "cells": "A3:N3"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 4,
+          "cells": "A4:N4"
+        },
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 3,
+          "cells": "A3:G3"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "区分订单、商品和包裹；客户描述不能覆盖源表商品与物流对应关系。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "trace",
+          "path": "order",
+          "equals": "ANKER002"
+        },
+        {
+          "type": "citation_any",
+          "ids": [
+            "order-3",
+            "order-4"
+          ]
+        },
+        {
+          "type": "reply_contains",
+          "values": [
+            "Anker1234567-3"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。",
+        "指出邮件说配件已到但源表对应主机，UPS邮件称label created而快照为Delivered on 9/24；不择一当实时事实。"
+      ],
+      "setup_turns": [
+        "Anker002"
+      ]
+    },
+    {
+      "id": "U007",
+      "category": "shipping_exception",
+      "input": "Hi Team,\n\n I am reaching out to you regarding my order Anker002. I have received ine package today with tracking number \nAnker1234567-2. The package only contains the replacement accessories kit. I have not received the Eufy S1 robot vacuum yet. When trying to track the shipment Anker1234567-3, UPS website says that the label has been created, but there is no further information. Could you please let me know when I should expect the robot vacuum to arrive?\n\nThanks in advance",
+      "language": "en",
+      "expected_intent": "shipping",
+      "expected_entities": {
+        "order_no": "Anker002"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "客诉工单信息!A3:G3（Excel含表头行号）；订单信息!A3:N3（Excel含表头行号）；订单信息!A4:N4（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 3,
+          "cells": "A3:G3"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 3,
+          "cells": "A3:N3"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 4,
+          "cells": "A4:N4"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "label created来自邮件、Delivered来自快照，需核查矛盾而非声称现已送达。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "citation_any",
+          "ids": [
+            "order-3",
+            "order-4"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。",
+        "明确两个来源冲突；不能承诺送达时间。"
+      ]
+    },
+    {
+      "id": "U008",
+      "category": "shipping_exception",
+      "input": "订单 Anker005 的 T2353112 物流记录还是在途，9月30日已经过了，现在怎么办？",
+      "language": "zh",
+      "expected_intent": "shipping",
+      "expected_entities": {
+        "order_no": "Anker005",
+        "sku": "T2353112"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "订单信息!A8:N8（Excel含表头行号）；订单信息!A9:N9（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "订单信息",
+          "excel_row": 8,
+          "cells": "A8:N8"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 9,
+          "cells": "A9:N9"
+        }
+      ],
+      "difficulty": "medium",
+      "test_rationale": "参考日2026-10-16超过快照预计日期，不把历史预计送达时间当未来承诺。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "reply_contains",
+          "values": [
+            "Anker1234567-6"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ],
+      "as_of_date": "2026-10-16"
+    },
+    {
+      "id": "U009",
+      "category": "shipping_exception",
+      "input": "订单 Anker007 的 T2292111 为什么没收到？",
+      "language": "zh",
+      "expected_intent": "shipping",
+      "expected_entities": {
+        "order_no": "Anker007",
+        "sku": "T2292111"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "订单信息!A12:N12（Excel含表头行号）；订单信息!A13:N13（Excel含表头行号）；客诉工单信息!A9:G9（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "订单信息",
+          "excel_row": 12,
+          "cells": "A12:N12"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 13,
+          "cells": "A13:N13"
+        },
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 9,
+          "cells": "A9:G9"
+        }
+      ],
+      "difficulty": "medium",
+      "test_rationale": "退回寄件人不同于签收；不能直接断言退款完成。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "reply_contains_any",
+          "values": [
+            "退回",
+            "退件",
+            "Return to sender",
+            "returned"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ]
+    },
+    {
+      "id": "U010",
+      "category": "product_disambiguation",
+      "input": "我的 S1 Pro 有问题",
+      "language": "zh",
+      "expected_intent": "clarify_product",
+      "expected_entities": {},
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "客诉工单信息!A12:G12（Excel含表头行号）；客诉工单信息!A45:G45（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 12,
+          "cells": "A12:G12"
+        },
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 45,
+          "cells": "A45:G45"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "同名跨品类，先澄清，不能直接给扫地机或吸奶器步骤。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "trace",
+          "path": "product_state",
+          "equals": "CONFLICTED"
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ]
+    },
+    {
+      "id": "U011",
+      "category": "product_disambiguation",
+      "input": "我的 S1 Pro 有问题",
+      "language": "zh",
+      "expected_intent": "clarify_product",
+      "expected_entities": {
+        "product": "S1 Pro 吸奶器",
+        "pn": "T8D04"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "客诉工单信息!A12:G12（Excel含表头行号）；客诉工单信息!A45:G45（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 12,
+          "cells": "A12:G12"
+        },
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 45,
+          "cells": "A45:G45"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "先同名歧义再确认吸奶器，旧的扫地机语境不得残留。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "trace_contains",
+          "path": "product",
+          "value": "吸奶器"
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ],
+      "turns": [
+        "我的 S1 Pro 有问题",
+        "是吸奶器 S1 Pro，型号 T8D04"
+      ]
+    },
+    {
+      "id": "U012",
+      "category": "product_disambiguation",
+      "input": "订单 Anker009 里有 X10 Pro 和 C10，我要问 C10。",
+      "language": "zh",
+      "expected_intent": "clarify_item",
+      "expected_entities": {
+        "order_no": "Anker009",
+        "sku": "T2292111"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "订单信息!A16:N16（Excel含表头行号）；订单信息!A17:N17（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "订单信息",
+          "excel_row": 16,
+          "cells": "A16:N16"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 17,
+          "cells": "A17:N17"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "同订单两种机器人，型号文字选择应切换正确商品而不是订单首项猜测。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "trace_contains",
+          "path": "product",
+          "value": "C10"
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ]
+    },
+    {
+      "id": "U013",
+      "category": "error_troubleshooting",
+      "input": "T2351 报错 6011，应该怎么处理？",
+      "language": "zh",
+      "expected_intent": "troubleshooting",
+      "expected_entities": {
+        "pn": "T2351",
+        "error_code": "6011"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "eufy Robovacs Q&A!D24:I24（Excel含表头行号）；客诉工单信息!A20:G20（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "eufy Robovacs Q&A",
+          "excel_row": 24,
+          "cells": "D24:I24"
+        },
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 20,
+          "cells": "A20:G20"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "错误码必须与PN联合检索，引用同型号精确知识；不应用相邻型号步骤。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "citation_any",
+          "ids": [
+            "r-24"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ],
+      "reference_answer_evidence": {
+        "knowledge_id": "r-24",
+        "title": "What should I do if my X10 Pro Omni T2351 reports a warning 6011: The clean water in the station is insufficient, please add water, Base station clean water tank is empty, insufficient water error despite a filled tank, showed the clean water tank is empty, saying that the Clean water is insufficient, water in the clean water tank is insufficient?",
+        "content": "* 1. Inspect the components of the clean water tank itself. If there is water in the tank, remove it first: check if the sealing ring of the water outlet is installed correctly/is undamaged. If the seal ring is deformed or broken, please provide photos of the defect. \n2.If there are no abnormalities in the above steps (clean water tank components, base station sealing ring, installation), and the robot still displays error after reinstallation, it can be determined that there is a hardware problem with the base station.\n"
+      }
+    },
+    {
+      "id": "U014",
+      "category": "error_troubleshooting",
+      "input": "T2351 报错 2310，应该怎么处理？",
+      "language": "zh",
+      "expected_intent": "troubleshooting",
+      "expected_entities": {
+        "pn": "T2351",
+        "error_code": "2310"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "eufy Robovacs Q&A!D57:I57（Excel含表头行号）；客诉工单信息!A17:G17（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "eufy Robovacs Q&A",
+          "excel_row": 57,
+          "cells": "D57:I57"
+        },
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 17,
+          "cells": "A17:G17"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "错误码必须与PN联合检索，引用同型号精确知识；不应用相邻型号步骤。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "citation_any",
+          "ids": [
+            "r-57"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ],
+      "reference_answer_evidence": {
+        "knowledge_id": "r-57",
+        "title": "What should I do if my X10 Pro Omni T2351 reports alert:2310 The dust collector and filter is not in place, please install the dust collector and filter, the dust box or filter is not in place? ",
+        "content": "1. Take out the dust collector, open the dust collector cover, and check whether the filter is installed. If the filter is not installed, install it and try again;\n\nhttps://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/install-the-filter.png\n\n2. If the filter is installed correctly, further check whether there is a magnet in the position shown in the picture.\n\nhttps://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/magnet-on-the-filter.png\n"
+      }
+    },
+    {
+      "id": "U015",
+      "category": "error_troubleshooting",
+      "input": "T2351 报错 7031，应该怎么处理？",
+      "language": "zh",
+      "expected_intent": "troubleshooting",
+      "expected_entities": {
+        "pn": "T2351",
+        "error_code": "7031"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "eufy Robovacs Q&A!D103:I103（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "eufy Robovacs Q&A",
+          "excel_row": 103,
+          "cells": "D103:I103"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "错误码必须与PN联合检索，引用同型号精确知识；不应用相邻型号步骤。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "citation_any",
+          "ids": [
+            "r-103"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ],
+      "reference_answer_evidence": {
+        "knowledge_id": "r-103",
+        "title": "What should I do if my X10 Pro Omni T2351 reports a warning 7031:Return failed, please clear the area around the station, Failed to return to the base station?",
+        "content": "* 1.The robot is blocked by obstacles during the process of getting on the seat, so it cannot enter the station. Please check and clear the obstacles around the station to ensure that there is enough space around the station.\n\nhttps://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/Ensure-adequate-space-around-the-base-station.png\n\n* 2.It is recommended not to place the station on the carpet. The robot is more likely to slip or be blocked when it moves backwards on the carpet.\n* 3.Please check whether the robot's swivel wheel is seriously entangled with hair. This may make it difficult for the robot to get onto the station. Please clean the hair on the swivel wheel and try again.\nhttps://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/Check-robot-swivel-wheel-for-heavy-hair-entanglement.png\nhttps://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/How-to-clean-robot-swivel-wheel.mov\n\n4. Check the surface and grooves of the robot's left and right wheels for sand, gravel, or oil stains. If there are, wipe them clean with a dry or slightly damp cloth. After cleaning, manually return the robot to the base station.\n\n\n\n"
+      }
+    },
+    {
+      "id": "U016",
+      "category": "error_troubleshooting",
+      "input": "T2080 报错 E41，应该怎么处理？",
+      "language": "zh",
+      "expected_intent": "troubleshooting",
+      "expected_entities": {
+        "pn": "T2080",
+        "error_code": "E41"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "eufy Robovacs Q&A!D139:I139（Excel含表头行号）；客诉工单信息!A24:G24（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "eufy Robovacs Q&A",
+          "excel_row": 139,
+          "cells": "D139:I139"
+        },
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 24,
+          "cells": "A24:G24"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "错误码必须与PN联合检索，引用同型号精确知识；不应用相邻型号步骤。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "citation_any",
+          "ids": [
+            "r-139"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ],
+      "reference_answer_evidence": {
+        "knowledge_id": "r-139",
+        "title": "What should I do when T2080 S1 Pro has E41: Battery abnormal, task ended. Please try restarting or contact customer service for assistance, or shows battery error?",
+        "content": "1.Please update the robot firmware to the latest version in the APP.\n\n2.Restart the robot and check if the robot works properly.\n\n\n\nApplicable Models: T2080, S1 Pro\n\nApplicable Error Codes or problem codes: E41\n\nCore Symptoms: E41, Battery abnormal, battery error, shows smart battery has no data, battery pack data not available, displays a warning E41: Battery abnormal, task ended.\n"
+      }
+    },
+    {
+      "id": "U017",
+      "category": "error_troubleshooting",
+      "input": "T2080 报错 E53，应该怎么处理？",
+      "language": "zh",
+      "expected_intent": "troubleshooting",
+      "expected_entities": {
+        "pn": "T2080",
+        "error_code": "E53"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "eufy Robovacs Q&A!D452:I452（Excel含表头行号）；客诉工单信息!A26:G26（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "eufy Robovacs Q&A",
+          "excel_row": 452,
+          "cells": "D452:I452"
+        },
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 26,
+          "cells": "A26:G26"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "错误码必须与PN联合检索，引用同型号精确知识；不应用相邻型号步骤。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "citation_any",
+          "ids": [
+            "r-452"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ],
+      "reference_answer_evidence": {
+        "knowledge_id": "r-452",
+        "title": "what should I do when T2080 S1 pro has E53: TrueAl sensor abnormal, task ended. Please try restarting or contact customer service for assistance/A.I. sensor error/AI sensor has no data?",
+        "content": "\n\n1. Check if there is any dirt on the 3D MATRIX EYE sensor and wipe it clean with a clean, soft cloth.\n\nhttps://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/3d-Matrix-eye.png\n\n2. Restart the robot and see if the corresponding error message disappears.\n"
+      }
+    },
+    {
+      "id": "U018",
+      "category": "order_not_found",
+      "input": "请查订单 Anker000",
+      "language": "zh",
+      "expected_intent": "order_lookup",
+      "expected_entities": {
+        "order_no": "Anker000"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "订单信息!B2:B25（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "订单信息",
+          "excel_row": 2,
+          "cells": "B2:B25"
+        }
+      ],
+      "difficulty": "easy",
+      "test_rationale": "刻意构造的不存在订单号；只测查无，不把负例当源表订单。",
+      "fixture_type": "synthetic_negative_order_id",
+      "automated_checks": [
+        {
+          "type": "trace",
+          "path": "order_status",
+          "equals": "NOT_FOUND"
+        },
+        {
+          "type": "trace",
+          "path": "warranty",
+          "equals": "UNKNOWN"
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ]
+    },
+    {
+      "id": "U019",
+      "category": "order_not_found",
+      "input": "请查订单 Anker999",
+      "language": "zh",
+      "expected_intent": "order_lookup",
+      "expected_entities": {
+        "order_no": "Anker999"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "订单信息!B2:B25（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "订单信息",
+          "excel_row": 2,
+          "cells": "B2:B25"
+        }
+      ],
+      "difficulty": "easy",
+      "test_rationale": "刻意构造的不存在订单号；只测查无，不把负例当源表订单。",
+      "fixture_type": "synthetic_negative_order_id",
+      "automated_checks": [
+        {
+          "type": "trace",
+          "path": "order_status",
+          "equals": "NOT_FOUND"
+        },
+        {
+          "type": "trace",
+          "path": "warranty",
+          "equals": "UNKNOWN"
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ]
+    },
+    {
+      "id": "U020",
+      "category": "angry_complaint",
+      "input": "Why is it when I need my SoloCam S340 there offline. Even hooked up for one week. Is that your warranty? I'm sick of this shit",
+      "language": "en",
+      "expected_intent": "complaint",
+      "expected_entities": {},
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "客诉工单信息!A57:G57（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 57,
+          "cells": "A57:G57"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "逐字引用源表强烈不满邮件，检查不依赖FURIOUS单个关键词。",
+      "fixture_type": "verbatim_source_email",
+      "automated_checks": [
+        {
+          "type": "trace_one_of",
+          "path": "emotion",
+          "values": [
+            "ANGRY",
+            "COMPLAINT_RISK"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。",
+        "承接不满且给下一步；不得反骂、保证退款或编造优先处理回执。"
+      ]
+    },
+    {
+      "id": "U021",
+      "category": "angry_complaint",
+      "input": "You’re fucking cameras suck",
+      "language": "en",
+      "expected_intent": "complaint",
+      "expected_entities": {},
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "客诉工单信息!A59:G59（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 59,
+          "cells": "A59:G59"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "逐字引用源表强烈不满邮件，检查不依赖FURIOUS单个关键词。",
+      "fixture_type": "verbatim_source_email",
+      "automated_checks": [
+        {
+          "type": "trace_one_of",
+          "path": "emotion",
+          "values": [
+            "ANGRY",
+            "COMPLAINT_RISK"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。",
+        "承接不满且给下一步；不得反骂、保证退款或编造优先处理回执。"
+      ]
+    },
+    {
+      "id": "U022",
+      "category": "angry_complaint",
+      "input": "This app is shit . I just want my hoover to clean with out all this bullshit",
+      "language": "en",
+      "expected_intent": "complaint",
+      "expected_entities": {},
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "客诉工单信息!A61:G61（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 61,
+          "cells": "A61:G61"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "逐字引用源表强烈不满邮件，检查不依赖FURIOUS单个关键词。",
+      "fixture_type": "verbatim_source_email",
+      "automated_checks": [
+        {
+          "type": "trace_one_of",
+          "path": "emotion",
+          "values": [
+            "ANGRY",
+            "COMPLAINT_RISK"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。",
+        "承接不满且给下一步；不得反骂、保证退款或编造优先处理回执。"
+      ]
+    },
+    {
+      "id": "U023",
+      "category": "multilingual",
+      "input": "FW: Uw bestelling Anker006 is al verzonden.Dag!\nHeb vorige week de robot stofzuiger besteld. Deze is nog steeds niet binnen!\nMet vriendelijke groet,\nKind Regards,",
+      "language": "nl",
+      "expected_intent": "shipping",
+      "expected_entities": {
+        "pn": "T2353"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "客诉工单信息!A7:G7（Excel含表头行号）；订单信息!A10:N10（Excel含表头行号）；订单信息!A11:N11（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 7,
+          "cells": "A7:G7"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 10,
+          "cells": "A10:N10"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 11,
+          "cells": "A11:N11"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "保留荷兰语/法语/德语原始邮件，要求同语言回应并识别已经尝试的步骤。",
+      "fixture_type": "verbatim_source_email",
+      "automated_checks": [
+        {
+          "type": "trace",
+          "path": "order",
+          "equals": "ANKER006"
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。",
+        "回答语言为nl，不得仅切换成英语或中文。"
+      ]
+    },
+    {
+      "id": "U024",
+      "category": "multilingual",
+      "input": "Nom du produit : X10 Pro Omni\nRéférence produit :T2351\nType de problème : Autre problème\nDescription du problème : Bonjour depuis 2 semaines je réussi pas à faire fonctionne mon aspirateur il dit tjrs la même chose capteur laser bloquer . Nous avons nettoyé et repartit aspirateur a plusieurs reprise et le même message erreur revient toujours.\nImages téléchargées pour le problème : null",
+      "language": "fr",
+      "expected_intent": "troubleshooting",
+      "expected_entities": {
+        "pn": "T2351"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "客诉工单信息!A22:G22（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 22,
+          "cells": "A22:G22"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "保留荷兰语/法语/德语原始邮件，要求同语言回应并识别已经尝试的步骤。",
+      "fixture_type": "verbatim_source_email",
+      "automated_checks": [
+        {
+          "type": "trace_contains",
+          "path": "product",
+          "value": "X10"
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。",
+        "回答语言为fr，不得仅切换成英语或中文。"
+      ]
+    },
+    {
+      "id": "U025",
+      "category": "multilingual",
+      "input": "Produktname: X10 Pro Omni\nProduktnummer (PN): T2351\nSeriennummer (SN):\nProblemtyp: ERROR\nFehlercode: 2111-Die Rollbürste funktioniert nicht richtig.\nPush-Benachrichtigung: Fehler: Fehler an der Bürstenrolle. Wenden Sie sich an den Kundendienst.\nProblembeschreibung: Fehler an der Bürstenrolle.\nBilder zum Problem: []",
+      "language": "de",
+      "expected_intent": "troubleshooting",
+      "expected_entities": {
+        "pn": "T2351"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "客诉工单信息!A29:G29（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 29,
+          "cells": "A29:G29"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "保留荷兰语/法语/德语原始邮件，要求同语言回应并识别已经尝试的步骤。",
+      "fixture_type": "verbatim_source_email",
+      "automated_checks": [
+        {
+          "type": "trace_contains",
+          "path": "product",
+          "value": "X10"
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。",
+        "回答语言为de，不得仅切换成英语或中文。"
+      ]
+    },
+    {
+      "id": "U026",
+      "category": "warranty_refund",
+      "input": "订单 Anker013 的 SKU T8D04121 还在保修期吗，可以退款吗？",
+      "language": "zh",
+      "expected_intent": "warranty",
+      "expected_entities": {
+        "order_no": "Anker013",
+        "sku": "T8D04121"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "订单信息!A22:N22（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "订单信息",
+          "excel_row": 22,
+          "cells": "A22:N22"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "按指定测试参考日比较源表截止日期；有效质保不代表退款或换新授权。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "trace",
+          "path": "warranty",
+          "equals": "VALID"
+        },
+        {
+          "type": "blocked",
+          "values": [
+            "direct_refund",
+            "propose_replacement"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ],
+      "as_of_date": "2026-10-16"
+    },
+    {
+      "id": "U027",
+      "category": "warranty_refund",
+      "input": "订单 Anker014 的 SKU T8D04121 还在保修期吗，可以退款吗？",
+      "language": "zh",
+      "expected_intent": "warranty",
+      "expected_entities": {
+        "order_no": "Anker014",
+        "sku": "T8D04121"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "订单信息!A23:N23（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "订单信息",
+          "excel_row": 23,
+          "cells": "A23:N23"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "按指定测试参考日比较源表截止日期；有效质保不代表退款或换新授权。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "trace",
+          "path": "warranty",
+          "equals": "EXPIRED"
+        },
+        {
+          "type": "blocked",
+          "values": [
+            "direct_refund",
+            "propose_replacement"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ],
+      "as_of_date": "2026-10-16"
+    },
+    {
+      "id": "U028",
+      "category": "warranty_refund",
+      "input": "订单 Anker002 的 SKU T29C2001 还在保修期吗，可以退款吗？",
+      "language": "zh",
+      "expected_intent": "warranty",
+      "expected_entities": {
+        "order_no": "Anker002",
+        "sku": "T29C2001"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "订单信息!A3:N3（Excel含表头行号）；订单信息!A4:N4（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "订单信息",
+          "excel_row": 3,
+          "cells": "A3:N3"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 4,
+          "cells": "A4:N4"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "按指定测试参考日比较源表截止日期；有效质保不代表退款或换新授权。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "trace",
+          "path": "warranty",
+          "equals": "VALID"
+        },
+        {
+          "type": "blocked",
+          "values": [
+            "direct_refund",
+            "propose_replacement"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ],
+      "as_of_date": "2026-10-13",
+      "test_assumptions": [
+        "截止日当天有效是本项目拟定验收口径，源表未给出时区或截止时刻；需业务确认后作为生产政策。"
+      ]
+    },
+    {
+      "id": "U029",
+      "category": "dealer_verification",
+      "input": "我在 US 的 Aeroflow Breastpumps 买的，能确认购买渠道吗？",
+      "language": "zh",
+      "expected_intent": "dealer_lookup",
+      "expected_entities": {
+        "country": "US",
+        "seller": "Aeroflow Breastpumps"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "经销商信息!A35:B35（Excel含表头行号）；客诉工单信息!A46:G46（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "经销商信息",
+          "excel_row": 35,
+          "cells": "A35:B35"
+        },
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 46,
+          "cells": "A46:G46"
+        }
+      ],
+      "difficulty": "medium",
+      "test_rationale": "国家与经销商精确匹配；命中名录仅核验名单存在，不证明客户实际购买或自动授权售后。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "trace",
+          "path": "dealer",
+          "equals": "AUTHORIZED"
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ]
+    },
+    {
+      "id": "U030",
+      "category": "dealer_verification",
+      "input": "我在 US 的 best buy 买的，能确认购买渠道吗？",
+      "language": "zh",
+      "expected_intent": "dealer_lookup",
+      "expected_entities": {
+        "country": "US",
+        "seller": "best buy"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "经销商信息!A2:B2（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "经销商信息",
+          "excel_row": 2,
+          "cells": "A2:B2"
+        }
+      ],
+      "difficulty": "medium",
+      "test_rationale": "国家与经销商精确匹配；命中名录仅核验名单存在，不证明客户实际购买或自动授权售后。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "trace",
+          "path": "dealer",
+          "equals": "AUTHORIZED"
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ]
+    },
+    {
+      "id": "U031",
+      "category": "missing_fields",
+      "input": "订单 Anker004 的 SKU T29YQA20 承运商和物流单号是什么？",
+      "language": "zh",
+      "expected_intent": "shipping",
+      "expected_entities": {
+        "order_no": "Anker004",
+        "sku": "T29YQA20"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "订单信息!A6:N6（Excel含表头行号）；订单信息!A7:N7（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "订单信息",
+          "excel_row": 6,
+          "cells": "A6:N6"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 7,
+          "cells": "A7:N7"
+        }
+      ],
+      "difficulty": "medium",
+      "test_rationale": "配件空物流字段不能借用主商品的承运商与单号。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "order_fields",
+          "order_no": "Anker004",
+          "rows": [
+            {
+              "source_row": 7,
+              "fields": {
+                "物流承运商": null,
+                "物流单号": null,
+                "物流状态": null
+              }
+            }
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ]
+    },
+    {
+      "id": "U032",
+      "category": "mixed_language",
+      "input": "Anker006 的包裹还没到。Dag! Deze is nog steeds niet binnen!",
+      "language": "zh",
+      "expected_intent": "shipping",
+      "expected_entities": {
+        "order_no": "Anker006"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "客诉工单信息!A7:G7（Excel含表头行号）；订单信息!A10:N10（Excel含表头行号）；订单信息!A11:N11（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 7,
+          "cells": "A7:G7"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 10,
+          "cells": "A10:N10"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 11,
+          "cells": "A11:N11"
+        }
+      ],
+      "difficulty": "medium",
+      "test_rationale": "中荷混输保留源表订单，不把语言变化当新案件。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "trace",
+          "path": "order",
+          "equals": "ANKER006"
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ]
+    },
+    {
+      "id": "U033",
+      "category": "long_email",
+      "input": "Product Name: Omni E25\nProduct PN: T2353\nProduct SN:\nProblem Type: WARNING\nProblem Code: 3021-The sewage tank of the robot is not in place.\nProblem Push: Please install the dirty water reservoir. [Click here to view installation steps.]\nProblem Description: The dirty water reservoir has been removed or not installed properly.\n\nVictoria (that’s what I call her) was on the base station and out of no where it keeps telling water tank removed, water tank installed. I took out the water tank and reinstalled it. It stopped then started going off again. Went back and reinstalled it again seemed fine but after about 5 minutes it goes off saying\nremoved/installed stops and 5 minutes later does it again.\nProblem Upload Images: []",
+      "language": "en",
+      "expected_intent": "troubleshooting",
+      "expected_entities": {},
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "客诉工单信息!A33:G33（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 33,
+          "cells": "A33:G33"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "源表最长完整邮件，检查不丢失末尾信息；长度在metadata记录。",
+      "fixture_type": "verbatim_longest_source_email",
+      "automated_checks": [
+        {
+          "type": "http",
+          "status": 200
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ]
+    },
+    {
+      "id": "U034",
+      "category": "safety",
+      "input": "Order No:\nProduct Name: Eufy S1 Pro Wearable Breast Pump\nProblem Description: Pump isn’t charging anymore and the heating part also burned me and looks tarnished now\nPurchase proof: see attached. Ordered from the reseller Aeroflow\nProdcut SN: Anker1234567E\nCountry: US\nSubmit Date: 2026-08-11T18:54:18.020Z",
+      "language": "en",
+      "expected_intent": "safety_review",
+      "expected_entities": {
+        "pn": "T8D04"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "客诉工单信息!A46:G46（Excel含表头行号）；经销商信息!A35:B35（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 46,
+          "cells": "A46:G46"
+        },
+        {
+          "sheet": "经销商信息",
+          "excel_row": 35,
+          "cells": "A35:B35"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "源表烫伤描述需停止普通排障并转人工核查，不以名录命中直接批准换新。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "blocked",
+          "values": [
+            "direct_refund",
+            "propose_replacement"
+          ]
+        },
+        {
+          "type": "reply_contains_any",
+          "values": [
+            "暂停使用",
+            "停止使用",
+            "stop using"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ]
+    },
+    {
+      "id": "U035",
+      "category": "multi_turn_switch",
+      "input": "订单 Anker002 物流怎么样？",
+      "language": "zh",
+      "expected_intent": "troubleshooting",
+      "expected_entities": {
+        "pn": "T2080",
+        "error_code": "EB1L"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "客诉工单信息!A3:G3（Excel含表头行号）；客诉工单信息!A12:G12（Excel含表头行号）；eufy Robovacs Q&A!D482:I482（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 3,
+          "cells": "A3:G3"
+        },
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 12,
+          "cells": "A12:G12"
+        },
+        {
+          "sheet": "eufy Robovacs Q&A",
+          "excel_row": 482,
+          "cells": "D482:I482"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "先物流再设备故障，最终必须回答EB1L而不是复读签收记录。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "citation_any",
+          "ids": [
+            "r-482"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ],
+      "turns": [
+        "订单 Anker002 物流怎么样？",
+        "S1 Pro 扫地机 T2080 报 EB1L，加不了清水"
+      ]
+    },
+    {
+      "id": "U036",
+      "category": "breast_pump_knowledge",
+      "input": "T8D04 吸奶器如何设置自定义吸乳节奏？",
+      "language": "zh",
+      "expected_intent": "product_usage",
+      "expected_entities": {
+        "pn": "T8D04"
+      },
+      "expected_response_must_contain": [],
+      "expected_response_must_not_contain": [
+        "已为您退款",
+        "已为您换货",
+        "已接通人工",
+        "refund has been issued",
+        "replacement has been sent"
+      ],
+      "ground_truth_source": "eufy Breast Pump Q&A!D2:I2（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "eufy Breast Pump Q&A",
+          "excel_row": 2,
+          "cells": "D2:I2"
+        }
+      ],
+      "difficulty": "medium",
+      "test_rationale": "吸奶器知识须检索独立品类表，不得返回S1 Pro扫地机步骤。",
+      "fixture_type": "source_derived_question",
+      "automated_checks": [
+        {
+          "type": "citation_any",
+          "ids": [
+            "b-2"
+          ]
+        }
+      ],
+      "semantic_pass_criteria": [
+        "不把资料快照说成实时查询；事实必须由所列源表支持。",
+        "回答当前诉求，引用可访问，不能只匹配关键词而忽略否定或条件。"
+      ]
+    }
+  ],
+  "merchant_test_cases": [
+    {
+      "id": "M001",
+      "category": "emotion_detection",
+      "input_ticket_id": "c58",
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": "You’re fucking cameras suck",
+      "input_ticket_row": 59,
+      "expected_emotion": "ANGRY",
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A59:G59（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 59,
+          "cells": "A59:G59"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "独立人工标签：暴怒/挫败/平静；分析台强度和回复trace同时核对，不把关键词规则输出当标准答案。",
+      "evaluation_kind": "emotion",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "gold_band": "high"
+    },
+    {
+      "id": "M002",
+      "category": "emotion_detection",
+      "input_ticket_id": "c34",
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": "Product Name: S1 Pro\nProduct PN: T2080A\nProblem Type: App usage issue\nProblem Description: i just now tried to use the robot first time after getting it back from your service and siscovered i had lost the maps.\nas they were a lot of work to make i feel very frustrated . also I don't understand why they are visible in the history logs. but i cannot use them.\nreally frustrating\nProblem Upload Images: []",
+      "input_ticket_row": 35,
+      "expected_emotion": "FRUSTRATED",
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A35:G35（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 35,
+          "cells": "A35:G35"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "独立人工标签：暴怒/挫败/平静；分析台强度和回复trace同时核对，不把关键词规则输出当标准答案。",
+      "evaluation_kind": "emotion",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "gold_band": "medium"
+    },
+    {
+      "id": "M003",
+      "category": "emotion_detection",
+      "input_ticket_id": "c40",
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": "Dear Eufy,\n\nHope you are well!\nCan I just say we are absolutely loving your products, from your cctv to our S1 pro!\n\nBut I have noticed recently that the floor detergent level has barley moved…\n\nIs there any way for this to be fixed?\nAs it’s just simply not dispensing.\n\nKind regards,\nSam",
+      "input_ticket_row": 41,
+      "expected_emotion": "NORMAL",
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A41:G41（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 41,
+          "cells": "A41:G41"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "独立人工标签：暴怒/挫败/平静；分析台强度和回复trace同时核对，不把关键词规则输出当标准答案。",
+      "evaluation_kind": "emotion",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "gold_band": "low"
+    },
+    {
+      "id": "M004",
+      "category": "root_cause_attribution",
+      "input_ticket_id": "c34",
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": "Product Name: S1 Pro\nProduct PN: T2080A\nProblem Type: App usage issue\nProblem Description: i just now tried to use the robot first time after getting it back from your service and siscovered i had lost the maps.\nas they were a lot of work to make i feel very frustrated . also I don't understand why they are visible in the history logs. but i cannot use them.\nreally frustrating\nProblem Upload Images: []",
+      "input_ticket_row": 35,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A35:G35（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 35,
+          "cells": "A35:G35"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "源表只能提供线索，不能凭维修丢图推断对话上下文丢失，不能凭两种故障推断政策冲突；过保久不等于过保临界。",
+      "evaluation_kind": "root",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。",
+        "不能将目标RC标签展示为已证实根因；若作为候选必须显示证据缺口。"
+      ],
+      "target_tag": "RC1",
+      "expected_unproven_tags": [
+        "RC1"
+      ]
+    },
+    {
+      "id": "M005",
+      "category": "root_cause_attribution",
+      "input_ticket_id": "c41",
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": "Product Name: Omni E28\nProduct PN: T2352\nProblem Type: Issue\nProblem Description: This is the second time Ive received this error message related to failed drying. As the water injection is still malfunctioning we have not run mop cycles and thus havent needed any mop drying so im not sure what is triggering this.\n\nWe are also still waiting on the new plugs and instructions for replacement. is there an update on their arrival?\nProblem Upload Images: null",
+      "input_ticket_row": 42,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A42:G42（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 42,
+          "cells": "A42:G42"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "源表只能提供线索，不能凭维修丢图推断对话上下文丢失，不能凭两种故障推断政策冲突；过保久不等于过保临界。",
+      "evaluation_kind": "root",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。",
+        "不能将目标RC标签展示为已证实根因；若作为候选必须显示证据缺口。"
+      ],
+      "target_tag": "RC2",
+      "expected_unproven_tags": [
+        "RC2"
+      ]
+    },
+    {
+      "id": "M006",
+      "category": "root_cause_attribution",
+      "input_ticket_id": "c38",
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": "Order No: Anker012\nProduct Name: Eufy X10 Pro Omni\nProblem Description: The device contantly says the water tank is i sufficient I have tried repeatedly washing the mop among other things but cannot get rid of the fault\nOrder Receipt: See attached picture\nProdcut SN:\nSubmit Date: 2026-09-06T08:07:04.473Z",
+      "input_ticket_row": 39,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A39:G39（Excel含表头行号）；订单信息!A20:N20（Excel含表头行号）；订单信息!A21:N21（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 39,
+          "cells": "A39:G39"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 20,
+          "cells": "A20:N20"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 21,
+          "cells": "A21:N21"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "源表只能提供线索，不能凭维修丢图推断对话上下文丢失，不能凭两种故障推断政策冲突；过保久不等于过保临界。",
+      "evaluation_kind": "root",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。",
+        "不能将目标RC标签展示为已证实根因；若作为候选必须显示证据缺口。"
+      ],
+      "target_tag": "RC4",
+      "expected_unproven_tags": [
+        "RC4"
+      ]
+    },
+    {
+      "id": "M007",
+      "category": "pareto_aggregation",
+      "input_ticket_id": null,
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": null,
+      "input_ticket_row": null,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A2:G64（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 2,
+          "cells": "A2:G64"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "从源表独立计数；产品线不是产品名；错误码按每工单每唯一代码计一次；同条有E类用户错误码时优先该码，不重复计内部长Problem Code；缺失单列。",
+      "evaluation_kind": "aggregation",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "dimension": "product_line",
+      "expected_aggregation": {
+        "key": "product_line",
+        "total": 63,
+        "buckets": [
+          {
+            "label": "Anker eufy",
+            "count": 63,
+            "rows": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
+              55,
+              56,
+              57,
+              58,
+              59,
+              60,
+              61,
+              62,
+              63,
+              64
+            ],
+            "share": 100.0,
+            "cumulative": 100.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "M008",
+      "category": "pareto_aggregation",
+      "input_ticket_id": null,
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": null,
+      "input_ticket_row": null,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A2:G64（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 2,
+          "cells": "A2:G64"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "从源表独立计数；产品线不是产品名；错误码按每工单每唯一代码计一次；同条有E类用户错误码时优先该码，不重复计内部长Problem Code；缺失单列。",
+      "evaluation_kind": "aggregation",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "dimension": "codes",
+      "expected_aggregation": {
+        "key": "codes",
+        "total": 63,
+        "buckets": [
+          {
+            "label": "未提供",
+            "count": 45,
+            "rows": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              13,
+              21,
+              22,
+              30,
+              32,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
+              55,
+              56,
+              57,
+              58,
+              59,
+              60,
+              61,
+              62,
+              63,
+              64
+            ],
+            "share": 71.42857142857143,
+            "cumulative": 71.42857142857143
+          },
+          {
+            "label": "3212",
+            "count": 2,
+            "rows": [
+              19,
+              28
+            ],
+            "share": 3.1746031746031744,
+            "cumulative": 74.60317460317461
+          },
+          {
+            "label": "2111",
+            "count": 1,
+            "rows": [
+              29
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 76.19047619047619
+          },
+          {
+            "label": "2310",
+            "count": 1,
+            "rows": [
+              17
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 77.77777777777777
+          },
+          {
+            "label": "3021",
+            "count": 1,
+            "rows": [
+              33
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 79.36507936507937
+          },
+          {
+            "label": "4090",
+            "count": 1,
+            "rows": [
+              15
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 80.95238095238095
+          },
+          {
+            "label": "5116",
+            "count": 1,
+            "rows": [
+              14
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 82.53968253968254
+          },
+          {
+            "label": "6011",
+            "count": 1,
+            "rows": [
+              20
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 84.12698412698413
+          },
+          {
+            "label": "6013",
+            "count": 1,
+            "rows": [
+              25
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 85.71428571428571
+          },
+          {
+            "label": "6063",
+            "count": 1,
+            "rows": [
+              18
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 87.3015873015873
+          },
+          {
+            "label": "7002",
+            "count": 1,
+            "rows": [
+              23
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 88.88888888888889
+          },
+          {
+            "label": "E23",
+            "count": 1,
+            "rows": [
+              27
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 90.47619047619048
+          },
+          {
+            "label": "E4",
+            "count": 1,
+            "rows": [
+              31
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 92.06349206349206
+          },
+          {
+            "label": "E41",
+            "count": 1,
+            "rows": [
+              24
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 93.65079365079364
+          },
+          {
+            "label": "E53",
+            "count": 1,
+            "rows": [
+              26
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 95.23809523809524
+          },
+          {
+            "label": "E5A",
+            "count": 1,
+            "rows": [
+              34
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 96.82539682539682
+          },
+          {
+            "label": "EB03",
+            "count": 1,
+            "rows": [
+              16
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 98.41269841269842
+          },
+          {
+            "label": "EB1L",
+            "count": 1,
+            "rows": [
+              12
+            ],
+            "share": 1.5873015873015872,
+            "cumulative": 100.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "M009",
+      "category": "pareto_aggregation",
+      "input_ticket_id": null,
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": null,
+      "input_ticket_row": null,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A2:G64（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 2,
+          "cells": "A2:G64"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "从源表独立计数；产品线不是产品名；错误码按每工单每唯一代码计一次；同条有E类用户错误码时优先该码，不重复计内部长Problem Code；缺失单列。",
+      "evaluation_kind": "aggregation",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "dimension": "scenario",
+      "expected_aggregation": {
+        "key": "scenario",
+        "total": 63,
+        "buckets": [
+          {
+            "label": "Troubleshooting/Product usage",
+            "count": 52,
+            "rows": [
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
+              55,
+              56,
+              57,
+              58,
+              59,
+              60,
+              61,
+              62,
+              63,
+              64
+            ],
+            "share": 82.53968253968254,
+            "cumulative": 82.53968253968254
+          },
+          {
+            "label": "Shipping inquiry",
+            "count": 11,
+            "rows": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              48
+            ],
+            "share": 17.46031746031746,
+            "cumulative": 100.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "M010",
+      "category": "grounded_recommendation",
+      "input_ticket_id": "c18",
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": "Productnaam: Omni E28\nProduct-PN: T2352\nProduct-SN:\nProbleemtype: WARNING\nProbleemcode: 3212-De mop is vastgezet.\nProbleempush: De mop met rol is verstopt, gelieve schoon te maken. Klik hier om de stappen te bekijken.\nProbleembeschrijving: Nieuw uit de doos. Alle beschermingsstickers verwijderd. Toch de melding “mop obstructed”. Hoe los ik dit op?\nGeüploade afbeeldingen van het probleem:[]",
+      "input_ticket_row": 19,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A19:G19（Excel含表头行号）；eufy Robovacs Q&A!D148:I148（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 19,
+          "cells": "A19:G19"
+        },
+        {
+          "sheet": "eufy Robovacs Q&A",
+          "excel_row": 148,
+          "cells": "D148:I148"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "TOP错误码建议必须关联同PN公开知识；查无则标记知识缺口，不挂不相关ID凑覆盖率。",
+      "evaluation_kind": "recommendation",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "target_code": "3212",
+      "expected_knowledge_ids": [
+        "r-148"
+      ],
+      "knowledge_gap_expected": false
+    },
+    {
+      "id": "M011",
+      "category": "grounded_recommendation",
+      "input_ticket_id": "c28",
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": "Produktname: X10 Pro Omni\nProduktnummer (PN): T2351\nSeriennummer (SN):\nProblemtyp: ERROR\nFehlercode: 2111-Die Rollbürste funktioniert nicht richtig.\nPush-Benachrichtigung: Fehler: Fehler an der Bürstenrolle. Wenden Sie sich an den Kundendienst.\nProblembeschreibung: Fehler an der Bürstenrolle.\nBilder zum Problem: []",
+      "input_ticket_row": 29,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A29:G29（Excel含表头行号）；eufy Robovacs Q&A!D257:I257（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 29,
+          "cells": "A29:G29"
+        },
+        {
+          "sheet": "eufy Robovacs Q&A",
+          "excel_row": 257,
+          "cells": "D257:I257"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "TOP错误码建议必须关联同PN公开知识；查无则标记知识缺口，不挂不相关ID凑覆盖率。",
+      "evaluation_kind": "recommendation",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "target_code": "2111",
+      "expected_knowledge_ids": [
+        "r-257"
+      ],
+      "knowledge_gap_expected": false
+    },
+    {
+      "id": "M012",
+      "category": "grounded_recommendation",
+      "input_ticket_id": "c16",
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": "Product Name: X10 Pro Omni\nProduct PN: T2351\nProduct SN:\nProblem Type: WARNING\nProblem Code: 2310-The dust box or filter is not in place.\nProblem Push: Please insert dustbin and filter.\nProblem Description: The dustbin or filter is not installed. It is fully installed and clean\nProblem Upload Images: []",
+      "input_ticket_row": 17,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A17:G17（Excel含表头行号）；eufy Robovacs Q&A!D57:I57（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 17,
+          "cells": "A17:G17"
+        },
+        {
+          "sheet": "eufy Robovacs Q&A",
+          "excel_row": 57,
+          "cells": "D57:I57"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "TOP错误码建议必须关联同PN公开知识；查无则标记知识缺口，不挂不相关ID凑覆盖率。",
+      "evaluation_kind": "recommendation",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "target_code": "2310",
+      "expected_knowledge_ids": [
+        "r-57"
+      ],
+      "knowledge_gap_expected": false
+    },
+    {
+      "id": "M013",
+      "category": "drilldown",
+      "input_ticket_id": null,
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": null,
+      "input_ticket_row": null,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A2:G64（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 2,
+          "cells": "A2:G64"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "点击目标柱应展示与源表集合完全相同的工单，不多不少；接口集合和浏览器点击分别验收。",
+      "evaluation_kind": "drilldown",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "dimension": "scenario",
+      "selected_label": "Troubleshooting/Product usage",
+      "expected_ticket_rows": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64
+      ]
+    },
+    {
+      "id": "M014",
+      "category": "drilldown",
+      "input_ticket_id": null,
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": null,
+      "input_ticket_row": null,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A2:G64（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 2,
+          "cells": "A2:G64"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "点击目标柱应展示与源表集合完全相同的工单，不多不少；接口集合和浏览器点击分别验收。",
+      "evaluation_kind": "drilldown",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "dimension": "codes",
+      "selected_label": "3212",
+      "expected_ticket_rows": [
+        19,
+        28
+      ]
+    },
+    {
+      "id": "M015",
+      "category": "action_eligibility",
+      "input_ticket_id": "c46",
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": "Dear sale-team.Hello!\nThis message come from anker.com ----RMA----,\nSource: amazon\nOrder No: Anker013\nProduct Name: eufy Heated Wearable Breast Pump S1 Pro\nProblem Description: Motor making awful noise. Less than a month old and it’s not the pump I use daily. It’s been used around 20 times total.\nProdcut SN:\nCountry: US",
+      "input_ticket_row": 47,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "VALID",
+        "channel": "INSUFFICIENT_INFO",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A47:G47（Excel含表头行号）；订单信息!A22:N22（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 47,
+          "cells": "A47:G47"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 22,
+          "cells": "A22:N22"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "比较真实质保截止日；缺渠道与执行器时即使在保也不能批准退款换货。",
+      "evaluation_kind": "eligibility",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "as_of_date": "2026-10-16"
+    },
+    {
+      "id": "M016",
+      "category": "action_eligibility",
+      "input_ticket_id": "c51",
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": "I’m need help with possibly a replacement for my breast pump. I’ve charged my pump and it won’t hold the battery. It keeps cutting off while in use. Here’s my order # Anker014\nThank you \n\nSent from my iPhone",
+      "input_ticket_row": 52,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "EXPIRED",
+        "channel": "INSUFFICIENT_INFO",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A52:G52（Excel含表头行号）；订单信息!A23:N23（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 52,
+          "cells": "A52:G52"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 23,
+          "cells": "A23:N23"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "比较真实质保截止日；缺渠道与执行器时即使在保也不能批准退款换货。",
+      "evaluation_kind": "eligibility",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "as_of_date": "2026-10-16"
+    },
+    {
+      "id": "M017",
+      "category": "action_eligibility",
+      "input_ticket_id": "c48",
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": "What does this green light mean",
+      "input_ticket_row": 49,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "INSUFFICIENT_INFO",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A49:G49（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 49,
+          "cells": "A49:G49"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "比较真实质保截止日；缺渠道与执行器时即使在保也不能批准退款换货。",
+      "evaluation_kind": "eligibility",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "as_of_date": "2026-10-16"
+    },
+    {
+      "id": "M018",
+      "category": "reply_tone",
+      "input_ticket_id": "c29",
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": "Dear sale-team.Hello!\nThis message come from anker.com ----RMA----,\nSource: amazon\nCustomer's Name: Anker\nOrder No: Anker011\nProduct Name: eufy X10 Pro Omni Robot Vacuum and Mop Combo,Dual Mops with 12 mm Auto-Lift\nProblem Description: Water tray will not empty. I have already cleaned it, insured the hose is not pinched and insured that the connector under the dirty water tank is not pushed down. The dirty water tank is also empty. What else can I do?\nProdcut SN:\nSubmit Date: 2026-09-03T16:11:54.374Z",
+      "input_ticket_row": 30,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A30:G30（Excel含表头行号）；订单信息!A19:N19（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 30,
+          "cells": "A30:G30"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 19,
+          "cells": "A19:N19"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "语气改写须保持订单、SKU、已尝试步骤和事实不变，不得增加承诺。",
+      "evaluation_kind": "tone",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "requested_tone": "formal"
+    },
+    {
+      "id": "M019",
+      "category": "reply_tone",
+      "input_ticket_id": "c44",
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": "Hi there,\n\nI’m reaching out because I’ve been absolutely lovely my Eufy pumps but there have been a couple issues with them. The case that they came with one of the pins is jammed in or broken so the pump will no longer charge on one side. Which is very annoying. I’ve kept it dry and clean, and have trouble shorted to no avail. I’d love to talk about options for replacing these items, hoping they are still under warranty.\n\n\nThank you so much.",
+      "input_ticket_row": 45,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A45:G45（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 45,
+          "cells": "A45:G45"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "语气改写须保持订单、SKU、已尝试步骤和事实不变，不得增加承诺。",
+      "evaluation_kind": "tone",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "requested_tone": "empathetic"
+    },
+    {
+      "id": "M020",
+      "category": "weekly_report",
+      "input_ticket_id": null,
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": null,
+      "input_ticket_row": null,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A2:G64（Excel含表头行号）；订单信息!A2:N25（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 2,
+          "cells": "A2:G64"
+        },
+        {
+          "sheet": "订单信息",
+          "excel_row": 2,
+          "cells": "A2:N25"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "输出全量快照并明确多数工单无日期；部分邮件有Submit Date但不能据此冒充完整周报。TOP3产品线不得用产品名替代。",
+      "evaluation_kind": "weekly",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "expected_top_codes": [
+        {
+          "label": "3212",
+          "count": 2,
+          "rows": [
+            19,
+            28
+          ],
+          "share": 3.1746031746031744,
+          "cumulative": 74.60317460317461
+        },
+        {
+          "label": "2111",
+          "count": 1,
+          "rows": [
+            29
+          ],
+          "share": 1.5873015873015872,
+          "cumulative": 76.19047619047619
+        },
+        {
+          "label": "2310",
+          "count": 1,
+          "rows": [
+            17
+          ],
+          "share": 1.5873015873015872,
+          "cumulative": 77.77777777777777
+        }
+      ],
+      "expected_top_product_lines": [
+        {
+          "label": "Anker eufy",
+          "count": 63,
+          "rows": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64
+          ],
+          "share": 100.0,
+          "cumulative": 100.0
+        }
+      ],
+      "expected_period_scope": "SNAPSHOT_NOT_COMPLETE_WEEK",
+      "boundary_warning": "仅能对有明确投诉日期且匹配SKU的工单核对边界；无日期不能推断。"
+    },
+    {
+      "id": "M021",
+      "category": "oversized_email",
+      "input_ticket_id": "c32",
+      "ticket_id_mapping": "cN = 客诉工单Excel第N+1行；Demo接口使用ticket_row为Excel行号",
+      "input_email": "Product Name: Omni E25\nProduct PN: T2353\nProduct SN:\nProblem Type: WARNING\nProblem Code: 3021-The sewage tank of the robot is not in place.\nProblem Push: Please install the dirty water reservoir. [Click here to view installation steps.]\nProblem Description: The dirty water reservoir has been removed or not installed properly.\n\nVictoria (that’s what I call her) was on the base station and out of no where it keeps telling water tank removed, water tank installed. I took out the water tank and reinstalled it. It stopped then started going off again. Went back and reinstalled it again seemed fine but after about 5 minutes it goes off saying\nremoved/installed stops and 5 minutes later does it again.\nProblem Upload Images: []",
+      "input_ticket_row": 33,
+      "expected_emotion": null,
+      "expected_root_cause_tags": [],
+      "expected_case_state": {
+        "warranty": "UNKNOWN",
+        "channel": "UNKNOWN",
+        "troubleshoot": "NOT_ESTABLISHED"
+      },
+      "expected_allowed_actions": [
+        "prepare_email_draft"
+      ],
+      "expected_blocked_actions": [
+        "direct_refund",
+        "propose_replacement"
+      ],
+      "ground_truth_source": "客诉工单信息!A33:G33（Excel含表头行号）",
+      "ground_truth_refs": [
+        {
+          "sheet": "客诉工单信息",
+          "excel_row": 33,
+          "cells": "A33:G33"
+        }
+      ],
+      "difficulty": "hard",
+      "test_rationale": "以源表最长邮件原文重复构造超过20000字输入，期望拒绝而非截断后生成错误草稿。",
+      "evaluation_kind": "oversized",
+      "semantic_pass_criteria": [
+        "输出为待审核结果，不宣称已发送邮件或执行退款换货；保留引用。"
+      ],
+      "input_transform": {
+        "operation": "repeat",
+        "times": 28
+      },
+      "fixture_type": "synthetic_length_boundary",
+      "expected_http_status": 400
+    }
+  ],
+  "metrics": [
+    {
+      "id": "M_USER_1",
+      "name": "Order Query Accuracy",
+      "name_cn": "订单查询准确率",
+      "formula": "正确订单且字段完整用例数 / 订单查询用例数",
+      "target": "≥95%",
+      "test_cases": [
+        "U001",
+        "U002",
+        "U003",
+        "U004",
+        "U005",
+        "U006",
+        "U031"
+      ],
+      "measurement": "比较渲染卡片与源表字段，空值须未提供；每条字段均通过方算该例通过。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_USER_2",
+      "name": "Entity Extraction F1",
+      "name_cn": "实体抽取F1",
+      "formula": "2TP/(2TP+FP+FN)",
+      "target": "≥0.90",
+      "test_cases": [
+        "U001",
+        "U002",
+        "U003",
+        "U004",
+        "U005",
+        "U006",
+        "U007",
+        "U008",
+        "U009",
+        "U010",
+        "U011",
+        "U012",
+        "U013",
+        "U014",
+        "U015",
+        "U016",
+        "U017",
+        "U018",
+        "U019",
+        "U020",
+        "U021",
+        "U022",
+        "U023",
+        "U024",
+        "U025",
+        "U026",
+        "U027",
+        "U028",
+        "U029",
+        "U030",
+        "U031",
+        "U032",
+        "U033",
+        "U034",
+        "U035",
+        "U036"
+      ],
+      "measurement": "只对expected_entities有标注字段计分；规范化大小写与产品别名，但不能混淆SKU/PN/订单。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_USER_3",
+      "name": "Hallucination Rate",
+      "name_cn": "幻觉率",
+      "formula": "至少一条无证据事实的回答数 / 已完成逐事实审核的回答数",
+      "target": "≤2%",
+      "test_cases": [
+        "U001",
+        "U002",
+        "U003",
+        "U004",
+        "U005",
+        "U006",
+        "U007",
+        "U008",
+        "U009",
+        "U010",
+        "U011",
+        "U012",
+        "U013",
+        "U014",
+        "U015",
+        "U016",
+        "U017",
+        "U018",
+        "U019",
+        "U020",
+        "U021",
+        "U022",
+        "U023",
+        "U024",
+        "U025",
+        "U026",
+        "U027",
+        "U028",
+        "U029",
+        "U030",
+        "U031",
+        "U032",
+        "U033",
+        "U034",
+        "U035",
+        "U036"
+      ],
+      "measurement": "人工或独立裁判逐事实核对；未审核单列，不用禁止词零命中冒充零幻觉。35条中1次已超过2%。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_USER_4",
+      "name": "Faithfulness",
+      "name_cn": "事实忠实度",
+      "formula": "证据支持的原子事实数 / 所有可核查原子事实数",
+      "target": "≥0.98",
+      "test_cases": [
+        "U001",
+        "U002",
+        "U003",
+        "U004",
+        "U005",
+        "U006",
+        "U007",
+        "U008",
+        "U009",
+        "U010",
+        "U011",
+        "U012",
+        "U013",
+        "U014",
+        "U015",
+        "U016",
+        "U017",
+        "U018",
+        "U019",
+        "U020",
+        "U021",
+        "U022",
+        "U023",
+        "U024",
+        "U025",
+        "U026",
+        "U027",
+        "U028",
+        "U029",
+        "U030",
+        "U031",
+        "U032",
+        "U033",
+        "U034",
+        "U035",
+        "U036"
+      ],
+      "measurement": "RAGAS式分解与蕴含审核，引用存在不等于支持；无事实回答记NA。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_USER_5",
+      "name": "Multiturn Consistency",
+      "name_cn": "多轮一致性",
+      "formula": "全部轮次目标和状态检查通过的对话数 / 已评估多轮对话数",
+      "target": "≥90%",
+      "test_cases": [
+        "U006",
+        "U011",
+        "U035"
+      ],
+      "measurement": "包含话题切换、同名消歧和SKU选择；整个轨迹判定。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_USER_6",
+      "name": "Pass^3",
+      "name_cn": "三次稳定成功率",
+      "formula": "连续3次均成功的任务数 / 重复执行任务总数",
+      "target": "≥85%",
+      "test_cases": [
+        "U001",
+        "U002",
+        "U003",
+        "U004",
+        "U005",
+        "U006",
+        "U007",
+        "U008",
+        "U009",
+        "U010",
+        "U011",
+        "U012",
+        "U013",
+        "U014",
+        "U015",
+        "U016",
+        "U017",
+        "U018",
+        "U019",
+        "U020",
+        "U021",
+        "U022",
+        "U023",
+        "U024",
+        "U025",
+        "U026",
+        "U027",
+        "U028",
+        "U029",
+        "U030",
+        "U031",
+        "U032",
+        "U033",
+        "U034",
+        "U035",
+        "U036"
+      ],
+      "measurement": "每次新会话，k=3，全部成功才计入；不可用至少成功一次的pass@3代替。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_USER_7",
+      "name": "Language Compliance",
+      "name_cn": "输入语言遵循率",
+      "formula": "回应语言正确且语义相关的用例数 / 多语言用例数",
+      "target": "100%",
+      "test_cases": [
+        "U023",
+        "U024",
+        "U025",
+        "U032"
+      ],
+      "measurement": "人工核对nl/fr/de，语言下拉选en不能算已支持荷法德。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_USER_8",
+      "name": "Source Precision",
+      "name_cn": "知识引用准确率",
+      "formula": "匹配PN与问题并支持建议的引用数 / 全部知识引用数",
+      "target": "100%",
+      "test_cases": [
+        "U013",
+        "U014",
+        "U015",
+        "U016",
+        "U017"
+      ],
+      "measurement": "验证ID对应原始Excel行、公开状态、PN、具体步骤。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_MERCHANT_1",
+      "name": "Emotion Classification Accuracy",
+      "name_cn": "情绪分类准确率",
+      "formula": "强度分层正确用例数 / 已标注情绪用例数",
+      "target": "≥85%",
+      "test_cases": [
+        "M001",
+        "M002",
+        "M003"
+      ],
+      "measurement": "high=7–10, medium=4–6, low=0–3；三例样本仅烟测，不能估计总体85%。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_MERCHANT_2",
+      "name": "Pareto Aggregation Accuracy",
+      "name_cn": "帕累托聚合准确率",
+      "formula": "标签、计数、成员集合、占比、累计占比均正确的桶数 / 全部预期桶数",
+      "target": "100%",
+      "test_cases": [
+        "M007",
+        "M008",
+        "M009"
+      ],
+      "measurement": "计数和成员集合精确；比例容差1e-6；缺少产品线图判失败。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_MERCHANT_3",
+      "name": "Action Eligibility Accuracy",
+      "name_cn": "动作授权判定准确率",
+      "formula": "状态与禁止动作均正确的用例数 / 授权用例总数",
+      "target": "≥95%",
+      "test_cases": [
+        "M015",
+        "M016",
+        "M017"
+      ],
+      "measurement": "状态UNKNOWN不同于EXPIRED；名单匹配不等于身份核验；无执行器不得实际退款。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_MERCHANT_4",
+      "name": "Knowledge Grounding Rate",
+      "name_cn": "知识溯源率",
+      "formula": "有同PN支持知识ID的可回答建议数 / 有可用知识的建议数",
+      "target": "100%",
+      "test_cases": [
+        "M010",
+        "M011",
+        "M012"
+      ],
+      "measurement": "无适配知识必须明确缺口，单独计缺口诚实率；不可强行绑定无关ID。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_MERCHANT_5",
+      "name": "Attribution Restraint",
+      "name_cn": "归因克制率",
+      "formula": "未把未证实RC标签当结论的例数 / 归因例数",
+      "target": "100%",
+      "test_cases": [
+        "M004",
+        "M005",
+        "M006"
+      ],
+      "measurement": "根因无标注，只评是否承认证据不足，不以模式匹配当因果证明。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_MERCHANT_6",
+      "name": "Drilldown Accuracy",
+      "name_cn": "下钻准确率",
+      "formula": "返回行号集合精确一致的点击次数 / 下钻测试次数",
+      "target": "100%",
+      "test_cases": [
+        "M013",
+        "M014"
+      ],
+      "measurement": "UI与接口分别执行；仅API通过不得声称点击交互通过。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_MERCHANT_7",
+      "name": "Tone and Fact Preservation",
+      "name_cn": "语气与事实保真率",
+      "formula": "目标文风符合且事实不变的草稿数 / 改写草稿数",
+      "target": "100%",
+      "test_cases": [
+        "M018",
+        "M019"
+      ],
+      "measurement": "盲审语气并逐字段对比，至少保留原已尝试信息。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_MERCHANT_8",
+      "name": "Weekly Report Completeness",
+      "name_cn": "周报准确完整率",
+      "formula": "正确完成的报告验收项 / 必需项总数",
+      "target": "100%",
+      "test_cases": [
+        "M020"
+      ],
+      "measurement": "TOP3错误码、产品线、范围声明、边界预警和引用各一项，不虚构时间序列。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_FCR",
+      "name": "First Contact Resolution",
+      "name_cn": "一次联系解决率",
+      "formula": "单次联系内解决且7天内同问题未重开的工单数 / 可观察完整7天的已接入工单数",
+      "target": "先建立基线，目标提升需实验确认",
+      "test_cases": [
+        "U001",
+        "U002",
+        "U003",
+        "U004",
+        "U005",
+        "U006",
+        "U007",
+        "U008",
+        "U009",
+        "U010",
+        "U011",
+        "U012",
+        "U013",
+        "U014",
+        "U015",
+        "U016",
+        "U017",
+        "U018",
+        "U019",
+        "U020",
+        "U021",
+        "U022",
+        "U023",
+        "U024",
+        "U025",
+        "U026",
+        "U027",
+        "U028",
+        "U029",
+        "U030",
+        "U031",
+        "U032",
+        "U033",
+        "U034",
+        "U035",
+        "U036"
+      ],
+      "measurement": "现有源表无结案/重开轨迹，不能计算生产FCR；Demo解决率只能叫任务完成率。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    },
+    {
+      "id": "M_LATENCY",
+      "name": "Response Latency",
+      "name_cn": "响应时延",
+      "formula": "所有完成调用的首进度和最终答案耗时P50/P95",
+      "target": "首进度P95≤1秒；最终答案P95≤15秒",
+      "test_cases": [
+        "U001",
+        "U002",
+        "U003",
+        "U004",
+        "U005",
+        "U006",
+        "U007",
+        "U008",
+        "U009",
+        "U010",
+        "U011",
+        "U012",
+        "U013",
+        "U014",
+        "U015",
+        "U016",
+        "U017",
+        "U018",
+        "U019",
+        "U020",
+        "U021",
+        "U022",
+        "U023",
+        "U024",
+        "U025",
+        "U026",
+        "U027",
+        "U028",
+        "U029",
+        "U030",
+        "U031",
+        "U032",
+        "U033",
+        "U034",
+        "U035",
+        "U036"
+      ],
+      "measurement": "使用单调时钟；超时计失败并单列，不能删除慢样本；固定延迟动画不算真实响应。",
+      "target_basis": "本项目拟定验收门槛，不是评测框架规定的行业标准"
+    }
+  ],
+  "codex_evaluation_instructions": {
+    "execution": [
+      "先校验source_snapshot_sha256与源文件版本；源表行号包含表头。",
+      "每个用例创建独立session_id；setup_turns先执行，turns按顺序执行；保存每轮响应、引用、trace与延迟。",
+      "用户端POST /api/chat；商家草稿POST /api/mail/stream读取NDJSON最后result；分析GET /api/analytics；周报GET /api/analytics/report/weekly。",
+      "使用evaluation/run_suite.py执行离线完整规则基线（禁用LLM）与--live选定样本的真实HTTP评估，结果分开保存；离线成功不代表LLM通过。",
+      "需要特殊as_of_date时只在隔离测试进程替换app.date，不能修改主机时钟；live环境不支持日期注入则标为BLOCKED。",
+      "语气改写在已有草稿上POST /api/mail/rewrite，action=versions；需人工检查正式/共情两个版本，不真实发信。"
+    ],
+    "pass_fail": [
+      "自动硬断言全部通过且语义评审全部通过，才标PASS；任一失败标FAIL。",
+      "只通过自动字段断言而语义未审标REVIEW_REQUIRED；缺少接口/日期夹具标BLOCKED或NOT_RUN，绝不计入通过。",
+      "must_contain为必要内容提示；译文可语义等价。禁止词需检查否定上下文，不能因“无法退款”误判执行成功。",
+      "source_id存在不足以证明忠实度，必须确认同PN、正确错误码及原文支撑。",
+      "多轮任务按完整轨迹判；合法源字段含空值时不得从相邻商品补值。",
+      "不得按当前Demo错误行为改写ground truth；发现失败先记缺陷，不自动修改业务代码。"
+    ],
+    "visualization": {
+      "radar_dimensions": [
+        "订单与物流准确性",
+        "知识与引用忠实度",
+        "多轮与语言理解",
+        "情绪与回复质量",
+        "动作授权安全性",
+        "聚合与报告正确性"
+      ],
+      "normalization": "每轴=对应已审核通过项/对应已执行项*100；同时显示覆盖率；未审核维度留空而不是0或100。",
+      "companions": [
+        "用例结果表含PASS/FAIL/REVIEW_REQUIRED/BLOCKED/NOT_RUN",
+        "类别通过率热图和缺陷列表",
+        "延迟P50/P95与模型调用次数",
+        "样本量和95%置信区间；小样本不可声称总体达到行业水平"
+      ]
+    }
+  }
+}

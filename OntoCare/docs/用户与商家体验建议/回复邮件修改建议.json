@@ -1,0 +1,560 @@
+{
+  "project": "Anker 智能客服商家端增强配置",
+  "version": "1.0",
+  "target": "Codex / GPT 自动化配置到现有安克智能客服源代码",
+  "instruction": "请阅读本 JSON 配置，将以下 15 个商家端增强功能逐一实现到现有源代码中。每个功能包含 id、name、priority、implementation、data_structure、ui_spec、interaction、acceptance 六个字段，请严格按照 implementation 描述实现，验收时逐条核对 acceptance。",
+  "context": {
+    "existing_system": "安克智能客服 Demo（OntoCare 本体队）",
+    "frontend": "单文件 index.html（HTML + CSS + JS 内联）",
+    "backend": "Flask + Python（如有）",
+    "data_source": "黑客松智能服务赛题资料.xlsx",
+    "style": "Anker 黑白灰极简风（主色 #000，背景 #FFF，次要文字 #666，边框 #E5E5E5）",
+    "existing_views": ["用户端（chat）", "商家端（merchant）"],
+    "merchant_layout": "左 300px 收件箱 + 中自适应邮件详情 + 右 380px 回复面板"
+  },
+  "features": [
+    {
+      "id": "F01",
+      "name": "AI回复语气调节器",
+      "name_en": "Tone Adjuster",
+      "priority": "P0",
+      "description": "客服生成回复后，可在不重新生成内容的前提下，一键切换回复语气。",
+      "implementation": "在商家端回复面板的【一键生成回复】按钮下方，增加一行语气选择器，包含 4 个按钮：正式、友好、简洁、共情。点击任一按钮后，调用 rewriteTone(draftText, tone) 函数，将当前草稿文本按目标语气重写，并替换 textarea 内容。切换时保留原草稿在 state.originalDraft 中，允许用户点击【恢复原文】撤回。",
+      "data_structure": {
+        "tone_options": [
+          { "id": "formal", "label": "正式", "prompt_modifier": "使用正式商务语气，避免口语化表达" },
+          { "id": "friendly", "label": "友好", "prompt_modifier": "使用亲切友好的语气，可适当使用温和的措辞" },
+          { "id": "concise", "label": "简洁", "prompt_modifier": "使用最简洁的表达，删除冗余修饰，直接给结论" },
+          { "id": "empathetic", "label": "共情", "prompt_modifier": "使用共情安抚语气，先承接情绪再给方案，避免说教" }
+        ],
+        "state": {
+          "originalDraft": "string",
+          "currentTone": "string | null"
+        }
+      },
+      "ui_spec": {
+        "position": "回复面板内，一键生成按钮下方",
+        "layout": "水平排列 4 个按钮，间距 8px",
+        "button_style": "padding: 4px 12px; border: 1px solid #E5E5E5; border-radius: 14px; font-size: 12px; color: #666",
+        "active_style": "border-color: #000; color: #000; background: #FAFAFA",
+        "hover_style": "border-color: #000; color: #000"
+      },
+      "interaction": [
+        "用户点击【一键生成回复】后，AI 生成初始草稿，state.originalDraft = 草稿",
+        "用户点击语气按钮 → 调用 rewriteTone() → 替换 textarea 内容 → 高亮当前语气按钮",
+        "用户点击【恢复原文】→ textarea 恢复为 state.originalDraft → 取消所有语气按钮高亮"
+      ],
+      "acceptance": [
+        "4 个语气按钮可见且可点击",
+        "点击后草稿文本语气明显变化（正式 vs 共情）",
+        "切换语气不丢失原始业务信息（订单号、金额、物流状态）",
+        "恢复原文按钮可撤销所有语气修改"
+      ]
+    },
+    {
+      "id": "F02",
+      "name": "工单情绪温度计",
+      "name_en": "Emotion Thermometer",
+      "priority": "P0",
+      "description": "在工单详情页显示客户情绪变化曲线，识别情绪升级趋势并自动预警。",
+      "implementation": "在商家端邮件详情区顶部，插入一个 200px 宽的情绪温度计组件。数据来自工单历史消息的情绪分析结果（当前 Demo 可用客诉工单的『咨询场景』和客户邮件原文模拟）。用 SVG 或 canvas 绘制折线图，x 轴为消息序号，y 轴为情绪分（1-10，1=平静，10=暴怒）。当曲线上升趋势明显（连续 2 个点以上升）时，在温度计下方显示红色预警条。",
+      "data_structure": {
+        "emotion_score": {
+          "min": 1,
+          "max": 10,
+          "levels": {
+            "1-3": "NORMAL",
+            "4-6": "CONCERNED",
+            "7-8": "ANGRY",
+            "9-10": "COMPLAINT_RISK"
+          }
+        },
+        "example_data": [
+          { "message_index": 1, "score": 3, "label": "NORMAL" },
+          { "message_index": 2, "score": 6, "label": "CONCERNED" },
+          { "message_index": 3, "score": 8, "label": "ANGRY" }
+        ],
+        "trend": "rising | stable | falling"
+      },
+      "ui_spec": {
+        "position": "邮件详情区顶部，标题下方",
+        "size": "宽 100%，高 80px",
+        "line_color": "#000",
+        "point_color": "#000",
+        "warning_bg": "#FDECEF",
+        "warning_text_color": "#D0021B",
+        "chart_bg": "#FAFAFA",
+        "chart_border": "1px solid #E5E5E5",
+        "border_radius": "8px"
+      },
+      "interaction": [
+        "打开工单时自动绘制情绪曲线",
+        "曲线上升时显示预警：⚠️ 客户情绪持续升级，建议主管介入",
+        "曲线下降时显示：✅ 客户情绪已缓和",
+        "鼠标悬停数据点显示 tooltip：第 N 封邮件 · 情绪分 X"
+      ],
+      "acceptance": [
+        "情绪曲线可见且随工单切换而变化",
+        "上升趋势时红色预警条出现",
+        "曲线数据点可交互（hover tooltip）",
+        "不同客诉工单显示不同情绪曲线"
+      ]
+    },
+    {
+      "id": "F03",
+      "name": "多版本预览",
+      "name_en": "Multi-version Preview",
+      "priority": "P1",
+      "description": "AI 一次性生成短版、标准版、详细版三份回复，客服可选择其一。",
+      "implementation": "修改【一键生成回复】的生成逻辑，一次返回三个版本。在回复面板中，生成后显示三个 Tab：短版、标准版、详细版。点击 Tab 切换 textarea 内容。默认选中标准版。每个版本长度：短版 50-80 字，标准版 150-250 字，详细版 300-400 字。",
+      "data_structure": {
+        "versions": [
+          { "id": "short", "label": "短版", "min_chars": 50, "max_chars": 80, "structure": ["结论", "下一步"] },
+          { "id": "standard", "label": "标准版", "min_chars": 150, "max_chars": 250, "structure": ["称呼", "结论", "依据", "方案"] },
+          { "id": "detailed", "label": "详细版", "min_chars": 300, "max_chars": 400, "structure": ["称呼", "共情", "结论", "依据", "分步方案", "后续承诺"] }
+        ],
+        "default_selected": "standard"
+      },
+      "ui_spec": {
+        "tab_bar": "水平排列，间距 4px，底部 1px 边框",
+        "tab_button": "padding: 6px 16px; font-size: 13px; color: #666",
+        "tab_active": "color: #000; font-weight: 600; border-bottom: 2px solid #000",
+        "textarea_position": "Tab 下方，高度 280px"
+      },
+      "interaction": [
+        "点击【一键生成回复】→ 800ms loading → 三版本同时生成",
+        "默认展示标准版",
+        "点击 Tab 切换 textarea 内容",
+        "客服可在任一版本基础上手动编辑"
+      ],
+      "acceptance": [
+        "三个 Tab 可见且可切换",
+        "三版本长度差异明显",
+        "三版本内容业务信息一致（订单号、SKU、状态）",
+        "切换 Tab 不丢失编辑内容（每版本独立保存）"
+      ]
+    },
+    {
+      "id": "F04",
+      "name": "客户画像卡片",
+      "name_en": "Customer Profile Card",
+      "priority": "P1",
+      "description": "打开工单时，自动聚合客户历史信息，形成一张画像卡片。",
+      "implementation": "在商家端邮件详情区，Ontology 实体信息下方，新增『客户画像』卡片。聚合以下信息：历史工单数、购买产品总数、保修状态、历史情绪记录、购买渠道。数据从 COMPLAINTS 和 ORDERS 常量中推导。",
+      "data_structure": {
+        "profile_fields": [
+          { "key": "contact_count", "label": "历史工单数", "example": "第 3 次联系" },
+          { "key": "product_count", "label": "购买产品数", "example": "共购买 5 件产品" },
+          { "key": "warranty_status", "label": "保修状态", "example": "质保剩余 45 天" },
+          { "key": "emotion_history", "label": "历史情绪", "example": "前两次情绪为 ANGRY" },
+          { "key": "purchase_channel", "label": "购买渠道", "example": "Amazon 官方旗舰店（授权渠道）" }
+        ]
+      },
+      "ui_spec": {
+        "card_bg": "#FAFAFA",
+        "card_border": "1px solid #E5E5E5",
+        "card_radius": "8px",
+        "card_padding": "16px",
+        "field_layout": "每行一个字段，label 左对齐 120px，value 自适应",
+        "label_color": "#666",
+        "value_color": "#000"
+      },
+      "interaction": [
+        "打开工单时自动填充画像字段",
+        "切换到不同工单时，画像卡片内容自动更新"
+      ],
+      "acceptance": [
+        "画像卡片可见",
+        "字段数据来自源表，非虚构",
+        "切换工单时卡片内容联动更新"
+      ]
+    },
+    {
+      "id": "F05",
+      "name": "AI置信度分数",
+      "name_en": "Confidence Score",
+      "priority": "P1",
+      "description": "AI 生成回复时，附带置信度分数，提示客服是否可放心发送。",
+      "implementation": "在回复面板的 textarea 上方，显示置信度条。置信度基于以下因素计算：是否命中知识库（+40）、是否命中订单数据（+30）、是否存在同义词模糊匹配（-10）、是否有未识别实体（-20）。分数范围 0-100%。",
+      "data_structure": {
+        "confidence_thresholds": [
+          { "min": 85, "max": 100, "label": "高置信", "color": "#00A651", "action": "建议直接发送" },
+          { "min": 60, "max": 84, "label": "中置信", "color": "#E8A33D", "action": "建议人工审核后再发送" },
+          { "min": 0, "max": 59, "label": "低置信", "color": "#D0021B", "action": "建议转人工处理" }
+        ]
+      },
+      "ui_spec": {
+        "position": "textarea 上方，右侧对齐",
+        "layout": "水平排列：置信度标签 + 分数 + 建议",
+        "font_size": "12px",
+        "bar_height": "4px",
+        "bar_radius": "2px"
+      },
+      "interaction": [
+        "AI 生成回复后，自动计算并显示置信度",
+        "低置信度时，显示『建议转人工』按钮"
+      ],
+      "acceptance": [
+        "置信度可见",
+        "不同工单置信度分数不同",
+        "低置信度时有转人工建议"
+      ]
+    },
+    {
+      "id": "F06",
+      "name": "知识库自动补课",
+      "name_en": "Auto FAQ Generation",
+      "priority": "P1",
+      "description": "从客服对话中自动识别知识库未覆盖的高频问题，生成 FAQ 草稿。",
+      "implementation": "在商家端顶部工具栏新增【知识库补课】按钮。点击后扫描最近 N 个工单，识别未命中知识库的问题，按频率排序，生成 FAQ 草稿。Demo 中用 mock 数据模拟。",
+      "data_structure": {
+        "faq_draft": {
+          "question": "string",
+          "frequency": "number",
+          "suggested_answer": "string",
+          "status": "pending_review | approved | rejected"
+        }
+      },
+      "ui_spec": {
+        "button_position": "顶栏右侧",
+        "panel_position": "右侧抽屉",
+        "panel_width": "400px"
+      },
+      "interaction": [
+        "点击按钮 → 打开右侧抽屉 → 显示 FAQ 草稿列表",
+        "每条草稿有【审核通过】和【拒绝】按钮"
+      ],
+      "acceptance": [
+        "按钮可见",
+        "抽屉可打开关闭",
+        "FAQ 草稿可审核"
+      ]
+    },
+    {
+      "id": "F07",
+      "name": "附件智能预判",
+      "name_en": "Smart Attachment Extraction",
+      "priority": "P2",
+      "description": "客户上传故障截图/视频时，自动识别错误码和产品型号。",
+      "implementation": "在商家端邮件详情中，若客诉工单有附件字段（非空），显示附件预览。Demo 中可用 mock 数据，标注识别的错误码和型号。",
+      "data_structure": {
+        "extracted_from_attachment": {
+          "error_code": "string",
+          "product_model": "string",
+          "confidence": "number"
+        }
+      },
+      "ui_spec": {
+        "position": "邮件详情区，客户邮件原文下方",
+        "attachment_preview": "缩略图 + 识别结果标签"
+      },
+      "interaction": [
+        "点击附件缩略图 → 放大预览",
+        "识别结果自动填充到 Ontology 实体信息区"
+      ],
+      "acceptance": [
+        "有附件的工单显示识别结果",
+        "无附件的工单不显示该区块"
+      ]
+    },
+    {
+      "id": "F08",
+      "name": "跨渠道上下文继承",
+      "name_en": "Cross-channel Context Inheritance",
+      "priority": "P2",
+      "description": "客户从邮件转到聊天时，自动带入历史上下文。",
+      "implementation": "在用户端聊天区顶部，显示『来自邮件工单 Anker001 的上下文』提示条。Demo 中用 mock 数据模拟。",
+      "data_structure": {
+        "inherited_context": {
+          "source_channel": "email",
+          "source_ticket_id": "Anker001",
+          "summary": "string"
+        }
+      },
+      "ui_spec": {
+        "position": "聊天区顶部",
+        "banner_bg": "#E8F3FF",
+        "banner_text_color": "#0A7AFF",
+        "banner_padding": "8px 16px",
+        "banner_radius": "6px"
+      },
+      "interaction": [
+        "用户从邮件转聊天时，顶部显示上下文提示条",
+        "点击提示条可展开查看完整上下文"
+      ],
+      "acceptance": [
+        "提示条可见",
+        "点击可展开/收起"
+      ]
+    },
+    {
+      "id": "F09",
+      "name": "补偿方案智能推荐",
+      "name_en": "Smart Compensation Recommendation",
+      "priority": "P2",
+      "description": "基于客户价值、情绪、复购频率，动态推荐补偿方案。",
+      "implementation": "在商家端回复面板底部，新增『补偿方案推荐』区块。系统根据客户画像（F04）和情绪温度计（F02）自动推荐。",
+      "data_structure": {
+        "compensation_options": [
+          { "type": "full_refund", "label": "全额退款", "condition": "过保+高价值客户+ANGRY" },
+          { "type": "replacement", "label": "免费换新", "condition": "在保+质量问题" },
+          { "type": "discount_25", "label": "25% 折扣换新", "condition": "过保+普通客户" },
+          { "type": "coupon", "label": "$20 优惠券", "condition": "非质量问题" }
+        ]
+      },
+      "ui_spec": {
+        "position": "回复面板底部",
+        "layout": "垂直排列，每个选项一行",
+        "option_bg": "#FAFAFA",
+        "option_border": "1px solid #E5E5E5",
+        "option_radius": "6px",
+        "option_padding": "10px 14px"
+      },
+      "interaction": [
+        "打开工单时自动推荐 2-3 个方案",
+        "点击方案 → 将方案文本插入回复草稿"
+      ],
+      "acceptance": [
+        "推荐方案可见",
+        "推荐逻辑与客户画像和情绪一致",
+        "点击可插入草稿"
+      ]
+    },
+    {
+      "id": "F10",
+      "name": "一键多语言",
+      "name_en": "One-click Multi-language",
+      "priority": "P2",
+      "description": "中文草稿一键翻译并适配目标语言文化习惯。",
+      "implementation": "在回复面板顶部，新增语言切换下拉框：中文、English、Deutsch、Français、Nederlands。客服在中文界面写好回复，点击目标语言，自动翻译并适配文化习惯。",
+      "data_structure": {
+        "languages": [
+          { "code": "zh-CN", "label": "中文" },
+          { "code": "en-US", "label": "English", "tone_note": "正式直接" },
+          { "code": "de-DE", "label": "Deutsch", "tone_note": "更正式" },
+          { "code": "fr-FR", "label": "Français", "tone_note": "注重礼貌" },
+          { "code": "nl-NL", "label": "Nederlands", "tone_note": "直接坦诚" }
+        ]
+      },
+      "ui_spec": {
+        "position": "回复面板顶部",
+        "layout": "下拉框，右对齐",
+        "dropdown_width": "120px"
+      },
+      "interaction": [
+        "选择目标语言 → 点击翻译 → textarea 内容翻译为目标语言",
+        "保持业务信息一致（订单号、金额、日期）"
+      ],
+      "acceptance": [
+        "5 种语言可选",
+        "翻译后业务信息不变",
+        "文化适配（如德语更正式）"
+      ]
+    },
+    {
+      "id": "F11",
+      "name": "禁用词检查",
+      "name_en": "Forbidden Word Check",
+      "priority": "P2",
+      "description": "发送前自动检查回复中的不合规表达，拦截过度承诺。",
+      "implementation": "在【发送回复邮件】按钮点击时，先扫描 textarea 内容，命中禁用词则弹出警告，提供改写建议。",
+      "data_structure": {
+        "forbidden_patterns": [
+          { "pattern": "保证退款", "suggestion": "退款将在审核通过后处理" },
+          { "pattern": "绝对没问题", "suggestion": "我们会尽全力为您解决" },
+          { "pattern": "这不是我们的问题", "suggestion": "我们理解您的困扰，让我们看看如何解决" },
+          { "pattern": "100%解决", "suggestion": "我们会优先为您处理" },
+          { "pattern": "马上退款", "suggestion": "退款将在审核通过后 3-5 个工作日处理" }
+        ]
+      },
+      "ui_spec": {
+        "alert_position": "toast 顶部居中",
+        "alert_bg": "#FDECEF",
+        "alert_text_color": "#D0021B",
+        "alert_padding": "12px 20px",
+        "alert_radius": "8px"
+      },
+      "interaction": [
+        "点击发送 → 扫描 → 命中禁用词 → 显示警告 → 提供改写建议 → 用户确认后发送"
+      ],
+      "acceptance": [
+        "禁用词可被识别",
+        "警告提示可见",
+        "改写建议可一键替换"
+      ]
+    },
+    {
+      "id": "F12",
+      "name": "工单自动摘要",
+      "name_en": "Auto Ticket Summary",
+      "priority": "P2",
+      "description": "工单顶部显示 AI 自动摘要，新客服 30 秒了解全部历史。",
+      "implementation": "在商家端邮件详情区顶部，标题下方，显示摘要卡片。摘要基于工单历史消息自动生成（Demo 中用 mock 数据）。",
+      "data_structure": {
+        "summary": {
+          "customer": "string",
+          "contact_count": "number",
+          "issue": "string",
+          "history": ["string"],
+          "current_status": "string",
+          "suggestion": "string"
+        }
+      },
+      "ui_spec": {
+        "card_bg": "#F5F5F5",
+        "card_border": "1px solid #E5E5E5",
+        "card_radius": "8px",
+        "card_padding": "14px 16px",
+        "label_color": "#666",
+        "value_color": "#000"
+      },
+      "interaction": [
+        "打开工单时自动生成摘要",
+        "切换到不同工单时摘要自动更新"
+      ],
+      "acceptance": [
+        "摘要卡片可见",
+        "内容来自真实工单数据",
+        "切换工单时联动更新"
+      ]
+    },
+    {
+      "id": "F13",
+      "name": "情绪个性化安抚",
+      "name_en": "Personalized Empathy",
+      "priority": "P2",
+      "description": "根据客户历史信息，生成个性化的安抚话术。",
+      "implementation": "AI 生成回复时，若检测到客户历史中有具体场景（如『明天直播要用』），在安抚话术中提及该场景。",
+      "data_structure": {
+        "personalized_context": {
+          "customer_mentioned": "明天直播要用",
+          "empathy_phrase": "我理解您明天直播要用，我们会优先处理"
+        }
+      },
+      "ui_spec": {
+        "position": "回复草稿中自动融入",
+        "highlight": "个性化部分用下划线标注"
+      },
+      "interaction": [
+        "AI 生成草稿时自动检测客户上下文",
+        "融入个性化安抚话术"
+      ],
+      "acceptance": [
+        "个性化话术可见",
+        "与客户原文场景一致"
+      ]
+    },
+    {
+      "id": "F14",
+      "name": "时区适配时间表达",
+      "name_en": "Timezone-aware Time Expression",
+      "priority": "P2",
+      "description": "根据客户所在时区，调整回复中的时间表达。",
+      "implementation": "AI 生成回复时，若涉及时间承诺（如『24小时内』），根据客户所在国家/时区调整为更自然的表达。",
+      "data_structure": {
+        "timezone_adaptation": {
+          "US": "我们将在您的当地时间明天上午之前回复",
+          "EU": "我们将在您的当地时间明天上午之前回复",
+          "ASIA": "我们将在 2 小时内回复"
+        }
+      },
+      "ui_spec": {
+        "position": "回复草稿中自动融入"
+      },
+      "interaction": [
+        "AI 生成时自动检测客户国家",
+        "调整时间表达"
+      ],
+      "acceptance": [
+        "时间表达与时区一致"
+      ]
+    },
+    {
+      "id": "F15",
+      "name": "一键改写选中段落",
+      "name_en": "Rewrite Selected Paragraph",
+      "priority": "P2",
+      "description": "客服选中草稿中的一段话，让 AI 只改写这一段，不重新生成整封。",
+      "implementation": "在 textarea 中选中文本后，弹出浮动工具条，包含『改写』『缩短』『更友好』三个按钮。点击后只改写选中部分。",
+      "data_structure": {
+        "rewrite_actions": [
+          { "id": "rewrite", "label": "改写" },
+          { "id": "shorten", "label": "缩短" },
+          { "id": "friendlier", "label": "更友好" }
+        ]
+      },
+      "ui_spec": {
+        "toolbar_position": "选中文本上方，浮动",
+        "toolbar_bg": "#000",
+        "toolbar_text_color": "#FFF",
+        "toolbar_padding": "6px 12px",
+        "toolbar_radius": "6px",
+        "button_gap": "8px"
+      },
+      "interaction": [
+        "选中文本 → 浮动工具条出现 → 点击动作 → 替换选中部分"
+      ],
+      "acceptance": [
+        "选中文本时工具条出现",
+        "改写只影响选中部分",
+        "未选中部分保持不变"
+      ]
+    }
+  ],
+  "global_requirements": {
+    "style_guide": {
+      "primary_color": "#000000",
+      "background": "#FFFFFF",
+      "text_secondary": "#666666",
+      "border": "#E5E5E5",
+      "danger": "#D0021B",
+      "success": "#00A651",
+      "info": "#0A7AFF",
+      "warn": "#E8A33D",
+      "font_family": "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial",
+      "border_radius": "8px",
+      "transition": "0.15s ease"
+    },
+    "data_integrity": {
+      "rule": "所有订单、SKU、物流、金额、错误码必须来自源表，禁止虚构",
+      "source_files": ["黑客松智能服务赛题资料.xlsx", "eufy Robovacs Q&A.xlsx", "eufy Breast Pump Q&A.xlsx"],
+      "empty_field_display": "未提供"
+    },
+    "demo_mode": {
+      "real_api_calls": false,
+      "mock_response_delay_ms": 800,
+      "send_action_label": "（Demo 模式，未真实发信）"
+    },
+    "compliance": {
+      "no_over_promise": "不得承诺退款、换货、赔付已办理",
+      "no_fabrication": "不得编造政策、时间、补偿",
+      "no_privacy_leak": "不得输出完整地址、电话、邮箱、信用卡",
+      "no_emotional_conflict": "不得与客户情绪化对骂"
+    }
+  },
+  "implementation_order": [
+    "F01 语气调节器（P0，最高优先级）",
+    "F02 情绪温度计（P0，最高优先级）",
+    "F03 多版本预览（P1）",
+    "F04 客户画像卡片（P1）",
+    "F05 AI 置信度（P1）",
+    "F06 知识库补课（P1）",
+    "F07-F15（P2，按时间允许逐个实现）"
+  ],
+  "acceptance_checklist": [
+    "所有 15 个功能模块均可独立演示",
+    "所有数据均来自源表，无虚构",
+    "所有 UI 符合安克黑白灰极简风",
+    "所有交互在 3 秒内可被评委理解",
+    "Demo 模式下所有发送动作均为模拟",
+    "高风险动作（退款/换货）只能建议，不承诺已办理",
+    "切换视图/工单时所有联动数据自动更新",
+    "移动端（<1100px）降级布局正常"
+  ],
+  "deliverable": {
+    "file": "index.html",
+    "type": "single_file",
+    "dependencies": "none",
+    "runtime": "open in browser"
+  }
+}

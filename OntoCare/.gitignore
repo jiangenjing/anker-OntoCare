@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+uploads/
+
+.env.local
+
+benchmark/output/
+
+.env.*.local
+
+# Owner-provided judging connection; included explicitly by the release packager.
+demo_api_config.json

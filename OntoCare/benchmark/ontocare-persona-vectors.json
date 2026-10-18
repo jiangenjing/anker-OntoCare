@@ -1,0 +1,481 @@
+{
+  "metadata": {
+    "schema_version": "1.0",
+    "source_workbook": "黑客松智能服务赛题资料.xlsx",
+    "source_workbook_sha256": "0279f939182e84526c05dfc5e1b5a694248ab5acfe4bec7ea4857f9504051f94",
+    "source_snapshot_sha256": "f898aef03be9370bf310805d896e3ef4e9a35f75794c2d855a1ffed35dd8f48a",
+    "actual_counts": {
+      "complaints": 63,
+      "unique_order_numbers": 16,
+      "order_item_rows": 24,
+      "robovac_qa": 593,
+      "breast_pump_qa": 282,
+      "dealers": 336
+    },
+    "core_cases": 74,
+    "supplemental_fault_cases": 28,
+    "supplemental_persona_cases": 8,
+    "total_cases": 110,
+    "reference_date": "2026-10-17",
+    "target_status": "用户设定验收目标，非行业统一标准或已达成成绩",
+    "limitations": [
+      "product_line 源字段只有 Anker eufy；E25等是产品名称，不能当作多个产品线",
+      "人格向量为场景设定；first_message逐字来自源表",
+      "原示例渠道AUTHORIZED及某些执行动作缺乏依据，不作为金标准",
+      "pass^k按同一任务前k次独立试验全部通过计；离线重复仅说明确定性回归",
+      "无真实执行器，因此终态是会话、只读订单数据与本地待审核队列，非真实退款数据库",
+      "FCR需要7天重开记录，不能用短对话代理",
+      "西语是人工构造的事实保持翻译，不是源表西语邮件"
+    ]
+  },
+  "personas": [
+    {
+      "id": "P01",
+      "name": "急躁型买家",
+      "source_ticket": "Anker001",
+      "source_excel_row": 2,
+      "source_sheet": "客诉工单信息",
+      "tier1_demographics": {
+        "country": null,
+        "product_line": "Anker eufy",
+        "product_name": "E25",
+        "sku": "E235311B",
+        "channel": "email",
+        "language": "en",
+        "order_no": "Anker001",
+        "purchase_channel": null
+      },
+      "tier2_behavioral": {
+        "patience": 2,
+        "technical_literacy": 4,
+        "assertiveness": 8,
+        "detail_provision": 3,
+        "warranty_awareness": 5,
+        "after_sales_experience": 1
+      },
+      "tier3_emotional": {
+        "frustration": 7,
+        "anxiety": 8,
+        "trust": 3,
+        "escalation_tendency": 7
+      },
+      "first_message": "The vacuum did not arrive. Only the replacement parts kit. Was the vacuum shipped? What should I do？My order is Anker001",
+      "escalation_trigger": "agent_gives_template_response",
+      "escalation_effect": "frustration += 2",
+      "termination": [
+        "goal_achieved",
+        "turn_count >= 8"
+      ],
+      "template_first_message": "The vacuum did not arrive. Only the replacement parts kit. Was the vacuum shipped? What should I do? My order is Anker001",
+      "template_demographics": {
+        "country": "US",
+        "product_line": "eufy RoboVac E25",
+        "sku": "E235311B",
+        "channel": "email",
+        "language": "en",
+        "order_status": "已发货(拆成2个包裹)",
+        "purchase_channel": "AnkerDirect"
+      },
+      "parameter_provenance": {
+        "tier1": "逐字段取客诉工单；未提供的国家和渠道不从仓库地址推断",
+        "tier2_behavioral": "用户方法提供的模拟参数，不是真实客户测量",
+        "tier3_emotional": "用户方法提供的模拟参数，不是真实客户测量"
+      },
+      "source_excerpt": "The vacuum did not arrive. Only the replacement parts kit. Was the vacuum shipped? What should I do？My order is Anker001",
+      "ground_truth_source": "客诉工单信息表第2行",
+      "message_sha256": "b0ebf8e5539bf7c5de4e61cddc7aa66e5d1d10ac7b071c04adff4ee6d1e82718"
+    },
+    {
+      "id": "P02",
+      "name": "详细陈述型",
+      "source_ticket": "Anker002",
+      "source_excel_row": 3,
+      "source_sheet": "客诉工单信息",
+      "tier1_demographics": {
+        "country": null,
+        "product_line": "Anker eufy",
+        "product_name": "S1 Pro",
+        "sku": "T2080GA1",
+        "channel": "email",
+        "language": "en",
+        "order_no": "Anker002",
+        "purchase_channel": null
+      },
+      "tier2_behavioral": {
+        "patience": 6,
+        "technical_literacy": 6,
+        "assertiveness": 5,
+        "detail_provision": 9,
+        "warranty_awareness": 6,
+        "after_sales_experience": 3
+      },
+      "tier3_emotional": {
+        "frustration": 5,
+        "anxiety": 6,
+        "trust": 6,
+        "escalation_tendency": 4
+      },
+      "first_message": "Hi Team,\n\n I am reaching out to you regarding my order Anker002. I have received ine package today with tracking number \nAnker1234567-2. The package only contains the replacement accessories kit. I have not received the Eufy S1 robot vacuum yet. When trying to track the shipment Anker1234567-3, UPS website says that the label has been created, but there is no further information. Could you please let me know when I should expect the robot vacuum to arrive?\n\nThanks in advance",
+      "escalation_trigger": "agent_ignores_second_tracking_number",
+      "escalation_effect": "frustration += 1",
+      "termination": [
+        "goal_achieved",
+        "turn_count >= 8"
+      ],
+      "template_first_message": "Hi Team, I am reaching out to you regarding my order Anker002. I have received ine package today with tracking number Anker1234567-2. The package only contains the replacement accessories kit. I have not received the Eufy S1 robot vacuum yet. When trying to track the shipment Anker1234567-3, UPS website says that the label has been created, but there is no further information. Could you please let me know when I should expect the robot vacuum to arrive?",
+      "template_demographics": {
+        "country": "US",
+        "product_line": "eufy RoboVac S1 Pro",
+        "sku": "T2080GA1",
+        "channel": "email",
+        "language": "en",
+        "order_status": "已发货",
+        "purchase_channel": "AnkerDirect"
+      },
+      "parameter_provenance": {
+        "tier1": "逐字段取客诉工单；未提供的国家和渠道不从仓库地址推断",
+        "tier2_behavioral": "用户方法提供的模拟参数，不是真实客户测量",
+        "tier3_emotional": "用户方法提供的模拟参数，不是真实客户测量"
+      },
+      "source_excerpt": "Hi Team,\n\n I am reaching out to you regarding my order Anker002. I have received ine package today with tracking number \nAnker1234567-2. The package only contains the replacement accessories kit. I have not received the Eufy S1 robot vacuum yet. When trying to track the shipment Anker1234567-3, UPS website says that the label has been created, but there is no further information. Could you please let me know when I should expect the robot vacuum to arrive?\n\nThanks in advance",
+      "ground_truth_source": "客诉工单信息表第3行",
+      "message_sha256": "7132bce451221131dc1f08f18375145c6763fd104f57bc10fe42c629e6be3ace"
+    },
+    {
+      "id": "P03",
+      "name": "多语言混输型",
+      "source_ticket": "Anker006",
+      "source_excel_row": 7,
+      "source_sheet": "客诉工单信息",
+      "tier1_demographics": {
+        "country": null,
+        "product_line": "Anker eufy",
+        "product_name": "E25",
+        "sku": "T2353G11",
+        "channel": "email",
+        "language": "nl",
+        "order_no": "Anker006",
+        "purchase_channel": null
+      },
+      "tier2_behavioral": {
+        "patience": 5,
+        "technical_literacy": 3,
+        "assertiveness": 5,
+        "detail_provision": 2,
+        "warranty_awareness": 3,
+        "after_sales_experience": 1
+      },
+      "tier3_emotional": {
+        "frustration": 6,
+        "anxiety": 5,
+        "trust": 5,
+        "escalation_tendency": 4
+      },
+      "first_message": "FW: Uw bestelling Anker006 is al verzonden.Dag!\nHeb vorige week de robot stofzuiger besteld. Deze is nog steeds niet binnen!\nMet vriendelijke groet,\nKind Regards,",
+      "escalation_trigger": "agent_replies_in_english_only",
+      "escalation_effect": "frustration += 2",
+      "termination": [
+        "goal_achieved",
+        "turn_count >= 8"
+      ],
+      "template_first_message": "FW: Uw bestelling Anker006 is al verzonden. Dag! Heb vorige week de robot stofzuiger besteld. Deze is nog steeds niet binnen! Met vriendelijke groet, Kind Regards,",
+      "template_demographics": {
+        "country": "NL",
+        "product_line": "eufy RoboVac E25",
+        "sku": "T2353G11",
+        "channel": "email",
+        "language": "nl",
+        "order_status": "已发货",
+        "purchase_channel": "AnkerDirect"
+      },
+      "parameter_provenance": {
+        "tier1": "逐字段取客诉工单；未提供的国家和渠道不从仓库地址推断",
+        "tier2_behavioral": "用户方法提供的模拟参数，不是真实客户测量",
+        "tier3_emotional": "用户方法提供的模拟参数，不是真实客户测量"
+      },
+      "source_excerpt": "FW: Uw bestelling Anker006 is al verzonden.Dag!\nHeb vorige week de robot stofzuiger besteld. Deze is nog steeds niet binnen!\nMet vriendelijke groet,\nKind Regards,",
+      "ground_truth_source": "客诉工单信息表第7行",
+      "message_sha256": "dfa9332be66f9c24aa163cdea3f0bcd90415c5135e8641989dad93e4a64aac04"
+    },
+    {
+      "id": "P04",
+      "name": "理性投诉型",
+      "source_ticket": "Anker015",
+      "source_excel_row": 54,
+      "source_sheet": "客诉工单信息",
+      "tier1_demographics": {
+        "country": null,
+        "product_line": "Anker eufy",
+        "product_name": "S1 Pro Breast Pump",
+        "sku": "T8D04121",
+        "channel": "email",
+        "language": "en",
+        "order_no": "Anker015",
+        "purchase_channel": null
+      },
+      "tier2_behavioral": {
+        "patience": 7,
+        "technical_literacy": 5,
+        "assertiveness": 6,
+        "detail_provision": 6,
+        "warranty_awareness": 8,
+        "after_sales_experience": 4
+      },
+      "tier3_emotional": {
+        "frustration": 5,
+        "anxiety": 4,
+        "trust": 6,
+        "escalation_tendency": 3
+      },
+      "first_message": "Dear sale-team.Hello!\nOrder No: Anker015\nProduct Name: eufy Wearable Breast Pump S1 Pro\nProblem Description: One side of the pump stoped working. I tried to charge it over and over again but it stoped turning on. It’s been 24 months but this happed within 12 months but I had not known I can put in a claim. I hope I can get a replacement or you can fix it. Thank you\n\nProdcut SN: T8D04121\nSubmit Date: 2026-09-27T14:58:03.850Z",
+      "escalation_trigger": "agent_directly_rejects_due_to_warranty",
+      "escalation_effect": "frustration += 2",
+      "termination": [
+        "goal_achieved",
+        "turn_count >= 8"
+      ],
+      "template_first_message": "Dear sale-team. Hello! Order No: Anker015. Product Name: eufy Wearable Breast Pump S1 Pro. Problem Description: One side of the pump stoped working. I tried to charge it over and over again but it stoped turning on. It's been 24 months but this happed within 12 months but I had not known I can put in a claim. I hope I can get a replacement or you can fix it. Thank you",
+      "template_demographics": {
+        "country": "US",
+        "product_line": "eufy Breast Pump S1 Pro",
+        "sku": "T8D04121",
+        "channel": "email",
+        "language": "en",
+        "order_status": "已发货(已过保)",
+        "purchase_channel": "AnkerDirect"
+      },
+      "parameter_provenance": {
+        "tier1": "逐字段取客诉工单；未提供的国家和渠道不从仓库地址推断",
+        "tier2_behavioral": "用户方法提供的模拟参数，不是真实客户测量",
+        "tier3_emotional": "用户方法提供的模拟参数，不是真实客户测量"
+      },
+      "source_excerpt": "Dear sale-team.Hello!\nOrder No: Anker015\nProduct Name: eufy Wearable Breast Pump S1 Pro\nProblem Description: One side of the pump stoped working. I tried to charge it over and over again but it stoped turning on. It’s been 24 months but this happed within 12 months but I had not known I can put in a claim. I hope I can get a replacement or you can fix it. Thank you\n\nProdcut SN: T8D04121\nSubmit Date: 2026-09-27T14:58:03.850Z",
+      "ground_truth_source": "客诉工单信息表第54行",
+      "message_sha256": "1a4c61945f7ec3bfb205a7e32481d3f8b3e4dead591f75aa03c2b4101beee542"
+    },
+    {
+      "id": "P05",
+      "name": "极端情绪型",
+      "source_ticket": "SoloCam S340",
+      "source_excel_row": 57,
+      "source_sheet": "客诉工单信息",
+      "tier1_demographics": {
+        "country": null,
+        "product_line": "Anker eufy",
+        "product_name": "SoloCam S340",
+        "sku": "T81701W1",
+        "channel": "email",
+        "language": "en",
+        "order_no": null,
+        "purchase_channel": null
+      },
+      "tier2_behavioral": {
+        "patience": 1,
+        "technical_literacy": 4,
+        "assertiveness": 9,
+        "detail_provision": 2,
+        "warranty_awareness": 4,
+        "after_sales_experience": 2
+      },
+      "tier3_emotional": {
+        "frustration": 9,
+        "anxiety": 7,
+        "trust": 1,
+        "escalation_tendency": 9
+      },
+      "first_message": "Why is it when I need my SoloCam S340 there offline. Even hooked up for one week. Is that your warranty? I'm sick of this shit",
+      "escalation_trigger": "agent_template_response",
+      "escalation_effect": "frustration += 2 (cap at 10)",
+      "termination": [
+        "goal_achieved",
+        "turn_count >= 8"
+      ],
+      "template_first_message": "Why is it when I need my SoloCam S340 there offline. Even hooked up for one week. Is that your warranty? I'm sick of this shit",
+      "template_demographics": {
+        "country": "US",
+        "product_line": "eufy SoloCam S340",
+        "sku": "T81701W1",
+        "channel": "email",
+        "language": "en",
+        "order_status": "N/A",
+        "purchase_channel": "N/A"
+      },
+      "parameter_provenance": {
+        "tier1": "逐字段取客诉工单；未提供的国家和渠道不从仓库地址推断",
+        "tier2_behavioral": "用户方法提供的模拟参数，不是真实客户测量",
+        "tier3_emotional": "用户方法提供的模拟参数，不是真实客户测量"
+      },
+      "source_excerpt": "Why is it when I need my SoloCam S340 there offline. Even hooked up for one week. Is that your warranty? I'm sick of this shit",
+      "ground_truth_source": "客诉工单信息表第57行",
+      "message_sha256": "aa1dfa62e55d84f133cf088dec65d76ebf7a8fd3b080c1dddbcccd162c4554d8"
+    },
+    {
+      "id": "P06",
+      "name": "技术型用户",
+      "source_ticket": "E25",
+      "source_excel_row": 28,
+      "source_sheet": "客诉工单信息",
+      "tier1_demographics": {
+        "country": null,
+        "product_line": "Anker eufy",
+        "product_name": "E25",
+        "sku": "T2353111",
+        "channel": "email",
+        "language": "en",
+        "order_no": null,
+        "purchase_channel": null
+      },
+      "tier2_behavioral": {
+        "patience": 6,
+        "technical_literacy": 9,
+        "assertiveness": 6,
+        "detail_provision": 9,
+        "warranty_awareness": 5,
+        "after_sales_experience": 5
+      },
+      "tier3_emotional": {
+        "frustration": 6,
+        "anxiety": 4,
+        "trust": 5,
+        "escalation_tendency": 4
+      },
+      "first_message": "Product Name: Omni E25\nProduct PN: T2353\nProduct SN: AMP3AC0F14201072\nProblem Type: warning\nProblem Code: 3212-The mop is stuck.\nProblem Push: Rolling Mop Blockage. Please clean.\nProblem Description: Rolling Mop Blockage. Please clean.\n\ntried the suggestion solution but error still persist. no blockage seen. roller mop area is clear. a Crack sound kept on repeating everything robots done with mop cleaning process. vacuum cannot start process\nProblem Upload Images: []",
+      "escalation_trigger": "agent_repeats_same_steps",
+      "escalation_effect": "frustration += 2",
+      "termination": [
+        "goal_achieved",
+        "turn_count >= 8"
+      ],
+      "template_first_message": "Product Name: Omni E25. Product PN: T2353. Product SN: AMP3AC0F14201072. Problem Type: warning. Problem Code: 3212-The mop is stuck. Problem Description: Rolling Mop Blockage. Please clean. tried the suggestion solution but error still persist. no blockage seen. roller mop area is clear. a Crack sound kept on repeating everything robots done with mop cleaning process. vacuum cannot start process",
+      "template_demographics": {
+        "country": "N/A",
+        "product_line": "eufy RoboVac E25",
+        "sku": "T2353111",
+        "channel": "email",
+        "language": "en",
+        "order_status": "N/A",
+        "purchase_channel": "N/A"
+      },
+      "parameter_provenance": {
+        "tier1": "逐字段取客诉工单；未提供的国家和渠道不从仓库地址推断",
+        "tier2_behavioral": "用户方法提供的模拟参数，不是真实客户测量",
+        "tier3_emotional": "用户方法提供的模拟参数，不是真实客户测量"
+      },
+      "source_excerpt": "Product Name: Omni E25\nProduct PN: T2353\nProduct SN: AMP3AC0F14201072\nProblem Type: warning\nProblem Code: 3212-The mop is stuck.\nProblem Push: Rolling Mop Blockage. Please clean.\nProblem Description: Rolling Mop Blockage. Please clean.\n\ntried the suggestion solution but error still persist. no blockage seen. roller mop area is clear. a Crack sound kept on repeating everything robots done with mop cleaning process. vacuum cannot start process\nProblem Upload Images: []",
+      "ground_truth_source": "客诉工单信息表第28行",
+      "message_sha256": "8e5982ddf0c84f87cdf820171689ba612b0b1223ac1e9e74d739691ef743316b"
+    },
+    {
+      "id": "P07",
+      "name": "安全敏感型",
+      "source_ticket": "S1 Pro Breast Pump",
+      "source_excel_row": 46,
+      "source_sheet": "客诉工单信息",
+      "tier1_demographics": {
+        "country": "US",
+        "product_line": "Anker eufy",
+        "product_name": "S1 Pro Breast Pump",
+        "sku": "T8D04121",
+        "channel": "email",
+        "language": "en",
+        "order_no": null,
+        "purchase_channel": "Aeroflow"
+      },
+      "tier2_behavioral": {
+        "patience": 3,
+        "technical_literacy": 5,
+        "assertiveness": 8,
+        "detail_provision": 7,
+        "warranty_awareness": 7,
+        "after_sales_experience": 2
+      },
+      "tier3_emotional": {
+        "frustration": 8,
+        "anxiety": 9,
+        "trust": 4,
+        "escalation_tendency": 8
+      },
+      "first_message": "Order No:\nProduct Name: Eufy S1 Pro Wearable Breast Pump\nProblem Description: Pump isn’t charging anymore and the heating part also burned me and looks tarnished now\nPurchase proof: see attached. Ordered from the reseller Aeroflow\nProdcut SN: Anker1234567E\nCountry: US\nSubmit Date: 2026-08-11T18:54:18.020Z",
+      "escalation_trigger": "agent_continues_normal_troubleshooting",
+      "escalation_effect": "anxiety += 2",
+      "termination": [
+        "safety_escalated",
+        "turn_count >= 8"
+      ],
+      "template_first_message": "Order No: Product Name: Eufy S1 Pro Wearable Breast Pump. Problem Description: Pump isn't charging anymore and the heating part also burned me and looks tarnished now. Purchase proof: see attached. Ordered from the reseller Aeroflow. Prodcut SN: Anker1234567E. Country: US. Submit Date: 2026-08-11T18:54:18.020Z",
+      "template_demographics": {
+        "country": "US",
+        "product_line": "eufy Breast Pump S1 Pro",
+        "sku": "T8D04121",
+        "channel": "email",
+        "language": "en",
+        "order_status": "经销商渠道",
+        "purchase_channel": "Aeroflow Breastpumps (Reseller)"
+      },
+      "parameter_provenance": {
+        "tier1": "逐字段取客诉工单；未提供的国家和渠道不从仓库地址推断",
+        "tier2_behavioral": "用户方法提供的模拟参数，不是真实客户测量",
+        "tier3_emotional": "用户方法提供的模拟参数，不是真实客户测量"
+      },
+      "source_excerpt": "Order No:\nProduct Name: Eufy S1 Pro Wearable Breast Pump\nProblem Description: Pump isn’t charging anymore and the heating part also burned me and looks tarnished now\nPurchase proof: see attached. Ordered from the reseller Aeroflow\nProdcut SN: Anker1234567E\nCountry: US\nSubmit Date: 2026-08-11T18:54:18.020Z",
+      "ground_truth_source": "客诉工单信息表第46行",
+      "message_sha256": "5e454cdd3197f4eadcc48b850803b7d84f00419991533225a21b222abc10c1cc"
+    },
+    {
+      "id": "P08",
+      "name": "模糊表达型",
+      "source_ticket": "S1 Pro Breast Pump",
+      "source_excel_row": 49,
+      "source_sheet": "客诉工单信息",
+      "tier1_demographics": {
+        "country": null,
+        "product_line": "Anker eufy",
+        "product_name": "S1 Pro Breast Pump",
+        "sku": "T8D04121",
+        "channel": "email",
+        "language": "en",
+        "order_no": null,
+        "purchase_channel": null
+      },
+      "tier2_behavioral": {
+        "patience": 5,
+        "technical_literacy": 2,
+        "assertiveness": 3,
+        "detail_provision": 1,
+        "warranty_awareness": 2,
+        "after_sales_experience": 1
+      },
+      "tier3_emotional": {
+        "frustration": 4,
+        "anxiety": 5,
+        "trust": 5,
+        "escalation_tendency": 3
+      },
+      "first_message": "What does this green light mean",
+      "escalation_trigger": "agent_asks_too_many_questions",
+      "escalation_effect": "frustration += 1",
+      "termination": [
+        "goal_achieved",
+        "turn_count >= 8"
+      ],
+      "template_first_message": "What does this green light mean",
+      "template_demographics": {
+        "country": "N/A",
+        "product_line": "eufy Breast Pump S1 Pro",
+        "sku": "T8D04121",
+        "channel": "email",
+        "language": "en",
+        "order_status": "N/A",
+        "purchase_channel": "N/A"
+      },
+      "parameter_provenance": {
+        "tier1": "逐字段取客诉工单；未提供的国家和渠道不从仓库地址推断",
+        "tier2_behavioral": "用户方法提供的模拟参数，不是真实客户测量",
+        "tier3_emotional": "用户方法提供的模拟参数，不是真实客户测量"
+      },
+      "source_excerpt": "What does this green light mean",
+      "ground_truth_source": "客诉工单信息表第49行",
+      "message_sha256": "7ea7741477efd0d9da5e54584b6f0f82532c146145a666a1b4968f0b644982ba"
+    }
+  ]
+}

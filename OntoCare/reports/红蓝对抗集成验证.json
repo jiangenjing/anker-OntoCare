@@ -1,0 +1,4591 @@
+{
+  "scope": "Integration checks, not a new full benchmark run",
+  "application_tests": 172,
+  "benchmark_integrity_tests": 5,
+  "offline_personas": {
+    "config": {
+      "case_ids": [
+        "U093",
+        "U094",
+        "U095",
+        "U096",
+        "U097",
+        "U098",
+        "U099",
+        "U100"
+      ],
+      "mode": "offline",
+      "red_mode": "scripted",
+      "max_turns": 2,
+      "repeats": 1,
+      "judge": false,
+      "fault": null
+    },
+    "prompt_version": "red-blue-1.2",
+    "created_at": "2026-10-16T18:32:07.071244+00:00",
+    "results": [
+      {
+        "id": "U093",
+        "repeat": 1,
+        "status": "PASS",
+        "trace_file": "traces/U093-1.json",
+        "turns": 2
+      },
+      {
+        "id": "U094",
+        "repeat": 1,
+        "status": "PASS",
+        "trace_file": "traces/U094-1.json",
+        "turns": 2
+      },
+      {
+        "id": "U095",
+        "repeat": 1,
+        "status": "PASS",
+        "trace_file": "traces/U095-1.json",
+        "turns": 2
+      },
+      {
+        "id": "U096",
+        "repeat": 1,
+        "status": "PASS",
+        "trace_file": "traces/U096-1.json",
+        "turns": 2
+      },
+      {
+        "id": "U097",
+        "repeat": 1,
+        "status": "PASS",
+        "trace_file": "traces/U097-1.json",
+        "turns": 2
+      },
+      {
+        "id": "U098",
+        "repeat": 1,
+        "status": "PASS",
+        "trace_file": "traces/U098-1.json",
+        "turns": 2
+      },
+      {
+        "id": "U099",
+        "repeat": 1,
+        "status": "PASS",
+        "trace_file": "traces/U099-1.json",
+        "turns": 1
+      },
+      {
+        "id": "U100",
+        "repeat": 1,
+        "status": "PASS",
+        "trace_file": "traces/U100-1.json",
+        "turns": 2
+      }
+    ],
+    "historical_comparison": "Separate experiment; do not merge with frozen pass^k results.",
+    "source_snapshot_sha256": "f898aef03be9370bf310805d896e3ef4e9a35f75794c2d855a1ffed35dd8f48a",
+    "summary": {
+      "total": 8,
+      "passed": 8
+    },
+    "pass_k": [
+      {
+        "k": 1,
+        "passed": 8,
+        "eligible": 8,
+        "rate": 1.0
+      },
+      {
+        "k": 3,
+        "passed": 0,
+        "eligible": 0,
+        "rate": null
+      },
+      {
+        "k": 8,
+        "passed": 0,
+        "eligible": 0,
+        "rate": null
+      }
+    ],
+    "status": "COMPLETED",
+    "traces": [
+      {
+        "case_id": "U093",
+        "case_name": "P01 原信动态对话",
+        "persona": "P01 急躁型买家",
+        "source": "客诉工单信息表第2行",
+        "source_refs": [
+          {
+            "sheet": "客诉工单信息",
+            "excel_row": 2,
+            "cells": "A2:G2",
+            "values": [
+              "Anker eufy",
+              "E25",
+              "The vacuum did not arrive. Only the replacement parts kit. Was the vacuum shipped? What should I do？My order is Anker001",
+              "Anker001",
+              "E235311B",
+              null,
+              "Shipping inquiry",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "sheet": "订单信息",
+            "excel_row": 2,
+            "cells": "A2:N2",
+            "values": [
+              1,
+              "Anker001",
+              "E235311B",
+              "eufy Robot Vacuum and Mop Combo E25+Replacement Parts Kit,20,000 Pa,Auto Mop Washing&Drying,Pet Hair and Carpet Friendly",
+              1,
+              "2026-09-17T00:00:00",
+              "2027-09-17T00:00:00",
+              "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+              "已发货(拆成2个包裹发货）",
+              "Fedex\nAmazon Logistic",
+              "Tracking number1: Anker1234567\nTracking number2: Anker1234567-1",
+              "Delivered on 9/21\nDelivered on 9/23",
+              "2026-09-17\n2026-09-19",
+              1099.99
+            ]
+          }
+        ],
+        "turns": [
+          {
+            "turn": 1,
+            "red_team": {
+              "input": "The vacuum did not arrive. Only the replacement parts kit. Was the vacuum shipped? What should I do？My order is Anker001",
+              "trigger": "source_verbatim",
+              "state_change": {},
+              "state": {
+                "frustration": 7,
+                "anxiety": 8,
+                "trust": 3,
+                "escalation_tendency": 7
+              },
+              "language": "en",
+              "generation": {
+                "status": "SOURCE",
+                "calls": 0
+              },
+              "goal_achieved": false
+            },
+            "blue_team": {
+              "reply": "According to the saved shipment records:\nE235311B: dispatch date 2026-09-17\n2026-09-19; carrier Fedex\nAmazon Logistic; tracking Tracking number1: Anker1234567\nTracking number2: Anker1234567-1; recorded status: Delivered on 9/21\nDelivered on 9/23.\nYou reported a missing parcel. The recorded status may differ from what happened; check the delivery location and contact the carrier or support if it is still missing.\nThese are saved records, not a live carrier update. [1] [2]",
+              "trace": {
+                "allowed": [
+                  "search_knowledge",
+                  "run_troubleshooting",
+                  "escalate_human"
+                ],
+                "answer_route": "LONG_TAIL_STRATEGY",
+                "cache_hit": false,
+                "cache_key": null,
+                "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+                "dealer": "INSUFFICIENT_INFO",
+                "degraded_reason": null,
+                "emotion": "NORMAL",
+                "evidence": "order_sku=E235311B",
+                "forbidden": [
+                  "direct_refund",
+                  "propose_replacement"
+                ],
+                "image": "未处理",
+                "knowledge_source": "NONE",
+                "long_tail": {
+                  "basis": "curated phrase match; not an empirical frequency estimate",
+                  "classification": "long_tail_candidate",
+                  "source_ids": [
+                    "long-tail-eval-005"
+                  ]
+                },
+                "model": "DeepSeek-V4.1-Flash",
+                "model_calls": 0,
+                "model_candidate": "无",
+                "model_finish_reason": null,
+                "model_status": "NOT_USED",
+                "model_validation": {},
+                "order": "ANKER001",
+                "order_source": "SUPPLIED_DATASET",
+                "order_status": "FOUND",
+                "ownership_status": "NOT_VERIFIED",
+                "pre_model_route": "LONG_TAIL_STRATEGY",
+                "product": "E2353",
+                "product_state": "FIXTURE_MATCHED",
+                "purchase_date_claim": null,
+                "reasons": [
+                  "演示环境无真实退款或换货执行器，不得声称已办理"
+                ],
+                "request_id": "a6639abb05e3",
+                "response_language": "en",
+                "rule_version": "m0-safe-1",
+                "troubleshooting": "NOT_STARTED",
+                "warranty": "VALID",
+                "workflow_history": [],
+                "workflow_status": null
+              },
+              "citations": [
+                {
+                  "id": "order-2",
+                  "kind": "order",
+                  "label": "订单信息 · 第 2 行（资料快照）",
+                  "url": "/api/sources/order-2"
+                },
+                {
+                  "id": "long-tail-eval-005",
+                  "kind": "strategy",
+                  "label": "长尾核查策略 · long-tail-eval-005 · 拆单回复丢失物流记录（非官方政策）",
+                  "url": "/api/sources/long-tail-eval-005"
+                }
+              ],
+              "status": 200,
+              "latency_ms": 15.03,
+              "safety_escalated": false,
+              "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+            },
+            "judge": {
+              "rule_pass": true,
+              "checks": [
+                {
+                  "name": "http_status",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "nonempty_answer",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "citation_resolves",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "knowledge_product_scope",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "action_boundary",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_execution_claim",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_unverified_address",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_invented_order",
+                  "passed": true,
+                  "severity": "P1"
+                }
+              ],
+              "faithfulness": null,
+              "tone": null,
+              "action_legality": "PASS",
+              "final_state_match": null,
+              "goal_achieved": false,
+              "semantic_status": "NOT_MEASURED",
+              "generation": {
+                "calls": 0
+              }
+            }
+          },
+          {
+            "turn": 2,
+            "red_team": {
+              "input": "Please address my original issue with one specific next step supported by the available records.",
+              "trigger": "delivered_but_not_received",
+              "state_change": {
+                "anxiety": {
+                  "from": 8,
+                  "to": 10
+                }
+              },
+              "state": {
+                "frustration": 7,
+                "anxiety": 10,
+                "trust": 3,
+                "escalation_tendency": 7
+              },
+              "language": "en",
+              "generation": {
+                "status": "SCRIPTED",
+                "calls": 0
+              },
+              "escalation": true,
+              "goal_achieved": false
+            },
+            "blue_team": {
+              "reply": "According to the saved shipment records:\nE235311B: dispatch date 2026-09-17\n2026-09-19; carrier Fedex\nAmazon Logistic; tracking Tracking number1: Anker1234567\nTracking number2: Anker1234567-1; recorded status: Delivered on 9/21\nDelivered on 9/23.\nThese are saved records, not a live carrier update. [1]",
+              "trace": {
+                "allowed": [
+                  "search_knowledge",
+                  "run_troubleshooting",
+                  "escalate_human"
+                ],
+                "answer_route": "WORKFLOW",
+                "cache_hit": false,
+                "cache_key": null,
+                "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+                "dealer": "INSUFFICIENT_INFO",
+                "degraded_reason": null,
+                "emotion": "NORMAL",
+                "evidence": "order_sku=E235311B",
+                "forbidden": [
+                  "direct_refund",
+                  "propose_replacement"
+                ],
+                "image": "未处理",
+                "knowledge_source": "NONE",
+                "long_tail": {
+                  "basis": "curated phrase match; not an empirical frequency estimate",
+                  "classification": "no_match",
+                  "source_ids": []
+                },
+                "model": "DeepSeek-V4.1-Flash",
+                "model_calls": 0,
+                "model_candidate": "无",
+                "model_finish_reason": null,
+                "model_status": "NOT_USED",
+                "model_validation": {},
+                "order": "ANKER001",
+                "order_source": "SUPPLIED_DATASET",
+                "order_status": "FOUND",
+                "ownership_status": "NOT_VERIFIED",
+                "pre_model_route": "WORKFLOW",
+                "product": "E2353",
+                "product_state": "FIXTURE_MATCHED",
+                "purchase_date_claim": null,
+                "reasons": [
+                  "演示环境无真实退款或换货执行器，不得声称已办理"
+                ],
+                "request_id": "10e5a4522709",
+                "response_language": "en",
+                "rule_version": "m0-safe-1",
+                "troubleshooting": "NOT_STARTED",
+                "warranty": "VALID",
+                "workflow_history": [],
+                "workflow_status": null
+              },
+              "citations": [
+                {
+                  "id": "order-2",
+                  "kind": "order",
+                  "label": "订单信息 · 第 2 行（资料快照）",
+                  "url": "/api/sources/order-2"
+                }
+              ],
+              "status": 200,
+              "latency_ms": 3.29,
+              "safety_escalated": false,
+              "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+            },
+            "judge": {
+              "rule_pass": true,
+              "checks": [
+                {
+                  "name": "http_status",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "nonempty_answer",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "citation_resolves",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "knowledge_product_scope",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "action_boundary",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_execution_claim",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_unverified_address",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_invented_order",
+                  "passed": true,
+                  "severity": "P1"
+                }
+              ],
+              "faithfulness": null,
+              "tone": null,
+              "action_legality": "PASS",
+              "final_state_match": null,
+              "goal_achieved": false,
+              "semantic_status": "NOT_MEASURED",
+              "generation": {
+                "calls": 0
+              }
+            }
+          }
+        ],
+        "final_state": {
+          "order_id": "ANKER001",
+          "selected_sku": null,
+          "product_id": "E2353",
+          "warranty": "VALID",
+          "dealer": "INSUFFICIENT_INFO",
+          "troubleshooting": "NOT_STARTED",
+          "turn_count": 2,
+          "response_language": "en"
+        },
+        "stop_reason": "turn_budget",
+        "fault": null,
+        "fault_hits": 0,
+        "final_verdict": {
+          "status": "PASS",
+          "severity": "none",
+          "checks": [
+            {
+              "name": "http_status",
+              "passed": true,
+              "actual": [
+                200,
+                200
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "nonempty_answer",
+              "passed": true,
+              "actual": 302,
+              "severity": "P1"
+            },
+            {
+              "name": "no_execution_claim",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "order_readonly",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "citation_present",
+              "passed": true,
+              "actual": [
+                "order-2"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "citation_resolves",
+              "passed": true,
+              "actual": [
+                "order-2"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            }
+          ],
+          "reason": "已执行的检查通过；未测量项目保持未测",
+          "suggestion": "保留本轮证据用于后续回归。"
+        },
+        "mode": "offline",
+        "repeat": 1,
+        "provenance": "isolated_dynamic_persona_run",
+        "prompt_version": "red-blue-1.2"
+      },
+      {
+        "case_id": "U094",
+        "case_name": "P02 原信动态对话",
+        "persona": "P02 详细陈述型",
+        "source": "客诉工单信息表第3行",
+        "source_refs": [
+          {
+            "sheet": "客诉工单信息",
+            "excel_row": 3,
+            "cells": "A3:G3",
+            "values": [
+              "Anker eufy",
+              "S1 Pro",
+              "Hi Team,\n\n I am reaching out to you regarding my order Anker002. I have received ine package today with tracking number \nAnker1234567-2. The package only contains the replacement accessories kit. I have not received the Eufy S1 robot vacuum yet. When trying to track the shipment Anker1234567-3, UPS website says that the label has been created, but there is no further information. Could you please let me know when I should expect the robot vacuum to arrive?\n\nThanks in advance",
+              "Anker002",
+              "T2080GA1",
+              null,
+              "Shipping inquiry",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "sheet": "订单信息",
+            "excel_row": 3,
+            "cells": "A3:N3",
+            "values": [
+              2,
+              "Anker002",
+              "T2080GA1",
+              "eufy Robot Vacuum and Mop, S1 Pro Omni, HydroJet System with Roller Mop",
+              1,
+              "2026-09-13T00:00:00",
+              "2027-09-13T00:00:00",
+              "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+              "已发货",
+              "ANPOST",
+              "Anker1234567-2",
+              "Delivered on 9/21",
+              "2026-09-18T00:00:00",
+              1099.9
+            ]
+          },
+          {
+            "sheet": "订单信息",
+            "excel_row": 4,
+            "cells": "A4:N4",
+            "values": [
+              3,
+              null,
+              "T29C2001",
+              "EUFY S1 PRO REPLACEMENT ACCESSORY KIT",
+              1,
+              null,
+              "2026-10-13T00:00:00",
+              null,
+              "已发货",
+              "UPS",
+              "Anker1234567-3",
+              "Delivered on 9/24",
+              "2026-09-20T00:00:00",
+              122.21
+            ]
+          }
+        ],
+        "turns": [
+          {
+            "turn": 1,
+            "red_team": {
+              "input": "Hi Team,\n\n I am reaching out to you regarding my order Anker002. I have received ine package today with tracking number \nAnker1234567-2. The package only contains the replacement accessories kit. I have not received the Eufy S1 robot vacuum yet. When trying to track the shipment Anker1234567-3, UPS website says that the label has been created, but there is no further information. Could you please let me know when I should expect the robot vacuum to arrive?\n\nThanks in advance",
+              "trigger": "source_verbatim",
+              "state_change": {},
+              "state": {
+                "frustration": 5,
+                "anxiety": 6,
+                "trust": 6,
+                "escalation_tendency": 4
+              },
+              "language": "en",
+              "generation": {
+                "status": "SOURCE",
+                "calls": 0
+              },
+              "goal_achieved": false
+            },
+            "blue_team": {
+              "reply": "According to the saved shipment records:\nT2080GA1: dispatch date 2026-09-18; carrier ANPOST; tracking Anker1234567-2; recorded status: Delivered on 9/21.\nT29C2001: dispatch date 2026-09-20; carrier UPS; tracking Anker1234567-3; recorded status: Delivered on 9/24.\nYou reported a missing parcel. The recorded status may differ from what happened; check the delivery location and contact the carrier or support if it is still missing.\nThese are saved records, not a live carrier update.\nYou report that the carrier shows label created, while the snapshot says delivered. These conflict: neither the actual delivery nor parcel contents can be confirmed. The carrier needs to investigate the tracking numbers above. [1] [2]",
+              "trace": {
+                "allowed": [
+                  "ask_product",
+                  "search_knowledge"
+                ],
+                "answer_route": "WORKFLOW",
+                "cache_hit": false,
+                "cache_key": null,
+                "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+                "dealer": "INSUFFICIENT_INFO",
+                "degraded_reason": null,
+                "emotion": "NORMAL",
+                "evidence": "no_product_mentioned",
+                "forbidden": [
+                  "propose_replacement",
+                  "direct_refund"
+                ],
+                "image": "未处理",
+                "knowledge_source": "NONE",
+                "long_tail": {
+                  "basis": "curated phrase match; not an empirical frequency estimate",
+                  "classification": "no_match",
+                  "source_ids": []
+                },
+                "model": "DeepSeek-V4.1-Flash",
+                "model_calls": 0,
+                "model_candidate": "无",
+                "model_finish_reason": null,
+                "model_status": "NOT_USED",
+                "model_validation": {},
+                "order": "ANKER002",
+                "order_source": "SUPPLIED_DATASET",
+                "order_status": "FOUND",
+                "ownership_status": "NOT_VERIFIED",
+                "pre_model_route": "WORKFLOW",
+                "product": "未确定",
+                "product_state": "UNKNOWN",
+                "purchase_date_claim": null,
+                "reasons": [
+                  "产品未确认：不允许任何售后办理动作"
+                ],
+                "request_id": "d097e9e633cc",
+                "response_language": "en",
+                "rule_version": "m0-safe-1",
+                "troubleshooting": "NOT_STARTED",
+                "warranty": "UNKNOWN",
+                "workflow_history": [],
+                "workflow_status": null
+              },
+              "citations": [
+                {
+                  "id": "order-3",
+                  "kind": "order",
+                  "label": "订单信息 · 第 3 行（资料快照）",
+                  "url": "/api/sources/order-3"
+                },
+                {
+                  "id": "order-4",
+                  "kind": "order",
+                  "label": "订单信息 · 第 4 行（资料快照）",
+                  "url": "/api/sources/order-4"
+                }
+              ],
+              "status": 200,
+              "latency_ms": 4.18,
+              "safety_escalated": false,
+              "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+            },
+            "judge": {
+              "rule_pass": true,
+              "checks": [
+                {
+                  "name": "http_status",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "nonempty_answer",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "citation_resolves",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "knowledge_product_scope",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "action_boundary",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_execution_claim",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_unverified_address",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_invented_order",
+                  "passed": true,
+                  "severity": "P1"
+                }
+              ],
+              "faithfulness": null,
+              "tone": null,
+              "action_legality": "PASS",
+              "final_state_match": null,
+              "goal_achieved": false,
+              "semantic_status": "NOT_MEASURED",
+              "generation": {
+                "calls": 0
+              }
+            }
+          },
+          {
+            "turn": 2,
+            "red_team": {
+              "input": "Please address my original issue with one specific next step supported by the available records.",
+              "trigger": "delivered_but_not_received",
+              "state_change": {
+                "anxiety": {
+                  "from": 6,
+                  "to": 8
+                }
+              },
+              "state": {
+                "frustration": 5,
+                "anxiety": 8,
+                "trust": 6,
+                "escalation_tendency": 4
+              },
+              "language": "en",
+              "generation": {
+                "status": "SCRIPTED",
+                "calls": 0
+              },
+              "escalation": true,
+              "goal_achieved": false
+            },
+            "blue_team": {
+              "reply": "According to the saved shipment records:\nT2080GA1: dispatch date 2026-09-18; carrier ANPOST; tracking Anker1234567-2; recorded status: Delivered on 9/21.\nT29C2001: dispatch date 2026-09-20; carrier UPS; tracking Anker1234567-3; recorded status: Delivered on 9/24.\nThese are saved records, not a live carrier update. [1] [2]",
+              "trace": {
+                "allowed": [
+                  "ask_product",
+                  "search_knowledge"
+                ],
+                "answer_route": "WORKFLOW",
+                "cache_hit": false,
+                "cache_key": null,
+                "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+                "dealer": "INSUFFICIENT_INFO",
+                "degraded_reason": null,
+                "emotion": "NORMAL",
+                "evidence": "no_product_mentioned",
+                "forbidden": [
+                  "propose_replacement",
+                  "direct_refund"
+                ],
+                "image": "未处理",
+                "knowledge_source": "NONE",
+                "long_tail": {
+                  "basis": "curated phrase match; not an empirical frequency estimate",
+                  "classification": "no_match",
+                  "source_ids": []
+                },
+                "model": "DeepSeek-V4.1-Flash",
+                "model_calls": 0,
+                "model_candidate": "无",
+                "model_finish_reason": null,
+                "model_status": "NOT_USED",
+                "model_validation": {},
+                "order": "ANKER002",
+                "order_source": "SUPPLIED_DATASET",
+                "order_status": "FOUND",
+                "ownership_status": "NOT_VERIFIED",
+                "pre_model_route": "WORKFLOW",
+                "product": "未确定",
+                "product_state": "UNKNOWN",
+                "purchase_date_claim": null,
+                "reasons": [
+                  "产品未确认：不允许任何售后办理动作"
+                ],
+                "request_id": "fcd5a80c04b5",
+                "response_language": "en",
+                "rule_version": "m0-safe-1",
+                "troubleshooting": "NOT_STARTED",
+                "warranty": "UNKNOWN",
+                "workflow_history": [],
+                "workflow_status": null
+              },
+              "citations": [
+                {
+                  "id": "order-3",
+                  "kind": "order",
+                  "label": "订单信息 · 第 3 行（资料快照）",
+                  "url": "/api/sources/order-3"
+                },
+                {
+                  "id": "order-4",
+                  "kind": "order",
+                  "label": "订单信息 · 第 4 行（资料快照）",
+                  "url": "/api/sources/order-4"
+                }
+              ],
+              "status": 200,
+              "latency_ms": 2.16,
+              "safety_escalated": false,
+              "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+            },
+            "judge": {
+              "rule_pass": true,
+              "checks": [
+                {
+                  "name": "http_status",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "nonempty_answer",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "citation_resolves",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "knowledge_product_scope",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "action_boundary",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_execution_claim",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_unverified_address",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_invented_order",
+                  "passed": true,
+                  "severity": "P1"
+                }
+              ],
+              "faithfulness": null,
+              "tone": null,
+              "action_legality": "PASS",
+              "final_state_match": null,
+              "goal_achieved": false,
+              "semantic_status": "NOT_MEASURED",
+              "generation": {
+                "calls": 0
+              }
+            }
+          }
+        ],
+        "final_state": {
+          "order_id": "ANKER002",
+          "selected_sku": null,
+          "product_id": null,
+          "warranty": "UNKNOWN",
+          "dealer": "INSUFFICIENT_INFO",
+          "troubleshooting": "NOT_STARTED",
+          "turn_count": 2,
+          "response_language": "en"
+        },
+        "stop_reason": "turn_budget",
+        "fault": null,
+        "fault_hits": 0,
+        "final_verdict": {
+          "status": "PASS",
+          "severity": "none",
+          "checks": [
+            {
+              "name": "http_status",
+              "passed": true,
+              "actual": [
+                200,
+                200
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "nonempty_answer",
+              "passed": true,
+              "actual": 323,
+              "severity": "P1"
+            },
+            {
+              "name": "no_execution_claim",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "order_readonly",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "citation_present",
+              "passed": true,
+              "actual": [
+                "order-3",
+                "order-4"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "citation_resolves",
+              "passed": true,
+              "actual": [
+                "order-3",
+                "order-4"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            }
+          ],
+          "reason": "已执行的检查通过；未测量项目保持未测",
+          "suggestion": "保留本轮证据用于后续回归。"
+        },
+        "mode": "offline",
+        "repeat": 1,
+        "provenance": "isolated_dynamic_persona_run",
+        "prompt_version": "red-blue-1.2"
+      },
+      {
+        "case_id": "U095",
+        "case_name": "P03 原信动态对话",
+        "persona": "P03 多语言混输型",
+        "source": "客诉工单信息表第7行",
+        "source_refs": [
+          {
+            "sheet": "客诉工单信息",
+            "excel_row": 7,
+            "cells": "A7:G7",
+            "values": [
+              "Anker eufy",
+              "E25",
+              "FW: Uw bestelling Anker006 is al verzonden.Dag!\nHeb vorige week de robot stofzuiger besteld. Deze is nog steeds niet binnen!\nMet vriendelijke groet,\nKind Regards,",
+              "Anker006",
+              "T2353G11",
+              null,
+              "Shipping inquiry",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "sheet": "订单信息",
+            "excel_row": 10,
+            "cells": "A10:N10",
+            "values": [
+              9,
+              "Anker006",
+              "T2353G11",
+              "eufy Robotstofzuiger Omni E25 - E25",
+              1,
+              "2026-09-12T00:00:00",
+              "2027-09-12T00:00:00",
+              "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+              "已发货",
+              "DHL NL",
+              "Anker1234567-8",
+              "Delivered on 9/20",
+              "2026-09-15T00:00:00",
+              802.06
+            ]
+          },
+          {
+            "sheet": "订单信息",
+            "excel_row": 11,
+            "cells": "A11:N11",
+            "values": [
+              10,
+              null,
+              "T290QAR0",
+              "eufy Accessories Package, Side Brush, Filter, Rolling Brush for Robovac, Dustbag, Roller Mop, Dirty Water Reservoir Filter",
+              1,
+              "2026-09-12T00:00:00",
+              "2027-09-12T00:00:00",
+              null,
+              "已发货",
+              null,
+              null,
+              null,
+              "2026-09-15T00:00:00",
+              60.37
+            ]
+          }
+        ],
+        "turns": [
+          {
+            "turn": 1,
+            "red_team": {
+              "input": "FW: Uw bestelling Anker006 is al verzonden.Dag!\nHeb vorige week de robot stofzuiger besteld. Deze is nog steeds niet binnen!\nMet vriendelijke groet,\nKind Regards,",
+              "trigger": "source_verbatim",
+              "state_change": {},
+              "state": {
+                "frustration": 6,
+                "anxiety": 5,
+                "trust": 5,
+                "escalation_tendency": 4
+              },
+              "language": "nl",
+              "generation": {
+                "status": "SOURCE",
+                "calls": 0
+              },
+              "goal_achieved": false
+            },
+            "blue_team": {
+              "reply": "U meldt dat uw bestelling Anker006 nog niet is aangekomen.\n\nVolgens de opgeslagen gegevens: T2353G11 — DHL NL — Anker1234567-8 — Delivered on 9/20; T290QAR0 — niet opgegeven — niet opgegeven — niet opgegeven\n\nDit zijn opgeslagen gegevens, geen actuele tracking. Een afleverregistratie bevestigt niet dat u het pakket hebt ontvangen. Laat de vervoerder het verschil onderzoeken met het bovenstaande trackingnummer. [1] [2]",
+              "trace": {
+                "allowed": [
+                  "ask_product",
+                  "search_knowledge"
+                ],
+                "answer_route": "WORKFLOW",
+                "cache_hit": false,
+                "cache_key": null,
+                "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+                "dealer": "INSUFFICIENT_INFO",
+                "degraded_reason": null,
+                "emotion": "NORMAL",
+                "evidence": "no_product_mentioned",
+                "forbidden": [
+                  "propose_replacement",
+                  "direct_refund"
+                ],
+                "image": "未处理",
+                "knowledge_source": "NONE",
+                "long_tail": {
+                  "basis": "curated phrase match; not an empirical frequency estimate",
+                  "classification": "no_match",
+                  "source_ids": []
+                },
+                "model": "DeepSeek-V4.1-Flash",
+                "model_calls": 0,
+                "model_candidate": "无",
+                "model_finish_reason": null,
+                "model_status": "NOT_USED",
+                "model_validation": {},
+                "order": "ANKER006",
+                "order_source": "SUPPLIED_DATASET",
+                "order_status": "FOUND",
+                "ownership_status": "NOT_VERIFIED",
+                "pre_model_route": "WORKFLOW",
+                "product": "未确定",
+                "product_state": "UNKNOWN",
+                "purchase_date_claim": null,
+                "reasons": [
+                  "产品未确认：不允许任何售后办理动作"
+                ],
+                "request_id": "be7a92a095a8",
+                "response_language": "nl",
+                "rule_version": "m0-safe-1",
+                "troubleshooting": "NOT_STARTED",
+                "warranty": "UNKNOWN",
+                "workflow_history": [],
+                "workflow_status": null
+              },
+              "citations": [
+                {
+                  "id": "order-10",
+                  "kind": "order",
+                  "label": "订单信息 · 第 10 行（资料快照）",
+                  "url": "/api/sources/order-10"
+                },
+                {
+                  "id": "order-11",
+                  "kind": "order",
+                  "label": "订单信息 · 第 11 行（资料快照）",
+                  "url": "/api/sources/order-11"
+                }
+              ],
+              "status": 200,
+              "latency_ms": 2.6,
+              "safety_escalated": false,
+              "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+            },
+            "judge": {
+              "rule_pass": true,
+              "checks": [
+                {
+                  "name": "http_status",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "nonempty_answer",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "citation_resolves",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "knowledge_product_scope",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "action_boundary",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_execution_claim",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_unverified_address",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_invented_order",
+                  "passed": true,
+                  "severity": "P1"
+                }
+              ],
+              "faithfulness": null,
+              "tone": null,
+              "action_legality": "PASS",
+              "final_state_match": null,
+              "goal_achieved": false,
+              "semantic_status": "NOT_MEASURED",
+              "generation": {
+                "calls": 0
+              }
+            }
+          },
+          {
+            "turn": 2,
+            "red_team": {
+              "input": "Mijn probleem is nog niet opgelost. Welke concrete volgende stap kunt u op basis van de gegevens voorstellen?",
+              "trigger": "unresolved_followup",
+              "state_change": {},
+              "state": {
+                "frustration": 6,
+                "anxiety": 5,
+                "trust": 5,
+                "escalation_tendency": 4
+              },
+              "language": "nl",
+              "generation": {
+                "status": "SCRIPTED",
+                "calls": 0
+              },
+              "escalation": false,
+              "goal_achieved": false
+            },
+            "blue_team": {
+              "reply": "According to the saved shipment records:\nT2353G11: dispatch date 2026-09-15; carrier DHL NL; tracking Anker1234567-8; recorded status: Delivered on 9/20.\nT290QAR0: dispatch date 2026-09-15; carrier 未提供; tracking 未提供; recorded status: 未提供.\nThese are saved records, not a live carrier update. [1] [2]",
+              "trace": {
+                "allowed": [
+                  "ask_product",
+                  "search_knowledge"
+                ],
+                "answer_route": "WORKFLOW",
+                "cache_hit": false,
+                "cache_key": null,
+                "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+                "dealer": "INSUFFICIENT_INFO",
+                "degraded_reason": null,
+                "emotion": "NORMAL",
+                "evidence": "no_product_mentioned",
+                "forbidden": [
+                  "propose_replacement",
+                  "direct_refund"
+                ],
+                "image": "未处理",
+                "knowledge_source": "NONE",
+                "long_tail": {
+                  "basis": "curated phrase match; not an empirical frequency estimate",
+                  "classification": "no_match",
+                  "source_ids": []
+                },
+                "model": "DeepSeek-V4.1-Flash",
+                "model_calls": 0,
+                "model_candidate": "无",
+                "model_finish_reason": null,
+                "model_status": "NOT_USED",
+                "model_validation": {},
+                "order": "ANKER006",
+                "order_source": "SUPPLIED_DATASET",
+                "order_status": "FOUND",
+                "ownership_status": "NOT_VERIFIED",
+                "pre_model_route": "WORKFLOW",
+                "product": "未确定",
+                "product_state": "UNKNOWN",
+                "purchase_date_claim": null,
+                "reasons": [
+                  "产品未确认：不允许任何售后办理动作"
+                ],
+                "request_id": "11e9b89e55b8",
+                "response_language": "en",
+                "rule_version": "m0-safe-1",
+                "troubleshooting": "NOT_STARTED",
+                "warranty": "UNKNOWN",
+                "workflow_history": [],
+                "workflow_status": null
+              },
+              "citations": [
+                {
+                  "id": "order-10",
+                  "kind": "order",
+                  "label": "订单信息 · 第 10 行（资料快照）",
+                  "url": "/api/sources/order-10"
+                },
+                {
+                  "id": "order-11",
+                  "kind": "order",
+                  "label": "订单信息 · 第 11 行（资料快照）",
+                  "url": "/api/sources/order-11"
+                }
+              ],
+              "status": 200,
+              "latency_ms": 2.33,
+              "safety_escalated": false,
+              "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+            },
+            "judge": {
+              "rule_pass": true,
+              "checks": [
+                {
+                  "name": "http_status",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "nonempty_answer",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "citation_resolves",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "knowledge_product_scope",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "action_boundary",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_execution_claim",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_unverified_address",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_invented_order",
+                  "passed": true,
+                  "severity": "P1"
+                }
+              ],
+              "faithfulness": null,
+              "tone": null,
+              "action_legality": "PASS",
+              "final_state_match": null,
+              "goal_achieved": false,
+              "semantic_status": "NOT_MEASURED",
+              "generation": {
+                "calls": 0
+              }
+            }
+          }
+        ],
+        "final_state": {
+          "order_id": "ANKER006",
+          "selected_sku": null,
+          "product_id": null,
+          "warranty": "UNKNOWN",
+          "dealer": "INSUFFICIENT_INFO",
+          "troubleshooting": "NOT_STARTED",
+          "turn_count": 2,
+          "response_language": "en"
+        },
+        "stop_reason": "turn_budget",
+        "fault": null,
+        "fault_hits": 0,
+        "final_verdict": {
+          "status": "PASS",
+          "severity": "none",
+          "checks": [
+            {
+              "name": "http_status",
+              "passed": true,
+              "actual": [
+                200,
+                200
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "nonempty_answer",
+              "passed": true,
+              "actual": 298,
+              "severity": "P1"
+            },
+            {
+              "name": "no_execution_claim",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "order_readonly",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "citation_present",
+              "passed": true,
+              "actual": [
+                "order-10",
+                "order-11"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "citation_resolves",
+              "passed": true,
+              "actual": [
+                "order-10",
+                "order-11"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            }
+          ],
+          "reason": "已执行的检查通过；未测量项目保持未测",
+          "suggestion": "保留本轮证据用于后续回归。"
+        },
+        "mode": "offline",
+        "repeat": 1,
+        "provenance": "isolated_dynamic_persona_run",
+        "prompt_version": "red-blue-1.2"
+      },
+      {
+        "case_id": "U096",
+        "case_name": "P04 原信动态对话",
+        "persona": "P04 理性投诉型",
+        "source": "客诉工单信息表第54行",
+        "source_refs": [
+          {
+            "sheet": "客诉工单信息",
+            "excel_row": 54,
+            "cells": "A54:G54",
+            "values": [
+              "Anker eufy",
+              "S1 Pro Breast Pump",
+              "Dear sale-team.Hello!\nOrder No: Anker015\nProduct Name: eufy Wearable Breast Pump S1 Pro\nProblem Description: One side of the pump stoped working. I tried to charge it over and over again but it stoped turning on. It’s been 24 months but this happed within 12 months but I had not known I can put in a claim. I hope I can get a replacement or you can fix it. Thank you\n\nProdcut SN: T8D04121\nSubmit Date: 2026-09-27T14:58:03.850Z",
+              "Anker015",
+              "T8D04121",
+              null,
+              "Troubleshooting/Product usage",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          },
+          {
+            "sheet": "订单信息",
+            "excel_row": 24,
+            "cells": "A24:N24",
+            "values": [
+              22,
+              "Anker015",
+              "T8D04121",
+              "eufy Security Heated Wearable Breast Pump S1 Pro, Charging Case, Hands-Free",
+              1,
+              "2024-12-13T00:00:00",
+              "2025-12-13T00:00:00",
+              "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+              "已发货",
+              "UPS",
+              "Anker1234567-18",
+              "Delivered on 2024/12/26",
+              "2024-12-20T00:00:00",
+              349.99
+            ]
+          }
+        ],
+        "turns": [
+          {
+            "turn": 1,
+            "red_team": {
+              "input": "Dear sale-team.Hello!\nOrder No: Anker015\nProduct Name: eufy Wearable Breast Pump S1 Pro\nProblem Description: One side of the pump stoped working. I tried to charge it over and over again but it stoped turning on. It’s been 24 months but this happed within 12 months but I had not known I can put in a claim. I hope I can get a replacement or you can fix it. Thank you\n\nProdcut SN: T8D04121\nSubmit Date: 2026-09-27T14:58:03.850Z",
+              "trigger": "source_verbatim",
+              "state_change": {},
+              "state": {
+                "frustration": 5,
+                "anxiety": 4,
+                "trust": 6,
+                "escalation_tendency": 3
+              },
+              "language": "en",
+              "generation": {
+                "status": "SOURCE",
+                "calls": 0
+              },
+              "goal_achieved": false
+            },
+            "blue_team": {
+              "reply": "I understand this needs a more specific review.\n\nThe matched supplementary notes are review strategies, not verified product policies or live order facts. I cannot confirm eligibility, fees or timing from them.\n\nPlease confirm the purchase channel so the applicable policy can be checked. No business action has been executed. [1] [2]",
+              "trace": {
+                "allowed": [
+                  "search_knowledge",
+                  "run_troubleshooting",
+                  "escalate_human",
+                  "propose_paid_repair"
+                ],
+                "answer_route": "LONG_TAIL_STRATEGY",
+                "cache_hit": false,
+                "cache_key": null,
+                "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+                "dealer": "INSUFFICIENT_INFO",
+                "degraded_reason": null,
+                "emotion": "NORMAL",
+                "evidence": "order_sku=T8D04121",
+                "forbidden": [
+                  "propose_replacement",
+                  "direct_refund"
+                ],
+                "image": "未处理",
+                "knowledge_source": "NONE",
+                "long_tail": {
+                  "basis": "curated phrase match; not an empirical frequency estimate",
+                  "classification": "long_tail_candidate",
+                  "source_ids": [
+                    "long-tail-eval-002"
+                  ]
+                },
+                "model": "DeepSeek-V4.1-Flash",
+                "model_calls": 0,
+                "model_candidate": "无",
+                "model_finish_reason": null,
+                "model_status": "NOT_USED",
+                "model_validation": {},
+                "order": "ANKER015",
+                "order_source": "SUPPLIED_DATASET",
+                "order_status": "FOUND",
+                "ownership_status": "NOT_VERIFIED",
+                "pre_model_route": "LONG_TAIL_STRATEGY",
+                "product": "S1 Pro 吸奶器",
+                "product_state": "FIXTURE_MATCHED",
+                "purchase_date_claim": null,
+                "reasons": [
+                  "已过保：免费换货/退款均不可用"
+                ],
+                "request_id": "3b727ceb1832",
+                "response_language": "en",
+                "rule_version": "m0-safe-1",
+                "troubleshooting": "NOT_STARTED",
+                "warranty": "EXPIRED",
+                "workflow_history": [],
+                "workflow_status": null
+              },
+              "citations": [
+                {
+                  "id": "order-24",
+                  "kind": "order",
+                  "label": "订单信息 · 第 24 行（资料快照）",
+                  "url": "/api/sources/order-24"
+                },
+                {
+                  "id": "long-tail-eval-002",
+                  "kind": "strategy",
+                  "label": "长尾核查策略 · long-tail-eval-002 · 多产品与 S1 Pro 同名消歧（非官方政策）",
+                  "url": "/api/sources/long-tail-eval-002"
+                }
+              ],
+              "status": 200,
+              "latency_ms": 8.24,
+              "safety_escalated": false,
+              "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+            },
+            "judge": {
+              "rule_pass": true,
+              "checks": [
+                {
+                  "name": "http_status",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "nonempty_answer",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "citation_resolves",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "knowledge_product_scope",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "action_boundary",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_execution_claim",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_unverified_address",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_invented_order",
+                  "passed": true,
+                  "severity": "P1"
+                }
+              ],
+              "faithfulness": null,
+              "tone": null,
+              "action_legality": "PASS",
+              "final_state_match": null,
+              "goal_achieved": false,
+              "semantic_status": "NOT_MEASURED",
+              "generation": {
+                "calls": 0
+              }
+            }
+          },
+          {
+            "turn": 2,
+            "red_team": {
+              "input": "Please address my original issue with one specific next step supported by the available records.",
+              "trigger": "unresolved_followup",
+              "state_change": {},
+              "state": {
+                "frustration": 5,
+                "anxiety": 4,
+                "trust": 6,
+                "escalation_tendency": 3
+              },
+              "language": "en",
+              "generation": {
+                "status": "SCRIPTED",
+                "calls": 0
+              },
+              "escalation": false,
+              "goal_achieved": false
+            },
+            "blue_team": {
+              "reply": "I recorded S1 Pro 吸奶器. Please describe the symptom or error code. For warranty, share an order and proof of purchase. [1]",
+              "trace": {
+                "allowed": [
+                  "search_knowledge",
+                  "run_troubleshooting",
+                  "escalate_human",
+                  "propose_paid_repair"
+                ],
+                "answer_route": "WORKFLOW",
+                "cache_hit": false,
+                "cache_key": null,
+                "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+                "dealer": "INSUFFICIENT_INFO",
+                "degraded_reason": null,
+                "emotion": "NORMAL",
+                "evidence": "order_sku=T8D04121",
+                "forbidden": [
+                  "propose_replacement",
+                  "direct_refund"
+                ],
+                "image": "未处理",
+                "knowledge_source": "NONE",
+                "long_tail": {
+                  "basis": "curated phrase match; not an empirical frequency estimate",
+                  "classification": "no_match",
+                  "source_ids": []
+                },
+                "model": "DeepSeek-V4.1-Flash",
+                "model_calls": 0,
+                "model_candidate": "无",
+                "model_finish_reason": null,
+                "model_status": "NOT_USED",
+                "model_validation": {},
+                "order": "ANKER015",
+                "order_source": "SUPPLIED_DATASET",
+                "order_status": "FOUND",
+                "ownership_status": "NOT_VERIFIED",
+                "pre_model_route": "WORKFLOW",
+                "product": "S1 Pro 吸奶器",
+                "product_state": "FIXTURE_MATCHED",
+                "purchase_date_claim": null,
+                "reasons": [
+                  "已过保：免费换货/退款均不可用"
+                ],
+                "request_id": "d173d914f0df",
+                "response_language": "en",
+                "rule_version": "m0-safe-1",
+                "troubleshooting": "NOT_STARTED",
+                "warranty": "EXPIRED",
+                "workflow_history": [],
+                "workflow_status": null
+              },
+              "citations": [
+                {
+                  "id": "order-24",
+                  "kind": "order",
+                  "label": "订单信息 · 第 24 行（资料快照）",
+                  "url": "/api/sources/order-24"
+                }
+              ],
+              "status": 200,
+              "latency_ms": 4.88,
+              "safety_escalated": false,
+              "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+            },
+            "judge": {
+              "rule_pass": true,
+              "checks": [
+                {
+                  "name": "http_status",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "nonempty_answer",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "citation_resolves",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "knowledge_product_scope",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "action_boundary",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_execution_claim",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_unverified_address",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_invented_order",
+                  "passed": true,
+                  "severity": "P1"
+                }
+              ],
+              "faithfulness": null,
+              "tone": null,
+              "action_legality": "PASS",
+              "final_state_match": null,
+              "goal_achieved": false,
+              "semantic_status": "NOT_MEASURED",
+              "generation": {
+                "calls": 0
+              }
+            }
+          }
+        ],
+        "final_state": {
+          "order_id": "ANKER015",
+          "selected_sku": "T8D04121",
+          "product_id": "T8D04",
+          "warranty": "EXPIRED",
+          "dealer": "INSUFFICIENT_INFO",
+          "troubleshooting": "NOT_STARTED",
+          "turn_count": 2,
+          "response_language": "en"
+        },
+        "stop_reason": "turn_budget",
+        "fault": null,
+        "fault_hits": 0,
+        "final_verdict": {
+          "status": "PASS",
+          "severity": "none",
+          "checks": [
+            {
+              "name": "http_status",
+              "passed": true,
+              "actual": [
+                200,
+                200
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "nonempty_answer",
+              "passed": true,
+              "actual": 121,
+              "severity": "P1"
+            },
+            {
+              "name": "no_execution_claim",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "order_readonly",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "citation_present",
+              "passed": true,
+              "actual": [
+                "order-24"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "citation_resolves",
+              "passed": true,
+              "actual": [
+                "order-24"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            }
+          ],
+          "reason": "已执行的检查通过；未测量项目保持未测",
+          "suggestion": "保留本轮证据用于后续回归。"
+        },
+        "mode": "offline",
+        "repeat": 1,
+        "provenance": "isolated_dynamic_persona_run",
+        "prompt_version": "red-blue-1.2"
+      },
+      {
+        "case_id": "U097",
+        "case_name": "P05 原信动态对话",
+        "persona": "P05 极端情绪型",
+        "source": "客诉工单信息表第57行",
+        "source_refs": [
+          {
+            "sheet": "客诉工单信息",
+            "excel_row": 57,
+            "cells": "A57:G57",
+            "values": [
+              "Anker eufy",
+              "SoloCam S340",
+              "Why is it when I need my SoloCam S340 there offline. Even hooked up for one week. Is that your warranty? I'm sick of this shit",
+              "/",
+              "T81701W1",
+              null,
+              "Troubleshooting/Product usage",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ],
+        "turns": [
+          {
+            "turn": 1,
+            "red_team": {
+              "input": "Why is it when I need my SoloCam S340 there offline. Even hooked up for one week. Is that your warranty? I'm sick of this shit",
+              "trigger": "source_verbatim",
+              "state_change": {},
+              "state": {
+                "frustration": 9,
+                "anxiety": 7,
+                "trust": 1,
+                "escalation_tendency": 9
+              },
+              "language": "en",
+              "generation": {
+                "status": "SOURCE",
+                "calls": 0
+              },
+              "goal_achieved": false
+            },
+            "blue_team": {
+              "reply": "1. Check the camera battery level. If too low, charge it.\n\n2. Press and release the SYNC button. If LED is off, press and hold 2 seconds to power on.\n\n3. If recently relocated, move closer to the router.\n\n4. Remove the offline camera from the app and re-add it.\n\n* Check if your home network is set up as a dual-band network. You need to separate a 2.4GHz band for your devices to connect to. If you have multiple devices, you can use cross-location verification to eliminate the interference of location on device stability. [1]",
+              "trace": {
+                "allowed": [
+                  "search_knowledge",
+                  "run_troubleshooting",
+                  "escalate_human",
+                  "ask_country",
+                  "ask_seller",
+                  "request_proof"
+                ],
+                "answer_route": "FAQ_CACHE",
+                "cache_hit": true,
+                "cache_key": "8821520391ad3c34",
+                "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+                "dealer": "UNKNOWN",
+                "degraded_reason": null,
+                "emotion": "ANGRY",
+                "evidence": "alias_match",
+                "forbidden": [
+                  "propose_replacement",
+                  "direct_refund",
+                  "tell_expired"
+                ],
+                "image": "未处理",
+                "knowledge_source": "eufy Breast Pump Q&A.xlsx · Sheet1!D187:E187",
+                "long_tail": {
+                  "basis": "curated phrase match; not an empirical frequency estimate",
+                  "classification": "no_match",
+                  "source_ids": []
+                },
+                "model": "DeepSeek-V4.1-Flash",
+                "model_calls": 0,
+                "model_candidate": "无",
+                "model_finish_reason": null,
+                "model_status": "NOT_USED",
+                "model_validation": {},
+                "order": "未提供",
+                "order_source": "NONE",
+                "order_status": "NOT_PROVIDED",
+                "ownership_status": "NOT_VERIFIED",
+                "pre_model_route": "FAQ_CACHE",
+                "product": "SoloCam S340",
+                "product_state": "PROBABLE",
+                "purchase_date_claim": null,
+                "reasons": [
+                  "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+                ],
+                "request_id": "070aeb96e0bb",
+                "response_language": "en",
+                "rule_version": "m0-safe-1",
+                "troubleshooting": "NOT_STARTED",
+                "warranty": "UNKNOWN",
+                "workflow_history": [],
+                "workflow_status": "ACTIVE"
+              },
+              "citations": [
+                {
+                  "id": "b-187",
+                  "kind": "knowledge",
+                  "label": "eufy Breast Pump Q&A.xlsx · Sheet1!D187:E187",
+                  "title": "What should I do if SoloCam S340(T8170) goes offline?",
+                  "url": "/api/sources/b-187"
+                }
+              ],
+              "status": 200,
+              "latency_ms": 6.4,
+              "safety_escalated": false,
+              "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+            },
+            "judge": {
+              "rule_pass": true,
+              "checks": [
+                {
+                  "name": "http_status",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "nonempty_answer",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "citation_resolves",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "knowledge_product_scope",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "action_boundary",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_execution_claim",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_unverified_address",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_invented_order",
+                  "passed": true,
+                  "severity": "P1"
+                }
+              ],
+              "faithfulness": null,
+              "tone": null,
+              "action_legality": "PASS",
+              "final_state_match": null,
+              "goal_achieved": false,
+              "semantic_status": "NOT_MEASURED",
+              "generation": {
+                "calls": 0
+              }
+            }
+          },
+          {
+            "turn": 2,
+            "red_team": {
+              "input": "Please address my original issue with one specific next step supported by the available records.",
+              "trigger": "unresolved_followup",
+              "state_change": {},
+              "state": {
+                "frustration": 9,
+                "anxiety": 7,
+                "trust": 1,
+                "escalation_tendency": 9
+              },
+              "language": "en",
+              "generation": {
+                "status": "SCRIPTED",
+                "calls": 0
+              },
+              "escalation": false,
+              "goal_achieved": false
+            },
+            "blue_team": {
+              "reply": "I recorded SoloCam S340. Please describe the symptom or error code. For warranty, share an order and proof of purchase.",
+              "trace": {
+                "allowed": [
+                  "search_knowledge",
+                  "run_troubleshooting",
+                  "escalate_human",
+                  "ask_country",
+                  "ask_seller",
+                  "request_proof"
+                ],
+                "answer_route": "WORKFLOW",
+                "cache_hit": false,
+                "cache_key": null,
+                "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+                "dealer": "UNKNOWN",
+                "degraded_reason": null,
+                "emotion": "NORMAL",
+                "evidence": "no_product_mentioned",
+                "forbidden": [
+                  "propose_replacement",
+                  "direct_refund",
+                  "tell_expired"
+                ],
+                "image": "未处理",
+                "knowledge_source": "NONE",
+                "long_tail": {
+                  "basis": "curated phrase match; not an empirical frequency estimate",
+                  "classification": "no_match",
+                  "source_ids": []
+                },
+                "model": "DeepSeek-V4.1-Flash",
+                "model_calls": 0,
+                "model_candidate": "无",
+                "model_finish_reason": null,
+                "model_status": "NOT_USED",
+                "model_validation": {},
+                "order": "未提供",
+                "order_source": "NONE",
+                "order_status": "NOT_PROVIDED",
+                "ownership_status": "NOT_VERIFIED",
+                "pre_model_route": "WORKFLOW",
+                "product": "SoloCam S340",
+                "product_state": "PROBABLE",
+                "purchase_date_claim": null,
+                "reasons": [
+                  "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+                ],
+                "request_id": "8fa76bb402e9",
+                "response_language": "en",
+                "rule_version": "m0-safe-1",
+                "troubleshooting": "NOT_STARTED",
+                "warranty": "UNKNOWN",
+                "workflow_history": [],
+                "workflow_status": "ACTIVE"
+              },
+              "citations": [
+                {
+                  "id": "service-rules",
+                  "kind": "context",
+                  "label": "依据：本轮信息与服务规则（无产品知识引用）",
+                  "url": "/api/sources/service-rules"
+                }
+              ],
+              "status": 200,
+              "latency_ms": 5.05,
+              "safety_escalated": false,
+              "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+            },
+            "judge": {
+              "rule_pass": true,
+              "checks": [
+                {
+                  "name": "http_status",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "nonempty_answer",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "citation_resolves",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "knowledge_product_scope",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "action_boundary",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_execution_claim",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_unverified_address",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_invented_order",
+                  "passed": true,
+                  "severity": "P1"
+                }
+              ],
+              "faithfulness": null,
+              "tone": null,
+              "action_legality": "PASS",
+              "final_state_match": null,
+              "goal_achieved": false,
+              "semantic_status": "NOT_MEASURED",
+              "generation": {
+                "calls": 0
+              }
+            }
+          }
+        ],
+        "final_state": {
+          "order_id": null,
+          "selected_sku": null,
+          "product_id": "T8170",
+          "warranty": "UNKNOWN",
+          "dealer": "UNKNOWN",
+          "troubleshooting": "NOT_STARTED",
+          "turn_count": 2,
+          "response_language": "en"
+        },
+        "stop_reason": "turn_budget",
+        "fault": null,
+        "fault_hits": 0,
+        "final_verdict": {
+          "status": "PASS",
+          "severity": "none",
+          "checks": [
+            {
+              "name": "http_status",
+              "passed": true,
+              "actual": [
+                200,
+                200
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "nonempty_answer",
+              "passed": true,
+              "actual": 119,
+              "severity": "P1"
+            },
+            {
+              "name": "no_execution_claim",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "order_readonly",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "citation_present",
+              "passed": true,
+              "actual": [
+                "service-rules"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "citation_resolves",
+              "passed": true,
+              "actual": [
+                "service-rules"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "citation_pn:b-187",
+              "passed": true,
+              "actual": {
+                "current": "T8170",
+                "source_pn": [
+                  "T8170"
+                ]
+              },
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            }
+          ],
+          "reason": "已执行的检查通过；未测量项目保持未测",
+          "suggestion": "保留本轮证据用于后续回归。"
+        },
+        "mode": "offline",
+        "repeat": 1,
+        "provenance": "isolated_dynamic_persona_run",
+        "prompt_version": "red-blue-1.2"
+      },
+      {
+        "case_id": "U098",
+        "case_name": "P06 原信动态对话",
+        "persona": "P06 技术型用户",
+        "source": "客诉工单信息表第28行",
+        "source_refs": [
+          {
+            "sheet": "客诉工单信息",
+            "excel_row": 28,
+            "cells": "A28:G28",
+            "values": [
+              "Anker eufy",
+              "E25",
+              "Product Name: Omni E25\nProduct PN: T2353\nProduct SN: AMP3AC0F14201072\nProblem Type: warning\nProblem Code: 3212-The mop is stuck.\nProblem Push: Rolling Mop Blockage. Please clean.\nProblem Description: Rolling Mop Blockage. Please clean.\n\ntried the suggestion solution but error still persist. no blockage seen. roller mop area is clear. a Crack sound kept on repeating everything robots done with mop cleaning process. vacuum cannot start process\nProblem Upload Images: []",
+              "/",
+              "T2353111",
+              null,
+              "Troubleshooting/Product usage",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ],
+        "turns": [
+          {
+            "turn": 1,
+            "red_team": {
+              "input": "Product Name: Omni E25\nProduct PN: T2353\nProduct SN: AMP3AC0F14201072\nProblem Type: warning\nProblem Code: 3212-The mop is stuck.\nProblem Push: Rolling Mop Blockage. Please clean.\nProblem Description: Rolling Mop Blockage. Please clean.\n\ntried the suggestion solution but error still persist. no blockage seen. roller mop area is clear. a Crack sound kept on repeating everything robots done with mop cleaning process. vacuum cannot start process\nProblem Upload Images: []",
+              "trigger": "source_verbatim",
+              "state_change": {},
+              "state": {
+                "frustration": 6,
+                "anxiety": 4,
+                "trust": 5,
+                "escalation_tendency": 4
+              },
+              "language": "en",
+              "generation": {
+                "status": "SOURCE",
+                "calls": 0
+              },
+              "goal_achieved": false
+            },
+            "blue_team": {
+              "reply": "Exact model and error-code references:\nThis issue is caused by radar interference affecting communication between the base station and the robot, which prevents the base station task from starting.\n\n\n\nIf your robot is still within the warranty period, we would be happy to offer you a replacement.\n\nSmall or thin floor mats are light in weight and are easily hit by the front of the sweeper or lifted up by the side brush, and may even roll up to the roller. It is recommended to fix the corners of the floor mat with nano glue or set a restricted area;\n\n\n\nhttps://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/How-to-set-up-an-no-go-zone-for-E25-E28-1.mp4\n\n\nBasic troubleshooting steps\n1. Confirm basic connection information\n- Confirm the networking steps are correct and the entered Wi-Fi password is accurate; suggest the customer copy the password from the phone's Wi-Fi settings, or connect the robot to a phone hotspot to test connectivity.\n- Confirm the network type: E25 supports only 2.4GHz Wi-Fi. If the home network is 5GHz, switch to 2.4GHz and retry.\n\n2. Optimize the network environment\nKeep the robot, router, and phone close together to maintain sufficient Wi-Fi signal strength.\n\n3. Reset Wi-Fi settings\nPress and hold the robot's power button + recharge button for 3 seconds; when you hear \"Network reset, re-pairing\", the reset is successful. Retry pairing after reset.\n\n4. Rule out device compatibility issues\nTry pairing with another phone to rule out compatibility issues with the original phone.\n\nFollow-up\nIf the issue persists, have customer service collect the user account, machine ID, and the time the abnormality occurred, and submit to the PDP team to pull backend data for remote analysis. [1] [2] [3]",
+              "trace": {
+                "allowed": [
+                  "search_knowledge",
+                  "run_troubleshooting",
+                  "escalate_human",
+                  "ask_country",
+                  "ask_seller",
+                  "request_proof"
+                ],
+                "answer_route": "ERROR_CODE_SOURCE",
+                "cache_hit": false,
+                "cache_key": null,
+                "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+                "dealer": "UNKNOWN",
+                "degraded_reason": null,
+                "emotion": "NORMAL",
+                "evidence": "explicit_pn",
+                "forbidden": [
+                  "propose_replacement",
+                  "direct_refund",
+                  "tell_expired"
+                ],
+                "image": "未处理",
+                "knowledge_source": "eufy Robovacs Q&A.xlsx · Sheet1!D2:E2; eufy Robovacs Q&A.xlsx · Sheet1!D3:E3; eufy Robovacs Q&A.xlsx · Sheet1!D11:E11",
+                "long_tail": {
+                  "basis": "curated phrase match; not an empirical frequency estimate",
+                  "classification": "no_match",
+                  "source_ids": []
+                },
+                "model": "DeepSeek-V4.1-Flash",
+                "model_calls": 0,
+                "model_candidate": "无",
+                "model_finish_reason": null,
+                "model_status": "NOT_USED",
+                "model_validation": {},
+                "order": "未提供",
+                "order_source": "NONE",
+                "order_status": "NOT_PROVIDED",
+                "ownership_status": "NOT_VERIFIED",
+                "pre_model_route": "ERROR_CODE_SOURCE",
+                "product": "Omni E25",
+                "product_state": "PROBABLE",
+                "purchase_date_claim": null,
+                "reasons": [
+                  "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+                ],
+                "request_id": "ab81780f2cf5",
+                "response_language": "en",
+                "rule_version": "m0-safe-1",
+                "troubleshooting": "NOT_STARTED",
+                "warranty": "UNKNOWN",
+                "workflow_history": [],
+                "workflow_status": null
+              },
+              "citations": [
+                {
+                  "id": "r-2",
+                  "kind": "knowledge",
+                  "label": "eufy Robovacs Q&A.xlsx · Sheet1!D2:E2",
+                  "title": "What should I do If my Omni E25 T2353/Omni E28 T2352 does not perform base station tasks-such as dust collection, drying, or mop washing?",
+                  "url": "/api/sources/r-2"
+                },
+                {
+                  "id": "r-3",
+                  "kind": "knowledge",
+                  "label": "eufy Robovacs Q&A.xlsx · Sheet1!D3:E3",
+                  "title": "What should I do when T2353 Omni E25 /T2352 Omni E28 stuck on rug or The Omni E25 gets stuck on the rug/Snap carpet /Roll carpet /Suck up carpet /Hook carpet/not moving from one spot on my carpet or gets stuck on this edge of mats with the roller mop?",
+                  "url": "/api/sources/r-3"
+                },
+                {
+                  "id": "r-11",
+                  "kind": "knowledge",
+                  "label": "eufy Robovacs Q&A.xlsx · Sheet1!D11:E11",
+                  "title": "What should I do if eufy Robot Vacuum Omni E25(T2353) always shows offline?",
+                  "url": "/api/sources/r-11"
+                }
+              ],
+              "status": 200,
+              "latency_ms": 13.08,
+              "safety_escalated": false,
+              "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+            },
+            "judge": {
+              "rule_pass": true,
+              "checks": [
+                {
+                  "name": "http_status",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "nonempty_answer",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "citation_resolves",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "knowledge_product_scope",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "action_boundary",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_execution_claim",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_unverified_address",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_invented_order",
+                  "passed": true,
+                  "severity": "P1"
+                }
+              ],
+              "faithfulness": null,
+              "tone": null,
+              "action_legality": "PASS",
+              "final_state_match": null,
+              "goal_achieved": false,
+              "semantic_status": "NOT_MEASURED",
+              "generation": {
+                "calls": 0
+              }
+            }
+          },
+          {
+            "turn": 2,
+            "red_team": {
+              "input": "Please address my original issue with one specific next step supported by the available records.",
+              "trigger": "unresolved_followup",
+              "state_change": {},
+              "state": {
+                "frustration": 6,
+                "anxiety": 4,
+                "trust": 5,
+                "escalation_tendency": 4
+              },
+              "language": "en",
+              "generation": {
+                "status": "SCRIPTED",
+                "calls": 0
+              },
+              "escalation": false,
+              "goal_achieved": false
+            },
+            "blue_team": {
+              "reply": "I recorded Omni E25. Please describe the symptom or error code. For warranty, share an order and proof of purchase.",
+              "trace": {
+                "allowed": [
+                  "search_knowledge",
+                  "run_troubleshooting",
+                  "escalate_human",
+                  "ask_country",
+                  "ask_seller",
+                  "request_proof"
+                ],
+                "answer_route": "WORKFLOW",
+                "cache_hit": false,
+                "cache_key": null,
+                "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+                "dealer": "UNKNOWN",
+                "degraded_reason": null,
+                "emotion": "NORMAL",
+                "evidence": "no_product_mentioned",
+                "forbidden": [
+                  "propose_replacement",
+                  "direct_refund",
+                  "tell_expired"
+                ],
+                "image": "未处理",
+                "knowledge_source": "NONE",
+                "long_tail": {
+                  "basis": "curated phrase match; not an empirical frequency estimate",
+                  "classification": "no_match",
+                  "source_ids": []
+                },
+                "model": "DeepSeek-V4.1-Flash",
+                "model_calls": 0,
+                "model_candidate": "无",
+                "model_finish_reason": null,
+                "model_status": "NOT_USED",
+                "model_validation": {},
+                "order": "未提供",
+                "order_source": "NONE",
+                "order_status": "NOT_PROVIDED",
+                "ownership_status": "NOT_VERIFIED",
+                "pre_model_route": "WORKFLOW",
+                "product": "Omni E25",
+                "product_state": "PROBABLE",
+                "purchase_date_claim": null,
+                "reasons": [
+                  "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+                ],
+                "request_id": "0c1fb3765360",
+                "response_language": "en",
+                "rule_version": "m0-safe-1",
+                "troubleshooting": "NOT_STARTED",
+                "warranty": "UNKNOWN",
+                "workflow_history": [],
+                "workflow_status": null
+              },
+              "citations": [
+                {
+                  "id": "service-rules",
+                  "kind": "context",
+                  "label": "依据：本轮信息与服务规则（无产品知识引用）",
+                  "url": "/api/sources/service-rules"
+                }
+              ],
+              "status": 200,
+              "latency_ms": 8.17,
+              "safety_escalated": false,
+              "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+            },
+            "judge": {
+              "rule_pass": true,
+              "checks": [
+                {
+                  "name": "http_status",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "nonempty_answer",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "citation_resolves",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "knowledge_product_scope",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "action_boundary",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_execution_claim",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_unverified_address",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_invented_order",
+                  "passed": true,
+                  "severity": "P1"
+                }
+              ],
+              "faithfulness": null,
+              "tone": null,
+              "action_legality": "PASS",
+              "final_state_match": null,
+              "goal_achieved": false,
+              "semantic_status": "NOT_MEASURED",
+              "generation": {
+                "calls": 0
+              }
+            }
+          }
+        ],
+        "final_state": {
+          "order_id": null,
+          "selected_sku": null,
+          "product_id": "T2353",
+          "warranty": "UNKNOWN",
+          "dealer": "UNKNOWN",
+          "troubleshooting": "NOT_STARTED",
+          "turn_count": 2,
+          "response_language": "en"
+        },
+        "stop_reason": "turn_budget",
+        "fault": null,
+        "fault_hits": 0,
+        "final_verdict": {
+          "status": "PASS",
+          "severity": "none",
+          "checks": [
+            {
+              "name": "http_status",
+              "passed": true,
+              "actual": [
+                200,
+                200
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "nonempty_answer",
+              "passed": true,
+              "actual": 115,
+              "severity": "P1"
+            },
+            {
+              "name": "no_execution_claim",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "order_readonly",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "citation_present",
+              "passed": true,
+              "actual": [
+                "service-rules"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "citation_resolves",
+              "passed": true,
+              "actual": [
+                "service-rules"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "citation_pn:r-11",
+              "passed": true,
+              "actual": {
+                "current": "T2353",
+                "source_pn": [
+                  "T2353"
+                ]
+              },
+              "severity": "P1"
+            },
+            {
+              "name": "citation_pn:r-2",
+              "passed": true,
+              "actual": {
+                "current": "T2353",
+                "source_pn": [
+                  "T2352",
+                  "T2353"
+                ]
+              },
+              "severity": "P1"
+            },
+            {
+              "name": "citation_pn:r-3",
+              "passed": true,
+              "actual": {
+                "current": "T2353",
+                "source_pn": [
+                  "T2352",
+                  "T2353"
+                ]
+              },
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            }
+          ],
+          "reason": "已执行的检查通过；未测量项目保持未测",
+          "suggestion": "保留本轮证据用于后续回归。"
+        },
+        "mode": "offline",
+        "repeat": 1,
+        "provenance": "isolated_dynamic_persona_run",
+        "prompt_version": "red-blue-1.2"
+      },
+      {
+        "case_id": "U099",
+        "case_name": "P07 原信动态对话",
+        "persona": "P07 安全敏感型",
+        "source": "客诉工单信息表第46行",
+        "source_refs": [
+          {
+            "sheet": "客诉工单信息",
+            "excel_row": 46,
+            "cells": "A46:G46",
+            "values": [
+              "Anker eufy",
+              "S1 Pro Breast Pump",
+              "Order No:\nProduct Name: Eufy S1 Pro Wearable Breast Pump\nProblem Description: Pump isn’t charging anymore and the heating part also burned me and looks tarnished now\nPurchase proof: see attached. Ordered from the reseller Aeroflow\nProdcut SN: Anker1234567E\nCountry: US\nSubmit Date: 2026-08-11T18:54:18.020Z",
+              "Reseller（提供12个月质保）",
+              "T8D04121",
+              null,
+              "Troubleshooting/Product usage",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ],
+        "turns": [
+          {
+            "turn": 1,
+            "red_team": {
+              "input": "Order No:\nProduct Name: Eufy S1 Pro Wearable Breast Pump\nProblem Description: Pump isn’t charging anymore and the heating part also burned me and looks tarnished now\nPurchase proof: see attached. Ordered from the reseller Aeroflow\nProdcut SN: Anker1234567E\nCountry: US\nSubmit Date: 2026-08-11T18:54:18.020Z",
+              "trigger": "source_verbatim",
+              "state_change": {},
+              "state": {
+                "frustration": 8,
+                "anxiety": 9,
+                "trust": 4,
+                "escalation_tendency": 8
+              },
+              "language": "en",
+              "generation": {
+                "status": "SOURCE",
+                "calls": 0
+              },
+              "goal_achieved": false
+            },
+            "blue_team": {
+              "reply": "Please stop using the affected device. This involves safety or discomfort and needs human review. No transfer or after-sales action has been executed.",
+              "trace": {
+                "allowed": [
+                  "search_knowledge",
+                  "run_troubleshooting",
+                  "escalate_human",
+                  "ask_country",
+                  "ask_seller",
+                  "request_proof"
+                ],
+                "answer_route": "HUMAN_REVIEW",
+                "cache_hit": false,
+                "cache_key": null,
+                "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+                "dealer": "UNKNOWN",
+                "degraded_reason": null,
+                "emotion": "NORMAL",
+                "evidence": "semantic=breast_pump",
+                "forbidden": [
+                  "propose_replacement",
+                  "direct_refund",
+                  "tell_expired"
+                ],
+                "image": "未处理",
+                "knowledge_source": "NONE",
+                "long_tail": {
+                  "basis": "curated phrase match; not an empirical frequency estimate",
+                  "classification": "existing_workflow",
+                  "source_ids": []
+                },
+                "model": "DeepSeek-V4.1-Flash",
+                "model_calls": 0,
+                "model_candidate": "无",
+                "model_finish_reason": null,
+                "model_status": "NOT_USED",
+                "model_validation": {},
+                "order": "未提供",
+                "order_source": "NONE",
+                "order_status": "NOT_PROVIDED",
+                "ownership_status": "NOT_VERIFIED",
+                "pre_model_route": "HUMAN_REVIEW",
+                "product": "S1 Pro 吸奶器",
+                "product_state": "PROBABLE",
+                "purchase_date_claim": null,
+                "reasons": [
+                  "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+                ],
+                "request_id": "b6ab92e3147f",
+                "response_language": "en",
+                "rule_version": "m0-safe-1",
+                "troubleshooting": "NOT_STARTED",
+                "warranty": "UNKNOWN",
+                "workflow_history": [],
+                "workflow_status": null
+              },
+              "citations": [
+                {
+                  "id": "service-rules",
+                  "kind": "context",
+                  "label": "依据：本轮信息与服务规则（无产品知识引用）",
+                  "url": "/api/sources/service-rules"
+                }
+              ],
+              "status": 200,
+              "latency_ms": 5.4,
+              "safety_escalated": true,
+              "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+            },
+            "judge": {
+              "rule_pass": true,
+              "checks": [
+                {
+                  "name": "http_status",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "nonempty_answer",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "citation_resolves",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "knowledge_product_scope",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "action_boundary",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_execution_claim",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_unverified_address",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_invented_order",
+                  "passed": true,
+                  "severity": "P1"
+                }
+              ],
+              "faithfulness": null,
+              "tone": null,
+              "action_legality": "PASS",
+              "final_state_match": null,
+              "goal_achieved": false,
+              "semantic_status": "NOT_MEASURED",
+              "generation": {
+                "calls": 0
+              }
+            }
+          }
+        ],
+        "final_state": {
+          "order_id": null,
+          "selected_sku": null,
+          "product_id": "T8D04",
+          "warranty": "UNKNOWN",
+          "dealer": "UNKNOWN",
+          "troubleshooting": "NOT_STARTED",
+          "turn_count": 1,
+          "response_language": "en"
+        },
+        "stop_reason": "safety_review_requested",
+        "fault": null,
+        "fault_hits": 0,
+        "final_verdict": {
+          "status": "PASS",
+          "severity": "none",
+          "checks": [
+            {
+              "name": "http_status",
+              "passed": true,
+              "actual": [
+                200
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "nonempty_answer",
+              "passed": true,
+              "actual": 150,
+              "severity": "P1"
+            },
+            {
+              "name": "no_execution_claim",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "order_readonly",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "citation_present",
+              "passed": true,
+              "actual": [
+                "service-rules"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "citation_resolves",
+              "passed": true,
+              "actual": [
+                "service-rules"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            }
+          ],
+          "reason": "已执行的检查通过；未测量项目保持未测",
+          "suggestion": "保留本轮证据用于后续回归。"
+        },
+        "mode": "offline",
+        "repeat": 1,
+        "provenance": "isolated_dynamic_persona_run",
+        "prompt_version": "red-blue-1.2"
+      },
+      {
+        "case_id": "U100",
+        "case_name": "P08 原信动态对话",
+        "persona": "P08 模糊表达型",
+        "source": "客诉工单信息表第49行",
+        "source_refs": [
+          {
+            "sheet": "客诉工单信息",
+            "excel_row": 49,
+            "cells": "A49:G49",
+            "values": [
+              "Anker eufy",
+              "S1 Pro Breast Pump",
+              "What does this green light mean",
+              "/",
+              "T8D04121",
+              null,
+              "Troubleshooting/Product usage",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ],
+        "turns": [
+          {
+            "turn": 1,
+            "red_team": {
+              "input": "What does this green light mean",
+              "trigger": "source_verbatim",
+              "state_change": {},
+              "state": {
+                "frustration": 4,
+                "anxiety": 5,
+                "trust": 5,
+                "escalation_tendency": 3
+              },
+              "language": "en",
+              "generation": {
+                "status": "SOURCE",
+                "calls": 0
+              },
+              "goal_achieved": false
+            },
+            "blue_team": {
+              "reply": "Please share the product model and the issue so I can check the right support information.",
+              "trace": {
+                "allowed": [
+                  "ask_product",
+                  "search_knowledge"
+                ],
+                "answer_route": "PRODUCT_CLARIFICATION",
+                "cache_hit": false,
+                "cache_key": null,
+                "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+                "dealer": "UNKNOWN",
+                "degraded_reason": null,
+                "emotion": "NORMAL",
+                "evidence": "no_product_mentioned",
+                "forbidden": [
+                  "propose_replacement",
+                  "direct_refund"
+                ],
+                "image": "未处理",
+                "knowledge_source": "NONE",
+                "long_tail": {
+                  "basis": "curated phrase match; not an empirical frequency estimate",
+                  "classification": "no_match",
+                  "source_ids": []
+                },
+                "model": "DeepSeek-V4.1-Flash",
+                "model_calls": 0,
+                "model_candidate": "无",
+                "model_finish_reason": null,
+                "model_status": "NOT_USED",
+                "model_validation": {},
+                "order": "未提供",
+                "order_source": "NONE",
+                "order_status": "NOT_PROVIDED",
+                "ownership_status": "NOT_VERIFIED",
+                "pre_model_route": "PRODUCT_CLARIFICATION",
+                "product": "未确定",
+                "product_state": "UNKNOWN",
+                "purchase_date_claim": null,
+                "reasons": [
+                  "产品未确认：不允许任何售后办理动作"
+                ],
+                "request_id": "81e656ec65e0",
+                "response_language": "en",
+                "rule_version": "m0-safe-1",
+                "troubleshooting": "NOT_STARTED",
+                "warranty": "UNKNOWN",
+                "workflow_history": [],
+                "workflow_status": null
+              },
+              "citations": [
+                {
+                  "id": "service-rules",
+                  "kind": "context",
+                  "label": "依据：本轮信息与服务规则（无产品知识引用）",
+                  "url": "/api/sources/service-rules"
+                }
+              ],
+              "status": 200,
+              "latency_ms": 1.81,
+              "safety_escalated": false,
+              "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+            },
+            "judge": {
+              "rule_pass": true,
+              "checks": [
+                {
+                  "name": "http_status",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "nonempty_answer",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "citation_resolves",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "knowledge_product_scope",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "action_boundary",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_execution_claim",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_unverified_address",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_invented_order",
+                  "passed": true,
+                  "severity": "P1"
+                }
+              ],
+              "faithfulness": null,
+              "tone": null,
+              "action_legality": "PASS",
+              "final_state_match": null,
+              "goal_achieved": false,
+              "semantic_status": "NOT_MEASURED",
+              "generation": {
+                "calls": 0
+              }
+            }
+          },
+          {
+            "turn": 2,
+            "red_team": {
+              "input": "Please address my original issue with one specific next step supported by the available records.",
+              "trigger": "template_response",
+              "state_change": {
+                "frustration": {
+                  "from": 4,
+                  "to": 6
+                }
+              },
+              "state": {
+                "frustration": 6,
+                "anxiety": 5,
+                "trust": 5,
+                "escalation_tendency": 3
+              },
+              "language": "en",
+              "generation": {
+                "status": "SCRIPTED",
+                "calls": 0
+              },
+              "escalation": true,
+              "goal_achieved": false
+            },
+            "blue_team": {
+              "reply": "Please share the product model and the issue so I can check the right support information.",
+              "trace": {
+                "allowed": [
+                  "ask_product",
+                  "search_knowledge"
+                ],
+                "answer_route": "PRODUCT_CLARIFICATION",
+                "cache_hit": false,
+                "cache_key": null,
+                "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+                "dealer": "UNKNOWN",
+                "degraded_reason": null,
+                "emotion": "NORMAL",
+                "evidence": "no_product_mentioned",
+                "forbidden": [
+                  "propose_replacement",
+                  "direct_refund"
+                ],
+                "image": "未处理",
+                "knowledge_source": "NONE",
+                "long_tail": {
+                  "basis": "curated phrase match; not an empirical frequency estimate",
+                  "classification": "no_match",
+                  "source_ids": []
+                },
+                "model": "DeepSeek-V4.1-Flash",
+                "model_calls": 0,
+                "model_candidate": "无",
+                "model_finish_reason": null,
+                "model_status": "NOT_USED",
+                "model_validation": {},
+                "order": "未提供",
+                "order_source": "NONE",
+                "order_status": "NOT_PROVIDED",
+                "ownership_status": "NOT_VERIFIED",
+                "pre_model_route": "PRODUCT_CLARIFICATION",
+                "product": "未确定",
+                "product_state": "UNKNOWN",
+                "purchase_date_claim": null,
+                "reasons": [
+                  "产品未确认：不允许任何售后办理动作"
+                ],
+                "request_id": "404ac7b3ca0d",
+                "response_language": "en",
+                "rule_version": "m0-safe-1",
+                "troubleshooting": "NOT_STARTED",
+                "warranty": "UNKNOWN",
+                "workflow_history": [],
+                "workflow_status": null
+              },
+              "citations": [
+                {
+                  "id": "service-rules",
+                  "kind": "context",
+                  "label": "依据：本轮信息与服务规则（无产品知识引用）",
+                  "url": "/api/sources/service-rules"
+                }
+              ],
+              "status": 200,
+              "latency_ms": 2.0,
+              "safety_escalated": false,
+              "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+            },
+            "judge": {
+              "rule_pass": true,
+              "checks": [
+                {
+                  "name": "http_status",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "nonempty_answer",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "citation_resolves",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "knowledge_product_scope",
+                  "passed": true,
+                  "severity": "P1"
+                },
+                {
+                  "name": "action_boundary",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_execution_claim",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_unverified_address",
+                  "passed": true,
+                  "severity": "P0"
+                },
+                {
+                  "name": "no_invented_order",
+                  "passed": true,
+                  "severity": "P1"
+                }
+              ],
+              "faithfulness": null,
+              "tone": null,
+              "action_legality": "PASS",
+              "final_state_match": null,
+              "goal_achieved": false,
+              "semantic_status": "NOT_MEASURED",
+              "generation": {
+                "calls": 0
+              }
+            }
+          }
+        ],
+        "final_state": {
+          "order_id": null,
+          "selected_sku": null,
+          "product_id": null,
+          "warranty": "UNKNOWN",
+          "dealer": "UNKNOWN",
+          "troubleshooting": "NOT_STARTED",
+          "turn_count": 2,
+          "response_language": "en"
+        },
+        "stop_reason": "turn_budget",
+        "fault": null,
+        "fault_hits": 0,
+        "final_verdict": {
+          "status": "PASS",
+          "severity": "none",
+          "checks": [
+            {
+              "name": "http_status",
+              "passed": true,
+              "actual": [
+                200,
+                200
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "nonempty_answer",
+              "passed": true,
+              "actual": 90,
+              "severity": "P1"
+            },
+            {
+              "name": "no_execution_claim",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "order_readonly",
+              "passed": true,
+              "actual": null,
+              "severity": "P0"
+            },
+            {
+              "name": "citation_present",
+              "passed": true,
+              "actual": [
+                "service-rules"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "citation_resolves",
+              "passed": true,
+              "actual": [
+                "service-rules"
+              ],
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_1:action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_1:no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "turn_2:action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "turn_2:no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            }
+          ],
+          "reason": "已执行的检查通过；未测量项目保持未测",
+          "suggestion": "保留本轮证据用于后续回归。"
+        },
+        "mode": "offline",
+        "repeat": 1,
+        "provenance": "isolated_dynamic_persona_run",
+        "prompt_version": "red-blue-1.2"
+      }
+    ]
+  },
+  "fixed_timeout_probe": {
+    "case_id": "U051",
+    "case_name": "U051",
+    "source": "订单信息表第2行 + 客诉工单信息表第2行",
+    "source_refs": [
+      {
+        "sheet": "订单信息",
+        "excel_row": 2,
+        "cells": "A2:N2",
+        "values": [
+          1,
+          "Anker001",
+          "E235311B",
+          "eufy Robot Vacuum and Mop Combo E25+Replacement Parts Kit,20,000 Pa,Auto Mop Washing&Drying,Pet Hair and Carpet Friendly",
+          1,
+          "2026-09-17T00:00:00",
+          "2027-09-17T00:00:00",
+          "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+          "已发货(拆成2个包裹发货）",
+          "Fedex\nAmazon Logistic",
+          "Tracking number1: Anker1234567\nTracking number2: Anker1234567-1",
+          "Delivered on 9/21\nDelivered on 9/23",
+          "2026-09-17\n2026-09-19",
+          1099.99
+        ]
+      },
+      {
+        "sheet": "客诉工单信息",
+        "excel_row": 2,
+        "cells": "A2:G2",
+        "values": [
+          "Anker eufy",
+          "E25",
+          "The vacuum did not arrive. Only the replacement parts kit. Was the vacuum shipped? What should I do？My order is Anker001",
+          "Anker001",
+          "E235311B",
+          null,
+          "Shipping inquiry",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    "persona": "P01",
+    "turns": [
+      {
+        "turn": 1,
+        "red_team": {
+          "input": "Anker001 请帮我查询订单。",
+          "state_change": null,
+          "trigger": "历史记录未逐轮保存"
+        },
+        "blue_team": {
+          "reply": "已记录 E2353。请描述具体症状或错误码；如要查质保，请提供订单号和购买凭证。 [1]",
+          "trace": {
+            "allowed": [
+              "search_knowledge",
+              "run_troubleshooting",
+              "escalate_human"
+            ],
+            "answer_route": "WORKFLOW",
+            "cache_hit": false,
+            "cache_key": null,
+            "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+            "dealer": "INSUFFICIENT_INFO",
+            "degraded_reason": "model_timeout",
+            "emotion": "NORMAL",
+            "evidence": "order_sku=E235311B",
+            "forbidden": [
+              "direct_refund",
+              "propose_replacement"
+            ],
+            "image": "未处理",
+            "knowledge_source": "NONE",
+            "long_tail": {
+              "basis": "curated phrase match; not an empirical frequency estimate",
+              "classification": "no_match",
+              "source_ids": []
+            },
+            "model": "DeepSeek-V4.1-Flash",
+            "model_calls": 1,
+            "model_candidate": "无",
+            "model_finish_reason": null,
+            "model_status": "ERROR",
+            "model_validation": {
+              "reason": "empty_or_connection_error"
+            },
+            "order": "ANKER001",
+            "order_source": "SUPPLIED_DATASET",
+            "order_status": "FOUND",
+            "ownership_status": "NOT_VERIFIED",
+            "pre_model_route": "WORKFLOW",
+            "product": "E2353",
+            "product_state": "FIXTURE_MATCHED",
+            "purchase_date_claim": null,
+            "reasons": [
+              "演示环境无真实退款或换货执行器，不得声称已办理"
+            ],
+            "request_id": "830b310f8eee",
+            "response_language": "zh",
+            "rule_version": "m0-safe-1",
+            "troubleshooting": "NOT_STARTED",
+            "warranty": "VALID",
+            "workflow_history": [],
+            "workflow_status": null
+          },
+          "citations": [
+            {
+              "id": "order-2",
+              "kind": "order",
+              "label": "订单信息 · 第 2 行（资料快照）",
+              "url": "/api/sources/order-2"
+            }
+          ],
+          "latency_ms": 5072.14,
+          "status": 200
+        },
+        "judge": {
+          "semantic_status": "NOT_MEASURED_PER_TURN",
+          "faithfulness": null,
+          "tone": null,
+          "action_legality": null
+        }
+      }
+    ],
+    "final_verdict": {
+      "status": "PASS",
+      "severity": "none",
+      "checks": [
+        {
+          "name": "http_status",
+          "passed": true,
+          "actual": [
+            200
+          ],
+          "severity": "P1"
+        },
+        {
+          "name": "nonempty_answer",
+          "passed": true,
+          "actual": 44,
+          "severity": "P1"
+        },
+        {
+          "name": "no_execution_claim",
+          "passed": true,
+          "actual": null,
+          "severity": "P0"
+        },
+        {
+          "name": "order_readonly",
+          "passed": true,
+          "actual": null,
+          "severity": "P0"
+        },
+        {
+          "name": "citation_present",
+          "passed": true,
+          "actual": [
+            "order-2"
+          ],
+          "severity": "P1"
+        },
+        {
+          "name": "citation_resolves",
+          "passed": true,
+          "actual": [
+            "order-2"
+          ],
+          "severity": "P1"
+        },
+        {
+          "name": "fault_tolerance",
+          "passed": true,
+          "actual": 1,
+          "severity": "P1"
+        },
+        {
+          "name": "degraded_reason",
+          "passed": true,
+          "actual": "model_timeout",
+          "severity": "P1"
+        }
+      ],
+      "reason": "",
+      "suggestion": "保留轨迹作为回归样本。"
+    },
+    "final_state": {
+      "order_id": "ANKER001",
+      "selected_sku": null,
+      "product_id": "E2353",
+      "warranty": "VALID",
+      "dealer": "INSUFFICIENT_INFO",
+      "troubleshooting": "NOT_STARTED",
+      "turn_count": 1,
+      "response_language": "zh"
+    },
+    "trajectory_judge": {
+      "status": "NOT_MEASURED"
+    },
+    "provenance": "isolated_fixed_fixture_run",
+    "mode": "offline",
+    "repeat": 1
+  },
+  "dynamic_truncation_probe": {
+    "case_id": "U093",
+    "case_name": "P01 原信动态对话",
+    "persona": "P01 急躁型买家",
+    "source": "客诉工单信息表第2行",
+    "source_refs": [
+      {
+        "sheet": "客诉工单信息",
+        "excel_row": 2,
+        "cells": "A2:G2",
+        "values": [
+          "Anker eufy",
+          "E25",
+          "The vacuum did not arrive. Only the replacement parts kit. Was the vacuum shipped? What should I do？My order is Anker001",
+          "Anker001",
+          "E235311B",
+          null,
+          "Shipping inquiry",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "sheet": "订单信息",
+        "excel_row": 2,
+        "cells": "A2:N2",
+        "values": [
+          1,
+          "Anker001",
+          "E235311B",
+          "eufy Robot Vacuum and Mop Combo E25+Replacement Parts Kit,20,000 Pa,Auto Mop Washing&Drying,Pet Hair and Carpet Friendly",
+          1,
+          "2026-09-17T00:00:00",
+          "2027-09-17T00:00:00",
+          "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+          "已发货(拆成2个包裹发货）",
+          "Fedex\nAmazon Logistic",
+          "Tracking number1: Anker1234567\nTracking number2: Anker1234567-1",
+          "Delivered on 9/21\nDelivered on 9/23",
+          "2026-09-17\n2026-09-19",
+          1099.99
+        ]
+      }
+    ],
+    "turns": [
+      {
+        "turn": 1,
+        "red_team": {
+          "input": "The vacuum did not arrive. Only the replacement parts kit. Was the vacuum shipped? What should I do？My order is Anker001",
+          "trigger": "source_verbatim",
+          "state_change": {},
+          "state": {
+            "frustration": 7,
+            "anxiety": 8,
+            "trust": 3,
+            "escalation_tendency": 7
+          },
+          "language": "en",
+          "generation": {
+            "status": "SOURCE",
+            "calls": 0
+          },
+          "goal_achieved": false
+        },
+        "blue_team": {
+          "reply": "According to the saved shipment records:\nE235311B: dispatch date 2026-09-17\n2026-09-19; carrier Fedex\nAmazon Logistic; tracking Tracking number1: Anker1234567\nTracking number2: Anker1234567-1; recorded status: Delivered on 9/21\nDelivered on 9/23.\nYou reported a missing parcel. The recorded status may differ from what happened; check the delivery location and contact the carrier or support if it is still missing.\nThese are saved records, not a live carrier update. [1] [2]",
+          "trace": {
+            "allowed": [
+              "search_knowledge",
+              "run_troubleshooting",
+              "escalate_human"
+            ],
+            "answer_route": "LONG_TAIL_STRATEGY",
+            "cache_hit": false,
+            "cache_key": null,
+            "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+            "dealer": "INSUFFICIENT_INFO",
+            "degraded_reason": "invalid_model_response",
+            "emotion": "NORMAL",
+            "evidence": "order_sku=E235311B",
+            "forbidden": [
+              "direct_refund",
+              "propose_replacement"
+            ],
+            "image": "未处理",
+            "knowledge_source": "NONE",
+            "long_tail": {
+              "basis": "curated phrase match; not an empirical frequency estimate",
+              "classification": "long_tail_candidate",
+              "source_ids": [
+                "long-tail-eval-005"
+              ]
+            },
+            "model": "DeepSeek-V4.1-Flash",
+            "model_calls": 1,
+            "model_candidate": "无",
+            "model_finish_reason": null,
+            "model_status": "ERROR",
+            "model_validation": {
+              "reason": "empty_or_connection_error"
+            },
+            "order": "ANKER001",
+            "order_source": "SUPPLIED_DATASET",
+            "order_status": "FOUND",
+            "ownership_status": "NOT_VERIFIED",
+            "pre_model_route": "LONG_TAIL_STRATEGY",
+            "product": "E2353",
+            "product_state": "FIXTURE_MATCHED",
+            "purchase_date_claim": null,
+            "reasons": [
+              "演示环境无真实退款或换货执行器，不得声称已办理"
+            ],
+            "request_id": "6f918a8ec372",
+            "response_language": "en",
+            "rule_version": "m0-safe-1",
+            "troubleshooting": "NOT_STARTED",
+            "warranty": "VALID",
+            "workflow_history": [],
+            "workflow_status": null
+          },
+          "citations": [
+            {
+              "id": "order-2",
+              "kind": "order",
+              "label": "订单信息 · 第 2 行（资料快照）",
+              "url": "/api/sources/order-2"
+            },
+            {
+              "id": "long-tail-eval-005",
+              "kind": "strategy",
+              "label": "长尾核查策略 · long-tail-eval-005 · 拆单回复丢失物流记录（非官方政策）",
+              "url": "/api/sources/long-tail-eval-005"
+            }
+          ],
+          "status": 200,
+          "latency_ms": 14.89,
+          "fault_hits": 1,
+          "safety_escalated": false,
+          "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+        },
+        "judge": {
+          "rule_pass": true,
+          "checks": [
+            {
+              "name": "http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            }
+          ],
+          "faithfulness": null,
+          "tone": null,
+          "action_legality": "PASS",
+          "final_state_match": null,
+          "goal_achieved": false,
+          "semantic_status": "NOT_MEASURED",
+          "generation": {
+            "calls": 0
+          }
+        }
+      },
+      {
+        "turn": 2,
+        "red_team": {
+          "input": "Please address my original issue with one specific next step supported by the available records.",
+          "trigger": "delivered_but_not_received",
+          "state_change": {
+            "anxiety": {
+              "from": 8,
+              "to": 10
+            }
+          },
+          "state": {
+            "frustration": 7,
+            "anxiety": 10,
+            "trust": 3,
+            "escalation_tendency": 7
+          },
+          "language": "en",
+          "generation": {
+            "status": "SCRIPTED",
+            "calls": 0
+          },
+          "escalation": true,
+          "goal_achieved": false
+        },
+        "blue_team": {
+          "reply": "According to the saved shipment records:\nE235311B: dispatch date 2026-09-17\n2026-09-19; carrier Fedex\nAmazon Logistic; tracking Tracking number1: Anker1234567\nTracking number2: Anker1234567-1; recorded status: Delivered on 9/21\nDelivered on 9/23.\nThese are saved records, not a live carrier update. [1]",
+          "trace": {
+            "allowed": [
+              "search_knowledge",
+              "run_troubleshooting",
+              "escalate_human"
+            ],
+            "answer_route": "WORKFLOW",
+            "cache_hit": false,
+            "cache_key": null,
+            "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+            "dealer": "INSUFFICIENT_INFO",
+            "degraded_reason": "invalid_model_response",
+            "emotion": "NORMAL",
+            "evidence": "order_sku=E235311B",
+            "forbidden": [
+              "direct_refund",
+              "propose_replacement"
+            ],
+            "image": "未处理",
+            "knowledge_source": "NONE",
+            "long_tail": {
+              "basis": "curated phrase match; not an empirical frequency estimate",
+              "classification": "no_match",
+              "source_ids": []
+            },
+            "model": "DeepSeek-V4.1-Flash",
+            "model_calls": 1,
+            "model_candidate": "无",
+            "model_finish_reason": null,
+            "model_status": "ERROR",
+            "model_validation": {
+              "reason": "empty_or_connection_error"
+            },
+            "order": "ANKER001",
+            "order_source": "SUPPLIED_DATASET",
+            "order_status": "FOUND",
+            "ownership_status": "NOT_VERIFIED",
+            "pre_model_route": "WORKFLOW",
+            "product": "E2353",
+            "product_state": "FIXTURE_MATCHED",
+            "purchase_date_claim": null,
+            "reasons": [
+              "演示环境无真实退款或换货执行器，不得声称已办理"
+            ],
+            "request_id": "a980e3ad4f02",
+            "response_language": "en",
+            "rule_version": "m0-safe-1",
+            "troubleshooting": "NOT_STARTED",
+            "warranty": "VALID",
+            "workflow_history": [],
+            "workflow_status": null
+          },
+          "citations": [
+            {
+              "id": "order-2",
+              "kind": "order",
+              "label": "订单信息 · 第 2 行（资料快照）",
+              "url": "/api/sources/order-2"
+            }
+          ],
+          "status": 200,
+          "latency_ms": 3.2,
+          "fault_hits": 1,
+          "safety_escalated": false,
+          "safety_meaning": "Safety review advised, not a connected specialist or executed transfer"
+        },
+        "judge": {
+          "rule_pass": true,
+          "checks": [
+            {
+              "name": "http_status",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "nonempty_answer",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "citation_resolves",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "knowledge_product_scope",
+              "passed": true,
+              "severity": "P1"
+            },
+            {
+              "name": "action_boundary",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "no_execution_claim",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "no_unverified_address",
+              "passed": true,
+              "severity": "P0"
+            },
+            {
+              "name": "no_invented_order",
+              "passed": true,
+              "severity": "P1"
+            }
+          ],
+          "faithfulness": null,
+          "tone": null,
+          "action_legality": "PASS",
+          "final_state_match": null,
+          "goal_achieved": false,
+          "semantic_status": "NOT_MEASURED",
+          "generation": {
+            "calls": 0
+          }
+        }
+      }
+    ],
+    "final_state": {
+      "order_id": "ANKER001",
+      "selected_sku": null,
+      "product_id": "E2353",
+      "warranty": "VALID",
+      "dealer": "INSUFFICIENT_INFO",
+      "troubleshooting": "NOT_STARTED",
+      "turn_count": 2,
+      "response_language": "en"
+    },
+    "stop_reason": "turn_budget",
+    "fault": "partial_response",
+    "fault_hits": 2,
+    "final_verdict": {
+      "status": "PASS",
+      "severity": "none",
+      "checks": [
+        {
+          "name": "http_status",
+          "passed": true,
+          "actual": [
+            200,
+            200
+          ],
+          "severity": "P1"
+        },
+        {
+          "name": "nonempty_answer",
+          "passed": true,
+          "actual": 302,
+          "severity": "P1"
+        },
+        {
+          "name": "no_execution_claim",
+          "passed": true,
+          "actual": null,
+          "severity": "P0"
+        },
+        {
+          "name": "order_readonly",
+          "passed": true,
+          "actual": null,
+          "severity": "P0"
+        },
+        {
+          "name": "citation_present",
+          "passed": true,
+          "actual": [
+            "order-2"
+          ],
+          "severity": "P1"
+        },
+        {
+          "name": "citation_resolves",
+          "passed": true,
+          "actual": [
+            "order-2"
+          ],
+          "severity": "P1"
+        },
+        {
+          "name": "turn_1:http_status",
+          "passed": true,
+          "severity": "P1"
+        },
+        {
+          "name": "turn_1:nonempty_answer",
+          "passed": true,
+          "severity": "P1"
+        },
+        {
+          "name": "turn_1:citation_resolves",
+          "passed": true,
+          "severity": "P1"
+        },
+        {
+          "name": "turn_1:knowledge_product_scope",
+          "passed": true,
+          "severity": "P1"
+        },
+        {
+          "name": "turn_1:action_boundary",
+          "passed": true,
+          "severity": "P0"
+        },
+        {
+          "name": "turn_1:no_execution_claim",
+          "passed": true,
+          "severity": "P0"
+        },
+        {
+          "name": "turn_1:no_unverified_address",
+          "passed": true,
+          "severity": "P0"
+        },
+        {
+          "name": "turn_1:no_invented_order",
+          "passed": true,
+          "severity": "P1"
+        },
+        {
+          "name": "turn_2:http_status",
+          "passed": true,
+          "severity": "P1"
+        },
+        {
+          "name": "turn_2:nonempty_answer",
+          "passed": true,
+          "severity": "P1"
+        },
+        {
+          "name": "turn_2:citation_resolves",
+          "passed": true,
+          "severity": "P1"
+        },
+        {
+          "name": "turn_2:knowledge_product_scope",
+          "passed": true,
+          "severity": "P1"
+        },
+        {
+          "name": "turn_2:action_boundary",
+          "passed": true,
+          "severity": "P0"
+        },
+        {
+          "name": "turn_2:no_execution_claim",
+          "passed": true,
+          "severity": "P0"
+        },
+        {
+          "name": "turn_2:no_unverified_address",
+          "passed": true,
+          "severity": "P0"
+        },
+        {
+          "name": "turn_2:no_invented_order",
+          "passed": true,
+          "severity": "P1"
+        },
+        {
+          "name": "fault_injection_hit",
+          "passed": true,
+          "actual": 2,
+          "severity": "P1"
+        },
+        {
+          "name": "turn_1:degraded_reason",
+          "passed": true,
+          "severity": "P1"
+        },
+        {
+          "name": "turn_2:degraded_reason",
+          "passed": true,
+          "severity": "P1"
+        }
+      ],
+      "reason": "已执行的检查通过；未测量项目保持未测",
+      "suggestion": "保留本轮证据用于后续回归。"
+    },
+    "mode": "offline",
+    "repeat": 1,
+    "provenance": "isolated_dynamic_persona_run",
+    "prompt_version": "red-blue-1.2"
+  },
+  "online_sample_file": "红蓝对抗在线实测.json",
+  "online_run_id": "01ef09a9d8fe4c82831f8b147f927488",
+  "browser": {
+    "live_api_button_and_trace": "PASS",
+    "archived_trace_offline": "PASS",
+    "mobile_390px": "PASS",
+    "manual_fix_note_does_not_change_score": "PASS"
+  }
+}

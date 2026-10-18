@@ -1,0 +1,39 @@
+{
+  "unit_tests": {
+    "passed": 134,
+    "new_tests": 7
+  },
+  "browser_checks": {
+    "passed": 15,
+    "widths": [
+      390,
+      1440
+    ],
+    "flows": [
+      "RC3 drilldown 18 rows",
+      "RC1 evidence empty state",
+      "scenario pagination exactly 52 rows",
+      "product 3 source rows",
+      "ticket original error code",
+      "blank review guard",
+      "review persisted across reload",
+      "JSON and HTML download",
+      "longtail strategy source",
+      "no JS runtime errors"
+    ]
+  },
+  "exports": {
+    "json_parse": true,
+    "tickets": 63,
+    "findings": 3,
+    "saved_note_preserved": true,
+    "rules_resolve": true
+  },
+  "data_limitations": {
+    "population": 63,
+    "emails_in_suite": 18,
+    "explicit_product_names": 10,
+    "product_groups": 7,
+    "rc3_is_candidate_not_confirmed_cause": true
+  }
+}

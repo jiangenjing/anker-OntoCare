@@ -1,0 +1,9 @@
+{
+  "source": "长尾问题.json",
+  "sha256": "45f43924a976cef4d9f3ebd6db562f7c69d735e46e65ce94af136c5a29e29a13",
+  "declared_entries": 290,
+  "recovered_complete_entries": 119,
+  "truncated": true,
+  "excluded_partial_entry": "C015",
+  "note": "原文未修改；只接入完整记录。模板订单、承诺及高风险操作已隔离或改写。"
+}

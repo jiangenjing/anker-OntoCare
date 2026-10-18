@@ -1,0 +1,64 @@
+/* One shared header for both customer and merchant views. */
+html{scrollbar-gutter:stable}
+[hidden]{display:none!important}
+.app-header{display:grid!important;grid-template-columns:minmax(180px,1fr) auto minmax(180px,1fr);align-items:center;gap:20px!important;min-height:82px;flex:none;position:sticky;top:0;z-index:30;padding:14px 30px!important}
+.app-brand{margin:0!important;display:flex;align-items:center;gap:14px;text-decoration:none;min-width:0}
+.app-brand-copy{display:flex;flex-direction:column;gap:4px;font-size:12px;color:#777;line-height:1.3}
+.app-brand-copy b{font-size:18px;color:#111;letter-spacing:-.5px}
+.app-header .view-tabs{margin:0!important;display:flex;width:auto;gap:4px!important;padding:5px;border-radius:11px;overflow:visible;background:#eee}
+.app-header .view-tabs a{display:flex;align-items:center;justify-content:center;min-width:110px;min-height:40px;padding:8px 22px!important;font-size:14px;line-height:1.5;border-radius:8px;transition:background .15s,color .15s}
+.app-header .view-tabs a:hover{background:#e0e0e0}
+.app-header .view-tabs a.active{background:#111;color:white!important;font-weight:600}
+.app-header-actions{display:flex;align-items:center;justify-content:flex-end;gap:12px;min-width:0}
+.workspace-label{font-size:12px;color:#777}
+.merchant-workspace{width:100%;max-width:1440px!important;margin:24px auto;padding:0 28px}
+.workspace-tabs{display:flex;gap:26px;border-bottom:1px solid #ddd;margin-bottom:24px;overflow-x:auto;scroll-margin-top:100px}
+.workspace-tabs button{flex:none;padding:12px 2px 14px;background:transparent;color:#777;border:0;border-bottom:2px solid transparent;border-radius:0;font-size:14px;white-space:nowrap}
+.workspace-tabs button.active{color:#111;border-bottom-color:#111;font-weight:600}
+.workspace-tabs button:hover{color:#111}
+.workspace-panel>h1{font-size:25px;line-height:1.5}
+.analytics-frame{display:block;width:100%;height:calc(100dvh - 210px);min-height:420px;border:0;background:#f7f7f7;border-radius:12px}
+.model-settings{max-width:800px;margin-top:24px}
+.model-settings label{color:#444}
+.settings-row{display:flex;align-items:stretch;gap:10px;margin-top:8px}
+.settings-row input{flex:1;min-width:0}
+.settings-row button{flex:none;background:#111;color:#fff}
+.model-settings dl{display:grid;grid-template-columns:110px minmax(0,1fr);gap:14px;font-size:13px;margin:22px 0}
+.model-settings dt{color:#777}.model-settings dd{margin:0;overflow-wrap:anywhere}
+.model-settings p{line-height:1.8}.model-settings small{display:block;color:#777;line-height:1.8}
+.media-entry{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:15px;background:white;border:1px solid #ddd;border-radius:10px;text-align:left;color:#111;cursor:pointer;margin-top:24px;font:inherit}
+.media-entry strong{display:block;font-size:14px;font-weight:500}.media-entry small{display:block;color:#777;font-size:12px;line-height:1.7;margin-top:4px}
+.composer-tools{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.composer-tools button{background:#fff;border:1px solid #ddd;border-radius:8px;font:inherit;font-size:12px;color:#555;padding:7px 12px;cursor:pointer}
+.composer-tools button:hover,.media-entry:hover{background:#f6f6f6;border-color:#aaa}
+.composer-tools button:disabled{opacity:.45;cursor:wait}
+.media-dialog{position:fixed;inset:0;margin:auto;width:min(800px,calc(100vw - 32px));max-height:calc(100dvh - 40px);overflow:auto;border:1px solid #ddd;border-radius:16px;padding:26px;color:#171717;background:#fff;font:14px/1.7 system-ui,-apple-system,"PingFang SC",sans-serif}
+.media-dialog::backdrop{background:#0005;backdrop-filter:blur(3px)}
+.media-dialog-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:20px}
+.media-dialog h2{font-size:20px;margin:0}.media-dialog p{margin:8px 0;color:#777;font-size:13px;line-height:1.8}
+.media-dialog .close-dialog{padding:4px 9px;background:#f4f4f4;border:0;border-radius:6px;font:inherit;font-size:20px;color:#555;cursor:pointer}
+.media-dialog label{display:block;margin:12px 0 6px;font-size:13px;color:#555}
+.media-dialog input,.media-dialog select,.media-dialog textarea{width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;background:white;font:inherit;box-sizing:border-box}
+.media-dialog textarea{resize:vertical;min-height:100px;margin:0;line-height:1.8}
+.media-dialog .media-selects{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.media-dialog .media-selects label{margin-top:0}
+.media-dialog button:not(.close-dialog){padding:10px 15px;border:1px solid #ddd;background:#f4f4f4;color:#222;border-radius:8px;font:inherit;font-size:13px;cursor:pointer}
+.media-dialog button:disabled{opacity:.45;cursor:wait}
+.media-dialog #media-run,.media-dialog #media-useDraft{background:#111;color:white;border-color:#111}
+.media-dialog .media-actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0}
+.media-dialog small{display:block;font-size:12px;color:#777;margin:8px 0}
+.media-dialog #media-modelid{font-size:11px;overflow-wrap:anywhere;margin:0 0 14px}
+.media-dialog #media-framePreview{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.media-dialog #media-media img{max-width:100%;border-radius:8px}.media-dialog pre{font-size:11px;white-space:pre-wrap;overflow-wrap:anywhere;padding:12px;background:#f7f7f7;border-radius:8px}
+.media-dialog details{margin-top:18px;font-size:12px}.media-dialog summary{cursor:pointer}
+.media-settings-link{padding:10px 12px;background:#f7f7f7;border-radius:8px;display:block;color:#555;font-size:12px;text-decoration:none}
+.media-notice{font-size:12px;color:#555;line-height:1.7;padding:10px 12px;background:#f6f6f6;border-radius:8px;margin-bottom:10px}
+.process{flex-shrink:0;line-height:1.7;max-width:100%}
+.process-steps>div{animation:process-in .24s ease-out}
+.process-step{padding:5px 0;line-height:1.9;color:#777;transition:color .2s}
+.process-step.is-current{color:#222}.process-steps .step-citation-detail{animation:none}
+.process.complete .process-step{color:#666}
+.process summary{font-size:12px}.process:not(.complete) summary{color:#333!important}
+@media(max-width:1000px){.app-header{grid-template-columns:minmax(150px,1fr) auto minmax(150px,1fr);padding:12px 20px!important;gap:12px!important}.app-brand-copy span{display:none}.app-brand{gap:10px}.app-brand-copy b{font-size:16px}.app-header-actions{gap:8px}.app-header .view-tabs a{min-width:94px;padding:8px 18px!important}}
+@media(max-width:800px){.app-header{grid-template-columns:1fr auto;gap:12px!important;min-height:0;padding:12px 16px!important}.app-brand-copy{display:none}.app-header .view-tabs{grid-column:1/-1;grid-row:2;width:100%;overflow:visible;gap:4px!important}.app-header .view-tabs a{flex:1;min-height:40px}.app-header-actions{grid-column:2;grid-row:1}.merchant-workspace{padding:16px!important;margin:0!important}.workspace-tabs{gap:24px;margin-bottom:20px;scroll-margin-top:150px}.analytics-frame{height:calc(100dvh - 240px);min-height:400px}.settings-row{flex-direction:column}.model-settings{margin-top:18px}.model-settings dl{grid-template-columns:90px minmax(0,1fr)}.media-dialog{padding:18px;width:calc(100vw - 20px);max-height:calc(100dvh - 24px)}.media-dialog .media-selects{grid-template-columns:1fr}.media-dialog h2{font-size:18px}.media-entry{margin:12px 0}.media-dialog input,.media-dialog select,.media-dialog textarea{font-size:16px}.composer-tools{gap:6px}.composer-tools button{min-height:36px;font-size:11px}.workspace-label{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.process-steps>div{animation:none}.process-step,.app-header .view-tabs a{transition:none}}

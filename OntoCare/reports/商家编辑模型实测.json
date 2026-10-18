@@ -1,0 +1,31 @@
+[
+  {
+    "action": "versions",
+    "language": "zh",
+    "status": 200,
+    "seconds": 16.6,
+    "result": {
+      "detailed": "您好，关于订单 Anker002 的 SKU T2080GA1：当前仅有资料快照，不能确认实时物流。原文的限制在于，资料仅为快照，因而不能确认实时物流；在这一限制下，下一步仍需请您确认未收到的是哪件商品。[1]",
+      "short": "订单 Anker002 的 SKU 为 T2080GA1；当前仅有资料快照，不能确认实时物流。请确认未收到的是哪件商品。[1]",
+      "standard": "您好，请确认未收到的是哪件商品。\n\n订单 Anker002 的 SKU 为 T2080GA1。当前仅有资料快照，不能确认实时物流。\n\n因此，下一步请确认未收到的是哪件商品。[1]"
+    }
+  },
+  {
+    "action": "translate",
+    "language": "de",
+    "status": 200,
+    "seconds": 5.8,
+    "result": {
+      "text": "Bestellung Anker002 enthält SKU T2080GA1. Der gespeicherte Datensatz ist kein Live-Tracking. Bitte bestätigen Sie, welcher Artikel nicht angekommen ist. [1]"
+    }
+  },
+  {
+    "action": "shorten",
+    "language": "zh",
+    "status": 200,
+    "seconds": 3.7,
+    "result": {
+      "text": "理解您想查一下订单 Anker002 的物流。目前没有实时物流结果，麻烦先确认没收到的是哪个包裹。[1]"
+    }
+  }
+]

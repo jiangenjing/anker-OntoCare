@@ -1,0 +1,193 @@
+{
+  "audit_date": "2026-10-17",
+  "method": "检查当前模块并复算已有报告；本次未重跑完整在线评测，也未执行竞品性能对照",
+  "historical_metrics": [
+    {
+      "id": "hard_pass",
+      "mode": "online",
+      "name": "核心硬断言通过率",
+      "value": 0.8378378378378378,
+      "numerator": 62,
+      "denominator": 74,
+      "unit": "ratio",
+      "target": null,
+      "scope": "74个核心任务首轮",
+      "status": "MEASURED"
+    },
+    {
+      "id": "faithfulness",
+      "mode": "online",
+      "name": "支持主张比例（模型估计）",
+      "value": 0.8603988603988604,
+      "numerator": 302,
+      "denominator": 351,
+      "unit": "ratio",
+      "target": 0.95,
+      "scope": "首轮独立提示词，同模型裁判；非官方Ragas运行",
+      "status": "MEASURED"
+    },
+    {
+      "id": "unsupported_answer",
+      "mode": "online",
+      "name": "含不支持主张的轨迹比例（模型估计）",
+      "value": 0.40594059405940597,
+      "numerator": 41,
+      "denominator": 101,
+      "unit": "ratio",
+      "target": 0.02,
+      "scope": "按完整轨迹计，不等同于人工确认的编造事实率",
+      "status": "MEASURED"
+    },
+    {
+      "id": "goal",
+      "mode": "online",
+      "name": "语义目标达成（模型估计）",
+      "value": 0.7326732673267327,
+      "numerator": 74,
+      "denominator": 101,
+      "unit": "ratio",
+      "target": null,
+      "scope": "首轮可评回复；排除无回复与裁判错误，不计为通过",
+      "status": "MEASURED"
+    },
+    {
+      "id": "joint",
+      "mode": "online",
+      "name": "硬断言+裁判联合通过",
+      "value": 0.6831683168316832,
+      "numerator": 69,
+      "denominator": 101,
+      "unit": "ratio",
+      "target": null,
+      "scope": "仅有有效裁判结果的首轮轨迹，不用于pass^8",
+      "status": "MEASURED"
+    },
+    {
+      "id": "latency_p50",
+      "mode": "online",
+      "name": "答案时延P50",
+      "value": 2629.68,
+      "unit": "ms",
+      "denominator": 746,
+      "target": 3000,
+      "status": "MEASURED",
+      "scope": "无人工故障，应用处理+真实模型API（线上）；不含浏览器渲染。nearest-rank分位数。"
+    },
+    {
+      "id": "latency_p95",
+      "mode": "online",
+      "name": "答案时延P95",
+      "value": 8999.15,
+      "unit": "ms",
+      "denominator": 746,
+      "target": 8000,
+      "status": "MEASURED",
+      "scope": "无人工故障，应用处理+真实模型API（线上）；不含浏览器渲染。nearest-rank分位数。"
+    },
+    {
+      "id": "fcr",
+      "mode": "online",
+      "name": "7日一次解决率",
+      "value": null,
+      "status": "NOT_MEASURED",
+      "target": 0.7,
+      "reason": "没有7日联系与重开观测数据；不能用短对话成功率替代"
+    }
+  ],
+  "repair_summary": {
+    "offline": {
+      "trials": 110,
+      "passed": 109,
+      "pass_k": [
+        {
+          "k": 1,
+          "passed": 73,
+          "eligible": 74,
+          "rate": 0.9864864864864865
+        },
+        {
+          "k": 3,
+          "passed": 0,
+          "eligible": 0,
+          "rate": null
+        },
+        {
+          "k": 8,
+          "passed": 0,
+          "eligible": 0,
+          "rate": null
+        }
+      ],
+      "model_calls": 24
+    },
+    "online": {
+      "trials": 110,
+      "passed": 109,
+      "pass_k": [
+        {
+          "k": 1,
+          "passed": 73,
+          "eligible": 74,
+          "rate": 0.9864864864864865
+        },
+        {
+          "k": 3,
+          "passed": 0,
+          "eligible": 0,
+          "rate": null
+        },
+        {
+          "k": 8,
+          "passed": 0,
+          "eligible": 0,
+          "rate": null
+        }
+      ],
+      "model_calls": 79
+    }
+  },
+  "repair_semantic_judge_status": {
+    "NOT_MEASURED": 110
+  },
+  "dynamic_redblue": {
+    "source": "reports/红蓝对抗在线实测.json",
+    "config": {
+      "case_ids": [
+        "U093"
+      ],
+      "fault": null,
+      "judge": true,
+      "max_turns": 2,
+      "mode": "online",
+      "red_mode": "llm",
+      "repeats": 1
+    },
+    "results": [
+      {
+        "id": "U093",
+        "repeat": 1,
+        "status": "PASS",
+        "trace_file": "traces/U093-1.json",
+        "turns": 2
+      }
+    ],
+    "turn_judges": [
+      {
+        "turn": 1,
+        "semantic_status": "ESTIMATE",
+        "faithfulness": 1.0
+      },
+      {
+        "turn": 2,
+        "semantic_status": "ESTIMATE",
+        "faithfulness": 1.0
+      }
+    ]
+  },
+  "claim_verdicts": {
+    "business_attribution": "已实现统计、规则候选、引用下钻和LLM建议；业务收益待真实试点",
+    "lower_latency_cost_than_logs": "有缓存/预计算机制；无公平对照和成本计量，尚未证实",
+    "self_evolution": "人工审核与工程回归驱动；非自动学习或自主发布",
+    "llm_judge_redblue": "模块与小样本动态在线验证存在；历史固定评测与动态对抗不能合并"
+  }
+}

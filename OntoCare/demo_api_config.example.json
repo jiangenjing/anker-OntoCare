@@ -1,0 +1,6 @@
+{
+  "api_key": "",
+  "base_url": "https://ai-router-cn-pub.anker-in.com",
+  "text_model": "hackathon/v_model/nova-pro",
+  "vision_model": "hackathon/v_model/deepseek-v4.1-flash"
+}

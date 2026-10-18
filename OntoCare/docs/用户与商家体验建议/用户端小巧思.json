@@ -1,0 +1,484 @@
+{
+  "task": "为用户端（User View）实现 6 个体验增强小巧思",
+  "target_file": "index.html",
+  "source_data_contract": {
+    "principle": "所有数据必须来自 T1_complaints / T2_orders / T3_robovac_qa / T4_breast_pump_qa / T5_dealers，禁止虚构",
+    "key_data": {
+      "recent_orders": "从 T2_orders 按 purchaseDate 降序排列，取最近 1-3 笔",
+      "order_fields": ["orderNo", "sku", "productDesc", "purchaseDate", "warrantyEnd", "orderStatus", "carrier", "tracking", "trackingStatus", "amount"],
+      "knowledge_fields": ["qaTitle", "qaContent", "pn"]
+    }
+  },
+
+  "features": [
+    {
+      "id": "U01",
+      "name": "订单卡片一键确认",
+      "priority": "P0",
+      "description": "当 AI 识别出用户可能涉及的订单时，将订单展示为可点击的选择卡片。用户点击后，AI 基于该订单数据精准回复，无需手动输入订单号。",
+      "trigger_condition": "AI 检测到用户当前问题涉及订单查询（物流、质保、退款等），且 COMPLAINTS/ORDERS 中匹配到 1 笔以上相关订单",
+      "implementation": {
+        "step_1": "在 assistantReply() 中，当回复内容包含订单信息时，将订单数据挂载到消息对象上，格式见 example_message_object",
+        "step_2": "在 appendMessage() 中，若消息对象含 orderCards 字段，则在消息气泡下方渲染订单卡片组",
+        "step_3": "订单卡片 click 事件绑定 onOrderCardClick(orderNo) 函数",
+        "step_4": "onOrderCardClick 将订单号填入输入框并自动发送，或直接触发下一轮 AI 回复"
+      },
+      "example_message_object": {
+        "role": "assistant",
+        "text": "我查到您最近有两笔订单，请问您说的是哪一笔？",
+        "orderCards": [
+          {
+            "orderNo": "Anker002",
+            "sku": "T2080GA1",
+            "productName": "S1 Pro",
+            "carrier": "ANPOST",
+            "tracking": "Anker1234567-2",
+            "trackingStatus": "Delivered on 9/21",
+            "purchaseDate": "2026-09-13"
+          },
+          {
+            "orderNo": "Anker002",
+            "sku": "T29C2001",
+            "productName": "S1 Pro Accessory",
+            "carrier": "UPS",
+            "tracking": "Anker1234567-3",
+            "trackingStatus": "Delivered on 9/24",
+            "purchaseDate": "2026-09-20"
+          }
+        ]
+      },
+      "example_rendered_ui": {
+        "message_bubble": "我查到您最近有两笔订单，请问您说的是哪一笔？",
+        "order_card_1": {
+          "border": "1px solid #E5E5E5",
+          "border_radius": "8px",
+          "padding": "12px 16px",
+          "cursor": "pointer",
+          "hover_border_color": "#000",
+          "content": "订单 Anker002 · T2080GA1\nS1 Pro · ANPOST\n物流单号：Anker1234567-2\n状态：Delivered on 9/21"
+        },
+        "order_card_2": {
+          "border": "1px solid #E5E5E5",
+          "border_radius": "8px",
+          "padding": "12px 16px",
+          "cursor": "pointer",
+          "hover_border_color": "#000",
+          "content": "订单 Anker002 · T29C2001\nS1 Pro Accessory · UPS\n物流单号：Anker1234567-3\n状态：Delivered on 9/24"
+        }
+      },
+      "ui_spec": {
+        "card_position": "assistant 消息气泡下方，间距 8px",
+        "card_layout": "垂直排列，卡片之间间距 8px",
+        "card_max_width": "与消息气泡同宽（78%）",
+        "card_padding": "12px 16px",
+        "card_border": "1px solid #E5E5E5",
+        "card_border_radius": "8px",
+        "card_bg": "#FFFFFF",
+        "card_hover": {
+          "border_color": "#000",
+          "background": "#FAFAFA",
+          "transition": "0.15s"
+        },
+        "line_1": {
+          "font_size": "13px",
+          "font_weight": "600",
+          "color": "#000"
+        },
+        "line_2": {
+          "font_size": "12px",
+          "color": "#666",
+          "margin_top": "4px"
+        },
+        "line_3": {
+          "font_size": "12px",
+          "color": "#666",
+          "margin_top": "2px"
+        },
+        "line_4": {
+          "font_size": "12px",
+          "color": "#00A651",
+          "margin_top": "2px"
+        }
+      },
+      "interaction": [
+        "鼠标悬停卡片 → 边框变黑 + 背景变浅灰",
+        "点击卡片 → 触发 onOrderCardClick(orderNo)",
+        "onOrderCardClick → 自动发送『我选 Anker002 的 T2080GA1』给 AI",
+        "AI 基于选中订单给出精准回复"
+      ],
+      "acceptance": [
+        "AI 回复含订单信息时，卡片自动渲染",
+        "卡片可点击",
+        "点击后 AI 精准回复该订单数据",
+        "卡片数据来自 ORDERS 常量，非虚构"
+      ]
+    },
+
+    {
+      "id": "U02",
+      "name": "猜你想问动态排序",
+      "priority": "P0",
+      "description": "右侧『常见问题』推荐列表按『最近订单优先 + 当前场景匹配』动态排序，而非静态展示。",
+      "trigger_condition": "页面初始化时、每轮对话后自动重新计算推荐列表",
+      "implementation": {
+        "step_1": "实现 computeSuggestedQuestions(context) 函数",
+        "step_2": "排序规则：① 最近订单优先（按 purchaseDate 降序）② 当前对话场景匹配（如当前问物流，优先推物流相关问题）",
+        "step_3": "每次对话后调用 renderSuggested() 重新渲染"
+      },
+      "example_input": {
+        "user_recent_orders": [
+          { "orderNo": "Anker002", "sku": "T29C2001", "purchaseDate": "2026-09-20", "scenario": "shipping" },
+          { "orderNo": "Anker002", "sku": "T2080GA1", "purchaseDate": "2026-09-13", "scenario": "shipping" }
+        ],
+        "current_context": {
+          "scenario": "shipping",
+          "last_user_message": "物流单号查不到"
+        }
+      },
+      "example_output": {
+        "suggested_list": [
+          {
+            "rank": 1,
+            "question": "订单 Anker002 的 T29C2001 物流单号查不到，怎么核对？",
+            "reason": "最近订单 + 场景匹配",
+            "score": 95
+          },
+          {
+            "rank": 2,
+            "question": "订单 Anker002 的 T2080GA1 物流单号能帮我查吗？",
+            "reason": "次近订单 + 场景匹配",
+            "score": 85
+          },
+          {
+            "rank": 3,
+            "question": "订单 Anker002 的物流单号显示 label created，是什么意思？",
+            "reason": "场景匹配",
+            "score": 75
+          },
+          {
+            "rank": 4,
+            "question": "T29C2001 的物流显示已签收，但我没收到怎么办？",
+            "reason": "最近订单 + 高频问题",
+            "score": 70
+          },
+          {
+            "rank": 5,
+            "question": "S1 Pro 的质保期到什么时候？",
+            "reason": "产品相关",
+            "score": 60
+          },
+          {
+            "rank": 6,
+            "question": "如何申请换货？",
+            "reason": "通用问题",
+            "score": 50
+          }
+        ]
+      },
+      "example_rendered_ui": {
+        "sidebar_title": "常见问题",
+        "subtitle": "已按本轮问题更新 · 核对 7 个本体节点",
+        "subtitle_style": "font-size: 12px; color: #999; margin-bottom: 12px",
+        "item_1": {
+          "text": "订单 Anker002 的 T29C2001 物流单号查不到，怎么核对？",
+          "border": "1px solid #E5E5E5",
+          "border_radius": "8px",
+          "padding": "12px 14px",
+          "font_size": "13px",
+          "cursor": "pointer",
+          "hover": "border-color: #000; background: #FAFAFA"
+        }
+      },
+      "scoring_algorithm": {
+        "recent_order_bonus": 30,
+        "scenario_match_bonus": 25,
+        "frequency_bonus": "基于历史工单频次，最高 20",
+        "product_match_bonus": 15,
+        "general_bonus": 10,
+        "note": "总分排序，取 TOP 6"
+      },
+      "ui_spec": {
+        "position": "右侧侧边栏（chat-sidebar）",
+        "title": "常见问题",
+        "title_font_size": "13px",
+        "title_font_weight": "600",
+        "title_color": "#666",
+        "subtitle": "已按本轮问题更新 · 核对 N 个本体节点",
+        "subtitle_font_size": "12px",
+        "subtitle_color": "#999",
+        "item_padding": "12px 14px",
+        "item_border": "1px solid #E5E5E5",
+        "item_border_radius": "8px",
+        "item_font_size": "13px",
+        "item_line_height": "1.5",
+        "item_margin_bottom": "8px",
+        "item_hover": {
+          "border_color": "#000",
+          "background": "#FAFAFA"
+        }
+      },
+      "acceptance": [
+        "每次对话后推荐列表自动更新",
+        "最近订单的问题排在前面",
+        "点击推荐问题自动填入输入框",
+        "推荐列表数量 = 6 条",
+        "所有问题数据来自源表"
+      ]
+    },
+
+    {
+      "id": "U03",
+      "name": "流式响应",
+      "priority": "P1",
+      "description": "AI 回复时逐步展示处理步骤，减少用户等待焦虑，体现『正在查询』的过程感。",
+      "trigger_condition": "用户发送消息后，AI 开始处理时",
+      "implementation": {
+        "step_1": "将原有 600ms 后一次性回复改为分步流式",
+        "step_2": "按处理步骤依次显示：正在识别意图 → 正在查询订单 → 正在核对物流 → 生成回复",
+        "step_3": "每步间隔 300-500ms，模拟真实查询过程",
+        "step_4": "最后一步用完整回复替换中间状态"
+      },
+      "example_sequence": [
+        {
+          "delay_ms": 0,
+          "content": "正在识别您的问题...",
+          "style": "color: #999; font-style: italic"
+        },
+        {
+          "delay_ms": 400,
+          "content": "✓ 已识别：物流查询",
+          "style": "color: #666"
+        },
+        {
+          "delay_ms": 800,
+          "content": "正在查询订单 Anker002...",
+          "style": "color: #999; font-style: italic"
+        },
+        {
+          "delay_ms": 1200,
+          "content": "✓ 已找到订单 T2080GA1 · S1 Pro",
+          "style": "color: #666"
+        },
+        {
+          "delay_ms": 1600,
+          "content": "正在核对物流状态...",
+          "style": "color: #999; font-style: italic"
+        },
+        {
+          "delay_ms": 2000,
+          "content": "✓ 物流状态：Delivered on 9/21",
+          "style": "color: #666"
+        },
+        {
+          "delay_ms": 2400,
+          "content": "[最终完整回复]",
+          "style": "color: #000"
+        }
+      ],
+      "ui_spec": {
+        "streaming_container": "在 assistant 消息气泡位置显示",
+        "step_line": {
+          "font_size": "13px",
+          "line_height": "1.8",
+          "padding": "2px 0"
+        },
+        "checkmark_color": "#00A651",
+        "loading_color": "#999",
+        "loading_animation": "三个点 pulse 动画",
+        "final_text_color": "#000"
+      },
+      "acceptance": [
+        "发送消息后有分步显示",
+        "每步间隔约 400ms",
+        "最终替换为完整回复",
+        "总等待时间不超过 2.5 秒"
+      ]
+    },
+
+    {
+      "id": "U04",
+      "name": "视觉指引图示",
+      "priority": "P1",
+      "description": "当 AI 回复涉及产品操作指引时，在文字中嵌入可点击的图示锚点，帮助用户定位产品部位。",
+      "trigger_condition": "AI 回复内容涉及硬件部位（清水箱、尘盒、传感器等）的检查或操作",
+      "implementation": {
+        "step_1": "在 KNOWLEDGE 条目中标记含图示的知识条目（如含图片 URL 的）",
+        "step_2": "在助手回复中，当涉及部位名称时，在文字后追加可点击的『查看图示』按钮",
+        "step_3": "点击按钮弹出 modal 显示对应图片（用 placeholder 或 SVG 示意）"
+      },
+      "example_reply": {
+        "text": "关于 6011 错误，请先检查清水箱密封圈是否变形或破损。[查看图示]",
+        "image_anchor": {
+          "label": "查看图示",
+          "target": "seal_ring_diagram",
+          "style": "color: #0A7AFF; text-decoration: underline; cursor: pointer; font-size: 12px; margin-left: 4px"
+        }
+      },
+      "example_modal": {
+        "title": "清水箱密封圈位置",
+        "image": "[SVG placeholder 或 base64 图片]",
+        "caption": "密封圈位于清水箱出水口处，若变形或破损需更换清水箱",
+        "close_button": "×"
+      },
+      "ui_spec": {
+        "anchor_style": "color: #0A7AFF; text-decoration: underline; cursor: pointer; font-size: 12px; margin-left: 4px",
+        "modal": {
+          "position": "fixed center",
+          "background": "#FFF",
+          "border_radius": "8px",
+          "padding": "24px",
+          "max_width": "480px",
+          "box_shadow": "0 4px 24px rgba(0,0,0,0.15)",
+          "z_index": 9999
+        },
+        "modal_backdrop": {
+          "background": "rgba(0,0,0,0.5)"
+        }
+      },
+      "image_anchors_mapping": [
+        { "keyword": "清水箱密封圈", "target": "seal_ring_diagram" },
+        { "keyword": "尘盒滤网", "target": "dust_filter_diagram" },
+        { "keyword": "防跌落传感器", "target": "anti_drop_sensor_diagram" },
+        { "keyword": "充电触点", "target": "charging_pin_diagram" },
+        { "keyword": "磁铁", "target": "magnet_location_diagram" }
+      ],
+      "acceptance": [
+        "回复中含部位名称时自动追加『查看图示』",
+        "点击弹出 modal",
+        "modal 可关闭",
+        "图示不含虚构内容（用 SVG 简易示意）"
+      ]
+    },
+
+    {
+      "id": "U05",
+      "name": "反馈循环",
+      "priority": "P1",
+      "description": "AI 每条回复下方提供轻量反馈入口，用户可标记『有帮助』或『没解决』。",
+      "trigger_condition": "AI 回复完成后自动显示",
+      "implementation": {
+        "step_1": "在 assistant 消息气泡下方追加反馈条",
+        "step_2": "点击『👍 有帮助』→ 显示『感谢反馈』toast",
+        "step_3": "点击『👎 没解决』→ 显示追问输入框『哪里没帮到您？』",
+        "step_4": "点击『💬 转人工』→ 触发转人工流程"
+      },
+      "example_ui": {
+        "feedback_bar": {
+          "layout": "水平排列 3 个按钮",
+          "margin_top": "8px",
+          "font_size": "12px",
+          "button_style": "padding: 4px 10px; border: 1px solid #E5E5E5; border-radius: 12px; color: #666; background: transparent",
+          "button_hover": "border-color: #000; color: #000",
+          "buttons": [
+            { "id": "fb_helpful", "label": "👍 有帮助" },
+            { "id": "fb_not_helpful", "label": "👎 没解决" },
+            { "id": "fb_human", "label": "💬 转人工" }
+          ]
+        },
+        "follow_up_input": {
+          "placeholder": "哪里没帮到您？",
+          "border": "1px solid #E5E5E5",
+          "border_radius": "8px",
+          "padding": "8px 12px",
+          "margin_top": "8px",
+          "font_size": "13px"
+        }
+      },
+      "acceptance": [
+        "每条 AI 回复下方有反馈条",
+        "点击有反馈 toast",
+        "点击『没解决』显示追问输入框",
+        "点击『转人工』触发转人工按钮区"
+      ]
+    },
+
+    {
+      "id": "U06",
+      "name": "引用可展开",
+      "priority": "P2",
+      "description": "AI 回复下方的引用标注（如 [1] [2] [3]）点击可展开，展示引用来源的具体内容。",
+      "trigger_condition": "AI 回复含引用标注时",
+      "implementation": {
+        "step_1": "将现有 [1] [2] [3] 改为可点击的 <span> 标签",
+        "step_2": "点击后在该消息下方展开引用卡片",
+        "step_3": "引用卡片显示引用来源、行号、原文摘要"
+      },
+      "example_message": {
+        "text": "记录显示签收并不代表你已经收到。[1] [2] [3]",
+        "citations": [
+          { "id": 1, "source": "订单信息 · 第3行（资料快照）", "preview": "订单号 Anker002 · SKU T2080GA1 · 已发货 · Delivered on 9/21" },
+          { "id": 2, "source": "订单信息 · 第4行（资料快照）", "preview": "订单号 Anker002 · SKU T29C2001 · 已发货 · Delivered on 9/24" },
+          { "id": 3, "source": "长尾核查策略 · L002（非官方政策）", "preview": "物流单号显示 label created 后无更新" }
+        ]
+      },
+      "ui_spec": {
+        "citation_tag": {
+          "display": "inline",
+          "color": "#0A7AFF",
+          "cursor": "pointer",
+          "font_size": "12px",
+          "margin_left": "2px",
+          "hover": "text-decoration: underline"
+        },
+        "citation_card": {
+          "background": "#FAFAFA",
+          "border_left": "3px solid #0A7AFF",
+          "border_radius": "6px",
+          "padding": "10px 14px",
+          "margin_top": "8px",
+          "font_size": "12px"
+        },
+        "citation_source": {
+          "font_weight": "600",
+          "color": "#000",
+          "margin_bottom": "4px"
+        },
+        "citation_preview": {
+          "color": "#666",
+          "line_height": "1.5"
+        }
+      },
+      "acceptance": [
+        "引用标注可点击",
+        "点击后展开引用卡片",
+        "卡片显示来源和预览内容",
+        "点击第二次收起"
+      ]
+    }
+  ],
+
+  "implementation_order": [
+    "U01 订单卡片一键确认（P0）",
+    "U02 猜你想问动态排序（P0）",
+    "U03 流式响应（P1）",
+    "U04 视觉指引图示（P1）",
+    "U05 反馈循环（P1）",
+    "U06 引用可展开（P2）"
+  ],
+
+  "global_ui_style": {
+    "primary_color": "#000000",
+    "background": "#FFFFFF",
+    "text_secondary": "#666666",
+    "text_tertiary": "#999999",
+    "border": "#E5E5E5",
+    "link_color": "#0A7AFF",
+    "success_color": "#00A651",
+    "danger_color": "#D0021B",
+    "font_family": "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial",
+    "border_radius": "8px",
+    "transition": "0.15s ease"
+  },
+
+  "global_acceptance": [
+    "所有 6 个功能可独立演示",
+    "所有数据来自源表，禁止虚构",
+    "UI 符合安克黑白灰极简风",
+    "移动端 <1100px 降级布局正常",
+    "所有交互元素有 hover 反馈",
+    "所有点击有明确的视觉响应",
+    "与商家端增强包（v3）保持视觉一致"
+  ],
+
+  "codex_instruction": "请按 implementation_order 顺序，将 6 个用户端小巧思实现到现有 index.html 的 view-user 视图中。严格遵守 example_* 字段给出的示例，以及 ui_spec 中的具体尺寸。所有数据来自 ORDERS/COMPLAINTS/KNOWLEDGE 常量，禁止虚构。完成后逐条对照每个功能的 acceptance 自查。输出完整 index.html。"
+}

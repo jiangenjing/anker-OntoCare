@@ -1,0 +1,21 @@
+{
+  "title": "OntoCare Benchmark · 评测工作台",
+  "tabs": {
+    "主报告": "main",
+    "可视化看板": "visual",
+    "稳定性看板": "stability",
+    "产品化看板": "product"
+  },
+  "errors": [],
+  "trialCount": "数据版本 2026-10-17 · 最近汇总 2026/10/17 00:52:17 · 1256 次独立试验",
+  "stats": "核心首轮硬断言\n83.8%\n62 / 74 个场景通过\npass⁸ · 核心任务\n83.8%\n74 个任务具备 8 次记录\n首轮待修场景\n12\n点击用例可查原始输入、回复与源表\n语义裁判覆盖\n101 / 110\n同模型独立提示词；不是人工审核",
+  "chartCount": 7,
+  "drawerHasSource": true,
+  "disambiguationRows": 4,
+  "offlineStats": "核心首轮硬断言\n85.1%\n63 / 74 个场景通过\npass⁸ · 核心任务\n85.1%\n74 个任务具备 8 次记录\n首轮待修场景\n11\n点击用例可查原始输入、回复与源表\n语义裁判覆盖\n0 / 110\n同模型独立提示词；不是人工审核",
+  "download": "ontocare-benchmark-page-evidence.json",
+  "tour": true,
+  "mobileOverflow": false,
+  "fallbackTables": 15,
+  "fallbackFlag": true
+}

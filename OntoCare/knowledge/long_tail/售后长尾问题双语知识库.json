@@ -1,0 +1,439 @@
+{
+  "knowledge_base": "Anker eufy 售后长尾问题双语知识库",
+  "version": "v4.0",
+  "data_source": [
+    "黑客松智能服务赛题资料.xlsx",
+    "eufy Robovacs Q&A.xlsx",
+    "eufy Breast Pump Q&A.xlsx",
+    "客诉工单信息.xlsx",
+    "OntoCare-整体架构与材料共识.md",
+    "长尾问题.json v3.0"
+  ],
+  "total_entries": 310,
+  "schema": {
+    "evidence_required": "Decision Ontology 要求的证据类型（订单号/SN/图片/视频/购买凭证）",
+    "action_boundary": "Action Gateway 允许的动作范围（自动执行/转人工/仅建议）",
+    "handoff_condition": "必须升级人工的条件",
+    "ontology_slots": "Service Ontology 中需要关联的实体"
+  },
+  "entries": [
+    {
+      "id": "QA001",
+      "category": "quick_action",
+      "sub_category": "price_match",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "I bought it and it went on sale. Can I get a price difference refund?",
+      "question_cn": "我刚买就降价了，能退差价吗？",
+      "synonyms_en": [
+        "price match",
+        "price protection",
+        "refund the difference",
+        "it went on sale after I bought it",
+        "can I get a partial refund"
+      ],
+      "synonyms_cn": [
+        "价保",
+        "退差价",
+        "降价补偿",
+        "刚买就降价",
+        "价格保护",
+        "能补差价吗"
+      ],
+      "ontology_slots": ["Order.orderNo", "Order.purchaseChannel", "Policy.priceProtection"],
+      "evidence_required": ["订单号", "降价截图"],
+      "action_boundary": "仅建议；符合条件时可由 Action Gateway 自动触发价差补偿",
+      "handoff_condition": "渠道规则复杂、用户情绪激动、或价保资格需人工核实时",
+      "strategy": "verify_price_protection_eligibility",
+      "response_en": "Anker offers price protection. If the price drops on the same official channel within a short period after purchase, contact support to apply for a price difference refund. Note: price protection is usually calculated from the order date, not the delivery date. Coupons, cross-store promotions, and subsidized prices are typically not eligible. Please provide your order number and a screenshot of the price drop.",
+      "response_cn": "安克提供价格保护服务。购买后短时间内发现同一官方渠道价格下降，可联系客服申请价差补偿。注意：价保通常从下单日期开始计算，而非收货日期；优惠券、跨店满减、百亿补贴等通常不参与价保。请提供订单号和降价截图，我帮您核实。"
+    },
+    {
+      "id": "QA002",
+      "category": "quick_action",
+      "sub_category": "order_tracking",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "How do I track my order?",
+      "question_cn": "怎么查物流？订单到哪了？",
+      "synonyms_en": [
+        "track my order",
+        "where is my package",
+        "order status",
+        "shipping update",
+        "delivery status"
+      ],
+      "synonyms_cn": [
+        "物流查询",
+        "订单状态",
+        "包裹到哪了",
+        "怎么查快递",
+        "发货了吗",
+        "运单号"
+      ],
+      "ontology_slots": ["Order.orderNo", "Order.trackingStatus", "Order.carrier"],
+      "evidence_required": ["订单号"],
+      "action_boundary": "可自动查询并返回物流状态；异常时转人工发起查件",
+      "handoff_condition": "物流超过9天无更新、显示签收但未收到、包裹退回时",
+      "strategy": "auto_query_tracking_status",
+      "response_en": "Once your order ships, you'll receive a confirmation email with a 'Track Order Status' link. You can also visit the Anker Order Tracker page. If tracking hasn't updated for 9+ days, or shows delivered but you haven't received it, contact support to initiate an investigation.",
+      "response_cn": "订单发货后，您会收到确认邮件，点击邮件中的 Track Order Status 即可追踪物流。也可访问安克官网 Order Tracker 页面查询。如物流超过9天无更新，或显示签收但未收到，请联系客服发起查件。"
+    },
+    {
+      "id": "QA003",
+      "category": "quick_action",
+      "sub_category": "subsidy",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "How does the national subsidy work? Can I get an invoice?",
+      "question_cn": "国家补贴怎么用？补贴商品能开发票吗？",
+      "synonyms_en": [
+        "national subsidy",
+        "government subsidy",
+        "subsidy invoice",
+        "can I get a company invoice for subsidized product",
+        "subsidy eligibility"
+      ],
+      "synonyms_cn": [
+        "国补",
+        "补贴开票",
+        "补贴资格",
+        "国家补贴",
+        "补贴怎么用",
+        "补贴商品发票"
+      ],
+      "ontology_slots": ["Product.PN", "Policy.subsidy", "Order.region"],
+      "evidence_required": ["产品型号", "收货地区"],
+      "action_boundary": "仅建议；涉及开票承诺时必须转人工确认",
+      "handoff_condition": "涉及开票承诺、售后归属、补贴资格争议时",
+      "strategy": "confirm_subsidy_eligibility_and_invoice_policy",
+      "response_en": "Some Anker products participate in the national subsidy program. Subsidies are region-limited — the delivery address must be within the subsidy area. Invoice policy for subsidized products may differ from regular products. We strongly recommend confirming invoice capabilities with support before placing your order. Subsidized products may not participate in nationwide warranty.",
+      "response_cn": "安克部分产品参与国家补贴活动。补贴通常限地区，下单时收货地址需在补贴范围内。补贴商品的开票政策可能与其他商品不同，建议下单前务必向客服确认开票事宜。补贴频道商品可能不参与品牌全国联保，售后可能需联系店铺而非安克官方。"
+    },
+    {
+      "id": "QA004",
+      "category": "quick_action",
+      "sub_category": "invoice_download",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "How do I download my invoice?",
+      "question_cn": "怎么下载发票？发票抬头写错了能改吗？",
+      "synonyms_en": [
+        "download invoice",
+        "invoice not received",
+        "wrong invoice",
+        "change invoice title",
+        "company invoice"
+      ],
+      "synonyms_cn": [
+        "发票下载",
+        "发票修改",
+        "公司发票",
+        "补开发票",
+        "发票丢了",
+        "发票抬头"
+      ],
+      "ontology_slots": ["Order.orderNo", "Order.invoiceStatus"],
+      "evidence_required": ["订单号"],
+      "action_boundary": "可自动指引下载路径；发票修改需转人工",
+      "handoff_condition": "涉及发票抬头修改、公司发票、税号问题时",
+      "strategy": "guide_invoice_download_or_escalate",
+      "response_en": "Visit the Anker Service Center, find the 'Invoice Download' section, and enter your order information to download the electronic invoice. For invoice corrections, company invoices, or tax ID issues, please contact support for manual processing.",
+      "response_cn": "可访问安克服务支持中心，在 Invoice Download 区域输入订单信息下载电子发票。发票信息修改、公司发票、税号等复杂问题请联系客服人工处理。"
+    },
+    {
+      "id": "QA005",
+      "category": "quick_action",
+      "sub_category": "charger_adapter",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "My wireless charger isn't working / adapter not charging",
+      "question_cn": "无线充电器充不上电/适配器不工作",
+      "synonyms_en": [
+        "wireless charger not working",
+        "charger not charging",
+        "adapter not working",
+        "charging issue",
+        "indicator light blinking"
+      ],
+      "synonyms_cn": [
+        "无线充电器充不上电",
+        "充电故障",
+        "适配器不工作",
+        "指示灯闪烁",
+        "充电时发烫",
+        "断断续续充电"
+      ],
+      "ontology_slots": ["Product.PN", "Product.faultCode"],
+      "evidence_required": ["产品型号", "故障现象", "指示灯状态", "适配器功率"],
+      "action_boundary": "可自动执行排查步骤；保修换货需 Action Gateway 核验",
+      "handoff_condition": "排查后仍无法解决、需保修换货时",
+      "strategy": "step_by_step_charger_troubleshoot",
+      "response_en": "1. Check power adapter wattage — wireless charging stations need 18W+ input. 2. Use the included USB-C adapter and cable. 3. Remove phone case if MagSafe incompatible. 4. If indicator blinks, check for insufficient power or foreign object detection. 5. If overheating, move to a ventilated area. If issues persist, warranty replacement may be available.",
+      "response_cn": "1. 检查电源适配器功率——无线充电站需18W以上输入。2. 使用附带的USB-C适配器和线缆。3. 如手机壳MagSafe不兼容请取下。4. 指示灯闪烁通常表示供电不足或异物检测触发。5. 过热时移至通风处冷却。如仍无法解决，可申请保修换货。"
+    },
+    {
+      "id": "L011",
+      "category": "logistics",
+      "product_pn": "T2353",
+      "error_code": null,
+      "question_en": "I ordered the robot vacuum but only received the replacement parts kit. Where is the main unit?",
+      "question_cn": "我买了扫地机器人，只收到配件包，主机去哪了？",
+      "synonyms_en": [
+        "only received accessories",
+        "main unit missing",
+        "parts kit arrived instead",
+        "vacuum not shipped",
+        "partial delivery missing vacuum"
+      ],
+      "synonyms_cn": [
+        "只收到配件",
+        "主机没到",
+        "配件包到了机器没到",
+        "少发主机",
+        "包裹不完整"
+      ],
+      "ontology_slots": ["Order.status", "Order.tracking1", "Order.tracking2", "Order.splitShipment"],
+      "evidence_required": ["订单号", "收到的包裹照片"],
+      "action_boundary": "可自动查询拆单状态并告知；丢失需转人工发起调查",
+      "handoff_condition": "主机包裹显示已签收但实际未收到时",
+      "strategy": "split_package_tracking",
+      "response_en": "Your order was split into 2 packages: Parts kit tracking (delivered) and Main unit tracking (separate). If the main unit still hasn't arrived after the estimated delivery date, I'll launch an internal investigation immediately. Please confirm your order number and provide a photo of the received package.",
+      "response_cn": "我查到您的订单拆分为2个包裹发出：配件包单号（已签收），主机包裹单号（单独发货）。如主机仍未收到，我立即为您启动内部核查。请确认订单号并提供收到的包裹照片。",
+      "source": "客诉工单信息.xlsx — Anker001 / Anker002 / Anker008"
+    },
+    {
+      "id": "L012",
+      "category": "logistics",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "Tracking number isn't working. Do you know when I'll get my order?",
+      "question_cn": "物流单号查不到，什么时候能到？",
+      "synonyms_en": [
+        "tracking not working",
+        "tracking number invalid",
+        "cannot track my order",
+        "no tracking info",
+        "label created no update"
+      ],
+      "synonyms_cn": [
+        "单号查不到",
+        "物流不动",
+        "查不到包裹",
+        "没有物流信息",
+        "单号无效"
+      ],
+      "ontology_slots": ["Order.trackingStatus", "Order.carrier"],
+      "evidence_required": ["订单号或运单号"],
+      "action_boundary": "可自动解释并查询；超时后转人工发起承运商查询",
+      "handoff_condition": "标签创建后超过3个工作日无更新时",
+      "strategy": "explain_label_creation_gap",
+      "response_en": "'Label Created' means the carrier has received shipping info. Physical pickup usually takes 1-2 business days. If there's no update after 3 business days, I'll initiate a carrier inquiry. Please provide your order number.",
+      "response_cn": "标签创建（Label Created）表示承运商已收到发货信息，实物揽收通常需要1-2个工作日。如超3个工作日仍无更新，我为您发起承运商查询。请提供订单号。",
+      "source": "客诉工单信息.xlsx — 用户未提供订单号 / Anker005"
+    },
+    {
+      "id": "L013",
+      "category": "logistics",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "I haven't received my order yet. When will it arrive?",
+      "question_cn": "还没收到货，什么时候能到？",
+      "synonyms_en": [
+        "order not arrived",
+        "when will it arrive",
+        "delivery delayed",
+        "still waiting for my order"
+      ],
+      "synonyms_cn": [
+        "还没收到",
+        "什么时候到",
+        "订单延迟",
+        "一直没发货",
+        "物流太慢"
+      ],
+      "ontology_slots": ["Order.status", "Order.trackingStatus"],
+      "evidence_required": ["订单号"],
+      "action_boundary": "可自动查询并回复预计时间；超时后转人工",
+      "handoff_condition": "超过预计送达日期仍未收到时",
+      "strategy": "proactive_verify_next_steps",
+      "response_en": "I'll check your order status right away. Please provide your order number. If the estimated delivery date has passed, I'll launch a carrier inquiry immediately — typically 1-2 business days for feedback.",
+      "response_cn": "我立即为您查询订单状态，请提供订单号。如已过预计到达时间，我马上发起物流查询，通常1-2个工作日有反馈。",
+      "source": "客诉工单信息.xlsx — Anker003 / Anker004 / Anker007 / Anker009"
+    },
+    {
+      "id": "R077",
+      "category": "robovac_error",
+      "product_line": "S1 Pro",
+      "product_pn": "T2080A",
+      "error_code": "21037332",
+      "question_en": "EB1L: The robot encountered an error while adding clean water",
+      "question_cn": "EB1L：机器人添加清水时遇到错误，任务结束",
+      "synonyms_en": [
+        "EB1L error",
+        "error adding clean water",
+        "water adding failed",
+        "21037332"
+      ],
+      "synonyms_cn": [
+        "EB1L 错误",
+        "添加清水失败",
+        "加清水报错",
+        "21037332"
+      ],
+      "ontology_slots": ["Product.PN", "Product.faultCode"],
+      "evidence_required": ["SN", "故障截图"],
+      "action_boundary": "硬件故障，保修期内可由 Action Gateway 触发换货流程",
+      "handoff_condition": "需确认SN和保修状态后安排换货",
+      "strategy": "hardware_failure_warranty",
+      "response_en": "EB1L indicates a clean water adding error on the base station. This is typically a hardware issue. If under warranty, we'll arrange a replacement. Please provide your product SN and a screenshot of the error.",
+      "response_cn": "EB1L 表示基站添加清水时遇到错误，通常属于硬件问题。如在保，我们为您安排换新。请提供产品SN和错误截图。",
+      "source": "客诉工单信息.xlsx — S1 Pro 工单"
+    },
+    {
+      "id": "R078",
+      "category": "robovac_error",
+      "product_line": "S1 Pro",
+      "product_pn": "T2080A",
+      "error_code": "20972545",
+      "question_en": "E41: Battery abnormal, task ended",
+      "question_cn": "E41：电池异常，任务结束",
+      "synonyms_en": [
+        "E41 error",
+        "battery abnormal",
+        "battery error S1 Pro",
+        "20972545"
+      ],
+      "synonyms_cn": [
+        "E41 错误",
+        "电池异常",
+        "S1 Pro 电池报错",
+        "20972545"
+      ],
+      "ontology_slots": ["Product.PN", "Product.faultCode"],
+      "evidence_required": ["SN", "故障截图"],
+      "action_boundary": "硬件故障，保修期内可由 Action Gateway 触发换货流程",
+      "handoff_condition": "需确认SN和保修状态后安排换货",
+      "strategy": "hardware_failure_warranty",
+      "response_en": "E41 indicates a battery abnormality. Please try restarting the robot first. If the error persists, it's a hardware failure — under warranty, we'll arrange a replacement.",
+      "response_cn": "E41 表示电池异常。请先重启机器人。如重启后仍报错，属于硬件故障，在保可安排换新。",
+      "source": "客诉工单信息.xlsx — S1 Pro 工单"
+    },
+    {
+      "id": "R079",
+      "category": "robovac_error",
+      "product_line": "S1 Pro",
+      "product_pn": "T2080A",
+      "error_code": "20972803",
+      "question_en": "E53: TrueAI sensor abnormal, task ended",
+      "question_cn": "E53：TrueAI 传感器异常，任务结束",
+      "synonyms_en": [
+        "E53 error",
+        "TrueAI sensor abnormal",
+        "sensor error S1 Pro",
+        "20972803"
+      ],
+      "synonyms_cn": [
+        "E53 错误",
+        "TrueAI 传感器异常",
+        "S1 Pro 传感器报错",
+        "20972803"
+      ],
+      "ontology_slots": ["Product.PN", "Product.faultCode"],
+      "evidence_required": ["SN", "故障截图"],
+      "action_boundary": "硬件故障，保修期内可由 Action Gateway 触发换货流程",
+      "handoff_condition": "需确认SN和保修状态后安排换货",
+      "strategy": "hardware_failure_warranty",
+      "response_en": "E53 indicates a TrueAI sensor abnormality. Please try restarting the robot. If the error persists, it's a hardware failure — under warranty, we'll arrange a replacement.",
+      "response_cn": "E53 表示 TrueAI 传感器异常。请先重启机器人。如重启后仍报错，属于硬件故障，在保可安排换新。",
+      "source": "客诉工单信息.xlsx — S1 Pro 工单"
+    },
+    {
+      "id": "R080",
+      "category": "robovac_error",
+      "product_line": "S1 Pro",
+      "product_pn": "T2080A",
+      "error_code": "20972035",
+      "question_en": "E23: Robot clean water level abnormal, task ended",
+      "question_cn": "E23：机器人清水水位异常，任务结束",
+      "synonyms_en": [
+        "E23 error",
+        "clean water level abnormal",
+        "water level error S1 Pro",
+        "20972035"
+      ],
+      "synonyms_cn": [
+        "E23 错误",
+        "清水水位异常",
+        "S1 Pro 水位报错",
+        "20972035"
+      ],
+      "ontology_slots": ["Product.PN", "Product.faultCode"],
+      "evidence_required": ["SN", "故障截图"],
+      "action_boundary": "硬件故障，保修期内可由 Action Gateway 触发换货流程",
+      "handoff_condition": "需确认SN和保修状态后安排换货",
+      "strategy": "hardware_failure_warranty",
+      "response_en": "E23 indicates a clean water level abnormality. Please check if the clean water tank is properly installed and filled. If the error persists, it's a hardware issue — under warranty, we'll arrange a replacement.",
+      "response_cn": "E23 表示清水水位异常。请检查清水箱是否安装到位并已加水。如仍报错，属于硬件问题，在保可安排换新。",
+      "source": "客诉工单信息.xlsx — S1 Pro 工单"
+    },
+    {
+      "id": "R081",
+      "category": "robovac_error",
+      "product_line": "S1 Pro",
+      "product_pn": "T2080A",
+      "error_code": "20971524",
+      "question_en": "E4: Side brush abnormal, task ended",
+      "question_cn": "E4：边刷异常，任务结束",
+      "synonyms_en": [
+        "E4 error",
+        "side brush abnormal",
+        "side brush error S1 Pro",
+        "20971524"
+      ],
+      "synonyms_cn": [
+        "E4 错误",
+        "边刷异常",
+        "S1 Pro 边刷报错",
+        "20971524"
+      ],
+      "ontology_slots": ["Product.PN", "Product.faultCode"],
+      "evidence_required": ["SN", "故障截图"],
+      "action_boundary": "先建议重启排查；仍报错则转保修换货",
+      "handoff_condition": "重启后仍报错时",
+      "strategy": "restart_then_warranty",
+      "response_en": "E4 indicates a side brush abnormality. Please restart the robot first. If the error persists, it's a hardware failure — under warranty, we'll arrange a replacement.",
+      "response_cn": "E4 表示边刷异常。请先重启机器人。如重启后仍报错，属于硬件故障，在保可安排换新。",
+      "source": "客诉工单信息.xlsx — S1 Pro 工单"
+    },
+    {
+      "id": "R082",
+      "category": "robovac_error",
+      "product_line": "S1 Pro",
+      "product_pn": "T2080A",
+      "error_code": "20972810",
+      "question_en": "E5A: Gyroscope abnormal, task ended",
+      "question_cn": "E5A：陀螺仪异常，任务结束",
+      "synonyms_en": [
+        "E5A error",
+        "gyroscope abnormal",
+        "gyroscope error S1 Pro",
+        "20972810"
+      ],
+      "synonyms_cn": [
+        "E5A 错误",
+        "陀螺仪异常",
+        "S1 Pro 陀螺仪报错",
+        "20972810"
+      ],
+      "ontology_slots": ["Product.PN", "Product.faultCode"],
+      "evidence_required": ["SN", "故障截图"],
+      "action_boundary": "硬件故障，保修期内可由 Action Gateway 触发换货流程",
+      "handoff_condition": "需确认SN和保修状态后安排换货",
+      "strategy": "hardware_failure_warranty",
+      "response_en": "E5A indicates a gyroscope abnormality. This is typically a hardware failure. If under warranty, we'll arrange a replacement. Please provide your SN and a screenshot of the error.",
+      "response_cn": "E5A 表示陀螺仪异常，通常属于硬件故障。如在保，我们为您安排换新。请提供SN和错误截图。",
+      "source": "客诉工单信息.xlsx — S1 Pro 工单"
+    }
+  ]
+}

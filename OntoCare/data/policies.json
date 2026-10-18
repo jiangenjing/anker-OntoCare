@@ -1,0 +1,37 @@
+{
+  "warranty": {
+    "default_months": 24,
+    "note": "warranty_until from order record is authoritative; UNKNOWN never implies expired"
+  },
+  "free_return_30d": {
+    "enabled": true,
+    "rule": "demo order within 30 days AND authorized dealer → prepare_return_review only",
+    "note": "退货仍须核对商品状态、购买渠道和人工流程；演示系统没有退款执行器"
+  },
+  "service_boundary": {
+    "out_of_scope_intents": ["human_supervisor", "corporate_bulk_order", "press_inquiry"],
+    "action": "escalate_human_directly"
+  },
+  "actions": {
+    "query_order": {"risk": "LOW", "auto": true},
+    "search_knowledge": {"risk": "LOW", "auto": true},
+    "run_troubleshooting": {"risk": "MEDIUM", "auto": true},
+    "propose_repair": {"risk": "MEDIUM", "auto": true},
+    "propose_replacement": {
+      "risk": "HIGH", "auto": false, "human_approval": true,
+      "preconditions": ["troubleshooting_failed", "warranty_valid", "dealer_authorized"]
+    },
+    "direct_refund": {
+      "risk": "CRITICAL", "auto": false, "human_approval": true,
+      "preconditions": ["within_30days", "authorized_dealer"]
+    },
+    "escalate_human": {"risk": "CRITICAL", "auto": true}
+  },
+  "emotion_policy": {
+    "NORMAL": "standard",
+    "ANXIOUS": "faster_steps, more_reassurance",
+    "ANGRY": "less_repeat_questions, lead_with_solution",
+    "COMPLAINT_RISK": "prioritize, offer_human_supervisor"
+  },
+  "post_resolution": ["mark_case_resolved", "send_nss_survey"]
+}

@@ -1,0 +1,52 @@
+{
+  "generated_at": "2026-10-16T18:09:59.699129+00:00",
+  "source": "benchmark/repair-final-results.json",
+  "historical_source": "benchmark/benchmark-results.json",
+  "historical_source_sha256": "8352cb8819987f14c5a7b5e848d156c577eb469d7c1aaa6eac04e04b4aabc79e",
+  "unit_tests": 156,
+  "benchmark_integrity_tests": 5,
+  "browser": {
+    "privacy_cache": "PASS",
+    "faq_2310_citation_r57": "PASS",
+    "model_calls": 0,
+    "page_errors": 0
+  },
+  "modes": {
+    "offline": {
+      "total": 110,
+      "passed": 109,
+      "failed": [
+        {
+          "id": "U060",
+          "checks": [
+            "fault_tolerance",
+            "degraded_reason"
+          ]
+        }
+      ]
+    },
+    "online": {
+      "total": 110,
+      "passed": 109,
+      "failed": [
+        {
+          "id": "U060",
+          "checks": [
+            "fault_tolerance",
+            "degraded_reason"
+          ]
+        }
+      ]
+    }
+  },
+  "replacement_probe": {
+    "id": "U060-R1",
+    "status": "PASS",
+    "fault_hits": 1
+  },
+  "limitations": [
+    "Each mode was run once; no new pass^3/pass^8 or semantic judge score.",
+    "U060 remains FAIL: EB1L workflow bypassed model, so timeout injection did not fire. Separate U060-R1 probes an uncached request.",
+    "Address masking is a demo output boundary, not production authentication or complete PII detection."
+  ]
+}

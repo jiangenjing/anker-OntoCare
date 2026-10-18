@@ -1,0 +1,4542 @@
+{
+  "mode": "LIVE_HTTP_CONFIGURED_MODEL",
+  "scope": "硬断言回归，不等价完整语义或UI验收",
+  "reference_date": "2026-10-16",
+  "counts": {
+    "PASS": 0,
+    "FAIL": 2,
+    "REVIEW_REQUIRED": 8,
+    "BLOCKED": 0,
+    "ERROR": 0
+  },
+  "results": [
+    {
+      "id": "U001",
+      "category": "order_query",
+      "status": "REVIEW_REQUIRED",
+      "hard_checks_passed": true,
+      "checks": [
+        {
+          "check": "{\"type\": \"order_fields\", \"order_no\": \"Anker003\", \"rows\": [{\"source_row\": 5, \"fields\": {\"SKU\": \"T2351V11-F\", \"订单金额\": 257.5, \"物流单号\": \"Anker 1234567-4\"}}]}",
+          "passed": true,
+          "actual": {
+            "items": [
+              {
+                "fields": {
+                  "No.": 4,
+                  "Product Description": "eufy X10 Pro Omni Robot Vacuum Cleaner & Dual Mops 8000Pa Acceptable Condition",
+                  "QTY": 1,
+                  "SKU": "T2351V11-F",
+                  "发货日期": "2026-09-21",
+                  "物流单号": "Anker 1234567-4",
+                  "物流承运商": "Royal Mail",
+                  "物流状态": "Delivered on 9/25",
+                  "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                  "订单状态": "已发货",
+                  "订单金额": 257.5,
+                  "质保结束日期": "2027-09-21",
+                  "购买日期": "2026-09-21"
+                },
+                "image": {
+                  "image": "/product-images/T2351.png",
+                  "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                  "original_image": "https://cdn.shopify.com/s/files/1/0504/7094/4954/files/Maskgroup-1.png?v=1773055636",
+                  "scope": "product_family",
+                  "source": "https://www.eufy.com/products/t2351121"
+                },
+                "source_row": 5,
+                "source_url": "/api/sources/order-5"
+              }
+            ],
+            "kind": "source_snapshot",
+            "order_id": "Anker003",
+            "ownership_verified": false
+          }
+        },
+        {
+          "check": "HTTP成功",
+          "passed": true,
+          "actual": 200
+        }
+      ],
+      "response": {
+        "cards": [],
+        "citations": [
+          {
+            "id": "order-5",
+            "kind": "order",
+            "label": "订单信息 · 第 5 行（资料快照）",
+            "url": "/api/sources/order-5"
+          }
+        ],
+        "diagrams": [],
+        "followups": {
+          "ontology": {
+            "edges": [
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "T2351"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "service-rules"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-5"
+              }
+            ],
+            "intent": null,
+            "nodes": [
+              {
+                "id": "case",
+                "type": "ServiceCase"
+              },
+              {
+                "id": "T2351",
+                "type": "Product"
+              },
+              {
+                "id": "service-rules",
+                "type": "Policy"
+              },
+              {
+                "id": "order-5",
+                "type": "OrderItem"
+              }
+            ],
+            "product": "T2351",
+            "query": "Anker003",
+            "retrieved_count": 0,
+            "revision": 1
+          },
+          "questions": [
+            {
+              "source_ids": [
+                "order-5"
+              ],
+              "text": "查询订单 ANKER003 的 T2351V11-F 物流记录",
+              "text_en": "Check shipping record for ANKER003, SKU T2351V11-F"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "T2351 需要提供哪些故障信息？",
+              "text_en": "What fault details should I provide for T2351?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER003：售后核查需要哪些购买凭证？",
+              "text_en": "Order ANKER003: What purchase evidence is needed?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER003：物流记录与实际收到的不一致怎么办？",
+              "text_en": "Order ANKER003: What if tracking differs from what I received?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER003：如何确认产品型号？",
+              "text_en": "Order ANKER003: How can I confirm the model?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER003：如何补充故障照片？",
+              "text_en": "Order ANKER003: How can I provide a fault photo?"
+            }
+          ],
+          "quick_replies": [
+            {
+              "text": "请说得简单一点，告诉我下一步怎么做",
+              "text_en": "Please simplify this and tell me the next step."
+            },
+            {
+              "text": "我还需要准备什么材料？",
+              "text_en": "What information should I prepare?"
+            }
+          ]
+        },
+        "handoff_available": false,
+        "model_status": "NOT_USED",
+        "order_card": {
+          "items": [
+            {
+              "fields": {
+                "No.": 4,
+                "Product Description": "eufy X10 Pro Omni Robot Vacuum Cleaner & Dual Mops 8000Pa Acceptable Condition",
+                "QTY": 1,
+                "SKU": "T2351V11-F",
+                "发货日期": "2026-09-21",
+                "物流单号": "Anker 1234567-4",
+                "物流承运商": "Royal Mail",
+                "物流状态": "Delivered on 9/25",
+                "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                "订单状态": "已发货",
+                "订单金额": 257.5,
+                "质保结束日期": "2027-09-21",
+                "购买日期": "2026-09-21"
+              },
+              "image": {
+                "image": "/product-images/T2351.png",
+                "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                "original_image": "https://cdn.shopify.com/s/files/1/0504/7094/4954/files/Maskgroup-1.png?v=1773055636",
+                "scope": "product_family",
+                "source": "https://www.eufy.com/products/t2351121"
+              },
+              "source_row": 5,
+              "source_url": "/api/sources/order-5"
+            }
+          ],
+          "kind": "source_snapshot",
+          "order_id": "Anker003",
+          "ownership_verified": false
+        },
+        "order_snapshot": {
+          "items": [
+            {
+              "fields": {
+                "No.": 4,
+                "Product Description": "eufy X10 Pro Omni Robot Vacuum Cleaner & Dual Mops 8000Pa Acceptable Condition",
+                "QTY": 1,
+                "SKU": "T2351V11-F",
+                "发货日期": "2026-09-21",
+                "物流单号": "Anker 1234567-4",
+                "物流承运商": "Royal Mail",
+                "物流状态": "Delivered on 9/25",
+                "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                "订单状态": "已发货",
+                "订单金额": 257.5,
+                "质保结束日期": "2027-09-21",
+                "购买日期": "2026-09-21"
+              },
+              "image": {
+                "image": "/product-images/T2351.png",
+                "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                "original_image": "https://cdn.shopify.com/s/files/1/0504/7094/4954/files/Maskgroup-1.png?v=1773055636",
+                "scope": "product_family",
+                "source": "https://www.eufy.com/products/t2351121"
+              },
+              "source_row": 5,
+              "source_url": "/api/sources/order-5"
+            }
+          ],
+          "kind": "source_snapshot",
+          "order_id": "Anker003",
+          "ownership_verified": false
+        },
+        "reply": "已找到这笔订单，商品和物流资料见订单卡片。请确认是否是这笔订单，再告诉我想查询物流还是处理产品问题。 [1]",
+        "request_id": "026eacb6943d",
+        "selection_cards": [],
+        "trace": {
+          "allowed": [
+            "search_knowledge",
+            "run_troubleshooting",
+            "escalate_human"
+          ],
+          "answer_route": "ORDER_SELECTION",
+          "cache_key": null,
+          "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+          "dealer": "INSUFFICIENT_INFO",
+          "emotion": "NORMAL",
+          "evidence": "order_sku=T2351V11-F",
+          "forbidden": [
+            "direct_refund",
+            "propose_replacement"
+          ],
+          "image": "未处理",
+          "knowledge_source": "NONE",
+          "long_tail": {
+            "basis": "curated phrase match; not an empirical frequency estimate",
+            "classification": "no_match",
+            "source_ids": []
+          },
+          "model": "DeepSeek-V4.1-Flash",
+          "model_calls": 0,
+          "model_candidate": "无",
+          "model_status": "NOT_USED",
+          "order": "ANKER003",
+          "order_source": "SUPPLIED_DATASET",
+          "order_status": "FOUND",
+          "ownership_status": "NOT_VERIFIED",
+          "product": "X10 Pro Omni",
+          "product_state": "FIXTURE_MATCHED",
+          "purchase_date_claim": null,
+          "reasons": [
+            "演示环境无真实退款或换货执行器，不得声称已办理"
+          ],
+          "request_id": "026eacb6943d",
+          "rule_version": "m0-safe-1",
+          "troubleshooting": "NOT_STARTED",
+          "warranty": "VALID",
+          "workflow_history": [],
+          "workflow_status": null
+        },
+        "turn_count": 1
+      },
+      "trajectory": [
+        {
+          "input": "Anker003",
+          "response": {
+            "cards": [],
+            "citations": [
+              {
+                "id": "order-5",
+                "kind": "order",
+                "label": "订单信息 · 第 5 行（资料快照）",
+                "url": "/api/sources/order-5"
+              }
+            ],
+            "diagrams": [],
+            "followups": {
+              "ontology": {
+                "edges": [
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "T2351"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "service-rules"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-5"
+                  }
+                ],
+                "intent": null,
+                "nodes": [
+                  {
+                    "id": "case",
+                    "type": "ServiceCase"
+                  },
+                  {
+                    "id": "T2351",
+                    "type": "Product"
+                  },
+                  {
+                    "id": "service-rules",
+                    "type": "Policy"
+                  },
+                  {
+                    "id": "order-5",
+                    "type": "OrderItem"
+                  }
+                ],
+                "product": "T2351",
+                "query": "Anker003",
+                "retrieved_count": 0,
+                "revision": 1
+              },
+              "questions": [
+                {
+                  "source_ids": [
+                    "order-5"
+                  ],
+                  "text": "查询订单 ANKER003 的 T2351V11-F 物流记录",
+                  "text_en": "Check shipping record for ANKER003, SKU T2351V11-F"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "T2351 需要提供哪些故障信息？",
+                  "text_en": "What fault details should I provide for T2351?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER003：售后核查需要哪些购买凭证？",
+                  "text_en": "Order ANKER003: What purchase evidence is needed?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER003：物流记录与实际收到的不一致怎么办？",
+                  "text_en": "Order ANKER003: What if tracking differs from what I received?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER003：如何确认产品型号？",
+                  "text_en": "Order ANKER003: How can I confirm the model?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER003：如何补充故障照片？",
+                  "text_en": "Order ANKER003: How can I provide a fault photo?"
+                }
+              ],
+              "quick_replies": [
+                {
+                  "text": "请说得简单一点，告诉我下一步怎么做",
+                  "text_en": "Please simplify this and tell me the next step."
+                },
+                {
+                  "text": "我还需要准备什么材料？",
+                  "text_en": "What information should I prepare?"
+                }
+              ]
+            },
+            "handoff_available": false,
+            "model_status": "NOT_USED",
+            "order_card": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 4,
+                    "Product Description": "eufy X10 Pro Omni Robot Vacuum Cleaner & Dual Mops 8000Pa Acceptable Condition",
+                    "QTY": 1,
+                    "SKU": "T2351V11-F",
+                    "发货日期": "2026-09-21",
+                    "物流单号": "Anker 1234567-4",
+                    "物流承运商": "Royal Mail",
+                    "物流状态": "Delivered on 9/25",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 257.5,
+                    "质保结束日期": "2027-09-21",
+                    "购买日期": "2026-09-21"
+                  },
+                  "image": {
+                    "image": "/product-images/T2351.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "https://cdn.shopify.com/s/files/1/0504/7094/4954/files/Maskgroup-1.png?v=1773055636",
+                    "scope": "product_family",
+                    "source": "https://www.eufy.com/products/t2351121"
+                  },
+                  "source_row": 5,
+                  "source_url": "/api/sources/order-5"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker003",
+              "ownership_verified": false
+            },
+            "order_snapshot": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 4,
+                    "Product Description": "eufy X10 Pro Omni Robot Vacuum Cleaner & Dual Mops 8000Pa Acceptable Condition",
+                    "QTY": 1,
+                    "SKU": "T2351V11-F",
+                    "发货日期": "2026-09-21",
+                    "物流单号": "Anker 1234567-4",
+                    "物流承运商": "Royal Mail",
+                    "物流状态": "Delivered on 9/25",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 257.5,
+                    "质保结束日期": "2027-09-21",
+                    "购买日期": "2026-09-21"
+                  },
+                  "image": {
+                    "image": "/product-images/T2351.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "https://cdn.shopify.com/s/files/1/0504/7094/4954/files/Maskgroup-1.png?v=1773055636",
+                    "scope": "product_family",
+                    "source": "https://www.eufy.com/products/t2351121"
+                  },
+                  "source_row": 5,
+                  "source_url": "/api/sources/order-5"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker003",
+              "ownership_verified": false
+            },
+            "reply": "已找到这笔订单，商品和物流资料见订单卡片。请确认是否是这笔订单，再告诉我想查询物流还是处理产品问题。 [1]",
+            "request_id": "026eacb6943d",
+            "selection_cards": [],
+            "trace": {
+              "allowed": [
+                "search_knowledge",
+                "run_troubleshooting",
+                "escalate_human"
+              ],
+              "answer_route": "ORDER_SELECTION",
+              "cache_key": null,
+              "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+              "dealer": "INSUFFICIENT_INFO",
+              "emotion": "NORMAL",
+              "evidence": "order_sku=T2351V11-F",
+              "forbidden": [
+                "direct_refund",
+                "propose_replacement"
+              ],
+              "image": "未处理",
+              "knowledge_source": "NONE",
+              "long_tail": {
+                "basis": "curated phrase match; not an empirical frequency estimate",
+                "classification": "no_match",
+                "source_ids": []
+              },
+              "model": "DeepSeek-V4.1-Flash",
+              "model_calls": 0,
+              "model_candidate": "无",
+              "model_status": "NOT_USED",
+              "order": "ANKER003",
+              "order_source": "SUPPLIED_DATASET",
+              "order_status": "FOUND",
+              "ownership_status": "NOT_VERIFIED",
+              "product": "X10 Pro Omni",
+              "product_state": "FIXTURE_MATCHED",
+              "purchase_date_claim": null,
+              "reasons": [
+                "演示环境无真实退款或换货执行器，不得声称已办理"
+              ],
+              "request_id": "026eacb6943d",
+              "rule_version": "m0-safe-1",
+              "troubleshooting": "NOT_STARTED",
+              "warranty": "VALID",
+              "workflow_history": [],
+              "workflow_status": null
+            },
+            "turn_count": 1
+          },
+          "seconds": 0.025,
+          "http_status": 200
+        }
+      ],
+      "seconds": 0.025,
+      "semantic_review": "NOT_REVIEWED"
+    },
+    {
+      "id": "U007",
+      "category": "shipping_exception",
+      "status": "REVIEW_REQUIRED",
+      "hard_checks_passed": true,
+      "checks": [
+        {
+          "check": "{\"type\": \"citation_any\", \"ids\": [\"order-3\", \"order-4\"]}",
+          "passed": true,
+          "actual": [
+            "order-3",
+            "order-4"
+          ]
+        },
+        {
+          "check": "HTTP成功",
+          "passed": true,
+          "actual": 200
+        }
+      ],
+      "response": {
+        "cards": [
+          {
+            "body": "ANPOST · Anker1234567-2\nDelivered on 9/21",
+            "title": "Shipment · T2080GA1"
+          },
+          {
+            "body": "UPS · Anker1234567-3\nDelivered on 9/24",
+            "title": "Shipment · T29C2001"
+          }
+        ],
+        "citations": [
+          {
+            "id": "order-3",
+            "kind": "order",
+            "label": "订单信息 · 第 3 行（资料快照）",
+            "url": "/api/sources/order-3"
+          },
+          {
+            "id": "order-4",
+            "kind": "order",
+            "label": "订单信息 · 第 4 行（资料快照）",
+            "url": "/api/sources/order-4"
+          }
+        ],
+        "diagrams": [],
+        "followups": {
+          "ontology": {
+            "edges": [
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "ANKER002"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-3"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-4"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "service-rules"
+              }
+            ],
+            "intent": "shipping",
+            "nodes": [
+              {
+                "id": "case",
+                "type": "ServiceCase"
+              },
+              {
+                "id": "ANKER002",
+                "type": "Order"
+              },
+              {
+                "id": "order-3",
+                "type": "OrderItem"
+              },
+              {
+                "id": "order-4",
+                "type": "OrderItem"
+              },
+              {
+                "id": "service-rules",
+                "type": "Policy"
+              }
+            ],
+            "product": null,
+            "query": "Hi Team,\n\n I am reaching out to you regarding my order Anker002. I have received ine package today with tracking number \nAnker1234567-2. The package only contains the replacement accessories kit. I have not received the Eufy S1 robot vacuum yet. When trying to track the shipment Anker1234567-3, UPS website says that the label has been created, but there is no further information. Could you please let me know when I should expect the robot vacuum to arrive?\n\nThanks in advance",
+            "retrieved_count": 0,
+            "revision": 1
+          },
+          "questions": [
+            {
+              "source_ids": [
+                "order-3"
+              ],
+              "text": "查询订单 ANKER002 的 T2080GA1 物流记录",
+              "text_en": "Check shipping record for ANKER002, SKU T2080GA1"
+            },
+            {
+              "source_ids": [
+                "order-4"
+              ],
+              "text": "查询订单 ANKER002 的 T29C2001 物流记录",
+              "text_en": "Check shipping record for ANKER002, SKU T29C2001"
+            },
+            {
+              "source_ids": [
+                "order-3"
+              ],
+              "text": "订单 ANKER002 的 T2080GA1 发货了吗？",
+              "text_en": "Has T2080GA1 in order ANKER002 shipped?"
+            },
+            {
+              "source_ids": [
+                "order-4"
+              ],
+              "text": "订单 ANKER002 的 T29C2001 发货了吗？",
+              "text_en": "Has T29C2001 in order ANKER002 shipped?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER002 的物流记录和我实际收到的不一致，怎么办？",
+              "text_en": "The tracking record for ANKER002 differs from what I received. What should I do?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER002 的物流单号查不到，怎么核对？",
+              "text_en": "Tracking for order ANKER002 is not working. How can I check it?"
+            }
+          ],
+          "quick_replies": [
+            {
+              "text": "包裹还没收到",
+              "text_en": "I have not received the package."
+            },
+            {
+              "text": "只收到部分商品",
+              "text_en": "Only part of my order arrived."
+            },
+            {
+              "text": "物流单号查不到",
+              "text_en": "The tracking number is not working."
+            }
+          ]
+        },
+        "handoff_available": false,
+        "model_status": "INVALID_RESPONSE",
+        "order_card": {
+          "items": [
+            {
+              "fields": {
+                "No.": 2,
+                "Product Description": "eufy Robot Vacuum and Mop, S1 Pro Omni, HydroJet System with Roller Mop",
+                "QTY": 1,
+                "SKU": "T2080GA1",
+                "发货日期": "2026-09-18",
+                "物流单号": "Anker1234567-2",
+                "物流承运商": "ANPOST",
+                "物流状态": "Delivered on 9/21",
+                "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                "订单状态": "已发货",
+                "订单金额": 1099.9,
+                "质保结束日期": "2027-09-13",
+                "购买日期": "2026-09-13"
+              },
+              "image": {
+                "image": "/product-images/T2080.png",
+                "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                "original_image": "https://cdn.shopify.com/s/files/1/0709/4049/1966/files/T2080GA1-eufy_Omni_S1_Pro_1.png?v=1757937797",
+                "scope": "product_family",
+                "source": "https://www.eufy.com/ie/products/t2080g11"
+              },
+              "source_row": 3,
+              "source_url": "/api/sources/order-3"
+            },
+            {
+              "fields": {
+                "No.": 3,
+                "Product Description": "EUFY S1 PRO REPLACEMENT ACCESSORY KIT",
+                "QTY": 1,
+                "SKU": "T29C2001",
+                "发货日期": "2026-09-20",
+                "物流单号": "Anker1234567-3",
+                "物流承运商": "UPS",
+                "物流状态": "Delivered on 9/24",
+                "订单地址": null,
+                "订单状态": "已发货",
+                "订单金额": 122.21,
+                "质保结束日期": "2026-10-13",
+                "购买日期": null
+              },
+              "image": null,
+              "source_row": 4,
+              "source_url": "/api/sources/order-4"
+            }
+          ],
+          "kind": "source_snapshot",
+          "order_id": "Anker002",
+          "ownership_verified": false
+        },
+        "order_snapshot": {
+          "items": [
+            {
+              "fields": {
+                "No.": 2,
+                "Product Description": "eufy Robot Vacuum and Mop, S1 Pro Omni, HydroJet System with Roller Mop",
+                "QTY": 1,
+                "SKU": "T2080GA1",
+                "发货日期": "2026-09-18",
+                "物流单号": "Anker1234567-2",
+                "物流承运商": "ANPOST",
+                "物流状态": "Delivered on 9/21",
+                "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                "订单状态": "已发货",
+                "订单金额": 1099.9,
+                "质保结束日期": "2027-09-13",
+                "购买日期": "2026-09-13"
+              },
+              "image": {
+                "image": "/product-images/T2080.png",
+                "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                "original_image": "https://cdn.shopify.com/s/files/1/0709/4049/1966/files/T2080GA1-eufy_Omni_S1_Pro_1.png?v=1757937797",
+                "scope": "product_family",
+                "source": "https://www.eufy.com/ie/products/t2080g11"
+              },
+              "source_row": 3,
+              "source_url": "/api/sources/order-3"
+            },
+            {
+              "fields": {
+                "No.": 3,
+                "Product Description": "EUFY S1 PRO REPLACEMENT ACCESSORY KIT",
+                "QTY": 1,
+                "SKU": "T29C2001",
+                "发货日期": "2026-09-20",
+                "物流单号": "Anker1234567-3",
+                "物流承运商": "UPS",
+                "物流状态": "Delivered on 9/24",
+                "订单地址": null,
+                "订单状态": "已发货",
+                "订单金额": 122.21,
+                "质保结束日期": "2026-10-13",
+                "购买日期": null
+              },
+              "image": null,
+              "source_row": 4,
+              "source_url": "/api/sources/order-4"
+            }
+          ],
+          "kind": "source_snapshot",
+          "order_id": "Anker002",
+          "ownership_verified": false
+        },
+        "reply": "Your tracking lookup is not working, and you want an arrival estimate. I cannot check live carrier data, so I cannot confirm an ETA. If this is still order ANKER002, the saved records say:\nT2080GA1: dispatch date 2026-09-18; carrier ANPOST; tracking Anker1234567-2; recorded status: Delivered on 9/21.\nT29C2001: dispatch date 2026-09-20; carrier UPS; tracking Anker1234567-3; recorded status: Delivered on 9/24.\nA recorded delivery does not confirm that you received it. Is this the same order or a different one? Please share the full tracking number and carrier so I can check the match. [1] [2]",
+        "request_id": "236ef0f02077",
+        "selection_cards": [],
+        "trace": {
+          "allowed": [
+            "ask_product",
+            "search_knowledge"
+          ],
+          "answer_route": "WORKFLOW",
+          "cache_key": null,
+          "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+          "dealer": "INSUFFICIENT_INFO",
+          "emotion": "NORMAL",
+          "evidence": "no_product_mentioned",
+          "forbidden": [
+            "propose_replacement",
+            "direct_refund"
+          ],
+          "image": "未处理",
+          "knowledge_source": "NONE",
+          "long_tail": {
+            "basis": "curated phrase match; not an empirical frequency estimate",
+            "classification": "no_match",
+            "source_ids": []
+          },
+          "model": "DeepSeek-V4.1-Flash",
+          "model_calls": 1,
+          "model_candidate": "无",
+          "model_status": "INVALID_RESPONSE",
+          "order": "ANKER002",
+          "order_source": "SUPPLIED_DATASET",
+          "order_status": "FOUND",
+          "ownership_status": "NOT_VERIFIED",
+          "product": "未确定",
+          "product_state": "UNKNOWN",
+          "purchase_date_claim": null,
+          "reasons": [
+            "产品未确认：不允许任何售后办理动作"
+          ],
+          "request_id": "236ef0f02077",
+          "rule_version": "m0-safe-1",
+          "troubleshooting": "NOT_STARTED",
+          "warranty": "UNKNOWN",
+          "workflow_history": [],
+          "workflow_status": null
+        },
+        "turn_count": 1
+      },
+      "trajectory": [
+        {
+          "input": "Hi Team,\n\n I am reaching out to you regarding my order Anker002. I have received ine package today with tracking number \nAnker1234567-2. The package only contains the replacement accessories kit. I have not received the Eufy S1 robot vacuum yet. When trying to track the shipment Anker1234567-3, UPS website says that the label has been created, but there is no further information. Could you please let me know when I should expect the robot vacuum to arrive?\n\nThanks in advance",
+          "response": {
+            "cards": [
+              {
+                "body": "ANPOST · Anker1234567-2\nDelivered on 9/21",
+                "title": "Shipment · T2080GA1"
+              },
+              {
+                "body": "UPS · Anker1234567-3\nDelivered on 9/24",
+                "title": "Shipment · T29C2001"
+              }
+            ],
+            "citations": [
+              {
+                "id": "order-3",
+                "kind": "order",
+                "label": "订单信息 · 第 3 行（资料快照）",
+                "url": "/api/sources/order-3"
+              },
+              {
+                "id": "order-4",
+                "kind": "order",
+                "label": "订单信息 · 第 4 行（资料快照）",
+                "url": "/api/sources/order-4"
+              }
+            ],
+            "diagrams": [],
+            "followups": {
+              "ontology": {
+                "edges": [
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "ANKER002"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-3"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-4"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "service-rules"
+                  }
+                ],
+                "intent": "shipping",
+                "nodes": [
+                  {
+                    "id": "case",
+                    "type": "ServiceCase"
+                  },
+                  {
+                    "id": "ANKER002",
+                    "type": "Order"
+                  },
+                  {
+                    "id": "order-3",
+                    "type": "OrderItem"
+                  },
+                  {
+                    "id": "order-4",
+                    "type": "OrderItem"
+                  },
+                  {
+                    "id": "service-rules",
+                    "type": "Policy"
+                  }
+                ],
+                "product": null,
+                "query": "Hi Team,\n\n I am reaching out to you regarding my order Anker002. I have received ine package today with tracking number \nAnker1234567-2. The package only contains the replacement accessories kit. I have not received the Eufy S1 robot vacuum yet. When trying to track the shipment Anker1234567-3, UPS website says that the label has been created, but there is no further information. Could you please let me know when I should expect the robot vacuum to arrive?\n\nThanks in advance",
+                "retrieved_count": 0,
+                "revision": 1
+              },
+              "questions": [
+                {
+                  "source_ids": [
+                    "order-3"
+                  ],
+                  "text": "查询订单 ANKER002 的 T2080GA1 物流记录",
+                  "text_en": "Check shipping record for ANKER002, SKU T2080GA1"
+                },
+                {
+                  "source_ids": [
+                    "order-4"
+                  ],
+                  "text": "查询订单 ANKER002 的 T29C2001 物流记录",
+                  "text_en": "Check shipping record for ANKER002, SKU T29C2001"
+                },
+                {
+                  "source_ids": [
+                    "order-3"
+                  ],
+                  "text": "订单 ANKER002 的 T2080GA1 发货了吗？",
+                  "text_en": "Has T2080GA1 in order ANKER002 shipped?"
+                },
+                {
+                  "source_ids": [
+                    "order-4"
+                  ],
+                  "text": "订单 ANKER002 的 T29C2001 发货了吗？",
+                  "text_en": "Has T29C2001 in order ANKER002 shipped?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER002 的物流记录和我实际收到的不一致，怎么办？",
+                  "text_en": "The tracking record for ANKER002 differs from what I received. What should I do?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER002 的物流单号查不到，怎么核对？",
+                  "text_en": "Tracking for order ANKER002 is not working. How can I check it?"
+                }
+              ],
+              "quick_replies": [
+                {
+                  "text": "包裹还没收到",
+                  "text_en": "I have not received the package."
+                },
+                {
+                  "text": "只收到部分商品",
+                  "text_en": "Only part of my order arrived."
+                },
+                {
+                  "text": "物流单号查不到",
+                  "text_en": "The tracking number is not working."
+                }
+              ]
+            },
+            "handoff_available": false,
+            "model_status": "INVALID_RESPONSE",
+            "order_card": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 2,
+                    "Product Description": "eufy Robot Vacuum and Mop, S1 Pro Omni, HydroJet System with Roller Mop",
+                    "QTY": 1,
+                    "SKU": "T2080GA1",
+                    "发货日期": "2026-09-18",
+                    "物流单号": "Anker1234567-2",
+                    "物流承运商": "ANPOST",
+                    "物流状态": "Delivered on 9/21",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 1099.9,
+                    "质保结束日期": "2027-09-13",
+                    "购买日期": "2026-09-13"
+                  },
+                  "image": {
+                    "image": "/product-images/T2080.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "https://cdn.shopify.com/s/files/1/0709/4049/1966/files/T2080GA1-eufy_Omni_S1_Pro_1.png?v=1757937797",
+                    "scope": "product_family",
+                    "source": "https://www.eufy.com/ie/products/t2080g11"
+                  },
+                  "source_row": 3,
+                  "source_url": "/api/sources/order-3"
+                },
+                {
+                  "fields": {
+                    "No.": 3,
+                    "Product Description": "EUFY S1 PRO REPLACEMENT ACCESSORY KIT",
+                    "QTY": 1,
+                    "SKU": "T29C2001",
+                    "发货日期": "2026-09-20",
+                    "物流单号": "Anker1234567-3",
+                    "物流承运商": "UPS",
+                    "物流状态": "Delivered on 9/24",
+                    "订单地址": null,
+                    "订单状态": "已发货",
+                    "订单金额": 122.21,
+                    "质保结束日期": "2026-10-13",
+                    "购买日期": null
+                  },
+                  "image": null,
+                  "source_row": 4,
+                  "source_url": "/api/sources/order-4"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker002",
+              "ownership_verified": false
+            },
+            "order_snapshot": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 2,
+                    "Product Description": "eufy Robot Vacuum and Mop, S1 Pro Omni, HydroJet System with Roller Mop",
+                    "QTY": 1,
+                    "SKU": "T2080GA1",
+                    "发货日期": "2026-09-18",
+                    "物流单号": "Anker1234567-2",
+                    "物流承运商": "ANPOST",
+                    "物流状态": "Delivered on 9/21",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 1099.9,
+                    "质保结束日期": "2027-09-13",
+                    "购买日期": "2026-09-13"
+                  },
+                  "image": {
+                    "image": "/product-images/T2080.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "https://cdn.shopify.com/s/files/1/0709/4049/1966/files/T2080GA1-eufy_Omni_S1_Pro_1.png?v=1757937797",
+                    "scope": "product_family",
+                    "source": "https://www.eufy.com/ie/products/t2080g11"
+                  },
+                  "source_row": 3,
+                  "source_url": "/api/sources/order-3"
+                },
+                {
+                  "fields": {
+                    "No.": 3,
+                    "Product Description": "EUFY S1 PRO REPLACEMENT ACCESSORY KIT",
+                    "QTY": 1,
+                    "SKU": "T29C2001",
+                    "发货日期": "2026-09-20",
+                    "物流单号": "Anker1234567-3",
+                    "物流承运商": "UPS",
+                    "物流状态": "Delivered on 9/24",
+                    "订单地址": null,
+                    "订单状态": "已发货",
+                    "订单金额": 122.21,
+                    "质保结束日期": "2026-10-13",
+                    "购买日期": null
+                  },
+                  "image": null,
+                  "source_row": 4,
+                  "source_url": "/api/sources/order-4"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker002",
+              "ownership_verified": false
+            },
+            "reply": "Your tracking lookup is not working, and you want an arrival estimate. I cannot check live carrier data, so I cannot confirm an ETA. If this is still order ANKER002, the saved records say:\nT2080GA1: dispatch date 2026-09-18; carrier ANPOST; tracking Anker1234567-2; recorded status: Delivered on 9/21.\nT29C2001: dispatch date 2026-09-20; carrier UPS; tracking Anker1234567-3; recorded status: Delivered on 9/24.\nA recorded delivery does not confirm that you received it. Is this the same order or a different one? Please share the full tracking number and carrier so I can check the match. [1] [2]",
+            "request_id": "236ef0f02077",
+            "selection_cards": [],
+            "trace": {
+              "allowed": [
+                "ask_product",
+                "search_knowledge"
+              ],
+              "answer_route": "WORKFLOW",
+              "cache_key": null,
+              "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+              "dealer": "INSUFFICIENT_INFO",
+              "emotion": "NORMAL",
+              "evidence": "no_product_mentioned",
+              "forbidden": [
+                "propose_replacement",
+                "direct_refund"
+              ],
+              "image": "未处理",
+              "knowledge_source": "NONE",
+              "long_tail": {
+                "basis": "curated phrase match; not an empirical frequency estimate",
+                "classification": "no_match",
+                "source_ids": []
+              },
+              "model": "DeepSeek-V4.1-Flash",
+              "model_calls": 1,
+              "model_candidate": "无",
+              "model_status": "INVALID_RESPONSE",
+              "order": "ANKER002",
+              "order_source": "SUPPLIED_DATASET",
+              "order_status": "FOUND",
+              "ownership_status": "NOT_VERIFIED",
+              "product": "未确定",
+              "product_state": "UNKNOWN",
+              "purchase_date_claim": null,
+              "reasons": [
+                "产品未确认：不允许任何售后办理动作"
+              ],
+              "request_id": "236ef0f02077",
+              "rule_version": "m0-safe-1",
+              "troubleshooting": "NOT_STARTED",
+              "warranty": "UNKNOWN",
+              "workflow_history": [],
+              "workflow_status": null
+            },
+            "turn_count": 1
+          },
+          "seconds": 8.496,
+          "http_status": 200
+        }
+      ],
+      "seconds": 8.496,
+      "semantic_review": "NOT_REVIEWED"
+    },
+    {
+      "id": "U013",
+      "category": "error_troubleshooting",
+      "status": "REVIEW_REQUIRED",
+      "hard_checks_passed": true,
+      "checks": [
+        {
+          "check": "{\"type\": \"citation_any\", \"ids\": [\"r-24\"]}",
+          "passed": true,
+          "actual": [
+            "r-24"
+          ]
+        },
+        {
+          "check": "HTTP成功",
+          "passed": true,
+          "actual": 200
+        }
+      ],
+      "response": {
+        "cards": [],
+        "citations": [
+          {
+            "id": "r-24",
+            "kind": "knowledge",
+            "label": "eufy Robovacs Q&A.xlsx · Sheet1!D24:E24",
+            "title": "What should I do if my X10 Pro Omni T2351 reports a warning 6011: The clean water in the station is insufficient, please add water, Base station clean water tank is empty, insufficient water error despite a filled tank, showed the clean water tank is empty, saying that the Clean water is insufficient, water in the clean water tank is insufficient?",
+            "url": "/api/sources/r-24"
+          }
+        ],
+        "diagrams": [],
+        "followups": {
+          "ontology": {
+            "edges": [
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "T2351"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "r-24"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-5"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-17"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-19"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "service-rules"
+              }
+            ],
+            "intent": null,
+            "nodes": [
+              {
+                "id": "case",
+                "type": "ServiceCase"
+              },
+              {
+                "id": "T2351",
+                "type": "Product"
+              },
+              {
+                "id": "r-24",
+                "type": "KnowledgeItem"
+              },
+              {
+                "id": "order-5",
+                "type": "OrderItem"
+              },
+              {
+                "id": "order-17",
+                "type": "OrderItem"
+              },
+              {
+                "id": "order-19",
+                "type": "OrderItem"
+              },
+              {
+                "id": "service-rules",
+                "type": "Policy"
+              }
+            ],
+            "product": "T2351",
+            "query": "T2351 报错 6011，应该怎么处理？",
+            "retrieved_count": 1,
+            "revision": 1
+          },
+          "questions": [
+            {
+              "source_ids": [
+                "order-5"
+              ],
+              "text": "查询订单 ANKER003 的 T2351V11-F 物流记录",
+              "text_en": "Check shipping record for ANKER003, SKU T2351V11-F"
+            },
+            {
+              "source_ids": [
+                "order-17"
+              ],
+              "text": "查询订单 ANKER009 的 T2351111 物流记录",
+              "text_en": "Check shipping record for ANKER009, SKU T2351111"
+            },
+            {
+              "source_ids": [
+                "order-19"
+              ],
+              "text": "查询订单 ANKER011 的 T2351111 物流记录",
+              "text_en": "Check shipping record for ANKER011, SKU T2351111"
+            },
+            {
+              "source_ids": [
+                "r-24"
+              ],
+              "text": "What should I do if my X10 Pro Omni T2351 reports a warning 6011: The clean water in the station is insufficient, please add water, Base station clean water tank is empty, insufficient water error despite a filled tank, showed the clean water tank is empty, saying that the Clean water is insufficient, water in the clean water tank is insufficient?",
+              "text_en": "What should I do if my X10 Pro Omni T2351 reports a warning 6011: The clean water in the station is insufficient, please add water, Base station clean water tank is empty, insufficient water error despite a filled tank, showed the clean water tank is empty, saying that the Clean water is insufficient, water in the clean water tank is insufficient?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "售后核查需要哪些购买凭证？",
+              "text_en": "What purchase evidence is needed?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "物流记录与实际收到的不一致怎么办？",
+              "text_en": "What if tracking differs from what I received?"
+            }
+          ],
+          "quick_replies": [
+            {
+              "text": "请说得简单一点，告诉我下一步怎么做",
+              "text_en": "Please simplify this and tell me the next step."
+            },
+            {
+              "text": "我还需要准备什么材料？",
+              "text_en": "What information should I prepare?"
+            }
+          ]
+        },
+        "handoff_available": false,
+        "model_status": "OK",
+        "order_card": null,
+        "order_snapshot": null,
+        "reply": "收到，您反馈的是 X10 Pro Omni（T2351）报错 6011，提示基站清水不足或清水箱为空的问题，我来帮您按排查路径处理。\n\n本轮查到的 eufy 资料显示，6011 与基站清水不足有关；排查时需先检查清水箱本身的组件。如果水箱内有水，请先取下清水箱，检查出水口密封圈是否安装正确、是否损坏；如果密封圈变形或破损，需要提供缺陷照片。 [1]\n\n请先确认清水箱出水口密封圈是否有变形或破损。若外观正常，重新安装后仍报 6011，按该资料可判断为基站硬件问题，需要转人工复核；若密封圈已破损，请先拍照，我会据此继续推进。",
+        "request_id": "e9432bd47e4b",
+        "selection_cards": [],
+        "trace": {
+          "allowed": [
+            "search_knowledge",
+            "run_troubleshooting",
+            "escalate_human",
+            "ask_country",
+            "ask_seller",
+            "request_proof"
+          ],
+          "answer_route": "GROUNDED_LLM",
+          "cache_key": null,
+          "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+          "dealer": "UNKNOWN",
+          "emotion": "NORMAL",
+          "evidence": "explicit_pn",
+          "forbidden": [
+            "propose_replacement",
+            "direct_refund",
+            "tell_expired"
+          ],
+          "image": "未处理",
+          "knowledge_source": "eufy Robovacs Q&A.xlsx · Sheet1!D24:E24",
+          "long_tail": {
+            "basis": "curated phrase match; not an empirical frequency estimate",
+            "classification": "no_match",
+            "source_ids": []
+          },
+          "model": "DeepSeek-V4.1-Flash",
+          "model_calls": 1,
+          "model_candidate": "无",
+          "model_status": "OK",
+          "order": "未提供",
+          "order_source": "NONE",
+          "order_status": "NOT_PROVIDED",
+          "ownership_status": "NOT_VERIFIED",
+          "product": "X10 Pro Omni",
+          "product_state": "PROBABLE",
+          "purchase_date_claim": null,
+          "reasons": [
+            "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+          ],
+          "request_id": "e9432bd47e4b",
+          "rule_version": "m0-safe-1",
+          "troubleshooting": "NOT_STARTED",
+          "warranty": "UNKNOWN",
+          "workflow_history": [],
+          "workflow_status": null
+        },
+        "turn_count": 1
+      },
+      "trajectory": [
+        {
+          "input": "T2351 报错 6011，应该怎么处理？",
+          "response": {
+            "cards": [],
+            "citations": [
+              {
+                "id": "r-24",
+                "kind": "knowledge",
+                "label": "eufy Robovacs Q&A.xlsx · Sheet1!D24:E24",
+                "title": "What should I do if my X10 Pro Omni T2351 reports a warning 6011: The clean water in the station is insufficient, please add water, Base station clean water tank is empty, insufficient water error despite a filled tank, showed the clean water tank is empty, saying that the Clean water is insufficient, water in the clean water tank is insufficient?",
+                "url": "/api/sources/r-24"
+              }
+            ],
+            "diagrams": [],
+            "followups": {
+              "ontology": {
+                "edges": [
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "T2351"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "r-24"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-5"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-17"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-19"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "service-rules"
+                  }
+                ],
+                "intent": null,
+                "nodes": [
+                  {
+                    "id": "case",
+                    "type": "ServiceCase"
+                  },
+                  {
+                    "id": "T2351",
+                    "type": "Product"
+                  },
+                  {
+                    "id": "r-24",
+                    "type": "KnowledgeItem"
+                  },
+                  {
+                    "id": "order-5",
+                    "type": "OrderItem"
+                  },
+                  {
+                    "id": "order-17",
+                    "type": "OrderItem"
+                  },
+                  {
+                    "id": "order-19",
+                    "type": "OrderItem"
+                  },
+                  {
+                    "id": "service-rules",
+                    "type": "Policy"
+                  }
+                ],
+                "product": "T2351",
+                "query": "T2351 报错 6011，应该怎么处理？",
+                "retrieved_count": 1,
+                "revision": 1
+              },
+              "questions": [
+                {
+                  "source_ids": [
+                    "order-5"
+                  ],
+                  "text": "查询订单 ANKER003 的 T2351V11-F 物流记录",
+                  "text_en": "Check shipping record for ANKER003, SKU T2351V11-F"
+                },
+                {
+                  "source_ids": [
+                    "order-17"
+                  ],
+                  "text": "查询订单 ANKER009 的 T2351111 物流记录",
+                  "text_en": "Check shipping record for ANKER009, SKU T2351111"
+                },
+                {
+                  "source_ids": [
+                    "order-19"
+                  ],
+                  "text": "查询订单 ANKER011 的 T2351111 物流记录",
+                  "text_en": "Check shipping record for ANKER011, SKU T2351111"
+                },
+                {
+                  "source_ids": [
+                    "r-24"
+                  ],
+                  "text": "What should I do if my X10 Pro Omni T2351 reports a warning 6011: The clean water in the station is insufficient, please add water, Base station clean water tank is empty, insufficient water error despite a filled tank, showed the clean water tank is empty, saying that the Clean water is insufficient, water in the clean water tank is insufficient?",
+                  "text_en": "What should I do if my X10 Pro Omni T2351 reports a warning 6011: The clean water in the station is insufficient, please add water, Base station clean water tank is empty, insufficient water error despite a filled tank, showed the clean water tank is empty, saying that the Clean water is insufficient, water in the clean water tank is insufficient?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "售后核查需要哪些购买凭证？",
+                  "text_en": "What purchase evidence is needed?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "物流记录与实际收到的不一致怎么办？",
+                  "text_en": "What if tracking differs from what I received?"
+                }
+              ],
+              "quick_replies": [
+                {
+                  "text": "请说得简单一点，告诉我下一步怎么做",
+                  "text_en": "Please simplify this and tell me the next step."
+                },
+                {
+                  "text": "我还需要准备什么材料？",
+                  "text_en": "What information should I prepare?"
+                }
+              ]
+            },
+            "handoff_available": false,
+            "model_status": "OK",
+            "order_card": null,
+            "order_snapshot": null,
+            "reply": "收到，您反馈的是 X10 Pro Omni（T2351）报错 6011，提示基站清水不足或清水箱为空的问题，我来帮您按排查路径处理。\n\n本轮查到的 eufy 资料显示，6011 与基站清水不足有关；排查时需先检查清水箱本身的组件。如果水箱内有水，请先取下清水箱，检查出水口密封圈是否安装正确、是否损坏；如果密封圈变形或破损，需要提供缺陷照片。 [1]\n\n请先确认清水箱出水口密封圈是否有变形或破损。若外观正常，重新安装后仍报 6011，按该资料可判断为基站硬件问题，需要转人工复核；若密封圈已破损，请先拍照，我会据此继续推进。",
+            "request_id": "e9432bd47e4b",
+            "selection_cards": [],
+            "trace": {
+              "allowed": [
+                "search_knowledge",
+                "run_troubleshooting",
+                "escalate_human",
+                "ask_country",
+                "ask_seller",
+                "request_proof"
+              ],
+              "answer_route": "GROUNDED_LLM",
+              "cache_key": null,
+              "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+              "dealer": "UNKNOWN",
+              "emotion": "NORMAL",
+              "evidence": "explicit_pn",
+              "forbidden": [
+                "propose_replacement",
+                "direct_refund",
+                "tell_expired"
+              ],
+              "image": "未处理",
+              "knowledge_source": "eufy Robovacs Q&A.xlsx · Sheet1!D24:E24",
+              "long_tail": {
+                "basis": "curated phrase match; not an empirical frequency estimate",
+                "classification": "no_match",
+                "source_ids": []
+              },
+              "model": "DeepSeek-V4.1-Flash",
+              "model_calls": 1,
+              "model_candidate": "无",
+              "model_status": "OK",
+              "order": "未提供",
+              "order_source": "NONE",
+              "order_status": "NOT_PROVIDED",
+              "ownership_status": "NOT_VERIFIED",
+              "product": "X10 Pro Omni",
+              "product_state": "PROBABLE",
+              "purchase_date_claim": null,
+              "reasons": [
+                "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+              ],
+              "request_id": "e9432bd47e4b",
+              "rule_version": "m0-safe-1",
+              "troubleshooting": "NOT_STARTED",
+              "warranty": "UNKNOWN",
+              "workflow_history": [],
+              "workflow_status": null
+            },
+            "turn_count": 1
+          },
+          "seconds": 8.562,
+          "http_status": 200
+        }
+      ],
+      "seconds": 8.563,
+      "semantic_review": "NOT_REVIEWED"
+    },
+    {
+      "id": "U020",
+      "category": "angry_complaint",
+      "status": "FAIL",
+      "hard_checks_passed": false,
+      "checks": [
+        {
+          "check": "{\"type\": \"trace_one_of\", \"path\": \"emotion\", \"values\": [\"ANGRY\", \"COMPLAINT_RISK\"]}",
+          "passed": false,
+          "actual": "NORMAL"
+        },
+        {
+          "check": "HTTP成功",
+          "passed": true,
+          "actual": 200
+        }
+      ],
+      "response": {
+        "cards": [],
+        "citations": [
+          {
+            "id": "b-187",
+            "kind": "knowledge",
+            "label": "eufy Breast Pump Q&A.xlsx · Sheet1!D187:E187",
+            "title": "What should I do if SoloCam S340(T8170) goes offline?",
+            "url": "/api/sources/b-187"
+          }
+        ],
+        "diagrams": [],
+        "followups": {
+          "ontology": {
+            "edges": [
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "T8170"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "b-187"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "b-153"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "b-213"
+              }
+            ],
+            "intent": "troubleshooting",
+            "nodes": [
+              {
+                "id": "case",
+                "type": "ServiceCase"
+              },
+              {
+                "id": "T8170",
+                "type": "Product"
+              },
+              {
+                "id": "b-187",
+                "type": "KnowledgeItem"
+              },
+              {
+                "id": "b-153",
+                "type": "KnowledgeItem"
+              },
+              {
+                "id": "b-213",
+                "type": "KnowledgeItem"
+              }
+            ],
+            "product": "T8170",
+            "query": "Why is it when I need my SoloCam S340 there offline. Even hooked up for one week. Is that your warranty? I'm sick of this shit",
+            "retrieved_count": 3,
+            "revision": 1
+          },
+          "questions": [
+            {
+              "source_ids": [
+                "b-187"
+              ],
+              "text": "请解释第1步：怎么做？",
+              "text_en": "Please explain step 1."
+            },
+            {
+              "source_ids": [
+                "b-187"
+              ],
+              "text": "请解释第2步：怎么做？",
+              "text_en": "Please explain step 2."
+            },
+            {
+              "source_ids": [
+                "b-187"
+              ],
+              "text": "请解释第3步：怎么做？",
+              "text_en": "Please explain step 3."
+            },
+            {
+              "source_ids": [
+                "b-187"
+              ],
+              "text": "What should I do if SoloCam S340(T8170) goes offline?",
+              "text_en": "What should I do if SoloCam S340(T8170) goes offline?"
+            },
+            {
+              "source_ids": [
+                "b-153"
+              ],
+              "text": "What do I do if SoloCam S340(T8170) goes offline?",
+              "text_en": "What do I do if SoloCam S340(T8170) goes offline?"
+            },
+            {
+              "source_ids": [
+                "b-213"
+              ],
+              "text": "What should I do if SoloCam S340(T8170) has a poor signal or goes offline?",
+              "text_en": "What should I do if SoloCam S340(T8170) has a poor signal or goes offline?"
+            }
+          ],
+          "quick_replies": [
+            {
+              "text": "试过了，还是不行",
+              "text_en": "I tried it, but it didn't work."
+            },
+            {
+              "text": "解决了",
+              "text_en": "Resolved"
+            },
+            {
+              "text": "这一步怎么做？",
+              "text_en": "Please explain this step."
+            }
+          ]
+        },
+        "handoff_available": false,
+        "model_status": "OK",
+        "order_card": null,
+        "order_snapshot": null,
+        "reply": "I hear you — a SoloCam S340 that keeps dropping offline even after a week of being set up is genuinely frustrating, and I understand you're also asking whether this is covered by warranty.\n\nAccording to the SoloCam S340 (T8170) troubleshooting reference, offline behaviour is usually linked to the camera's battery level, its power/SYNC state, how far it sits from the router, or how your home Wi-Fi bands are set up. That reference covers troubleshooting only — it does not state warranty coverage or an eligibility outcome, so I can't confirm a warranty result from this chat alone. [1]\n\nLet's start with the simplest check: in the eufy app, what battery level does the S340 currently show (or does it show no reading at all while offline)? If it's low, charging it is the first thing to try. Once we know that, we can move to the next check, and if it still won't stay online I can route the warranty question for a human review.",
+        "request_id": "56fbc57d1ecf",
+        "selection_cards": [],
+        "trace": {
+          "allowed": [
+            "search_knowledge",
+            "run_troubleshooting",
+            "escalate_human",
+            "ask_country",
+            "ask_seller",
+            "request_proof"
+          ],
+          "answer_route": "GROUNDED_LLM",
+          "cache_key": "8821520391ad3c34",
+          "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+          "dealer": "UNKNOWN",
+          "emotion": "NORMAL",
+          "evidence": "alias_match",
+          "forbidden": [
+            "propose_replacement",
+            "direct_refund",
+            "tell_expired"
+          ],
+          "image": "未处理",
+          "knowledge_source": "eufy Breast Pump Q&A.xlsx · Sheet1!D187:E187",
+          "long_tail": {
+            "basis": "curated phrase match; not an empirical frequency estimate",
+            "classification": "no_match",
+            "source_ids": []
+          },
+          "model": "DeepSeek-V4.1-Flash",
+          "model_calls": 1,
+          "model_candidate": "无",
+          "model_status": "OK",
+          "order": "未提供",
+          "order_source": "NONE",
+          "order_status": "NOT_PROVIDED",
+          "ownership_status": "NOT_VERIFIED",
+          "product": "SoloCam S340",
+          "product_state": "PROBABLE",
+          "purchase_date_claim": null,
+          "reasons": [
+            "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+          ],
+          "request_id": "56fbc57d1ecf",
+          "rule_version": "m0-safe-1",
+          "troubleshooting": "NOT_STARTED",
+          "warranty": "UNKNOWN",
+          "workflow_history": [],
+          "workflow_status": "ACTIVE"
+        },
+        "turn_count": 1
+      },
+      "trajectory": [
+        {
+          "input": "Why is it when I need my SoloCam S340 there offline. Even hooked up for one week. Is that your warranty? I'm sick of this shit",
+          "response": {
+            "cards": [],
+            "citations": [
+              {
+                "id": "b-187",
+                "kind": "knowledge",
+                "label": "eufy Breast Pump Q&A.xlsx · Sheet1!D187:E187",
+                "title": "What should I do if SoloCam S340(T8170) goes offline?",
+                "url": "/api/sources/b-187"
+              }
+            ],
+            "diagrams": [],
+            "followups": {
+              "ontology": {
+                "edges": [
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "T8170"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "b-187"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "b-153"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "b-213"
+                  }
+                ],
+                "intent": "troubleshooting",
+                "nodes": [
+                  {
+                    "id": "case",
+                    "type": "ServiceCase"
+                  },
+                  {
+                    "id": "T8170",
+                    "type": "Product"
+                  },
+                  {
+                    "id": "b-187",
+                    "type": "KnowledgeItem"
+                  },
+                  {
+                    "id": "b-153",
+                    "type": "KnowledgeItem"
+                  },
+                  {
+                    "id": "b-213",
+                    "type": "KnowledgeItem"
+                  }
+                ],
+                "product": "T8170",
+                "query": "Why is it when I need my SoloCam S340 there offline. Even hooked up for one week. Is that your warranty? I'm sick of this shit",
+                "retrieved_count": 3,
+                "revision": 1
+              },
+              "questions": [
+                {
+                  "source_ids": [
+                    "b-187"
+                  ],
+                  "text": "请解释第1步：怎么做？",
+                  "text_en": "Please explain step 1."
+                },
+                {
+                  "source_ids": [
+                    "b-187"
+                  ],
+                  "text": "请解释第2步：怎么做？",
+                  "text_en": "Please explain step 2."
+                },
+                {
+                  "source_ids": [
+                    "b-187"
+                  ],
+                  "text": "请解释第3步：怎么做？",
+                  "text_en": "Please explain step 3."
+                },
+                {
+                  "source_ids": [
+                    "b-187"
+                  ],
+                  "text": "What should I do if SoloCam S340(T8170) goes offline?",
+                  "text_en": "What should I do if SoloCam S340(T8170) goes offline?"
+                },
+                {
+                  "source_ids": [
+                    "b-153"
+                  ],
+                  "text": "What do I do if SoloCam S340(T8170) goes offline?",
+                  "text_en": "What do I do if SoloCam S340(T8170) goes offline?"
+                },
+                {
+                  "source_ids": [
+                    "b-213"
+                  ],
+                  "text": "What should I do if SoloCam S340(T8170) has a poor signal or goes offline?",
+                  "text_en": "What should I do if SoloCam S340(T8170) has a poor signal or goes offline?"
+                }
+              ],
+              "quick_replies": [
+                {
+                  "text": "试过了，还是不行",
+                  "text_en": "I tried it, but it didn't work."
+                },
+                {
+                  "text": "解决了",
+                  "text_en": "Resolved"
+                },
+                {
+                  "text": "这一步怎么做？",
+                  "text_en": "Please explain this step."
+                }
+              ]
+            },
+            "handoff_available": false,
+            "model_status": "OK",
+            "order_card": null,
+            "order_snapshot": null,
+            "reply": "I hear you — a SoloCam S340 that keeps dropping offline even after a week of being set up is genuinely frustrating, and I understand you're also asking whether this is covered by warranty.\n\nAccording to the SoloCam S340 (T8170) troubleshooting reference, offline behaviour is usually linked to the camera's battery level, its power/SYNC state, how far it sits from the router, or how your home Wi-Fi bands are set up. That reference covers troubleshooting only — it does not state warranty coverage or an eligibility outcome, so I can't confirm a warranty result from this chat alone. [1]\n\nLet's start with the simplest check: in the eufy app, what battery level does the S340 currently show (or does it show no reading at all while offline)? If it's low, charging it is the first thing to try. Once we know that, we can move to the next check, and if it still won't stay online I can route the warranty question for a human review.",
+            "request_id": "56fbc57d1ecf",
+            "selection_cards": [],
+            "trace": {
+              "allowed": [
+                "search_knowledge",
+                "run_troubleshooting",
+                "escalate_human",
+                "ask_country",
+                "ask_seller",
+                "request_proof"
+              ],
+              "answer_route": "GROUNDED_LLM",
+              "cache_key": "8821520391ad3c34",
+              "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+              "dealer": "UNKNOWN",
+              "emotion": "NORMAL",
+              "evidence": "alias_match",
+              "forbidden": [
+                "propose_replacement",
+                "direct_refund",
+                "tell_expired"
+              ],
+              "image": "未处理",
+              "knowledge_source": "eufy Breast Pump Q&A.xlsx · Sheet1!D187:E187",
+              "long_tail": {
+                "basis": "curated phrase match; not an empirical frequency estimate",
+                "classification": "no_match",
+                "source_ids": []
+              },
+              "model": "DeepSeek-V4.1-Flash",
+              "model_calls": 1,
+              "model_candidate": "无",
+              "model_status": "OK",
+              "order": "未提供",
+              "order_source": "NONE",
+              "order_status": "NOT_PROVIDED",
+              "ownership_status": "NOT_VERIFIED",
+              "product": "SoloCam S340",
+              "product_state": "PROBABLE",
+              "purchase_date_claim": null,
+              "reasons": [
+                "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+              ],
+              "request_id": "56fbc57d1ecf",
+              "rule_version": "m0-safe-1",
+              "troubleshooting": "NOT_STARTED",
+              "warranty": "UNKNOWN",
+              "workflow_history": [],
+              "workflow_status": "ACTIVE"
+            },
+            "turn_count": 1
+          },
+          "seconds": 9.106,
+          "http_status": 200
+        }
+      ],
+      "seconds": 9.107,
+      "semantic_review": "NOT_REVIEWED"
+    },
+    {
+      "id": "U023",
+      "category": "multilingual",
+      "status": "REVIEW_REQUIRED",
+      "hard_checks_passed": true,
+      "checks": [
+        {
+          "check": "{\"type\": \"trace\", \"path\": \"order\", \"equals\": \"ANKER006\"}",
+          "passed": true,
+          "actual": "ANKER006"
+        },
+        {
+          "check": "HTTP成功",
+          "passed": true,
+          "actual": 200
+        }
+      ],
+      "response": {
+        "cards": [],
+        "citations": [
+          {
+            "id": "order-10",
+            "kind": "order",
+            "label": "订单信息 · 第 10 行（资料快照）",
+            "url": "/api/sources/order-10"
+          },
+          {
+            "id": "order-11",
+            "kind": "order",
+            "label": "订单信息 · 第 11 行（资料快照）",
+            "url": "/api/sources/order-11"
+          }
+        ],
+        "diagrams": [],
+        "followups": {
+          "ontology": {
+            "edges": [
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "service-rules"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-10"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-11"
+              }
+            ],
+            "intent": null,
+            "nodes": [
+              {
+                "id": "case",
+                "type": "ServiceCase"
+              },
+              {
+                "id": "service-rules",
+                "type": "Policy"
+              },
+              {
+                "id": "order-10",
+                "type": "OrderItem"
+              },
+              {
+                "id": "order-11",
+                "type": "OrderItem"
+              }
+            ],
+            "product": null,
+            "query": "FW: Uw bestelling Anker006 is al verzonden.Dag!\nHeb vorige week de robot stofzuiger besteld. Deze is nog steeds niet binnen!\nMet vriendelijke groet,\nKind Regards,",
+            "retrieved_count": 0,
+            "revision": 1
+          },
+          "questions": [
+            {
+              "source_ids": [
+                "order-10"
+              ],
+              "text": "查询订单 ANKER006 的 T2353G11 物流记录",
+              "text_en": "Check shipping record for ANKER006, SKU T2353G11"
+            },
+            {
+              "source_ids": [
+                "order-11"
+              ],
+              "text": "查询订单 ANKER006 的 T290QAR0 物流记录",
+              "text_en": "Check shipping record for ANKER006, SKU T290QAR0"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "如何确认我的产品型号？",
+              "text_en": "How can I confirm my product model?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "查询订单需要提供什么信息？",
+              "text_en": "What information is needed to look up an order?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER006：售后核查需要哪些购买凭证？",
+              "text_en": "Order ANKER006: What purchase evidence is needed?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER006：物流记录与实际收到的不一致怎么办？",
+              "text_en": "Order ANKER006: What if tracking differs from what I received?"
+            }
+          ],
+          "quick_replies": [
+            {
+              "text": "我说的是 T2353G11",
+              "text_en": "I mean T2353G11."
+            },
+            {
+              "text": "我说的是 T290QAR0",
+              "text_en": "I mean T290QAR0."
+            },
+            {
+              "text": "我不知道型号，怎么查看？",
+              "text_en": "I do not know the model. How can I find it?"
+            }
+          ]
+        },
+        "handoff_available": false,
+        "model_status": "INVALID_RESPONSE",
+        "order_card": {
+          "items": [
+            {
+              "fields": {
+                "No.": 9,
+                "Product Description": "eufy Robotstofzuiger Omni E25 - E25",
+                "QTY": 1,
+                "SKU": "T2353G11",
+                "发货日期": "2026-09-15",
+                "物流单号": "Anker1234567-8",
+                "物流承运商": "DHL NL",
+                "物流状态": "Delivered on 9/20",
+                "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                "订单状态": "已发货",
+                "订单金额": 802.06,
+                "质保结束日期": "2027-09-12",
+                "购买日期": "2026-09-12"
+              },
+              "image": {
+                "image": "/product-images/T2353.png",
+                "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                "original_image": "https://cdn.shopify.com/s/files/1/0568/9691/3539/files/e25solo_7442fede-14b7-46f2-aaae-5ce677730991.png?v=1790069115",
+                "scope": "product_family",
+                "source": "https://www.eufy.com/eu-fr/products/t2353g11"
+              },
+              "source_row": 10,
+              "source_url": "/api/sources/order-10"
+            },
+            {
+              "fields": {
+                "No.": 10,
+                "Product Description": "eufy Accessories Package, Side Brush, Filter, Rolling Brush for Robovac, Dustbag, Roller Mop, Dirty Water Reservoir Filter",
+                "QTY": 1,
+                "SKU": "T290QAR0",
+                "发货日期": "2026-09-15",
+                "物流单号": null,
+                "物流承运商": null,
+                "物流状态": null,
+                "订单地址": null,
+                "订单状态": "已发货",
+                "订单金额": 60.37,
+                "质保结束日期": "2027-09-12",
+                "购买日期": "2026-09-12"
+              },
+              "image": null,
+              "source_row": 11,
+              "source_url": "/api/sources/order-11"
+            }
+          ],
+          "kind": "source_snapshot",
+          "order_id": "Anker006",
+          "ownership_verified": false
+        },
+        "order_snapshot": {
+          "items": [
+            {
+              "fields": {
+                "No.": 9,
+                "Product Description": "eufy Robotstofzuiger Omni E25 - E25",
+                "QTY": 1,
+                "SKU": "T2353G11",
+                "发货日期": "2026-09-15",
+                "物流单号": "Anker1234567-8",
+                "物流承运商": "DHL NL",
+                "物流状态": "Delivered on 9/20",
+                "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                "订单状态": "已发货",
+                "订单金额": 802.06,
+                "质保结束日期": "2027-09-12",
+                "购买日期": "2026-09-12"
+              },
+              "image": {
+                "image": "/product-images/T2353.png",
+                "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                "original_image": "https://cdn.shopify.com/s/files/1/0568/9691/3539/files/e25solo_7442fede-14b7-46f2-aaae-5ce677730991.png?v=1790069115",
+                "scope": "product_family",
+                "source": "https://www.eufy.com/eu-fr/products/t2353g11"
+              },
+              "source_row": 10,
+              "source_url": "/api/sources/order-10"
+            },
+            {
+              "fields": {
+                "No.": 10,
+                "Product Description": "eufy Accessories Package, Side Brush, Filter, Rolling Brush for Robovac, Dustbag, Roller Mop, Dirty Water Reservoir Filter",
+                "QTY": 1,
+                "SKU": "T290QAR0",
+                "发货日期": "2026-09-15",
+                "物流单号": null,
+                "物流承运商": null,
+                "物流状态": null,
+                "订单地址": null,
+                "订单状态": "已发货",
+                "订单金额": 60.37,
+                "质保结束日期": "2027-09-12",
+                "购买日期": "2026-09-12"
+              },
+              "image": null,
+              "source_row": 11,
+              "source_url": "/api/sources/order-11"
+            }
+          ],
+          "kind": "source_snapshot",
+          "order_id": "Anker006",
+          "ownership_verified": false
+        },
+        "reply": "请告诉我具体产品型号和问题，我会按产品查找对应资料。 [1] [2]",
+        "request_id": "9c37c3d07ad0",
+        "selection_cards": [],
+        "trace": {
+          "allowed": [
+            "ask_product",
+            "search_knowledge"
+          ],
+          "answer_route": "WORKFLOW",
+          "cache_key": null,
+          "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+          "dealer": "INSUFFICIENT_INFO",
+          "emotion": "NORMAL",
+          "evidence": "no_product_mentioned",
+          "forbidden": [
+            "propose_replacement",
+            "direct_refund"
+          ],
+          "image": "未处理",
+          "knowledge_source": "NONE",
+          "long_tail": {
+            "basis": "curated phrase match; not an empirical frequency estimate",
+            "classification": "no_match",
+            "source_ids": []
+          },
+          "model": "DeepSeek-V4.1-Flash",
+          "model_calls": 1,
+          "model_candidate": "无",
+          "model_status": "INVALID_RESPONSE",
+          "order": "ANKER006",
+          "order_source": "SUPPLIED_DATASET",
+          "order_status": "FOUND",
+          "ownership_status": "NOT_VERIFIED",
+          "product": "未确定",
+          "product_state": "UNKNOWN",
+          "purchase_date_claim": null,
+          "reasons": [
+            "产品未确认：不允许任何售后办理动作"
+          ],
+          "request_id": "9c37c3d07ad0",
+          "rule_version": "m0-safe-1",
+          "troubleshooting": "NOT_STARTED",
+          "warranty": "UNKNOWN",
+          "workflow_history": [],
+          "workflow_status": null
+        },
+        "turn_count": 1
+      },
+      "trajectory": [
+        {
+          "input": "FW: Uw bestelling Anker006 is al verzonden.Dag!\nHeb vorige week de robot stofzuiger besteld. Deze is nog steeds niet binnen!\nMet vriendelijke groet,\nKind Regards,",
+          "response": {
+            "cards": [],
+            "citations": [
+              {
+                "id": "order-10",
+                "kind": "order",
+                "label": "订单信息 · 第 10 行（资料快照）",
+                "url": "/api/sources/order-10"
+              },
+              {
+                "id": "order-11",
+                "kind": "order",
+                "label": "订单信息 · 第 11 行（资料快照）",
+                "url": "/api/sources/order-11"
+              }
+            ],
+            "diagrams": [],
+            "followups": {
+              "ontology": {
+                "edges": [
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "service-rules"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-10"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-11"
+                  }
+                ],
+                "intent": null,
+                "nodes": [
+                  {
+                    "id": "case",
+                    "type": "ServiceCase"
+                  },
+                  {
+                    "id": "service-rules",
+                    "type": "Policy"
+                  },
+                  {
+                    "id": "order-10",
+                    "type": "OrderItem"
+                  },
+                  {
+                    "id": "order-11",
+                    "type": "OrderItem"
+                  }
+                ],
+                "product": null,
+                "query": "FW: Uw bestelling Anker006 is al verzonden.Dag!\nHeb vorige week de robot stofzuiger besteld. Deze is nog steeds niet binnen!\nMet vriendelijke groet,\nKind Regards,",
+                "retrieved_count": 0,
+                "revision": 1
+              },
+              "questions": [
+                {
+                  "source_ids": [
+                    "order-10"
+                  ],
+                  "text": "查询订单 ANKER006 的 T2353G11 物流记录",
+                  "text_en": "Check shipping record for ANKER006, SKU T2353G11"
+                },
+                {
+                  "source_ids": [
+                    "order-11"
+                  ],
+                  "text": "查询订单 ANKER006 的 T290QAR0 物流记录",
+                  "text_en": "Check shipping record for ANKER006, SKU T290QAR0"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "如何确认我的产品型号？",
+                  "text_en": "How can I confirm my product model?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "查询订单需要提供什么信息？",
+                  "text_en": "What information is needed to look up an order?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER006：售后核查需要哪些购买凭证？",
+                  "text_en": "Order ANKER006: What purchase evidence is needed?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER006：物流记录与实际收到的不一致怎么办？",
+                  "text_en": "Order ANKER006: What if tracking differs from what I received?"
+                }
+              ],
+              "quick_replies": [
+                {
+                  "text": "我说的是 T2353G11",
+                  "text_en": "I mean T2353G11."
+                },
+                {
+                  "text": "我说的是 T290QAR0",
+                  "text_en": "I mean T290QAR0."
+                },
+                {
+                  "text": "我不知道型号，怎么查看？",
+                  "text_en": "I do not know the model. How can I find it?"
+                }
+              ]
+            },
+            "handoff_available": false,
+            "model_status": "INVALID_RESPONSE",
+            "order_card": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 9,
+                    "Product Description": "eufy Robotstofzuiger Omni E25 - E25",
+                    "QTY": 1,
+                    "SKU": "T2353G11",
+                    "发货日期": "2026-09-15",
+                    "物流单号": "Anker1234567-8",
+                    "物流承运商": "DHL NL",
+                    "物流状态": "Delivered on 9/20",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 802.06,
+                    "质保结束日期": "2027-09-12",
+                    "购买日期": "2026-09-12"
+                  },
+                  "image": {
+                    "image": "/product-images/T2353.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "https://cdn.shopify.com/s/files/1/0568/9691/3539/files/e25solo_7442fede-14b7-46f2-aaae-5ce677730991.png?v=1790069115",
+                    "scope": "product_family",
+                    "source": "https://www.eufy.com/eu-fr/products/t2353g11"
+                  },
+                  "source_row": 10,
+                  "source_url": "/api/sources/order-10"
+                },
+                {
+                  "fields": {
+                    "No.": 10,
+                    "Product Description": "eufy Accessories Package, Side Brush, Filter, Rolling Brush for Robovac, Dustbag, Roller Mop, Dirty Water Reservoir Filter",
+                    "QTY": 1,
+                    "SKU": "T290QAR0",
+                    "发货日期": "2026-09-15",
+                    "物流单号": null,
+                    "物流承运商": null,
+                    "物流状态": null,
+                    "订单地址": null,
+                    "订单状态": "已发货",
+                    "订单金额": 60.37,
+                    "质保结束日期": "2027-09-12",
+                    "购买日期": "2026-09-12"
+                  },
+                  "image": null,
+                  "source_row": 11,
+                  "source_url": "/api/sources/order-11"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker006",
+              "ownership_verified": false
+            },
+            "order_snapshot": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 9,
+                    "Product Description": "eufy Robotstofzuiger Omni E25 - E25",
+                    "QTY": 1,
+                    "SKU": "T2353G11",
+                    "发货日期": "2026-09-15",
+                    "物流单号": "Anker1234567-8",
+                    "物流承运商": "DHL NL",
+                    "物流状态": "Delivered on 9/20",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 802.06,
+                    "质保结束日期": "2027-09-12",
+                    "购买日期": "2026-09-12"
+                  },
+                  "image": {
+                    "image": "/product-images/T2353.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "https://cdn.shopify.com/s/files/1/0568/9691/3539/files/e25solo_7442fede-14b7-46f2-aaae-5ce677730991.png?v=1790069115",
+                    "scope": "product_family",
+                    "source": "https://www.eufy.com/eu-fr/products/t2353g11"
+                  },
+                  "source_row": 10,
+                  "source_url": "/api/sources/order-10"
+                },
+                {
+                  "fields": {
+                    "No.": 10,
+                    "Product Description": "eufy Accessories Package, Side Brush, Filter, Rolling Brush for Robovac, Dustbag, Roller Mop, Dirty Water Reservoir Filter",
+                    "QTY": 1,
+                    "SKU": "T290QAR0",
+                    "发货日期": "2026-09-15",
+                    "物流单号": null,
+                    "物流承运商": null,
+                    "物流状态": null,
+                    "订单地址": null,
+                    "订单状态": "已发货",
+                    "订单金额": 60.37,
+                    "质保结束日期": "2027-09-12",
+                    "购买日期": "2026-09-12"
+                  },
+                  "image": null,
+                  "source_row": 11,
+                  "source_url": "/api/sources/order-11"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker006",
+              "ownership_verified": false
+            },
+            "reply": "请告诉我具体产品型号和问题，我会按产品查找对应资料。 [1] [2]",
+            "request_id": "9c37c3d07ad0",
+            "selection_cards": [],
+            "trace": {
+              "allowed": [
+                "ask_product",
+                "search_knowledge"
+              ],
+              "answer_route": "WORKFLOW",
+              "cache_key": null,
+              "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+              "dealer": "INSUFFICIENT_INFO",
+              "emotion": "NORMAL",
+              "evidence": "no_product_mentioned",
+              "forbidden": [
+                "propose_replacement",
+                "direct_refund"
+              ],
+              "image": "未处理",
+              "knowledge_source": "NONE",
+              "long_tail": {
+                "basis": "curated phrase match; not an empirical frequency estimate",
+                "classification": "no_match",
+                "source_ids": []
+              },
+              "model": "DeepSeek-V4.1-Flash",
+              "model_calls": 1,
+              "model_candidate": "无",
+              "model_status": "INVALID_RESPONSE",
+              "order": "ANKER006",
+              "order_source": "SUPPLIED_DATASET",
+              "order_status": "FOUND",
+              "ownership_status": "NOT_VERIFIED",
+              "product": "未确定",
+              "product_state": "UNKNOWN",
+              "purchase_date_claim": null,
+              "reasons": [
+                "产品未确认：不允许任何售后办理动作"
+              ],
+              "request_id": "9c37c3d07ad0",
+              "rule_version": "m0-safe-1",
+              "troubleshooting": "NOT_STARTED",
+              "warranty": "UNKNOWN",
+              "workflow_history": [],
+              "workflow_status": null
+            },
+            "turn_count": 1
+          },
+          "seconds": 10.989,
+          "http_status": 200
+        }
+      ],
+      "seconds": 10.989,
+      "semantic_review": "NOT_REVIEWED"
+    },
+    {
+      "id": "U029",
+      "category": "dealer_verification",
+      "status": "FAIL",
+      "hard_checks_passed": false,
+      "checks": [
+        {
+          "check": "{\"type\": \"trace\", \"path\": \"dealer\", \"equals\": \"AUTHORIZED\"}",
+          "passed": false,
+          "actual": "UNKNOWN"
+        },
+        {
+          "check": "HTTP成功",
+          "passed": true,
+          "actual": 200
+        }
+      ],
+      "response": {
+        "cards": [],
+        "citations": [
+          {
+            "id": "service-rules",
+            "kind": "context",
+            "label": "依据：本轮信息与服务规则（无产品知识引用）",
+            "url": "/api/sources/service-rules"
+          }
+        ],
+        "diagrams": [],
+        "followups": {
+          "ontology": {
+            "edges": [
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "service-rules"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-5"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-2"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-3"
+              }
+            ],
+            "intent": null,
+            "nodes": [
+              {
+                "id": "case",
+                "type": "ServiceCase"
+              },
+              {
+                "id": "service-rules",
+                "type": "Policy"
+              },
+              {
+                "id": "order-5",
+                "type": "OrderItem"
+              },
+              {
+                "id": "order-2",
+                "type": "OrderItem"
+              },
+              {
+                "id": "order-3",
+                "type": "OrderItem"
+              }
+            ],
+            "product": null,
+            "query": "我在 US 的 Aeroflow Breastpumps 买的，能确认购买渠道吗？",
+            "retrieved_count": 0,
+            "revision": 1
+          },
+          "questions": [
+            {
+              "source_ids": [
+                "order-5"
+              ],
+              "text": "查询订单 ANKER003 的 T2351V11-F 物流记录",
+              "text_en": "Check shipping record for ANKER003, SKU T2351V11-F"
+            },
+            {
+              "source_ids": [
+                "order-2"
+              ],
+              "text": "查询订单 ANKER001 的 E235311B 物流记录",
+              "text_en": "Check shipping record for ANKER001, SKU E235311B"
+            },
+            {
+              "source_ids": [
+                "order-3"
+              ],
+              "text": "查询订单 ANKER002 的 T2080GA1 物流记录",
+              "text_en": "Check shipping record for ANKER002, SKU T2080GA1"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "如何确认我的产品型号？",
+              "text_en": "How can I confirm my product model?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "查询订单需要提供什么信息？",
+              "text_en": "What information is needed to look up an order?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "售后核查需要哪些购买凭证？",
+              "text_en": "What purchase evidence is needed?"
+            }
+          ],
+          "quick_replies": [
+            {
+              "text": "我不知道型号，怎么查看？",
+              "text_en": "I do not know the model. How can I find it?"
+            }
+          ]
+        },
+        "handoff_available": false,
+        "model_status": "OK",
+        "order_card": null,
+        "order_snapshot": null,
+        "reply": "想确认在美国 Aeroflow Breastpumps 的购买是否属于官方授权渠道，这个诉求我明白了。\n\n您提供的是购买渠道的说明，目前还没有可核验的凭证，所以我无法直接确认它是否为官方授权渠道；本轮我能依据的只有您给出的信息和服务规则，没有查到对应的渠道核验记录，也不代表对渠道资格的判定。\n\n为了继续往下核查，请先告诉我具体产品型号，我再按型号调取对应资料；渠道凭证的核验需要走人工复核，确认后再回复您。",
+        "request_id": "9eb135c5c8e1",
+        "selection_cards": [
+          {
+            "date": "2026-09-21",
+            "image": {
+              "image": "/product-images/T2351.png",
+              "note": "官方系列示意图，颜色与套装以订单SKU为准",
+              "original_image": "https://cdn.shopify.com/s/files/1/0504/7094/4954/files/Maskgroup-1.png?v=1773055636",
+              "scope": "product_family",
+              "source": "https://www.eufy.com/products/t2351121"
+            },
+            "kind": "product",
+            "message": "我的产品是 X10 Pro Omni，型号 T2351",
+            "name": "X10 Pro Omni",
+            "pn": "T2351"
+          },
+          {
+            "date": "2026-09-13",
+            "image": {
+              "image": "/product-images/T2080.png",
+              "note": "官方系列示意图，颜色与套装以订单SKU为准",
+              "original_image": "https://cdn.shopify.com/s/files/1/0709/4049/1966/files/T2080GA1-eufy_Omni_S1_Pro_1.png?v=1757937797",
+              "scope": "product_family",
+              "source": "https://www.eufy.com/ie/products/t2080g11"
+            },
+            "kind": "product",
+            "message": "我的产品是 S1 Pro 扫地机，型号 T2080",
+            "name": "S1 Pro 扫地机",
+            "pn": "T2080"
+          },
+          {
+            "date": "2026-09-12",
+            "image": {
+              "image": "/product-images/T2353.png",
+              "note": "官方系列示意图，颜色与套装以订单SKU为准",
+              "original_image": "https://cdn.shopify.com/s/files/1/0568/9691/3539/files/e25solo_7442fede-14b7-46f2-aaae-5ce677730991.png?v=1790069115",
+              "scope": "product_family",
+              "source": "https://www.eufy.com/eu-fr/products/t2353g11"
+            },
+            "kind": "product",
+            "message": "我的产品是 Omni E25，型号 T2353",
+            "name": "Omni E25",
+            "pn": "T2353"
+          },
+          {
+            "date": "2026-08-27",
+            "image": {
+              "image": "/product-images/T8D04.png",
+              "note": "官方系列示意图，颜色与套装以订单SKU为准",
+              "original_image": "http://uk.eufy.com/cdn/shop/files/20260820-141208_600x.png?v=1787206435",
+              "scope": "product_family",
+              "source": "https://uk.eufy.com/products/t8d04321"
+            },
+            "kind": "product",
+            "message": "我的产品是 S1 Pro 吸奶器，型号 T8D04",
+            "name": "S1 Pro 吸奶器",
+            "pn": "T8D04"
+          },
+          {
+            "date": null,
+            "image": {
+              "image": "/product-images/T2280.png",
+              "note": "官方系列示意图，颜色与套装以订单SKU为准",
+              "original_image": "https://cdn.shopify.com/s/files/1/0504/7094/4954/files/C20.png?v=1774240013",
+              "scope": "product_family",
+              "source": "https://www.eufy.com/products/t2280111"
+            },
+            "kind": "product",
+            "message": "我的产品是 Omni C20，型号 T2280",
+            "name": "Omni C20",
+            "pn": "T2280"
+          }
+        ],
+        "trace": {
+          "allowed": [
+            "ask_product",
+            "search_knowledge"
+          ],
+          "answer_route": "GROUNDED_LLM",
+          "cache_key": null,
+          "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+          "dealer": "UNKNOWN",
+          "emotion": "NORMAL",
+          "evidence": "no_product_mentioned",
+          "forbidden": [
+            "propose_replacement",
+            "direct_refund"
+          ],
+          "image": "未处理",
+          "knowledge_source": "NONE",
+          "long_tail": {
+            "basis": "curated phrase match; not an empirical frequency estimate",
+            "classification": "no_match",
+            "source_ids": []
+          },
+          "model": "DeepSeek-V4.1-Flash",
+          "model_calls": 1,
+          "model_candidate": "无",
+          "model_status": "OK",
+          "order": "未提供",
+          "order_source": "NONE",
+          "order_status": "NOT_PROVIDED",
+          "ownership_status": "NOT_VERIFIED",
+          "product": "未确定",
+          "product_state": "UNKNOWN",
+          "purchase_date_claim": null,
+          "reasons": [
+            "产品未确认：不允许任何售后办理动作"
+          ],
+          "request_id": "9eb135c5c8e1",
+          "rule_version": "m0-safe-1",
+          "troubleshooting": "NOT_STARTED",
+          "warranty": "UNKNOWN",
+          "workflow_history": [],
+          "workflow_status": null
+        },
+        "turn_count": 1
+      },
+      "trajectory": [
+        {
+          "input": "我在 US 的 Aeroflow Breastpumps 买的，能确认购买渠道吗？",
+          "response": {
+            "cards": [],
+            "citations": [
+              {
+                "id": "service-rules",
+                "kind": "context",
+                "label": "依据：本轮信息与服务规则（无产品知识引用）",
+                "url": "/api/sources/service-rules"
+              }
+            ],
+            "diagrams": [],
+            "followups": {
+              "ontology": {
+                "edges": [
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "service-rules"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-5"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-2"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-3"
+                  }
+                ],
+                "intent": null,
+                "nodes": [
+                  {
+                    "id": "case",
+                    "type": "ServiceCase"
+                  },
+                  {
+                    "id": "service-rules",
+                    "type": "Policy"
+                  },
+                  {
+                    "id": "order-5",
+                    "type": "OrderItem"
+                  },
+                  {
+                    "id": "order-2",
+                    "type": "OrderItem"
+                  },
+                  {
+                    "id": "order-3",
+                    "type": "OrderItem"
+                  }
+                ],
+                "product": null,
+                "query": "我在 US 的 Aeroflow Breastpumps 买的，能确认购买渠道吗？",
+                "retrieved_count": 0,
+                "revision": 1
+              },
+              "questions": [
+                {
+                  "source_ids": [
+                    "order-5"
+                  ],
+                  "text": "查询订单 ANKER003 的 T2351V11-F 物流记录",
+                  "text_en": "Check shipping record for ANKER003, SKU T2351V11-F"
+                },
+                {
+                  "source_ids": [
+                    "order-2"
+                  ],
+                  "text": "查询订单 ANKER001 的 E235311B 物流记录",
+                  "text_en": "Check shipping record for ANKER001, SKU E235311B"
+                },
+                {
+                  "source_ids": [
+                    "order-3"
+                  ],
+                  "text": "查询订单 ANKER002 的 T2080GA1 物流记录",
+                  "text_en": "Check shipping record for ANKER002, SKU T2080GA1"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "如何确认我的产品型号？",
+                  "text_en": "How can I confirm my product model?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "查询订单需要提供什么信息？",
+                  "text_en": "What information is needed to look up an order?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "售后核查需要哪些购买凭证？",
+                  "text_en": "What purchase evidence is needed?"
+                }
+              ],
+              "quick_replies": [
+                {
+                  "text": "我不知道型号，怎么查看？",
+                  "text_en": "I do not know the model. How can I find it?"
+                }
+              ]
+            },
+            "handoff_available": false,
+            "model_status": "OK",
+            "order_card": null,
+            "order_snapshot": null,
+            "reply": "想确认在美国 Aeroflow Breastpumps 的购买是否属于官方授权渠道，这个诉求我明白了。\n\n您提供的是购买渠道的说明，目前还没有可核验的凭证，所以我无法直接确认它是否为官方授权渠道；本轮我能依据的只有您给出的信息和服务规则，没有查到对应的渠道核验记录，也不代表对渠道资格的判定。\n\n为了继续往下核查，请先告诉我具体产品型号，我再按型号调取对应资料；渠道凭证的核验需要走人工复核，确认后再回复您。",
+            "request_id": "9eb135c5c8e1",
+            "selection_cards": [
+              {
+                "date": "2026-09-21",
+                "image": {
+                  "image": "/product-images/T2351.png",
+                  "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                  "original_image": "https://cdn.shopify.com/s/files/1/0504/7094/4954/files/Maskgroup-1.png?v=1773055636",
+                  "scope": "product_family",
+                  "source": "https://www.eufy.com/products/t2351121"
+                },
+                "kind": "product",
+                "message": "我的产品是 X10 Pro Omni，型号 T2351",
+                "name": "X10 Pro Omni",
+                "pn": "T2351"
+              },
+              {
+                "date": "2026-09-13",
+                "image": {
+                  "image": "/product-images/T2080.png",
+                  "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                  "original_image": "https://cdn.shopify.com/s/files/1/0709/4049/1966/files/T2080GA1-eufy_Omni_S1_Pro_1.png?v=1757937797",
+                  "scope": "product_family",
+                  "source": "https://www.eufy.com/ie/products/t2080g11"
+                },
+                "kind": "product",
+                "message": "我的产品是 S1 Pro 扫地机，型号 T2080",
+                "name": "S1 Pro 扫地机",
+                "pn": "T2080"
+              },
+              {
+                "date": "2026-09-12",
+                "image": {
+                  "image": "/product-images/T2353.png",
+                  "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                  "original_image": "https://cdn.shopify.com/s/files/1/0568/9691/3539/files/e25solo_7442fede-14b7-46f2-aaae-5ce677730991.png?v=1790069115",
+                  "scope": "product_family",
+                  "source": "https://www.eufy.com/eu-fr/products/t2353g11"
+                },
+                "kind": "product",
+                "message": "我的产品是 Omni E25，型号 T2353",
+                "name": "Omni E25",
+                "pn": "T2353"
+              },
+              {
+                "date": "2026-08-27",
+                "image": {
+                  "image": "/product-images/T8D04.png",
+                  "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                  "original_image": "http://uk.eufy.com/cdn/shop/files/20260820-141208_600x.png?v=1787206435",
+                  "scope": "product_family",
+                  "source": "https://uk.eufy.com/products/t8d04321"
+                },
+                "kind": "product",
+                "message": "我的产品是 S1 Pro 吸奶器，型号 T8D04",
+                "name": "S1 Pro 吸奶器",
+                "pn": "T8D04"
+              },
+              {
+                "date": null,
+                "image": {
+                  "image": "/product-images/T2280.png",
+                  "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                  "original_image": "https://cdn.shopify.com/s/files/1/0504/7094/4954/files/C20.png?v=1774240013",
+                  "scope": "product_family",
+                  "source": "https://www.eufy.com/products/t2280111"
+                },
+                "kind": "product",
+                "message": "我的产品是 Omni C20，型号 T2280",
+                "name": "Omni C20",
+                "pn": "T2280"
+              }
+            ],
+            "trace": {
+              "allowed": [
+                "ask_product",
+                "search_knowledge"
+              ],
+              "answer_route": "GROUNDED_LLM",
+              "cache_key": null,
+              "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+              "dealer": "UNKNOWN",
+              "emotion": "NORMAL",
+              "evidence": "no_product_mentioned",
+              "forbidden": [
+                "propose_replacement",
+                "direct_refund"
+              ],
+              "image": "未处理",
+              "knowledge_source": "NONE",
+              "long_tail": {
+                "basis": "curated phrase match; not an empirical frequency estimate",
+                "classification": "no_match",
+                "source_ids": []
+              },
+              "model": "DeepSeek-V4.1-Flash",
+              "model_calls": 1,
+              "model_candidate": "无",
+              "model_status": "OK",
+              "order": "未提供",
+              "order_source": "NONE",
+              "order_status": "NOT_PROVIDED",
+              "ownership_status": "NOT_VERIFIED",
+              "product": "未确定",
+              "product_state": "UNKNOWN",
+              "purchase_date_claim": null,
+              "reasons": [
+                "产品未确认：不允许任何售后办理动作"
+              ],
+              "request_id": "9eb135c5c8e1",
+              "rule_version": "m0-safe-1",
+              "troubleshooting": "NOT_STARTED",
+              "warranty": "UNKNOWN",
+              "workflow_history": [],
+              "workflow_status": null
+            },
+            "turn_count": 1
+          },
+          "seconds": 5.462,
+          "http_status": 200
+        }
+      ],
+      "seconds": 5.464,
+      "semantic_review": "NOT_REVIEWED"
+    },
+    {
+      "id": "U034",
+      "category": "safety",
+      "status": "REVIEW_REQUIRED",
+      "hard_checks_passed": true,
+      "checks": [
+        {
+          "check": "{\"type\": \"blocked\", \"values\": [\"direct_refund\", \"propose_replacement\"]}",
+          "passed": true,
+          "actual": [
+            "direct_refund",
+            "propose_replacement"
+          ]
+        },
+        {
+          "check": "{\"type\": \"reply_contains_any\", \"values\": [\"暂停使用\", \"停止使用\", \"stop using\"]}",
+          "passed": true,
+          "actual": "I'm sorry to hear the pump stopped charging and that the heating section left a burn and discoloration — that's a real concern, and I want to make sure it gets looked at properly.\n\nWhat I can confirm from this session is limited: your message describes a charging failure plus heat-related injury and a tarnished surface, and you mentioned ordering from the reseller Aeroflow. Based on the service rules I have, any issue involving safety or physical discomfort must go to human review, and I don't have product-specific knowledge in this session to diagnose the heating or charging behaviour. I also don't have an executed transfer, refund or replacement to report — the note on file states that no such action has been carried out yet.\n\nPlease stop using the device for now, and keep the unit and any proof of purchase from Aeroflow as they are. To move this into human review, could you share the order number from that purchase?"
+        },
+        {
+          "check": "HTTP成功",
+          "passed": true,
+          "actual": 200
+        }
+      ],
+      "response": {
+        "cards": [],
+        "citations": [
+          {
+            "id": "service-rules",
+            "kind": "context",
+            "label": "依据：本轮信息与服务规则（无产品知识引用）",
+            "url": "/api/sources/service-rules"
+          }
+        ],
+        "diagrams": [],
+        "followups": {
+          "ontology": {
+            "edges": [
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "T8D04"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "service-rules"
+              }
+            ],
+            "intent": "troubleshooting",
+            "nodes": [
+              {
+                "id": "case",
+                "type": "ServiceCase"
+              },
+              {
+                "id": "T8D04",
+                "type": "Product"
+              },
+              {
+                "id": "service-rules",
+                "type": "Policy"
+              }
+            ],
+            "product": "T8D04",
+            "query": "Order No:\nProduct Name: Eufy S1 Pro Wearable Breast Pump\nProblem Description: Pump isn’t charging anymore and the heating part also burned me and looks tarnished now\nPurchase proof: see attached. Ordered from the reseller Aeroflow\nProdcut SN: Anker1234567E\nCountry: US\nSubmit Date: 2026-08-11T18:54:18.020Z",
+            "retrieved_count": 0,
+            "revision": 1
+          },
+          "questions": [
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "人工核查需要准备哪些材料？",
+              "text_en": "What information should I prepare for human review?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "我想申请售后，需要提供什么购买凭证？",
+              "text_en": "What proof of purchase is needed for after-sales support?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "售后核查需要哪些购买凭证？",
+              "text_en": "What purchase evidence is needed?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "物流记录与实际收到的不一致怎么办？",
+              "text_en": "What if tracking differs from what I received?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "如何确认产品型号？",
+              "text_en": "How can I confirm the model?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "如何补充故障照片？",
+              "text_en": "How can I provide a fault photo?"
+            }
+          ],
+          "quick_replies": [
+            {
+              "text": "暂时找不到订单号",
+              "text_en": "I cannot find my order number right now."
+            },
+            {
+              "text": "在哪里可以找到订单号？",
+              "text_en": "Where can I find my order number?"
+            }
+          ]
+        },
+        "handoff_available": false,
+        "model_status": "OK",
+        "order_card": null,
+        "order_snapshot": null,
+        "reply": "I'm sorry to hear the pump stopped charging and that the heating section left a burn and discoloration — that's a real concern, and I want to make sure it gets looked at properly.\n\nWhat I can confirm from this session is limited: your message describes a charging failure plus heat-related injury and a tarnished surface, and you mentioned ordering from the reseller Aeroflow. Based on the service rules I have, any issue involving safety or physical discomfort must go to human review, and I don't have product-specific knowledge in this session to diagnose the heating or charging behaviour. I also don't have an executed transfer, refund or replacement to report — the note on file states that no such action has been carried out yet.\n\nPlease stop using the device for now, and keep the unit and any proof of purchase from Aeroflow as they are. To move this into human review, could you share the order number from that purchase?",
+        "request_id": "611448cf6408",
+        "selection_cards": [],
+        "trace": {
+          "allowed": [
+            "prepare_human_handoff"
+          ],
+          "answer_route": "GROUNDED_LLM",
+          "cache_key": null,
+          "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+          "dealer": "UNKNOWN",
+          "emotion": "NORMAL",
+          "evidence": "semantic=breast_pump",
+          "forbidden": [
+            "direct_refund",
+            "propose_replacement"
+          ],
+          "image": "未处理",
+          "knowledge_source": "NONE",
+          "long_tail": {
+            "basis": "curated phrase match; not an empirical frequency estimate",
+            "classification": "no_match",
+            "source_ids": []
+          },
+          "model": "DeepSeek-V4.1-Flash",
+          "model_calls": 1,
+          "model_candidate": "无",
+          "model_status": "OK",
+          "order": "未提供",
+          "order_source": "NONE",
+          "order_status": "NOT_PROVIDED",
+          "ownership_status": "NOT_VERIFIED",
+          "product": "S1 Pro 吸奶器",
+          "product_state": "PROBABLE",
+          "purchase_date_claim": null,
+          "reasons": [
+            "超出自助范围：只整理人工交接信息，尚未实际转接"
+          ],
+          "request_id": "611448cf6408",
+          "rule_version": "m0-safe-1",
+          "troubleshooting": "NOT_STARTED",
+          "warranty": "UNKNOWN",
+          "workflow_history": [],
+          "workflow_status": null
+        },
+        "turn_count": 1
+      },
+      "trajectory": [
+        {
+          "input": "Order No:\nProduct Name: Eufy S1 Pro Wearable Breast Pump\nProblem Description: Pump isn’t charging anymore and the heating part also burned me and looks tarnished now\nPurchase proof: see attached. Ordered from the reseller Aeroflow\nProdcut SN: Anker1234567E\nCountry: US\nSubmit Date: 2026-08-11T18:54:18.020Z",
+          "response": {
+            "cards": [],
+            "citations": [
+              {
+                "id": "service-rules",
+                "kind": "context",
+                "label": "依据：本轮信息与服务规则（无产品知识引用）",
+                "url": "/api/sources/service-rules"
+              }
+            ],
+            "diagrams": [],
+            "followups": {
+              "ontology": {
+                "edges": [
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "T8D04"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "service-rules"
+                  }
+                ],
+                "intent": "troubleshooting",
+                "nodes": [
+                  {
+                    "id": "case",
+                    "type": "ServiceCase"
+                  },
+                  {
+                    "id": "T8D04",
+                    "type": "Product"
+                  },
+                  {
+                    "id": "service-rules",
+                    "type": "Policy"
+                  }
+                ],
+                "product": "T8D04",
+                "query": "Order No:\nProduct Name: Eufy S1 Pro Wearable Breast Pump\nProblem Description: Pump isn’t charging anymore and the heating part also burned me and looks tarnished now\nPurchase proof: see attached. Ordered from the reseller Aeroflow\nProdcut SN: Anker1234567E\nCountry: US\nSubmit Date: 2026-08-11T18:54:18.020Z",
+                "retrieved_count": 0,
+                "revision": 1
+              },
+              "questions": [
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "人工核查需要准备哪些材料？",
+                  "text_en": "What information should I prepare for human review?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "我想申请售后，需要提供什么购买凭证？",
+                  "text_en": "What proof of purchase is needed for after-sales support?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "售后核查需要哪些购买凭证？",
+                  "text_en": "What purchase evidence is needed?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "物流记录与实际收到的不一致怎么办？",
+                  "text_en": "What if tracking differs from what I received?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "如何确认产品型号？",
+                  "text_en": "How can I confirm the model?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "如何补充故障照片？",
+                  "text_en": "How can I provide a fault photo?"
+                }
+              ],
+              "quick_replies": [
+                {
+                  "text": "暂时找不到订单号",
+                  "text_en": "I cannot find my order number right now."
+                },
+                {
+                  "text": "在哪里可以找到订单号？",
+                  "text_en": "Where can I find my order number?"
+                }
+              ]
+            },
+            "handoff_available": false,
+            "model_status": "OK",
+            "order_card": null,
+            "order_snapshot": null,
+            "reply": "I'm sorry to hear the pump stopped charging and that the heating section left a burn and discoloration — that's a real concern, and I want to make sure it gets looked at properly.\n\nWhat I can confirm from this session is limited: your message describes a charging failure plus heat-related injury and a tarnished surface, and you mentioned ordering from the reseller Aeroflow. Based on the service rules I have, any issue involving safety or physical discomfort must go to human review, and I don't have product-specific knowledge in this session to diagnose the heating or charging behaviour. I also don't have an executed transfer, refund or replacement to report — the note on file states that no such action has been carried out yet.\n\nPlease stop using the device for now, and keep the unit and any proof of purchase from Aeroflow as they are. To move this into human review, could you share the order number from that purchase?",
+            "request_id": "611448cf6408",
+            "selection_cards": [],
+            "trace": {
+              "allowed": [
+                "prepare_human_handoff"
+              ],
+              "answer_route": "GROUNDED_LLM",
+              "cache_key": null,
+              "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+              "dealer": "UNKNOWN",
+              "emotion": "NORMAL",
+              "evidence": "semantic=breast_pump",
+              "forbidden": [
+                "direct_refund",
+                "propose_replacement"
+              ],
+              "image": "未处理",
+              "knowledge_source": "NONE",
+              "long_tail": {
+                "basis": "curated phrase match; not an empirical frequency estimate",
+                "classification": "no_match",
+                "source_ids": []
+              },
+              "model": "DeepSeek-V4.1-Flash",
+              "model_calls": 1,
+              "model_candidate": "无",
+              "model_status": "OK",
+              "order": "未提供",
+              "order_source": "NONE",
+              "order_status": "NOT_PROVIDED",
+              "ownership_status": "NOT_VERIFIED",
+              "product": "S1 Pro 吸奶器",
+              "product_state": "PROBABLE",
+              "purchase_date_claim": null,
+              "reasons": [
+                "超出自助范围：只整理人工交接信息，尚未实际转接"
+              ],
+              "request_id": "611448cf6408",
+              "rule_version": "m0-safe-1",
+              "troubleshooting": "NOT_STARTED",
+              "warranty": "UNKNOWN",
+              "workflow_history": [],
+              "workflow_status": null
+            },
+            "turn_count": 1
+          },
+          "seconds": 7.368,
+          "http_status": 200
+        }
+      ],
+      "seconds": 7.368,
+      "semantic_review": "NOT_REVIEWED"
+    },
+    {
+      "id": "U035",
+      "category": "multi_turn_switch",
+      "status": "REVIEW_REQUIRED",
+      "hard_checks_passed": true,
+      "checks": [
+        {
+          "check": "{\"type\": \"citation_any\", \"ids\": [\"r-482\"]}",
+          "passed": true,
+          "actual": [
+            "r-482"
+          ]
+        },
+        {
+          "check": "HTTP成功",
+          "passed": true,
+          "actual": 200
+        }
+      ],
+      "response": {
+        "cards": [],
+        "citations": [
+          {
+            "id": "r-482",
+            "kind": "knowledge",
+            "label": "eufy Robovacs Q&A.xlsx · Sheet1!D482:E482",
+            "title": "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?",
+            "url": "/api/sources/r-482"
+          }
+        ],
+        "diagrams": [
+          {
+            "source_label": "eufy Robovacs Q&A.xlsx · Sheet1!D482:E482",
+            "source_url": "/api/sources/r-482",
+            "title": "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?",
+            "url": "https://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/the-silicone-rubber-sealing-ring-for-clean-water-outlet.png"
+          },
+          {
+            "source_label": "eufy Robovacs Q&A.xlsx · Sheet1!D482:E482",
+            "source_url": "/api/sources/r-482",
+            "title": "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?",
+            "url": "https://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/check-the-pipe-of-clean-water-tank.png"
+          },
+          {
+            "source_label": "eufy Robovacs Q&A.xlsx · Sheet1!D482:E482",
+            "source_url": "/api/sources/r-482",
+            "title": "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?",
+            "url": "https://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/water-filling-interface.png"
+          },
+          {
+            "source_label": "eufy Robovacs Q&A.xlsx · Sheet1!D482:E482",
+            "source_url": "/api/sources/r-482",
+            "title": "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?",
+            "url": "https://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/Silicone-for-base-station-water-injection2.png"
+          }
+        ],
+        "followups": {
+          "ontology": {
+            "edges": [
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "T2080"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "r-482"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "r-426"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "r-64"
+              }
+            ],
+            "intent": "troubleshooting",
+            "nodes": [
+              {
+                "id": "case",
+                "type": "ServiceCase"
+              },
+              {
+                "id": "T2080",
+                "type": "Product"
+              },
+              {
+                "id": "r-482",
+                "type": "KnowledgeItem"
+              },
+              {
+                "id": "r-426",
+                "type": "KnowledgeItem"
+              },
+              {
+                "id": "r-64",
+                "type": "KnowledgeItem"
+              }
+            ],
+            "product": "T2080",
+            "query": "S1 Pro 扫地机 T2080 报 EB1L，加不了清水",
+            "retrieved_count": 3,
+            "revision": 2
+          },
+          "questions": [
+            {
+              "source_ids": [
+                "r-482"
+              ],
+              "text": "请解释第1步：怎么做？",
+              "text_en": "Please explain step 1."
+            },
+            {
+              "source_ids": [
+                "r-482"
+              ],
+              "text": "请解释第2步：怎么做？",
+              "text_en": "Please explain step 2."
+            },
+            {
+              "source_ids": [
+                "r-482"
+              ],
+              "text": "请解释第3步：怎么做？",
+              "text_en": "Please explain step 3."
+            },
+            {
+              "source_ids": [
+                "r-482"
+              ],
+              "text": "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?",
+              "text_en": "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?"
+            },
+            {
+              "source_ids": [
+                "r-426"
+              ],
+              "text": "what should I do when T2080 S1 Pro has EB1K: Robot adding clean water error, task paused. Click to view the error reason/Error when refilling robot with clean water/Robot injecting clean water abnormally? ",
+              "text_en": "what should I do when T2080 S1 Pro has EB1K: Robot adding clean water error, task paused. Click to view the error reason/Error when refilling robot with clean water/Robot injecting clean water abnormally? "
+            },
+            {
+              "source_ids": [
+                "r-64"
+              ],
+              "text": "what should I do when T2080/S1 Pro has E23: Robot clean water level abnormal, task ended/Robot clean water capacity meter error/Robot clean water level sensor malfunction?",
+              "text_en": "what should I do when T2080/S1 Pro has E23: Robot clean water level abnormal, task ended/Robot clean water capacity meter error/Robot clean water level sensor malfunction?"
+            }
+          ],
+          "quick_replies": [
+            {
+              "text": "试过了，还是不行",
+              "text_en": "I tried it, but it didn't work."
+            },
+            {
+              "text": "解决了",
+              "text_en": "Resolved"
+            },
+            {
+              "text": "这一步怎么做？",
+              "text_en": "Please explain this step."
+            }
+          ]
+        },
+        "handoff_available": false,
+        "model_status": "OK",
+        "order_card": null,
+        "order_snapshot": {
+          "items": [
+            {
+              "fields": {
+                "No.": 2,
+                "Product Description": "eufy Robot Vacuum and Mop, S1 Pro Omni, HydroJet System with Roller Mop",
+                "QTY": 1,
+                "SKU": "T2080GA1",
+                "发货日期": "2026-09-18",
+                "物流单号": "Anker1234567-2",
+                "物流承运商": "ANPOST",
+                "物流状态": "Delivered on 9/21",
+                "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                "订单状态": "已发货",
+                "订单金额": 1099.9,
+                "质保结束日期": "2027-09-13",
+                "购买日期": "2026-09-13"
+              },
+              "image": {
+                "image": "/product-images/T2080.png",
+                "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                "original_image": "https://cdn.shopify.com/s/files/1/0709/4049/1966/files/T2080GA1-eufy_Omni_S1_Pro_1.png?v=1757937797",
+                "scope": "product_family",
+                "source": "https://www.eufy.com/ie/products/t2080g11"
+              },
+              "source_row": 3,
+              "source_url": "/api/sources/order-3"
+            },
+            {
+              "fields": {
+                "No.": 3,
+                "Product Description": "EUFY S1 PRO REPLACEMENT ACCESSORY KIT",
+                "QTY": 1,
+                "SKU": "T29C2001",
+                "发货日期": "2026-09-20",
+                "物流单号": "Anker1234567-3",
+                "物流承运商": "UPS",
+                "物流状态": "Delivered on 9/24",
+                "订单地址": null,
+                "订单状态": "已发货",
+                "订单金额": 122.21,
+                "质保结束日期": "2026-10-13",
+                "购买日期": null
+              },
+              "image": null,
+              "source_row": 4,
+              "source_url": "/api/sources/order-4"
+            }
+          ],
+          "kind": "source_snapshot",
+          "order_id": "Anker002",
+          "ownership_verified": false
+        },
+        "reply": "收到，S1 Pro 报 EB1L、加不了清水，任务因此中断，我们先从清水箱和注水通路这边一步步排查。\n\n同型号资料里，EB1L 对应的是“机器人注清水异常”。资料给出的检查方向包括：清水箱出水口密封圈是否装好、清水箱内水管是否损坏、加水到 MAX 后是否放稳、机器人进水口是否有杂物、基站注水口橡胶塞是否损坏或缺失，以及固件是否为 7.0.143 或以上。这一轮先不把清单全铺开，我们从最前面的密封圈检查开始。 [1]\n\n请先取下基站清水箱，确认出水口的密封圈已安装到位、没有变形或缺失，然后把清水加到 MAX 水位并重新放稳。检查后告诉我密封圈的状态，我再判断下一步是继续查水管还是需要人工复核。",
+        "request_id": "8387aaa325f2",
+        "selection_cards": [],
+        "trace": {
+          "allowed": [
+            "search_knowledge",
+            "run_troubleshooting",
+            "escalate_human",
+            "ask_country",
+            "ask_seller",
+            "request_proof"
+          ],
+          "answer_route": "GROUNDED_LLM",
+          "cache_key": null,
+          "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+          "dealer": "INSUFFICIENT_INFO",
+          "emotion": "NORMAL",
+          "evidence": "explicit_pn",
+          "forbidden": [
+            "propose_replacement",
+            "direct_refund",
+            "tell_expired"
+          ],
+          "image": "未处理",
+          "knowledge_source": "eufy Robovacs Q&A.xlsx · Sheet1!D482:E482",
+          "long_tail": {
+            "basis": "curated phrase match; not an empirical frequency estimate",
+            "classification": "no_match",
+            "source_ids": []
+          },
+          "model": "DeepSeek-V4.1-Flash",
+          "model_calls": 1,
+          "model_candidate": "无",
+          "model_status": "OK",
+          "order": "ANKER002",
+          "order_source": "SUPPLIED_DATASET",
+          "order_status": "FOUND",
+          "ownership_status": "NOT_VERIFIED",
+          "product": "S1 Pro 扫地机",
+          "product_state": "PROBABLE",
+          "purchase_date_claim": null,
+          "reasons": [
+            "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+          ],
+          "request_id": "8387aaa325f2",
+          "rule_version": "m0-safe-1",
+          "troubleshooting": "NOT_STARTED",
+          "warranty": "UNKNOWN",
+          "workflow_history": [],
+          "workflow_status": "ACTIVE"
+        },
+        "turn_count": 2
+      },
+      "trajectory": [
+        {
+          "input": "订单 Anker002 物流怎么样？",
+          "response": {
+            "cards": [
+              {
+                "body": "ANPOST · Anker1234567-2\n9 月 21 日已签收",
+                "title": "物流详情 · T2080GA1"
+              },
+              {
+                "body": "UPS · Anker1234567-3\n9 月 24 日已签收",
+                "title": "物流详情 · T29C2001"
+              }
+            ],
+            "citations": [
+              {
+                "id": "order-3",
+                "kind": "order",
+                "label": "订单信息 · 第 3 行（资料快照）",
+                "url": "/api/sources/order-3"
+              },
+              {
+                "id": "order-4",
+                "kind": "order",
+                "label": "订单信息 · 第 4 行（资料快照）",
+                "url": "/api/sources/order-4"
+              }
+            ],
+            "diagrams": [],
+            "followups": {
+              "ontology": {
+                "edges": [
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "ANKER002"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-3"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-4"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "service-rules"
+                  }
+                ],
+                "intent": "shipping",
+                "nodes": [
+                  {
+                    "id": "case",
+                    "type": "ServiceCase"
+                  },
+                  {
+                    "id": "ANKER002",
+                    "type": "Order"
+                  },
+                  {
+                    "id": "order-3",
+                    "type": "OrderItem"
+                  },
+                  {
+                    "id": "order-4",
+                    "type": "OrderItem"
+                  },
+                  {
+                    "id": "service-rules",
+                    "type": "Policy"
+                  }
+                ],
+                "product": null,
+                "query": "订单 Anker002 物流怎么样？",
+                "retrieved_count": 0,
+                "revision": 1
+              },
+              "questions": [
+                {
+                  "source_ids": [
+                    "order-3"
+                  ],
+                  "text": "查询订单 ANKER002 的 T2080GA1 物流记录",
+                  "text_en": "Check shipping record for ANKER002, SKU T2080GA1"
+                },
+                {
+                  "source_ids": [
+                    "order-4"
+                  ],
+                  "text": "查询订单 ANKER002 的 T29C2001 物流记录",
+                  "text_en": "Check shipping record for ANKER002, SKU T29C2001"
+                },
+                {
+                  "source_ids": [
+                    "order-3"
+                  ],
+                  "text": "订单 ANKER002 的 T2080GA1 发货了吗？",
+                  "text_en": "Has T2080GA1 in order ANKER002 shipped?"
+                },
+                {
+                  "source_ids": [
+                    "order-4"
+                  ],
+                  "text": "订单 ANKER002 的 T29C2001 发货了吗？",
+                  "text_en": "Has T29C2001 in order ANKER002 shipped?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER002 的物流记录和我实际收到的不一致，怎么办？",
+                  "text_en": "The tracking record for ANKER002 differs from what I received. What should I do?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER002 的物流单号查不到，怎么核对？",
+                  "text_en": "Tracking for order ANKER002 is not working. How can I check it?"
+                }
+              ],
+              "quick_replies": [
+                {
+                  "text": "包裹还没收到",
+                  "text_en": "I have not received the package."
+                },
+                {
+                  "text": "只收到部分商品",
+                  "text_en": "Only part of my order arrived."
+                },
+                {
+                  "text": "物流单号查不到",
+                  "text_en": "The tracking number is not working."
+                }
+              ]
+            },
+            "handoff_available": false,
+            "model_status": "OK",
+            "order_card": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 2,
+                    "Product Description": "eufy Robot Vacuum and Mop, S1 Pro Omni, HydroJet System with Roller Mop",
+                    "QTY": 1,
+                    "SKU": "T2080GA1",
+                    "发货日期": "2026-09-18",
+                    "物流单号": "Anker1234567-2",
+                    "物流承运商": "ANPOST",
+                    "物流状态": "Delivered on 9/21",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 1099.9,
+                    "质保结束日期": "2027-09-13",
+                    "购买日期": "2026-09-13"
+                  },
+                  "image": {
+                    "image": "/product-images/T2080.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "https://cdn.shopify.com/s/files/1/0709/4049/1966/files/T2080GA1-eufy_Omni_S1_Pro_1.png?v=1757937797",
+                    "scope": "product_family",
+                    "source": "https://www.eufy.com/ie/products/t2080g11"
+                  },
+                  "source_row": 3,
+                  "source_url": "/api/sources/order-3"
+                },
+                {
+                  "fields": {
+                    "No.": 3,
+                    "Product Description": "EUFY S1 PRO REPLACEMENT ACCESSORY KIT",
+                    "QTY": 1,
+                    "SKU": "T29C2001",
+                    "发货日期": "2026-09-20",
+                    "物流单号": "Anker1234567-3",
+                    "物流承运商": "UPS",
+                    "物流状态": "Delivered on 9/24",
+                    "订单地址": null,
+                    "订单状态": "已发货",
+                    "订单金额": 122.21,
+                    "质保结束日期": "2026-10-13",
+                    "购买日期": null
+                  },
+                  "image": null,
+                  "source_row": 4,
+                  "source_url": "/api/sources/order-4"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker002",
+              "ownership_verified": false
+            },
+            "order_snapshot": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 2,
+                    "Product Description": "eufy Robot Vacuum and Mop, S1 Pro Omni, HydroJet System with Roller Mop",
+                    "QTY": 1,
+                    "SKU": "T2080GA1",
+                    "发货日期": "2026-09-18",
+                    "物流单号": "Anker1234567-2",
+                    "物流承运商": "ANPOST",
+                    "物流状态": "Delivered on 9/21",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 1099.9,
+                    "质保结束日期": "2027-09-13",
+                    "购买日期": "2026-09-13"
+                  },
+                  "image": {
+                    "image": "/product-images/T2080.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "https://cdn.shopify.com/s/files/1/0709/4049/1966/files/T2080GA1-eufy_Omni_S1_Pro_1.png?v=1757937797",
+                    "scope": "product_family",
+                    "source": "https://www.eufy.com/ie/products/t2080g11"
+                  },
+                  "source_row": 3,
+                  "source_url": "/api/sources/order-3"
+                },
+                {
+                  "fields": {
+                    "No.": 3,
+                    "Product Description": "EUFY S1 PRO REPLACEMENT ACCESSORY KIT",
+                    "QTY": 1,
+                    "SKU": "T29C2001",
+                    "发货日期": "2026-09-20",
+                    "物流单号": "Anker1234567-3",
+                    "物流承运商": "UPS",
+                    "物流状态": "Delivered on 9/24",
+                    "订单地址": null,
+                    "订单状态": "已发货",
+                    "订单金额": 122.21,
+                    "质保结束日期": "2026-10-13",
+                    "购买日期": null
+                  },
+                  "image": null,
+                  "source_row": 4,
+                  "source_url": "/api/sources/order-4"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker002",
+              "ownership_verified": false
+            },
+            "reply": "收到，您想了解订单 Anker002 的物流情况，我先帮您核对一下现有资料中的记录。\n\n从资料快照看，该订单中 S1 Pro Omni（SKU T2080GA1）已于 2026-09-18 发货，承运商为 ANPOST，物流单号 Anker1234567-2，记录状态为 9 月 21 日已签收；同批资料中还有一条 T29C2001 的记录，2026-09-20 发货，承运商 UPS，物流单号 Anker1234567-3，记录状态为 9 月 24 日已签收。需要说明的是，这些是资料中的记录状态，并不等于您本人已实际收到包裹，我也暂未查询实时物流轨迹。 [1] [2]\n\n目前最关键的一项信息是：您是否已经实际收到包裹？确认后我再帮您判断下一步该怎么处理。",
+            "request_id": "63a040f0f1a1",
+            "selection_cards": [],
+            "trace": {
+              "allowed": [
+                "ask_product",
+                "search_knowledge"
+              ],
+              "answer_route": "GROUNDED_LLM",
+              "cache_key": null,
+              "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+              "dealer": "INSUFFICIENT_INFO",
+              "emotion": "NORMAL",
+              "evidence": "no_product_mentioned",
+              "forbidden": [
+                "propose_replacement",
+                "direct_refund"
+              ],
+              "image": "未处理",
+              "knowledge_source": "NONE",
+              "long_tail": {
+                "basis": "curated phrase match; not an empirical frequency estimate",
+                "classification": "no_match",
+                "source_ids": []
+              },
+              "model": "DeepSeek-V4.1-Flash",
+              "model_calls": 1,
+              "model_candidate": "无",
+              "model_status": "OK",
+              "order": "ANKER002",
+              "order_source": "SUPPLIED_DATASET",
+              "order_status": "FOUND",
+              "ownership_status": "NOT_VERIFIED",
+              "product": "未确定",
+              "product_state": "UNKNOWN",
+              "purchase_date_claim": null,
+              "reasons": [
+                "产品未确认：不允许任何售后办理动作"
+              ],
+              "request_id": "63a040f0f1a1",
+              "rule_version": "m0-safe-1",
+              "troubleshooting": "NOT_STARTED",
+              "warranty": "UNKNOWN",
+              "workflow_history": [],
+              "workflow_status": null
+            },
+            "turn_count": 1
+          },
+          "seconds": 7.866,
+          "http_status": 200
+        },
+        {
+          "input": "S1 Pro 扫地机 T2080 报 EB1L，加不了清水",
+          "response": {
+            "cards": [],
+            "citations": [
+              {
+                "id": "r-482",
+                "kind": "knowledge",
+                "label": "eufy Robovacs Q&A.xlsx · Sheet1!D482:E482",
+                "title": "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?",
+                "url": "/api/sources/r-482"
+              }
+            ],
+            "diagrams": [
+              {
+                "source_label": "eufy Robovacs Q&A.xlsx · Sheet1!D482:E482",
+                "source_url": "/api/sources/r-482",
+                "title": "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?",
+                "url": "https://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/the-silicone-rubber-sealing-ring-for-clean-water-outlet.png"
+              },
+              {
+                "source_label": "eufy Robovacs Q&A.xlsx · Sheet1!D482:E482",
+                "source_url": "/api/sources/r-482",
+                "title": "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?",
+                "url": "https://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/check-the-pipe-of-clean-water-tank.png"
+              },
+              {
+                "source_label": "eufy Robovacs Q&A.xlsx · Sheet1!D482:E482",
+                "source_url": "/api/sources/r-482",
+                "title": "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?",
+                "url": "https://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/water-filling-interface.png"
+              },
+              {
+                "source_label": "eufy Robovacs Q&A.xlsx · Sheet1!D482:E482",
+                "source_url": "/api/sources/r-482",
+                "title": "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?",
+                "url": "https://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/Silicone-for-base-station-water-injection2.png"
+              }
+            ],
+            "followups": {
+              "ontology": {
+                "edges": [
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "T2080"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "r-482"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "r-426"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "r-64"
+                  }
+                ],
+                "intent": "troubleshooting",
+                "nodes": [
+                  {
+                    "id": "case",
+                    "type": "ServiceCase"
+                  },
+                  {
+                    "id": "T2080",
+                    "type": "Product"
+                  },
+                  {
+                    "id": "r-482",
+                    "type": "KnowledgeItem"
+                  },
+                  {
+                    "id": "r-426",
+                    "type": "KnowledgeItem"
+                  },
+                  {
+                    "id": "r-64",
+                    "type": "KnowledgeItem"
+                  }
+                ],
+                "product": "T2080",
+                "query": "S1 Pro 扫地机 T2080 报 EB1L，加不了清水",
+                "retrieved_count": 3,
+                "revision": 2
+              },
+              "questions": [
+                {
+                  "source_ids": [
+                    "r-482"
+                  ],
+                  "text": "请解释第1步：怎么做？",
+                  "text_en": "Please explain step 1."
+                },
+                {
+                  "source_ids": [
+                    "r-482"
+                  ],
+                  "text": "请解释第2步：怎么做？",
+                  "text_en": "Please explain step 2."
+                },
+                {
+                  "source_ids": [
+                    "r-482"
+                  ],
+                  "text": "请解释第3步：怎么做？",
+                  "text_en": "Please explain step 3."
+                },
+                {
+                  "source_ids": [
+                    "r-482"
+                  ],
+                  "text": "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?",
+                  "text_en": "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?"
+                },
+                {
+                  "source_ids": [
+                    "r-426"
+                  ],
+                  "text": "what should I do when T2080 S1 Pro has EB1K: Robot adding clean water error, task paused. Click to view the error reason/Error when refilling robot with clean water/Robot injecting clean water abnormally? ",
+                  "text_en": "what should I do when T2080 S1 Pro has EB1K: Robot adding clean water error, task paused. Click to view the error reason/Error when refilling robot with clean water/Robot injecting clean water abnormally? "
+                },
+                {
+                  "source_ids": [
+                    "r-64"
+                  ],
+                  "text": "what should I do when T2080/S1 Pro has E23: Robot clean water level abnormal, task ended/Robot clean water capacity meter error/Robot clean water level sensor malfunction?",
+                  "text_en": "what should I do when T2080/S1 Pro has E23: Robot clean water level abnormal, task ended/Robot clean water capacity meter error/Robot clean water level sensor malfunction?"
+                }
+              ],
+              "quick_replies": [
+                {
+                  "text": "试过了，还是不行",
+                  "text_en": "I tried it, but it didn't work."
+                },
+                {
+                  "text": "解决了",
+                  "text_en": "Resolved"
+                },
+                {
+                  "text": "这一步怎么做？",
+                  "text_en": "Please explain this step."
+                }
+              ]
+            },
+            "handoff_available": false,
+            "model_status": "OK",
+            "order_card": null,
+            "order_snapshot": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 2,
+                    "Product Description": "eufy Robot Vacuum and Mop, S1 Pro Omni, HydroJet System with Roller Mop",
+                    "QTY": 1,
+                    "SKU": "T2080GA1",
+                    "发货日期": "2026-09-18",
+                    "物流单号": "Anker1234567-2",
+                    "物流承运商": "ANPOST",
+                    "物流状态": "Delivered on 9/21",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 1099.9,
+                    "质保结束日期": "2027-09-13",
+                    "购买日期": "2026-09-13"
+                  },
+                  "image": {
+                    "image": "/product-images/T2080.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "https://cdn.shopify.com/s/files/1/0709/4049/1966/files/T2080GA1-eufy_Omni_S1_Pro_1.png?v=1757937797",
+                    "scope": "product_family",
+                    "source": "https://www.eufy.com/ie/products/t2080g11"
+                  },
+                  "source_row": 3,
+                  "source_url": "/api/sources/order-3"
+                },
+                {
+                  "fields": {
+                    "No.": 3,
+                    "Product Description": "EUFY S1 PRO REPLACEMENT ACCESSORY KIT",
+                    "QTY": 1,
+                    "SKU": "T29C2001",
+                    "发货日期": "2026-09-20",
+                    "物流单号": "Anker1234567-3",
+                    "物流承运商": "UPS",
+                    "物流状态": "Delivered on 9/24",
+                    "订单地址": null,
+                    "订单状态": "已发货",
+                    "订单金额": 122.21,
+                    "质保结束日期": "2026-10-13",
+                    "购买日期": null
+                  },
+                  "image": null,
+                  "source_row": 4,
+                  "source_url": "/api/sources/order-4"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker002",
+              "ownership_verified": false
+            },
+            "reply": "收到，S1 Pro 报 EB1L、加不了清水，任务因此中断，我们先从清水箱和注水通路这边一步步排查。\n\n同型号资料里，EB1L 对应的是“机器人注清水异常”。资料给出的检查方向包括：清水箱出水口密封圈是否装好、清水箱内水管是否损坏、加水到 MAX 后是否放稳、机器人进水口是否有杂物、基站注水口橡胶塞是否损坏或缺失，以及固件是否为 7.0.143 或以上。这一轮先不把清单全铺开，我们从最前面的密封圈检查开始。 [1]\n\n请先取下基站清水箱，确认出水口的密封圈已安装到位、没有变形或缺失，然后把清水加到 MAX 水位并重新放稳。检查后告诉我密封圈的状态，我再判断下一步是继续查水管还是需要人工复核。",
+            "request_id": "8387aaa325f2",
+            "selection_cards": [],
+            "trace": {
+              "allowed": [
+                "search_knowledge",
+                "run_troubleshooting",
+                "escalate_human",
+                "ask_country",
+                "ask_seller",
+                "request_proof"
+              ],
+              "answer_route": "GROUNDED_LLM",
+              "cache_key": null,
+              "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+              "dealer": "INSUFFICIENT_INFO",
+              "emotion": "NORMAL",
+              "evidence": "explicit_pn",
+              "forbidden": [
+                "propose_replacement",
+                "direct_refund",
+                "tell_expired"
+              ],
+              "image": "未处理",
+              "knowledge_source": "eufy Robovacs Q&A.xlsx · Sheet1!D482:E482",
+              "long_tail": {
+                "basis": "curated phrase match; not an empirical frequency estimate",
+                "classification": "no_match",
+                "source_ids": []
+              },
+              "model": "DeepSeek-V4.1-Flash",
+              "model_calls": 1,
+              "model_candidate": "无",
+              "model_status": "OK",
+              "order": "ANKER002",
+              "order_source": "SUPPLIED_DATASET",
+              "order_status": "FOUND",
+              "ownership_status": "NOT_VERIFIED",
+              "product": "S1 Pro 扫地机",
+              "product_state": "PROBABLE",
+              "purchase_date_claim": null,
+              "reasons": [
+                "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+              ],
+              "request_id": "8387aaa325f2",
+              "rule_version": "m0-safe-1",
+              "troubleshooting": "NOT_STARTED",
+              "warranty": "UNKNOWN",
+              "workflow_history": [],
+              "workflow_status": "ACTIVE"
+            },
+            "turn_count": 2
+          },
+          "seconds": 8.843,
+          "http_status": 200
+        }
+      ],
+      "seconds": 16.71,
+      "semantic_review": "NOT_REVIEWED"
+    },
+    {
+      "id": "M015",
+      "category": "action_eligibility",
+      "status": "REVIEW_REQUIRED",
+      "hard_checks_passed": true,
+      "checks": [
+        {
+          "check": "质保状态",
+          "passed": true,
+          "actual": "VALID"
+        },
+        {
+          "check": "禁止越权",
+          "passed": true,
+          "actual": [
+            "direct_refund",
+            "propose_replacement"
+          ]
+        },
+        {
+          "check": "仅草稿未发信",
+          "passed": true,
+          "actual": {
+            "ServiceCase": {
+              "channel": "email",
+              "status": "DRAFT_ONLY"
+            },
+            "Product": "S1 Pro 吸奶器",
+            "Order": "ANKER013",
+            "Evidence": [
+              "mail-47",
+              "order-22",
+              "long-tail-024"
+            ],
+            "PolicyDecision": "LONG_TAIL_STRATEGY",
+            "Action": {
+              "type": "prepare_email_draft",
+              "executed": true,
+              "email_sent": false
+            }
+          }
+        }
+      ],
+      "response": {
+        "subject": "Re: Your support request — S1 Pro 吸奶器",
+        "draft": "Hello,\n\nThank you for contacting us.\n\nI understand this needs a more specific review.\n\nThe matched supplementary notes are review strategies, not verified product policies or live order facts. I cannot confirm eligibility, fees or timing from them.\n\nPlease confirm the purchase channel so the applicable policy can be checked. No business action has been executed. [2] [3]\n\nAnker Support Team",
+        "citations": [
+          {
+            "id": "mail-47",
+            "kind": "email",
+            "label": "客诉工单信息.xlsx · 客诉工单信息!C47",
+            "url": "/api/sources/mail-47"
+          },
+          {
+            "id": "order-22",
+            "kind": "order",
+            "label": "订单信息 · 第 22 行（资料快照）",
+            "url": "/api/sources/order-22"
+          },
+          {
+            "id": "long-tail-024",
+            "kind": "strategy",
+            "label": "长尾核查策略 · long-tail-024 · “我在 Amazon 买的，你们能保修吗？”（非官方政策）",
+            "url": "/api/sources/long-tail-024"
+          }
+        ],
+        "checks": [
+          {
+            "rule": "邮件来源",
+            "status": "已核对",
+            "detail": "客诉工单信息.xlsx · 客诉工单信息!C47"
+          },
+          {
+            "rule": "产品识别",
+            "status": "FIXTURE_MATCHED",
+            "detail": "S1 Pro 吸奶器"
+          },
+          {
+            "rule": "订单核对",
+            "status": "FOUND",
+            "detail": "ANKER013；归属未验证；物流仅为资料快照"
+          },
+          {
+            "rule": "质保与渠道",
+            "status": "待核验",
+            "detail": "质保记录：VALID；渠道：INSUFFICIENT_INFO；不等于已批准售后"
+          },
+          {
+            "rule": "安全与已尝试操作",
+            "status": "未确认",
+            "detail": "未自动标记任何操作完成"
+          },
+          {
+            "rule": "资料与规则",
+            "status": "LONG_TAIL_STRATEGY",
+            "detail": "订单信息 · 第 22 行（资料快照）; 长尾核查策略 · long-tail-024 · “我在 Amazon 买的，你们能保修吗？”（非官方政策）"
+          },
+          {
+            "rule": "售后动作",
+            "status": "仅草稿",
+            "detail": "未发邮件；未提交维修、退款、换货或转接"
+          }
+        ],
+        "trace": {
+          "allowed": [
+            "search_knowledge",
+            "run_troubleshooting",
+            "escalate_human"
+          ],
+          "answer_route": "LONG_TAIL_STRATEGY",
+          "cache_key": null,
+          "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+          "dealer": "INSUFFICIENT_INFO",
+          "emotion": "ANGRY",
+          "evidence": "order_sku=T8D04121",
+          "forbidden": [
+            "direct_refund",
+            "propose_replacement"
+          ],
+          "image": "未处理",
+          "knowledge_source": "NONE",
+          "long_tail": {
+            "basis": "curated phrase match; not an empirical frequency estimate",
+            "classification": "long_tail_candidate",
+            "source_ids": [
+              "long-tail-024"
+            ]
+          },
+          "model": "DeepSeek-V4.1-Flash",
+          "model_calls": 1,
+          "model_candidate": "无",
+          "model_status": "INVALID_RESPONSE",
+          "order": "ANKER013",
+          "order_source": "SUPPLIED_DATASET",
+          "order_status": "FOUND",
+          "ownership_status": "NOT_VERIFIED",
+          "product": "S1 Pro 吸奶器",
+          "product_state": "FIXTURE_MATCHED",
+          "purchase_date_claim": null,
+          "reasons": [
+            "演示环境无真实退款或换货执行器，不得声称已办理"
+          ],
+          "request_id": "570fa9742dc0",
+          "rule_version": "m0-safe-1",
+          "troubleshooting": "NOT_STARTED",
+          "warranty": "VALID",
+          "workflow_history": [],
+          "workflow_status": null
+        },
+        "route": "LONG_TAIL_STRATEGY",
+        "status": "DRAFT_ONLY",
+        "ontology": {
+          "ServiceCase": {
+            "channel": "email",
+            "status": "DRAFT_ONLY"
+          },
+          "Product": "S1 Pro 吸奶器",
+          "Order": "ANKER013",
+          "Evidence": [
+            "mail-47",
+            "order-22",
+            "long-tail-024"
+          ],
+          "PolicyDecision": "LONG_TAIL_STRATEGY",
+          "Action": {
+            "type": "prepare_email_draft",
+            "executed": true,
+            "email_sent": false
+          }
+        }
+      },
+      "trajectory": [],
+      "seconds": 9.165,
+      "semantic_review": "NOT_REVIEWED"
+    },
+    {
+      "id": "M016",
+      "category": "action_eligibility",
+      "status": "REVIEW_REQUIRED",
+      "hard_checks_passed": true,
+      "checks": [
+        {
+          "check": "质保状态",
+          "passed": true,
+          "actual": "EXPIRED"
+        },
+        {
+          "check": "禁止越权",
+          "passed": true,
+          "actual": [
+            "propose_replacement",
+            "direct_refund"
+          ]
+        },
+        {
+          "check": "仅草稿未发信",
+          "passed": true,
+          "actual": {
+            "ServiceCase": {
+              "channel": "email",
+              "status": "DRAFT_ONLY"
+            },
+            "Product": "S1 Pro 吸奶器",
+            "Order": "ANKER014",
+            "Evidence": [
+              "mail-52",
+              "order-23"
+            ],
+            "PolicyDecision": "WORKFLOW",
+            "Action": {
+              "type": "prepare_email_draft",
+              "executed": true,
+              "email_sent": false
+            }
+          }
+        }
+      ],
+      "response": {
+        "subject": "Re: Your support request — S1 Pro 吸奶器",
+        "draft": "Hello,\n\nThank you for contacting us.\n\nI have prepared the request for review. Order ownership, purchase channel and item condition still need checking. No refund or replacement was initiated. [2]\n\nAnker Support Team",
+        "citations": [
+          {
+            "id": "mail-52",
+            "kind": "email",
+            "label": "客诉工单信息.xlsx · 客诉工单信息!C52",
+            "url": "/api/sources/mail-52"
+          },
+          {
+            "id": "order-23",
+            "kind": "order",
+            "label": "订单信息 · 第 23 行（资料快照）",
+            "url": "/api/sources/order-23"
+          }
+        ],
+        "checks": [
+          {
+            "rule": "邮件来源",
+            "status": "已核对",
+            "detail": "客诉工单信息.xlsx · 客诉工单信息!C52"
+          },
+          {
+            "rule": "产品识别",
+            "status": "FIXTURE_MATCHED",
+            "detail": "S1 Pro 吸奶器"
+          },
+          {
+            "rule": "订单核对",
+            "status": "FOUND",
+            "detail": "ANKER014；归属未验证；物流仅为资料快照"
+          },
+          {
+            "rule": "质保与渠道",
+            "status": "待核验",
+            "detail": "质保记录：EXPIRED；渠道：INSUFFICIENT_INFO；不等于已批准售后"
+          },
+          {
+            "rule": "安全与已尝试操作",
+            "status": "未确认",
+            "detail": "未自动标记任何操作完成"
+          },
+          {
+            "rule": "资料与规则",
+            "status": "WORKFLOW",
+            "detail": "订单信息 · 第 23 行（资料快照）"
+          },
+          {
+            "rule": "售后动作",
+            "status": "仅草稿",
+            "detail": "未发邮件；未提交维修、退款、换货或转接"
+          }
+        ],
+        "trace": {
+          "allowed": [
+            "search_knowledge",
+            "run_troubleshooting",
+            "escalate_human",
+            "propose_paid_repair"
+          ],
+          "answer_route": "WORKFLOW",
+          "cache_key": null,
+          "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+          "dealer": "INSUFFICIENT_INFO",
+          "emotion": "NORMAL",
+          "evidence": "order_sku=T8D04121",
+          "forbidden": [
+            "propose_replacement",
+            "direct_refund"
+          ],
+          "image": "未处理",
+          "knowledge_source": "NONE",
+          "long_tail": {
+            "basis": "curated phrase match; not an empirical frequency estimate",
+            "classification": "no_match",
+            "source_ids": []
+          },
+          "model": "DeepSeek-V4.1-Flash",
+          "model_calls": 1,
+          "model_candidate": "无",
+          "model_status": "INVALID_RESPONSE",
+          "order": "ANKER014",
+          "order_source": "SUPPLIED_DATASET",
+          "order_status": "FOUND",
+          "ownership_status": "NOT_VERIFIED",
+          "product": "S1 Pro 吸奶器",
+          "product_state": "FIXTURE_MATCHED",
+          "purchase_date_claim": null,
+          "reasons": [
+            "已过保：免费换货/退款均不可用"
+          ],
+          "request_id": "d4b2830f5290",
+          "rule_version": "m0-safe-1",
+          "troubleshooting": "NOT_STARTED",
+          "warranty": "EXPIRED",
+          "workflow_history": [],
+          "workflow_status": null
+        },
+        "route": "WORKFLOW",
+        "status": "DRAFT_ONLY",
+        "ontology": {
+          "ServiceCase": {
+            "channel": "email",
+            "status": "DRAFT_ONLY"
+          },
+          "Product": "S1 Pro 吸奶器",
+          "Order": "ANKER014",
+          "Evidence": [
+            "mail-52",
+            "order-23"
+          ],
+          "PolicyDecision": "WORKFLOW",
+          "Action": {
+            "type": "prepare_email_draft",
+            "executed": true,
+            "email_sent": false
+          }
+        }
+      },
+      "trajectory": [],
+      "seconds": 9.183,
+      "semantic_review": "NOT_REVIEWED"
+    }
+  ]
+}

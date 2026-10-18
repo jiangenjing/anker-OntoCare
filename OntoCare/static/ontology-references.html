@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OntoCare · 本体引用说明</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#fff;color:#000;font:15px/1.7 -apple-system,"PingFang SC","Helvetica Neue",Arial,sans-serif}header{border-bottom:1px solid #e5e5e5;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}a{color:inherit;text-underline-offset:3px}nav{display:flex;gap:8px}nav a{border:1px solid #e5e5e5;border-radius:6px;padding:3px 12px;text-decoration:none;transition:background .15s}nav a:hover{background:#f5f5f5}nav a[aria-current=page]{background:#000;color:#fff}main{max-width:900px;margin:30px auto;padding:0 24px 40px}h1{font-size:25px;line-height:1.4;margin:0 0 12px}h2{font-size:18px;line-height:1.5;margin:0 0 10px}p{margin:8px 0}.intro,.source{color:#666}.intro{margin-bottom:24px}section{border:1px solid #e5e5e5;border-radius:8px;margin:14px 0;padding:18px;scroll-margin-top:20px}section:target{border-color:#000;outline:1px solid #000}code{font:13px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;background:#f3f3f3;border-radius:4px;padding:2px 5px;overflow-wrap:anywhere}ul{padding-left:20px;margin:8px 0}.source{font-size:13px;border-top:1px solid #e5e5e5;margin-top:12px;padding-top:10px}[hidden]{display:none!important}
+</style>
+<link rel="stylesheet" href="/responsive.css"></head>
+<body>
+<header><strong>OntoCare</strong><nav aria-label="Language"><a id="zh-link" href="?lang=zh">中文</a><a id="en-link" href="?lang=en">EN</a></nav></header>
+<main>
+<h1><span data-lang="zh">本体引用说明</span><span data-lang="en" hidden>Ontology reference guide</span></h1>
+<p class="intro" data-lang="zh">流式步骤的引用说明当前代码使用的实体定义、关联方式和决策规则。它们不是客户身份核验凭证，也不表示连接了图数据库或实时订单系统。具体订单和产品知识仍以最终答复的原始资料引用为准。</p>
+<p class="intro" data-lang="en" hidden>Progress citations describe entity definitions, relations and decision rules used by the current code. They do not verify customer identity or imply a graph-database query or a live order-system connection. Order and product facts remain grounded in the original-source citations attached to the final answer.</p>
+<section id="service-case">
+<h2>Service Ontology · <span data-lang="zh">服务案件定义</span><span data-lang="en" hidden>Service case definition</span></h2>
+<div data-lang="zh"><p><code>ServiceCase</code> 表示当前会话中的服务案件，保存产品、订单、服务诉求、处理状态和对话上下文。</p><p>生成后续问题时，从该案件重新关联本轮适用资料。未确认产品、未提供订单或未核验信息保留其未知状态；当前实现没有独立的 <code>Customer</code> 身份实体。</p></div>
+<div data-lang="en" hidden><p><code>ServiceCase</code> represents the current conversation's service case, holding its product, order, service intent, handling state and dialogue context.</p><p>Follow-up generation links the case to applicable sources again each turn. Unconfirmed products, missing orders and unverified information retain their unknown state. The current implementation has no separate <code>Customer</code> identity entity.</p></div>
+<p class="source"><span data-lang="zh">代码依据：</span><span data-lang="en" hidden>Code references: </span><code>app.py · chat / SESSIONS</code> · <code>followup_questions.py · refresh</code></p>
+</section>
+<section id="order">
+<h2><span data-lang="zh">本体 · 订单实体</span><span data-lang="en" hidden>Ontology · Order entity</span></h2>
+<div data-lang="zh"><p><code>Order</code> 按订单号关联用户提供的订单资料；<code>OrderItem</code> 保留商品 SKU、源表行号及对应物流、日期和质保字段，支持多商品与拆单记录。</p><p><code>lookup_order</code> 区分已找到、未找到和未提供订单号。此引用说明查询所依据的结构，无论是否命中都不构成订单归属核验，也不把历史物流快照当作实时物流。</p></div>
+<div data-lang="en" hidden><p><code>Order</code> associates the supplied order data by order number. <code>OrderItem</code> preserves each SKU, source row, tracking record, dates and warranty fields, supporting multiple items and shipments.</p><p><code>lookup_order</code> distinguishes found, not found and not provided. The citation explains the lookup structure; a match does not verify ownership, and historical tracking snapshots are not live carrier status.</p></div>
+<p class="source"><span data-lang="zh">代码依据：</span><span data-lang="en" hidden>Code references: </span><code>app.py · lookup_order</code> · <code>dataset.py</code> · <code>followup_questions.py · refresh</code></p>
+</section>
+<section id="product">
+<h2><span data-lang="zh">本体 · 产品实体</span><span data-lang="en" hidden>Ontology · Product entity</span></h2>
+<div data-lang="zh"><p><code>Product</code> 用目录中的产品型号区分设备。<code>resolve_product</code> 结合用户文字与订单 SKU 解析候选产品；相同商品名可能对应不同品类，不能仅凭“S1 Pro”套用任意知识。</p><p>明确型号后按该型号检索资料；有冲突时保留待确认状态。此步骤引用实体定义，具体产品知识证据在最终答复中单独列出。</p></div>
+<div data-lang="en" hidden><p><code>Product</code> distinguishes devices by their catalog model. <code>resolve_product</code> combines customer wording with order SKUs. A shared name such as “S1 Pro” may refer to different product categories and is not sufficient to apply arbitrary guidance.</p><p>Retrieval is scoped to the resolved model; conflicts remain unresolved. This progress citation describes the entity, while specific knowledge evidence is cited separately in the final answer.</p></div>
+<p class="source"><span data-lang="zh">代码依据：</span><span data-lang="en" hidden>Code references: </span><code>app.py · resolve_product</code> · <code>qa_workflows.py · retrieve</code></p>
+</section>
+<section id="decision-rules">
+<h2>Decision Ontology · <span data-lang="zh">决策规则</span><span data-lang="en" hidden>Decision rules</span></h2>
+<div data-lang="zh"><p><code>allowed_actions</code> 根据当前产品、质保、渠道与排障状态生成允许动作、禁止动作及说明。</p><ul><li>产品未确认时先补充产品信息；质保未知或待重核时不能判定过保。</li><li>质保状态为过保时，可提出付费维修建议，不能承诺免费换货或直接退款。</li><li>满足已核验状态组合时，最多整理退货或换货人工审核材料；用户自述排障失败不等于已确认排障失败。</li><li>演示环境没有实际退款或换货执行器，不能声称已办理；超出自助范围时仅准备人工交接资料。</li></ul></div>
+<div data-lang="en" hidden><p><code>allowed_actions</code> derives allowed actions, blocked actions and explanations from product, warranty, channel and troubleshooting states.</p><ul><li>Unconfirmed products require clarification. Unknown warranty or a pending date recheck must not be classified as expired.</li><li>An expired warranty permits a paid-repair suggestion, not a promise of free replacement or direct refund.</li><li>Eligible state combinations may prepare return or replacement materials for human review. Customer-reported troubleshooting failure is not the confirmed-failure state.</li><li>The demo has no real refund or replacement executor. Requests outside self-service scope only prepare handoff information.</li></ul></div>
+<p class="source"><span data-lang="zh">代码依据：</span><span data-lang="en" hidden>Code references: </span><code>app.py · allowed_actions / chat</code></p>
+</section>
+<section id="case-references">
+<h2><span data-lang="zh">本体 · 案件关联关系</span><span data-lang="en" hidden>Ontology · Case reference relations</span></h2>
+<div data-lang="zh"><p><code>followup_questions.refresh</code> 根据本轮诉求、产品、订单和引用重新检索后续问题。它生成以 <code>ServiceCase</code> 为起点、关系名为 <code>references</code> 的关联。</p><p>实际目标节点可能是 <code>Product</code>、<code>Order</code>、<code>OrderItem</code>、<code>KnowledgeItem</code>、<code>ReviewStrategy</code> 或 <code>Policy</code>，以本轮返回的节点为准。它是代码构建的引用关系，不宣称已执行图数据库查询。</p></div>
+<div data-lang="en" hidden><p><code>followup_questions.refresh</code> retrieves follow-up questions using this turn's intent, product, order and citations. It builds relations named <code>references</code> from <code>ServiceCase</code>.</p><p>Targets may include <code>Product</code>, <code>Order</code>, <code>OrderItem</code>, <code>KnowledgeItem</code>, <code>ReviewStrategy</code> or <code>Policy</code>, depending on the nodes actually returned this turn. These are references constructed in code, not a claim that a graph database was queried.</p></div>
+<p class="source"><span data-lang="zh">代码依据：</span><span data-lang="en" hidden>Code reference: </span><code>followup_questions.py · refresh / node</code></p>
+</section>
+</main>
+<script>
+const language=new URLSearchParams(location.search).get('lang')==='en'?'en':'zh';
+document.documentElement.lang=language==='en'?'en':'zh-CN';
+document.title=language==='en'?'OntoCare · Ontology reference guide':'OntoCare · 本体引用说明';
+document.querySelectorAll('[data-lang]').forEach(node=>{node.hidden=node.dataset.lang!==language;});
+for(const item of ['zh','en']){const link=document.getElementById(item+'-link');link.href='?lang='+item+location.hash;if(item===language)link.setAttribute('aria-current','page');}
+</script>
+</body>
+</html>

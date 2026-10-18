@@ -1,0 +1,766 @@
+[
+  {
+    "number": 1,
+    "question": "只收到配件包，主机没到，怎么办？",
+    "candidate": "long-tail-json-L001",
+    "predicted_reply": "理解您收到配件却没收到主机的着急。\n\n需要按商品和包裹分别核对，配件签收不能说明主机已送达；目前没有您的订单资料，不能确认物流状态。\n\n请提供订单号，我帮您核对主机对应的包裹。",
+    "actual_reply": "配件包先到、主机还没到，这种情况确实会让人不放心。我先帮你核对这次订单的发货和物流情况。\n\n目前我还没有你的订单信息，暂时查不到具体的发货记录。配件包和主机有可能是分开发出的，需要按订单逐件核对商品和对应的物流单号，才能确认主机这一件的状态；本轮我能依据的只有这些信息和服务规则，还没有实际物流或发货回执。 [1] [2]\n\n请把订单号发给我（例如 Anker002），我据此核查这次购买的发货情况。",
+    "citations": [
+      {
+        "id": "service-rules",
+        "kind": "context",
+        "label": "依据：本轮信息与服务规则（无产品知识引用）",
+        "url": "/api/sources/service-rules"
+      },
+      {
+        "id": "long-tail-json-L001",
+        "kind": "strategy",
+        "label": "长尾核查策略 · long-tail-json-L001 · 只收到配件包，主机没到（非官方政策）",
+        "url": "/api/sources/long-tail-json-L001"
+      }
+    ],
+    "trace": {
+      "allowed": [
+        "ask_product",
+        "search_knowledge"
+      ],
+      "answer_route": "GROUNDED_LLM",
+      "cache_key": null,
+      "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+      "dealer": "UNKNOWN",
+      "emotion": "NORMAL",
+      "evidence": "no_product_mentioned",
+      "forbidden": [
+        "propose_replacement",
+        "direct_refund"
+      ],
+      "image": "未处理",
+      "knowledge_source": "NONE",
+      "long_tail": {
+        "basis": "curated phrase match; not an empirical frequency estimate",
+        "classification": "long_tail_candidate",
+        "source_ids": [
+          "long-tail-json-L001"
+        ]
+      },
+      "model": "DeepSeek-V4.1-Flash",
+      "model_calls": 1,
+      "model_candidate": "无",
+      "model_status": "OK",
+      "order": "未提供",
+      "order_source": "NONE",
+      "order_status": "NOT_PROVIDED",
+      "ownership_status": "NOT_VERIFIED",
+      "product": "未确定",
+      "product_state": "UNKNOWN",
+      "purchase_date_claim": null,
+      "reasons": [
+        "产品未确认：不允许任何售后办理动作"
+      ],
+      "request_id": "9343627dd4dd",
+      "rule_version": "m0-safe-1",
+      "troubleshooting": "NOT_STARTED",
+      "warranty": "UNKNOWN",
+      "workflow_history": [],
+      "workflow_status": null
+    },
+    "seconds": 3.6,
+    "checks": {
+      "has_reply": true,
+      "has_citations": true,
+      "citations_open": true,
+      "no_foreign_order": true,
+      "model_ok": true
+    }
+  },
+  {
+    "number": 2,
+    "question": "物流单号显示 label created 后无更新",
+    "candidate": "long-tail-json-L002",
+    "predicted_reply": "理解您想知道包裹是否真正寄出了。\n\n标签创建与实际揽收需要分开核对，目前没有当前包裹的扫描记录，无法确认送达时间。\n\n请提供订单号或物流单号。",
+    "actual_reply": "还需要你的订单号，才能查询这次购买的发货情况。请发送订单号（例如 Anker002）。 [1] [2]",
+    "citations": [
+      {
+        "id": "service-rules",
+        "kind": "context",
+        "label": "依据：本轮信息与服务规则（无产品知识引用）",
+        "url": "/api/sources/service-rules"
+      },
+      {
+        "id": "long-tail-json-L002",
+        "kind": "strategy",
+        "label": "长尾核查策略 · long-tail-json-L002 · 物流单号显示 label created 后无更新（非官方政策）",
+        "url": "/api/sources/long-tail-json-L002"
+      }
+    ],
+    "trace": {
+      "allowed": [
+        "ask_product",
+        "search_knowledge"
+      ],
+      "answer_route": "LONG_TAIL_STRATEGY",
+      "cache_key": null,
+      "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+      "dealer": "UNKNOWN",
+      "emotion": "NORMAL",
+      "evidence": "no_product_mentioned",
+      "forbidden": [
+        "propose_replacement",
+        "direct_refund"
+      ],
+      "image": "未处理",
+      "knowledge_source": "NONE",
+      "long_tail": {
+        "basis": "curated phrase match; not an empirical frequency estimate",
+        "classification": "long_tail_candidate",
+        "source_ids": [
+          "long-tail-json-L002"
+        ]
+      },
+      "model": "DeepSeek-V4.1-Flash",
+      "model_calls": 1,
+      "model_candidate": "无",
+      "model_status": "INVALID_RESPONSE",
+      "order": "未提供",
+      "order_source": "NONE",
+      "order_status": "NOT_PROVIDED",
+      "ownership_status": "NOT_VERIFIED",
+      "product": "未确定",
+      "product_state": "UNKNOWN",
+      "purchase_date_claim": null,
+      "reasons": [
+        "产品未确认：不允许任何售后办理动作"
+      ],
+      "request_id": "c607dc97906d",
+      "rule_version": "m0-safe-1",
+      "troubleshooting": "NOT_STARTED",
+      "warranty": "UNKNOWN",
+      "workflow_history": [],
+      "workflow_status": null
+    },
+    "seconds": 6.5,
+    "checks": {
+      "has_reply": true,
+      "has_citations": true,
+      "citations_open": true,
+      "no_foreign_order": true,
+      "model_ok": false
+    }
+  },
+  {
+    "number": 3,
+    "question": "物流显示 in transit，预计到达时间已过",
+    "candidate": "long-tail-json-L003",
+    "predicted_reply": "超过预计日期还没收到，确实会让人担心。\n\n需要核对该包裹最新扫描和原预计日期；预计日期不等于保证送达时间，目前也没有发起承运商查询。\n\n请提供订单号，以便确认需要核查的包裹。",
+    "actual_reply": "物流显示还在运输中、而预计到达时间已经过去，这种情况确实会让人等得着急。\n\n目前我这边能看到的只是你描述的状态：包裹仍为运输中、原预计时间已过。实际物流以承运商最新扫描为准，预计到达时间通常是预估而非保证送达，我暂时无法查看你的实时物流。要查询这次购买的发货情况，还需要订单号。 [1] [2]\n\n请把订单号发给我（例如 Anker002），我据此核对当前的物流状态；如果需要，我可以建议由商家向承运商发起核查。",
+    "citations": [
+      {
+        "id": "service-rules",
+        "kind": "context",
+        "label": "依据：本轮信息与服务规则（无产品知识引用）",
+        "url": "/api/sources/service-rules"
+      },
+      {
+        "id": "long-tail-json-L003",
+        "kind": "strategy",
+        "label": "长尾核查策略 · long-tail-json-L003 · 物流显示 in transit，预计到达时间已过（非官方政策）",
+        "url": "/api/sources/long-tail-json-L003"
+      }
+    ],
+    "trace": {
+      "allowed": [
+        "ask_product",
+        "search_knowledge"
+      ],
+      "answer_route": "GROUNDED_LLM",
+      "cache_key": null,
+      "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+      "dealer": "UNKNOWN",
+      "emotion": "NORMAL",
+      "evidence": "no_product_mentioned",
+      "forbidden": [
+        "propose_replacement",
+        "direct_refund"
+      ],
+      "image": "未处理",
+      "knowledge_source": "NONE",
+      "long_tail": {
+        "basis": "curated phrase match; not an empirical frequency estimate",
+        "classification": "long_tail_candidate",
+        "source_ids": [
+          "long-tail-json-L003"
+        ]
+      },
+      "model": "DeepSeek-V4.1-Flash",
+      "model_calls": 1,
+      "model_candidate": "无",
+      "model_status": "OK",
+      "order": "未提供",
+      "order_source": "NONE",
+      "order_status": "NOT_PROVIDED",
+      "ownership_status": "NOT_VERIFIED",
+      "product": "未确定",
+      "product_state": "UNKNOWN",
+      "purchase_date_claim": null,
+      "reasons": [
+        "产品未确认：不允许任何售后办理动作"
+      ],
+      "request_id": "92d15ee44bbb",
+      "rule_version": "m0-safe-1",
+      "troubleshooting": "NOT_STARTED",
+      "warranty": "UNKNOWN",
+      "workflow_history": [],
+      "workflow_status": null
+    },
+    "seconds": 3.13,
+    "checks": {
+      "has_reply": true,
+      "has_citations": true,
+      "citations_open": true,
+      "no_foreign_order": true,
+      "model_ok": true
+    }
+  },
+  {
+    "number": 4,
+    "question": "物流显示 Return to sender，但我没收到退款",
+    "candidate": "long-tail-json-L004",
+    "predicted_reply": "理解您既没收到包裹，也没收到退款的困扰。\n\n退回寄件人的物流状态不能证明退款已办理，需要分别核对物流及退款记录，资格由购买渠道审核。\n\n您希望申请重新寄送，还是核查退款？",
+    "actual_reply": "物流显示退回发件人却一直没收到退款，这种情况确实需要尽快查清楚，我来帮你核对。\n\n目前我这边只能看到你描述的“Return to sender”物流状态，还没有这次购买的订单号，因此无法查询对应的发货与退回记录，也无法确认退款是否已经发起或需要人工审核。退款资格和实际执行都需要商家端审核，依据仅为本轮信息和服务规则。 [1] [2] [3]\n\n请先发送订单号（例如 Anker002），我据此核查这笔订单的退回记录和退款状态，再走后续的人工复核。",
+    "citations": [
+      {
+        "id": "service-rules",
+        "kind": "context",
+        "label": "依据：本轮信息与服务规则（无产品知识引用）",
+        "url": "/api/sources/service-rules"
+      },
+      {
+        "id": "long-tail-json-L004",
+        "kind": "strategy",
+        "label": "长尾核查策略 · long-tail-json-L004 · 物流显示 Return to sender，但我没收到退款（非官方政策）",
+        "url": "/api/sources/long-tail-json-L004"
+      },
+      {
+        "id": "long-tail-003",
+        "kind": "strategy",
+        "label": "长尾核查策略 · long-tail-003 · “包裹被退回了，怎么回事？”（非官方政策）",
+        "url": "/api/sources/long-tail-003"
+      }
+    ],
+    "trace": {
+      "allowed": [
+        "ask_product",
+        "search_knowledge"
+      ],
+      "answer_route": "GROUNDED_LLM",
+      "cache_key": null,
+      "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+      "dealer": "UNKNOWN",
+      "emotion": "NORMAL",
+      "evidence": "no_product_mentioned",
+      "forbidden": [
+        "propose_replacement",
+        "direct_refund"
+      ],
+      "image": "未处理",
+      "knowledge_source": "NONE",
+      "long_tail": {
+        "basis": "curated phrase match; not an empirical frequency estimate",
+        "classification": "long_tail_candidate",
+        "source_ids": [
+          "long-tail-json-L004",
+          "long-tail-003"
+        ]
+      },
+      "model": "DeepSeek-V4.1-Flash",
+      "model_calls": 1,
+      "model_candidate": "无",
+      "model_status": "OK",
+      "order": "未提供",
+      "order_source": "NONE",
+      "order_status": "NOT_PROVIDED",
+      "ownership_status": "NOT_VERIFIED",
+      "product": "未确定",
+      "product_state": "UNKNOWN",
+      "purchase_date_claim": null,
+      "reasons": [
+        "产品未确认：不允许任何售后办理动作"
+      ],
+      "request_id": "b7af7b403d8f",
+      "rule_version": "m0-safe-1",
+      "troubleshooting": "NOT_STARTED",
+      "warranty": "UNKNOWN",
+      "workflow_history": [],
+      "workflow_status": null
+    },
+    "seconds": 5.67,
+    "checks": {
+      "has_reply": true,
+      "has_citations": true,
+      "citations_open": true,
+      "no_foreign_order": true,
+      "model_ok": true
+    }
+  },
+  {
+    "number": 5,
+    "question": "客户要求指定承运商，可以选吗？",
+    "candidate": "long-tail-json-L009",
+    "predicted_reply": "理解您希望选择更合适的承运商。\n\n是否支持指定，需要核对购买渠道的配送规则；目前没有已确认的规则，不能保证仓库采纳，也尚未提交备注。\n\n请告诉我购买渠道。",
+    "actual_reply": "我理解，这个情况需要进一步核对。\n\n核对购买渠道是否支持指定承运商；未有对应政策时不能承诺指定、备注已提交或仓库会采纳。\n\n以上是核查建议，不代表已办理，也不是已确认的官方政策。可以先补充当前缺少的关键信息，再确定处理路径。 [1] [2] [3]",
+    "citations": [
+      {
+        "id": "service-rules",
+        "kind": "context",
+        "label": "依据：本轮信息与服务规则（无产品知识引用）",
+        "url": "/api/sources/service-rules"
+      },
+      {
+        "id": "long-tail-json-L009",
+        "kind": "strategy",
+        "label": "长尾核查策略 · long-tail-json-L009 · 客户要求指定承运商（非官方政策）",
+        "url": "/api/sources/long-tail-json-L009"
+      },
+      {
+        "id": "long-tail-010",
+        "kind": "strategy",
+        "label": "长尾核查策略 · long-tail-010 · “能指定快递公司吗？我不想用 XX”（非官方政策）",
+        "url": "/api/sources/long-tail-010"
+      }
+    ],
+    "trace": {
+      "allowed": [
+        "ask_product",
+        "search_knowledge"
+      ],
+      "answer_route": "LONG_TAIL_STRATEGY",
+      "cache_key": null,
+      "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+      "dealer": "UNKNOWN",
+      "emotion": "NORMAL",
+      "evidence": "no_product_mentioned",
+      "forbidden": [
+        "propose_replacement",
+        "direct_refund"
+      ],
+      "image": "未处理",
+      "knowledge_source": "NONE",
+      "long_tail": {
+        "basis": "curated phrase match; not an empirical frequency estimate",
+        "classification": "long_tail_candidate",
+        "source_ids": [
+          "long-tail-json-L009",
+          "long-tail-010"
+        ]
+      },
+      "model": "DeepSeek-V4.1-Flash",
+      "model_calls": 1,
+      "model_candidate": "无",
+      "model_status": "INVALID_RESPONSE",
+      "order": "未提供",
+      "order_source": "NONE",
+      "order_status": "NOT_PROVIDED",
+      "ownership_status": "NOT_VERIFIED",
+      "product": "未确定",
+      "product_state": "UNKNOWN",
+      "purchase_date_claim": null,
+      "reasons": [
+        "产品未确认：不允许任何售后办理动作"
+      ],
+      "request_id": "755b60df2300",
+      "rule_version": "m0-safe-1",
+      "troubleshooting": "NOT_STARTED",
+      "warranty": "UNKNOWN",
+      "workflow_history": [],
+      "workflow_status": null
+    },
+    "seconds": 5.29,
+    "checks": {
+      "has_reply": true,
+      "has_citations": true,
+      "citations_open": true,
+      "no_foreign_order": true,
+      "model_ok": false
+    }
+  },
+  {
+    "number": 6,
+    "question": "T8170 夜视效果差",
+    "candidate": "long-tail-json-C004",
+    "predicted_reply": "了解，您遇到的是 T8170 夜视画面问题。\n\n补充策略建议核对镜头是否脏污、附近墙面或灯源是否造成反光，并检查安装角度；具体操作仍需对照该型号说明。\n\n画面主要是过曝发白，还是整体太暗？",
+    "actual_reply": "了解，您反馈的是 T8170（SoloCam S340）夜间画面效果不理想，我先帮您把情况对清楚。\n\n目前本轮没有可引用的该型号夜视原始知识，现有依据只是服务规则和一轮待核验的核查方向，因此清洁镜头、避开墙面或灯源附近的红外反射、调整安装角度这些都只是排查候选，不是官方结论；型号 T8170 已经确认，但夜间画面的具体表现还没有获得。 [1] [2] [3]\n\n在此之前，您可以先用软布擦拭镜头表面，并确认镜头前方和附近没有墙壁、灯源等可能造成反射的物体。方便的话请告诉我夜间画面具体是哪一种情况，比如几乎全黑看不清、画面发白过曝，还是有反光或模糊，我再据此核对对应型号的原始资料并给出下一步。",
+    "citations": [
+      {
+        "id": "service-rules",
+        "kind": "context",
+        "label": "依据：本轮信息与服务规则（无产品知识引用）",
+        "url": "/api/sources/service-rules"
+      },
+      {
+        "id": "long-tail-json-C004",
+        "kind": "strategy",
+        "label": "长尾核查策略 · long-tail-json-C004 · 夜视效果差（非官方政策）",
+        "url": "/api/sources/long-tail-json-C004"
+      },
+      {
+        "id": "long-tail-044",
+        "kind": "strategy",
+        "label": "长尾核查策略 · long-tail-044 · “摄像头夜视效果很差”（非官方政策）",
+        "url": "/api/sources/long-tail-044"
+      }
+    ],
+    "trace": {
+      "allowed": [
+        "search_knowledge",
+        "run_troubleshooting",
+        "escalate_human",
+        "ask_country",
+        "ask_seller",
+        "request_proof"
+      ],
+      "answer_route": "GROUNDED_LLM",
+      "cache_key": null,
+      "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+      "dealer": "UNKNOWN",
+      "emotion": "NORMAL",
+      "evidence": "explicit_pn",
+      "forbidden": [
+        "propose_replacement",
+        "direct_refund",
+        "tell_expired"
+      ],
+      "image": "未处理",
+      "knowledge_source": "NONE",
+      "long_tail": {
+        "basis": "curated phrase match; not an empirical frequency estimate",
+        "classification": "long_tail_candidate",
+        "source_ids": [
+          "long-tail-json-C004",
+          "long-tail-044"
+        ]
+      },
+      "model": "DeepSeek-V4.1-Flash",
+      "model_calls": 1,
+      "model_candidate": "无",
+      "model_status": "OK",
+      "order": "未提供",
+      "order_source": "NONE",
+      "order_status": "NOT_PROVIDED",
+      "ownership_status": "NOT_VERIFIED",
+      "product": "SoloCam S340",
+      "product_state": "PROBABLE",
+      "purchase_date_claim": null,
+      "reasons": [
+        "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+      ],
+      "request_id": "0588aa18a34c",
+      "rule_version": "m0-safe-1",
+      "troubleshooting": "NOT_STARTED",
+      "warranty": "UNKNOWN",
+      "workflow_history": [],
+      "workflow_status": null
+    },
+    "seconds": 7.73,
+    "checks": {
+      "has_reply": true,
+      "has_citations": true,
+      "citations_open": true,
+      "no_foreign_order": true,
+      "model_ok": true
+    }
+  },
+  {
+    "number": 7,
+    "question": "T8170 图像模糊",
+    "candidate": "long-tail-json-C005",
+    "predicted_reply": "了解，您想改善 T8170 的画面清晰度。\n\n补充策略建议先检查镜头表面污渍、凝露及附近反光物；目前不能据此判断硬件损坏。\n\n镜头表面能看到水汽或污渍吗？",
+    "actual_reply": "图像模糊确实会影响看家体验，我们先把可能的原因逐项排查看一下。\n\n我查到针对 SoloCam S340（T8170）图像模糊的官方排查说明，主要包括：用柔软干燥的布轻轻擦拭镜头；确认镜头是否有水汽凝结，擦掉后观察画面是否恢复清晰；以及确认摄像机安装位置是否离墙面或反光面太近。此外还建议提供一张照片或一段视频来呈现问题，视频更能保留画面原始画质。 [1]\n\n你可以先用柔软干燥的布轻轻擦拭镜头，再看看画面是否恢复清晰；同时方便的话，请提供一张模糊画面的照片或一段视频，我据此帮你判断下一步。",
+    "citations": [
+      {
+        "id": "b-202",
+        "kind": "knowledge",
+        "label": "eufy Breast Pump Q&A.xlsx · Sheet1!D202:E202",
+        "title": "What should I do if SoloCam S340(T8170) image appears blurry?",
+        "url": "/api/sources/b-202"
+      }
+    ],
+    "trace": {
+      "allowed": [
+        "search_knowledge",
+        "run_troubleshooting",
+        "escalate_human",
+        "ask_country",
+        "ask_seller",
+        "request_proof"
+      ],
+      "answer_route": "GROUNDED_LLM",
+      "cache_key": null,
+      "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+      "dealer": "UNKNOWN",
+      "emotion": "NORMAL",
+      "evidence": "explicit_pn",
+      "forbidden": [
+        "propose_replacement",
+        "direct_refund",
+        "tell_expired"
+      ],
+      "image": "未处理",
+      "knowledge_source": "eufy Breast Pump Q&A.xlsx · Sheet1!D202:E202",
+      "long_tail": {
+        "basis": "curated phrase match; not an empirical frequency estimate",
+        "classification": "no_match",
+        "source_ids": []
+      },
+      "model": "DeepSeek-V4.1-Flash",
+      "model_calls": 1,
+      "model_candidate": "无",
+      "model_status": "OK",
+      "order": "未提供",
+      "order_source": "NONE",
+      "order_status": "NOT_PROVIDED",
+      "ownership_status": "NOT_VERIFIED",
+      "product": "SoloCam S340",
+      "product_state": "PROBABLE",
+      "purchase_date_claim": null,
+      "reasons": [
+        "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+      ],
+      "request_id": "6e0c1250e923",
+      "rule_version": "m0-safe-1",
+      "troubleshooting": "NOT_STARTED",
+      "warranty": "UNKNOWN",
+      "workflow_history": [],
+      "workflow_status": null
+    },
+    "seconds": 3.93,
+    "checks": {
+      "has_reply": true,
+      "has_citations": true,
+      "citations_open": true,
+      "no_foreign_order": true,
+      "model_ok": true
+    }
+  },
+  {
+    "number": 8,
+    "question": "T8170 误报太多",
+    "candidate": "long-tail-json-C007",
+    "predicted_reply": "频繁收到误报确实会影响使用。\n\n补充策略建议检查检测灵敏度、活动区域及热源或树木干扰，再对照该型号功能设置调整；目前没有替您更改任何配置。\n\n误报通常由车辆、树木还是其他目标触发？",
+    "actual_reply": "误报频繁确实会打扰日常使用，我理解您希望提醒能更准确一些。\n\n本轮我查到的是该型号（T8170，SoloCam S340）误报问题的核查方向，属于待核验的排查思路，并非官方政策，也还没有同型号原始问答作为确定依据，所以灵敏度、活动区域、镜头角度等具体调整方式我不能先当作已确认步骤给您结论。目前最关键的缺口是误报发生的实际场景，这决定了后续该核对哪部分资料。 [1] [2]\n\n方便先告诉我误报大多出现在什么情况下吗，比如夜间、有车辆经过，还是固定方向反复触发？我据此核对该型号对应的原始支持资料，必要时再走人工复核路径。",
+    "citations": [
+      {
+        "id": "service-rules",
+        "kind": "context",
+        "label": "依据：本轮信息与服务规则（无产品知识引用）",
+        "url": "/api/sources/service-rules"
+      },
+      {
+        "id": "long-tail-json-C007",
+        "kind": "strategy",
+        "label": "长尾核查策略 · long-tail-json-C007 · 误报太多（非官方政策）",
+        "url": "/api/sources/long-tail-json-C007"
+      }
+    ],
+    "trace": {
+      "allowed": [
+        "search_knowledge",
+        "run_troubleshooting",
+        "escalate_human",
+        "ask_country",
+        "ask_seller",
+        "request_proof"
+      ],
+      "answer_route": "GROUNDED_LLM",
+      "cache_key": null,
+      "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+      "dealer": "UNKNOWN",
+      "emotion": "NORMAL",
+      "evidence": "explicit_pn",
+      "forbidden": [
+        "propose_replacement",
+        "direct_refund",
+        "tell_expired"
+      ],
+      "image": "未处理",
+      "knowledge_source": "NONE",
+      "long_tail": {
+        "basis": "curated phrase match; not an empirical frequency estimate",
+        "classification": "long_tail_candidate",
+        "source_ids": [
+          "long-tail-json-C007"
+        ]
+      },
+      "model": "DeepSeek-V4.1-Flash",
+      "model_calls": 1,
+      "model_candidate": "无",
+      "model_status": "OK",
+      "order": "未提供",
+      "order_source": "NONE",
+      "order_status": "NOT_PROVIDED",
+      "ownership_status": "NOT_VERIFIED",
+      "product": "SoloCam S340",
+      "product_state": "PROBABLE",
+      "purchase_date_claim": null,
+      "reasons": [
+        "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+      ],
+      "request_id": "b547f37b3712",
+      "rule_version": "m0-safe-1",
+      "troubleshooting": "NOT_STARTED",
+      "warranty": "UNKNOWN",
+      "workflow_history": [],
+      "workflow_status": null
+    },
+    "seconds": 7.77,
+    "checks": {
+      "has_reply": true,
+      "has_citations": true,
+      "citations_open": true,
+      "no_foreign_order": true,
+      "model_ok": true
+    }
+  },
+  {
+    "number": 9,
+    "question": "T2351 7053 设备倾斜",
+    "candidate": "long-tail-json-R063",
+    "predicted_reply": "了解，设备出现了倾斜提示。\n\n先按 T2351 对应资料核对 7053，检查机器是否位于平整地面；具体建议以原始 Q&A 为准，不能直接判定故障或承诺换新。\n\n机器移到平整地面后，是否仍提示同一错误？",
+    "actual_reply": "确认一下，您这台 X10 Pro Omni（T2351）目前报的是 7053 倾斜告警。\n\n本轮依据为该机型的 Q&A 说明：出现 7053 时，需先把机器移到平整地面再启动，否则可能无法正常行进；如果在平整地面仍持续报错，可按资料建议重启机器人后观察是否恢复。 [1]\n\n建议您先按这两步操作：把机器移到平整地面后启动，若仍报 7053，就重启一次看是否恢复正常。处理后这个告警还会复现吗？",
+    "citations": [
+      {
+        "id": "r-100",
+        "kind": "knowledge",
+        "label": "eufy Robovacs Q&A.xlsx · Sheet1!D100:E100",
+        "title": "What should I do if my X10 Pro Omni T2351 reports a warning 7053:Robot tilted. Put it on a flat surface to start, Robot tilt?",
+        "url": "/api/sources/r-100"
+      }
+    ],
+    "trace": {
+      "allowed": [
+        "search_knowledge",
+        "run_troubleshooting",
+        "escalate_human",
+        "ask_country",
+        "ask_seller",
+        "request_proof"
+      ],
+      "answer_route": "GROUNDED_LLM",
+      "cache_key": null,
+      "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+      "dealer": "UNKNOWN",
+      "emotion": "NORMAL",
+      "evidence": "explicit_pn",
+      "forbidden": [
+        "propose_replacement",
+        "direct_refund",
+        "tell_expired"
+      ],
+      "image": "未处理",
+      "knowledge_source": "eufy Robovacs Q&A.xlsx · Sheet1!D100:E100",
+      "long_tail": {
+        "basis": "curated phrase match; not an empirical frequency estimate",
+        "classification": "no_match",
+        "source_ids": []
+      },
+      "model": "DeepSeek-V4.1-Flash",
+      "model_calls": 1,
+      "model_candidate": "无",
+      "model_status": "OK",
+      "order": "未提供",
+      "order_source": "NONE",
+      "order_status": "NOT_PROVIDED",
+      "ownership_status": "NOT_VERIFIED",
+      "product": "X10 Pro Omni",
+      "product_state": "PROBABLE",
+      "purchase_date_claim": null,
+      "reasons": [
+        "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+      ],
+      "request_id": "9fdf02cd1019",
+      "rule_version": "m0-safe-1",
+      "troubleshooting": "NOT_STARTED",
+      "warranty": "UNKNOWN",
+      "workflow_history": [],
+      "workflow_status": null
+    },
+    "seconds": 5.47,
+    "checks": {
+      "has_reply": true,
+      "has_citations": true,
+      "citations_open": true,
+      "no_foreign_order": true,
+      "model_ok": true
+    }
+  },
+  {
+    "number": 10,
+    "question": "T8D04 充电盒或配件熔化",
+    "candidate": "long-tail-json-B010",
+    "predicted_reply": "出现熔化需要优先处理安全问题。\n\n请停止使用和充电，保留故障照片供人工核查；不能仅凭描述认定是消毒方式导致，也不能直接承诺换新。\n\n熔化的是充电盒还是可拆卸配件？",
+    "actual_reply": "充电盒或配件出现熔化确实让人担心，我先确认您反馈的是 T8D04（S1 Pro 吸奶器）的充电盒或配件熔化问题，安全上的顾虑我理解。\n\n目前我可依据的只有本轮信息和服务规则，没有该型号的产品知识可以引用，因此不能就具体原因下结论。这类涉及使用安全的情况需要人工进一步核查，目前尚未实际转接或办理任何售后事项；也不要继续使用已出现熔化的部件。\n\n为便于人工核查，建议您先停止使用该充电盒或配件并断开电源，同时提供一张熔化部位的照片。收到后我会据此为您发起人工复核，具体处理方式以复核结论为准。",
+    "citations": [
+      {
+        "id": "service-rules",
+        "kind": "context",
+        "label": "依据：本轮信息与服务规则（无产品知识引用）",
+        "url": "/api/sources/service-rules"
+      }
+    ],
+    "trace": {
+      "allowed": [
+        "search_knowledge",
+        "run_troubleshooting",
+        "escalate_human",
+        "ask_country",
+        "ask_seller",
+        "request_proof"
+      ],
+      "answer_route": "GROUNDED_LLM",
+      "cache_key": null,
+      "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+      "dealer": "UNKNOWN",
+      "emotion": "NORMAL",
+      "evidence": "explicit_pn",
+      "forbidden": [
+        "propose_replacement",
+        "direct_refund",
+        "tell_expired"
+      ],
+      "image": "未处理",
+      "knowledge_source": "NONE",
+      "long_tail": {
+        "basis": "curated phrase match; not an empirical frequency estimate",
+        "classification": "existing_workflow",
+        "source_ids": []
+      },
+      "model": "DeepSeek-V4.1-Flash",
+      "model_calls": 1,
+      "model_candidate": "无",
+      "model_status": "OK",
+      "order": "未提供",
+      "order_source": "NONE",
+      "order_status": "NOT_PROVIDED",
+      "ownership_status": "NOT_VERIFIED",
+      "product": "S1 Pro 吸奶器",
+      "product_state": "PROBABLE",
+      "purchase_date_claim": null,
+      "reasons": [
+        "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+      ],
+      "request_id": "481f9504e745",
+      "rule_version": "m0-safe-1",
+      "troubleshooting": "NOT_STARTED",
+      "warranty": "UNKNOWN",
+      "workflow_history": [],
+      "workflow_status": null
+    },
+    "seconds": 8.79,
+    "checks": {
+      "has_reply": true,
+      "has_citations": true,
+      "citations_open": true,
+      "no_foreign_order": true,
+      "model_ok": true
+    }
+  }
+]

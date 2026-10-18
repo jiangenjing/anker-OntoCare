@@ -1,0 +1,55 @@
+/* Compact conversation composer and a source-backed conversation graph. */
+.customer-main{max-width:1440px!important;gap:20px}
+.customer-main .chat{min-width:0}.customer-main .log{overscroll-behavior:contain}
+.chat-head{gap:9px}.new-chat{margin-left:auto;flex:none;background:#fff;color:#555;border:1px solid #ddd;border-radius:7px;padding:6px 10px;cursor:pointer;font:inherit;font-size:12px}
+.new-chat:hover{background:#f5f5f5;border-color:#aaa}.new-chat:disabled{opacity:.45;cursor:wait}
+.customer-main .composer{padding:11px 16px 14px}
+.composer-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;min-height:26px}
+.composer-toolbar .composer-tools{margin:0;gap:6px}.composer-toolbar .composer-tools button{padding:4px 9px;font-size:11px;border-color:transparent;background:transparent;color:#888;min-height:26px}
+.composer-toolbar .composer-tools button:hover{color:#333;background:#f3f4f6}
+.quick-suggestions{display:flex;align-items:center;gap:10px;min-width:0;flex:1;color:#858c99;font-size:11px}
+.quick-suggestions .quick-label{width:auto;flex:none;font-size:11px;color:#858c99;white-space:nowrap}
+.quick-suggestions .quick-replies{display:flex;flex-wrap:nowrap;gap:6px;padding:0;min-width:0;overflow-x:auto;scrollbar-width:thin}
+.quick-suggestions .quick-choice{flex:0 1 auto;max-width:170px;min-width:55px;font-size:11px;padding:5px 8px;border-radius:6px;border-color:#e3e7ef;background:#f8faff;line-height:1.5;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.quick-suggestions .quick-choice:hover{border-color:#b5c4e1;background:#edf3ff}
+.composer .row .icon-btn{font-size:15px;height:42px;flex-basis:36px;width:36px}.composer .row .send{height:42px}.composer .row input{padding:11px 12px}
+.ontology-rail{width:350px;flex:0 0 350px;min-width:0;overflow-y:auto;overscroll-behavior:contain;border:1px solid #e4e8f0;background:linear-gradient(150deg,#fff,#f8faff);border-radius:13px;padding:18px}
+.ontology-heading{display:flex;justify-content:space-between;align-items:center;gap:8px}.ontology-heading h2{font-size:16px;font-weight:600;line-height:1.5;margin:3px 0 0}.ontology-eyebrow{font-size:10px;color:#8995ab;letter-spacing:.5px}
+.ontology-count{display:grid;place-items:center;font-size:13px;color:#5268a0;background:#eef2fc;border:1px solid #e3eafa;border-radius:9px;width:30px;height:30px}
+.ontology-subtitle{font-size:11px;color:#98a1b2!important;margin:9px 0 15px;line-height:1.7}
+.ontology-canvas{height:220px;position:relative;width:100%;margin-top:5px;border-radius:9px;background-image:radial-gradient(#dce2ee .8px,transparent .8px);background-size:16px 16px;overflow:hidden}
+.ontology-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.ontology-node{position:absolute;transform:translate(-50%,-50%);width:126px;min-height:85px;padding:10px 9px;border:1px solid color-mix(in srgb,var(--node-color) 24%,white);border-radius:11px;background:#fff;box-shadow:0 3px 10px #243e6609;text-align:left;cursor:pointer;font:inherit;transition:box-shadow .2s,border-color .2s;display:grid;grid-template-columns:23px minmax(0,1fr);gap:3px 6px;color:var(--node-color)}
+.ontology-node:hover,.ontology-node[aria-pressed=true]{border-color:var(--node-color);box-shadow:0 3px 14px color-mix(in srgb,var(--node-color) 18%,transparent)}
+.ontology-node svg{grid-column:1;grid-row:1/3;align-self:center;color:var(--node-color);background:color-mix(in srgb,var(--node-color) 8%,white);border-radius:6px;padding:3px;box-sizing:content-box;width:19px;height:19px}
+.ontology-node-type{grid-column:2;font-size:9px;line-height:1.4;color:#8a94a5}
+.ontology-node b{grid-column:1/-1;font-size:12px;font-weight:600;color:#37435b;overflow-wrap:anywhere;line-height:1.5;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.ontology-node small{grid-column:1/-1;color:#96a0b1;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ontology-legend{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 0}.ontology-legend span{font-size:10px;color:#8d97a9;display:flex;align-items:center;gap:5px}.ontology-legend span:before{content:'';width:6px;height:6px;border-radius:50%;background:var(--node-color)}
+.ontology-detail:empty{display:none}.ontology-detail{border-top:1px solid #e9edf4;margin-top:14px;padding-top:13px;font-size:11px}.ontology-detail strong{display:block;color:#48546b;font-weight:600}.ontology-detail p{font-size:10px;line-height:1.7;margin:5px 0;color:#929cad!important;max-height:52px;overflow:auto;overflow-wrap:anywhere}.ontology-detail a{display:inline-block;font-size:10px;margin-top:8px;color:#7c8ead!important}
+.ontology-source-list{max-height:92px;overflow:auto;display:flex;flex-direction:column;gap:5px;margin-top:8px}.ontology-source-list button{font:inherit;color:#73839f;cursor:pointer;border:1px solid #e4eaf5;background:#f6f9ff;padding:6px 8px;border-radius:5px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.5}
+.ontology-status{font-size:10px;line-height:1.7;color:#a0a9b7!important;margin:12px 0 0}
+.ontology-empty{height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center}.ontology-empty strong{font-size:12px;font-weight:500;color:#8995aa}.ontology-empty p{font-size:11px;line-height:1.8;margin:7px 0;color:#a5afbf!important;max-width:210px}
+.ontology-empty-dots{display:flex;gap:22px;align-items:center;margin-bottom:24px;position:relative}.ontology-empty-dots:before{content:'';position:absolute;inset:14px 15px auto;height:1px;background:#d8e0ef}.ontology-empty-dots i{position:relative;display:block;width:28px;height:28px;background:#e7ebfc;border:6px solid #f4f6ff;border-radius:9px}.ontology-empty-dots i:nth-child(2){background:#d8f0ec;border-color:#eff9f7}.ontology-empty-dots i:nth-child(3){background:#faecd4;border-color:#fff8ed}
+.ontology-mobile{margin:0}.ontology-mobile>summary{display:none}
+.message-linked{outline:2px solid #7c96da!important;outline-offset:5px;box-shadow:0 0 0 7px #738ed21a!important;transition:outline-color .2s}
+.mail-sources{margin-top:20px;padding:16px;background:#f8faff;border:1px solid #e1e8f5;border-radius:10px}.mail-sources h3{font-size:13px;color:#4a5873;margin:0 0 6px}.mail-sources p{font-size:11px;line-height:1.7;margin:0 0 8px;color:#8d98ad!important}.mail-sources #refs a{font-size:11px;line-height:1.7;color:#6d83af!important;margin:7px 0}.mail-sources:has(#refs:empty){display:none}
+.initial-selection{align-self:stretch;border:1px solid #e4e7ec;border-radius:9px;background:#fff;flex-shrink:0}.initial-selection>summary{font-size:12px;padding:11px 13px;cursor:pointer}.initial-selection .selection-panel{border:0;margin:0;padding:12px;border-top:1px solid #eee;max-height:340px;overflow:auto}.initial-selection .selection-panel>p{font-size:10px}
+@media(max-width:1100px) and (min-width:801px){.ontology-rail{width:300px;flex-basis:300px;padding:14px}.ontology-node{width:112px}.customer-main{gap:14px}}
+@media(max-width:800px){.customer-main{gap:10px!important}.ontology-rail{width:100%;flex:none;padding:0;overflow:visible;order:2}.ontology-mobile>summary{display:block;font-size:12px;padding:13px 15px;cursor:pointer;list-style:none;color:#7887a1!important}.ontology-mobile>summary:after{content:'⌄';float:right}.ontology-mobile[open]>summary:after{content:'⌃'}.ontology-content{padding:14px;max-width:420px;margin:auto}.ontology-heading{display:none}.ontology-subtitle{margin-top:0}.ontology-canvas{max-width:340px;margin-left:auto;margin-right:auto}.customer-main .composer{padding:8px 10px 11px}.composer-toolbar{gap:8px;margin-bottom:6px}.composer-toolbar .composer-tools button{font-size:10px;padding:3px 6px;min-height:24px}.quick-suggestions{font-size:11px}.new-chat{min-height:30px;padding:4px 9px;font-size:11px}.customer-main .chat{height:calc(100dvh - 185px);min-height:380px}.customer-main .row input{font-size:14px!important}.customer-main .chat-head{padding:12px 14px}.customer-main .row .send{flex-basis:50px}.ontology-source-list button{min-height:32px}.initial-selection .product-selection-grid{grid-template-columns:1fr}.initial-selection .selection-panel{max-height:260px}}
+@media(prefers-reduced-motion:reduce){.ontology-node,.message-linked{transition:none}}
+
+/* Order/product cards: a compact content hierarchy and two distinct actions. */
+.product-selection-card{padding:15px;gap:14px;align-items:center;border-color:#e5e9ef;border-radius:11px;background:#fff}
+.product-selection-card:hover{border-color:#bac7dc;background:#fbfcff}
+.product-selection-card .product-picture{width:84px}.product-selection-card .product-picture img{height:86px}
+.selection-card-info{min-width:0;flex:1}.selection-card-info>b{display:block;font-size:12px;line-height:1.65;font-weight:600;color:#303846}
+.selection-card-info>p,.selection-card-info>small{font-size:10px;line-height:1.6;color:#939aa5;margin:4px 0}
+.selection-card-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px}
+.product-selection-card .selection-primary{display:inline-flex;align-items:center;justify-content:center;font-size:11px;line-height:1.5;padding:6px 10px;min-height:29px;margin:0;border-color:#d9e0eb;border-radius:6px;color:#435269;background:#f5f8fd}
+.product-selection-card .selection-source{font-size:10px;line-height:1.6;color:#8996aa;text-decoration:none;white-space:nowrap;padding:4px 0}
+.product-selection-card .selection-source:hover{color:#455b7b;text-decoration:underline}
+.draft-language{display:inline-flex;align-items:center;gap:6px;font-size:11px;border:1px solid #dbe6dd;border-radius:6px;background:#f5faf6;color:#52705a;padding:4px 8px;margin:8px 0}
+.translation-controls label{margin:0;font-size:12px;white-space:nowrap}.translation-controls{gap:10px}
+@media(max-width:1200px){.composer-toolbar{flex-wrap:wrap;gap:4px}.quick-suggestions{flex-basis:100%}.composer-toolbar .composer-tools{margin-left:auto}}
+@media(max-width:800px){.quick-suggestions{gap:6px}.quick-suggestions .quick-choice{font-size:10px;padding:5px 7px;max-width:145px;flex-shrink:0}.product-selection-card{padding:12px;gap:10px}.selection-card-actions{gap:12px}}

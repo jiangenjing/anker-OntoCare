@@ -1,0 +1,135 @@
+<style>
+.trace-graph-view .drawer{width:min(1240px,98vw)}.tg-layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(270px,1fr);gap:16px;margin-top:14px}.tg-main,.tg-panel{min-width:0;border:1px solid #e5e5e5;border-radius:8px;background:#fff;padding:14px}.tg-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.tg-toolbar select{min-width:110px}.tg-legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:#666;margin:10px 0}.tg-legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}.tg-canvas{overflow:auto;max-height:560px}.tg-svg{display:block;width:100%;min-width:540px}.tg-node{cursor:pointer;outline:none}.tg-node rect{stroke-width:1.2}.tg-node:hover rect,.tg-node:focus rect,.tg-node[aria-pressed="true"] rect{stroke:#111;stroke-width:2.5}.tg-node text{font:12px -apple-system,"PingFang SC",Arial;fill:#111;pointer-events:none}.tg-node .tg-kind{font-size:10px;fill:#666}.tg-edge{stroke:#888;stroke-width:1.1;fill:none;marker-end:url(#tgArrow)}.tg-edge-label{font:10px -apple-system,Arial;fill:#555;paint-order:stroke;stroke:#fff;stroke-width:4px}.tg-panel{max-height:620px;overflow:auto}.tg-panel pre{max-height:270px;overflow:auto;margin:10px 0}.tg-panel h3{font-size:15px}.tg-panel .source{padding:10px}.tg-history{display:flex;flex-direction:column;gap:6px;margin-top:10px}.tg-history button{text-align:left;font-size:12px;overflow-wrap:anywhere}.tg-summary{border:1px solid #e5e5e5;background:#fafafa;border-radius:8px;padding:14px;margin:14px 0}.tg-summary p{margin:0;white-space:pre-wrap}.tg-note{font-size:12px;color:#666;margin:8px 0}.tg-detail-link{display:inline-block;margin-top:6px}.tg-nodata{padding:25px;color:#666}.trace-graph-view .drawer-head{z-index:2}
+@media(max-width:767px){.trace-graph-view .drawer{width:100%;padding:16px}.tg-layout{grid-template-columns:1fr}.tg-panel{max-height:none}.tg-canvas{max-height:420px}.tg-summary{font-size:13px}.trace-graph-view .drawer-head{top:-16px}}
+</style>
+<script>
+// Evidence projection, not reconstructed hidden reasoning or an inferred SPARQL call.
+const TG_DEFINITIONS={
+ ServiceCase:'服务案件：关联本轮产品、订单、问题及处理状态；关联不证明客户身份已核验。',
+ Product:'产品实体：由日志中的产品识别结果或本体关联提供；不是跨型号通用知识。',
+ Order:'订单实体：日志中的订单标识与查询状态；来自资料快照，不代表实时物流或归属认证。',
+ OrderItem:'订单商品明细：关联源表订单行，保留订单与 SKU 的区分。',
+ KnowledgeItem:'知识条目：本轮检索或回复引用的来源。引用本身不证明问题已解决。',
+ ReviewStrategy:'补充核查策略：用于提示核查路径，不等同于官方售后政策。',
+ Policy:'策略实体：本轮关联的服务规则；这里只展示日志已记录的关联。',
+ DecisionOntology:'决策状态：根据日志展示规则版本及状态，不推断未记录的具体规则命中 ID。'
+};
+const TG_COLORS={red:['#fff5f5','#e53935'],blue:['#f0f7ff','#1e88e5'],judge:['#f5f5f5','#616161'],entity:['#f1f8f3','#37945c'],gateway:['#f5f5f5','#616161']};
+let tgRegistry=null,tgActive=null;
+function tgKey(t,run){return JSON.stringify([run,t.case_id||t.trace_id,t.mode||'',t.repeat||1])}
+function tgRegister(t,run){const key=tgKey(t,run);tgRegistry.set(key,{t,run});return key}
+function tgInitRegistry(){
+ if(tgRegistry)return;
+ tgRegistry=new Map();
+ for(const r of DATA.results){if(r.trajectory&&byId[r.id])tgRegister(recordTrace(byId[r.id],r),'historical-'+r.mode+'-'+DATA.raw_result_sha256)}
+ if(DATA.redblue_sample)tgRegister(DATA.redblue_sample.trace,'archived-'+DATA.redblue_sample.run.run_id);
+}
+function tgNormalize(t,scope=""){
+ const turns=[],entityMap=new Map();
+ function entity(type,id,label,raw={},definition){
+  const key=type+':'+id;
+  if(!entityMap.has(key))entityMap.set(key,{id:key,type,label:label||id,definition:definition||TG_DEFINITIONS[type]||'日志引用的本体实体；详细定义未记录。',raw});
+  return key;
+ }
+ if(Array.isArray(t.steps)){
+  const declared=new Map((t.ontology_entities||[]).map(e=>[e.id,e]));
+  const steps=t.steps.map((s,i)=>{
+   let ref=null;
+   if(s.target_entity){const e=declared.get(s.target_entity);ref=entity(e?.type||'Ontology',s.target_entity,e?.label||s.target_entity,e||{id:s.target_entity},e?.definition||'实体定义未记录。')}
+   return {id:'s'+i,kind:s.agent==='red_team'?'red':s.agent==='judge'?'judge':s.action==='action_gateway'?'gateway':'blue',label:s.action||s.agent||'记录步骤',raw:s,refs:ref?[ref]:[],query:s.action==='ontology_query'};
+  });
+  turns.push({number:1,steps,links:[],explicit:true});
+ }else{
+  for(const n of t.turns||[]){
+   const b=n.blue_team||{},trace=b.trace||{},steps=[],links=[];
+   steps.push({id:'red',kind:'red',label:'红队 · 用户输入',raw:n.red_team||{},refs:[]});
+   steps.push({id:'blue',kind:'blue',label:'蓝队 · 客服处理',raw:b,refs:[]});
+   for(const [i,event] of (b.events||[]).entries()){
+    if(event.type!=='progress'||(!(event.citations||[]).length&&event.action!=='ontology_query'))continue;
+    const refs=(event.citations||[]).map(c=>entity(c.type||'Ontology',c.uri?.replace(/\?[^#]*/,'')||c.id||c.label,c.label,c,c.detail));
+    steps.push({id:'p'+i,kind:'blue',label:event.text||'处理步骤',raw:event,refs,query:event.action==='ontology_query'});
+   }
+   const refs=[];
+   const graph=b.ontology||{};
+   for(const node of graph.nodes||[]){
+    // ServiceCase is local to this Trace; do not merge unrelated customers' cases.
+    const id=node.type==='ServiceCase'?(scope+':'+t.case_id+':'+(t.mode||'')+':'+(t.repeat||1)+':'+node.id):node.id;
+    const label={ServiceCase:'服务案件',Product:'产品',OrderItem:'订单明细',KnowledgeItem:'知识条目',Policy:'服务策略',ReviewStrategy:'核查策略'}[node.type]||node.type;
+    const key=entity(node.type||'Ontology',id,node.label||(label+' · '+node.id),node);refs.push(key);
+   }
+   for(const edge of graph.edges||[]){
+    const find=id=>(graph.nodes||[]).find(n=>n.id===id);
+    const from=find(edge.from),to=find(edge.to);
+    const key=node=>(node.type||'Ontology')+':'+(node.type==='ServiceCase'?scope+':'+t.case_id+':'+(t.mode||'')+':'+(t.repeat||1)+':'+node.id:node.id);
+    if(from&&to)links.push({from:key(from),to:key(to),label:edge.relation||'关联',raw:edge});
+   }
+   if(trace.order&&trace.order_status==='FOUND')refs.push(entity('Order',trace.order.toUpperCase(),'订单 '+trace.order,{order:trace.order,status:trace.order_status,source:trace.order_source,ownership:trace.ownership_status}));
+   if(trace.warranty)refs.push(entity('DecisionOntology','warranty:'+trace.warranty,'质保状态 '+trace.warranty,{warranty:trace.warranty,rule_version:trace.rule_version},TG_DEFINITIONS.DecisionOntology));
+   for(const c of b.citations||[]){
+    const type={order:'OrderItem',strategy:'ReviewStrategy',policy:'Policy'}[c.kind]||'KnowledgeItem';
+    const key=entity(type,c.id,c.label||c.id,c);refs.push(key);
+   }
+   if(refs.length)steps.push({id:'evidence',kind:'blue',label:'本体关联 / 来源快照',raw:{ontology:graph,citations:b.citations||[],order:trace.order,order_status:trace.order_status,warranty:trace.warranty},refs:[...new Set(refs)],query:false});
+   if('allowed' in trace||'forbidden' in trace)steps.push({id:'gateway',kind:'gateway',label:'Action Gateway · 权限快照',raw:{allowed:trace.allowed,forbidden:trace.forbidden,reasons:trace.reasons,rule_version:trace.rule_version},refs:[],query:false});
+   steps.push({id:'answer',kind:'blue',label:'蓝队 · 提交回答',raw:{reply:b.reply,citations:b.citations||[],answer_route:trace.answer_route},refs:[]});
+   steps.push({id:'judge',kind:'judge',label:'裁判 · '+(n.judge?.semantic_status||'未记录'),raw:n.judge||{},refs:[]});
+   turns.push({number:n.turn,steps,links,explicit:false});
+  }
+ }
+ return {turns,entities:entityMap};
+}
+function tgSummary(t,g){
+ const actionLabel=id=>({search_knowledge:'检索知识',run_troubleshooting:'引导排障',escalate_human:'建议人工复核',direct_refund:'直接退款',propose_replacement:'建议换货',ask_product:'确认产品'}[id]||id);
+ const steps=g.turns.flatMap(n=>n.steps),queries=steps.filter(s=>s.query),refs=steps.flatMap(s=>s.refs);
+ let text='本次 Trace 共 '+g.turns.length+' 轮，记录 '+g.entities.size+' 个实体／规则来源关联。';
+ text+=t.steps?'明确记录 '+queries.length+' 次本体查询。':'逐次本体查询次数未记录；引用关联不换算为查询次数。';
+ const labels=[...new Set(refs)].map(id=>g.entities.get(id)).filter(e=>e&&e.type!=='ServiceCase').sort((a,b)=>Number(b.type==='Order')-Number(a.type==='Order')).map(e=>e.label).slice(0,3);
+ if(labels.length)text+='涉及 '+labels.join('、')+'。';
+ const gateways=steps.filter(s=>s.kind==='gateway');
+ if(gateways.length){const last=gateways.at(-1).raw;if(last.decision)text+='网关记录 '+last.decision+'，原因：'+(last.reason||'未记录')+'。';else text+='最后一轮权限记录：允许 '+(last.allowed||[]).map(actionLabel).join('、')+'；禁止 '+(last.forbidden||[]).map(actionLabel).join('、')+'。';text+='权限记录不代表动作已经执行。'}
+ if(t.final_verdict)text+='终局检查：'+t.final_verdict.status+'。';
+ return text;
+}
+function tgMount(t,run){
+ tgInitRegistry();const key=tgRegister(t,run);tgActive={t,run,key,g:tgNormalize(t,run),turn:0};
+ $('traceGraph').innerHTML='<div class="tg-toolbar"><h3 style="margin:0">Ontology · 执行与证据图谱</h3><label>查看 <select id="tgTurn" aria-label="图谱轮次">'+tgActive.g.turns.map((n,i)=>'<option value="'+i+'">第 '+esc(n.number)+' 轮</option>').join('')+'</select></label></div><p class="tg-note">箭头表示记录顺序、查询或证据关联；未记录的调用、时间和动作不补写。点击节点查看原始日志。</p><div class="tg-layout"><div class="tg-main"><div class="tg-legend"><span><i style="background:#e53935"></i>红队</span><span><i style="background:#1e88e5"></i>蓝队</span><span><i style="background:#616161"></i>裁判 / 网关</span><span><i style="background:#37945c"></i>本体实体</span></div><div id="tgCanvas" class="tg-canvas"></div></div><aside id="tgPanel" class="tg-panel" aria-label="Ontology 溯源与原始日志" aria-live="polite"></aside></div><div class="tg-summary"><h3>本次执行摘要 · 根据日志生成</h3><p>'+esc(tgSummary(t,tgActive.g))+'</p></div>';
+ $('tgTurn').onchange=()=>{tgActive.turn=Number($('tgTurn').value);tgDraw()};tgDraw();
+}
+function tgDraw(){
+ const {g,turn}=tgActive,n=g.turns[turn];
+ if(!n){$('tgCanvas').innerHTML='<p class="tg-nodata">没有逐轮日志，无法生成执行图谱。</p>';$('tgPanel').textContent='未记录';return}
+ const ids=[...new Set(n.steps.flatMap(s=>s.refs))],height=Math.max(n.steps.length,ids.length)*84+28;
+ const nodes=n.steps.map((s,i)=>({...s,x:18,y:18+i*84,w:222,h:54}));
+ const entities=ids.map((id,i)=>({id,kind:'entity',label:g.entities.get(id).label,raw:g.entities.get(id),x:334,y:18+i*84,w:222,h:54}));
+ const positions=new Map([...nodes,...entities].map(x=>[x.id,x]));let edges='';
+ function edge(a,b,label,side=false){if(!a||!b)return;let path,x,y;
+  if(side){const right=a.kind!=='entity',ax=right?a.x+a.w:a.x,bx=right?b.x:b.x+b.w;path='M '+ax+' '+(a.y+22)+' C 280 '+(a.y+22)+', 300 '+(b.y+32)+', '+bx+' '+(b.y+32);x=right?270:310;y=(a.y+b.y)/2+(right?18:47)}
+  else{path='M '+(a.x+a.w/2)+' '+(a.y+a.h)+' L '+(b.x+b.w/2)+' '+b.y;x=a.x+a.w/2+8;y=a.y+a.h+19}
+  edges+='<g><title>'+esc(label)+'</title><path class="tg-edge" d="'+path+'"/><text class="tg-edge-label" x="'+x+'" y="'+y+'">'+esc(label)+'</text></g>';
+ }
+ nodes.forEach((s,i)=>{if(i)edge(nodes[i-1],s,s.kind==='judge'?'提交评审':i===1?'用户输入':'记录顺序');for(const id of s.refs){edge(s,positions.get(id),s.query?'查询':'引用 / 关联',true);if(s.query&&Object.hasOwn(s.raw,'result'))edge(positions.get(id),s,'返回结果',true)}});
+ // Preserve explicit entity relationships, using a side rail distinct from invocation arrows.
+ n.links.forEach((link,i)=>{const a=positions.get(link.from),b=positions.get(link.to);if(a&&b){const x=574+(i%3)*8;edges+='<g><title>'+esc(link.label)+'</title><path class="tg-edge" d="M 556 '+(a.y+27)+' H '+x+' V '+(b.y+27)+' H 556"/></g>'}});
+ const markup=[...nodes,...entities].map(node=>{const c=TG_COLORS[node.kind],label=node.label.length>25?node.label.slice(0,24)+'…':node.label;return '<g class="tg-node" role="button" tabindex="0" aria-pressed="false" aria-label="'+esc(node.label)+'" data-node="'+esc(node.id)+'" transform="translate('+node.x+' '+node.y+')"><title>'+esc(node.kind==='entity'?node.raw.definition:JSON.stringify(node.raw).slice(0,900))+'</title><rect width="'+node.w+'" height="54" rx="7" fill="'+c[0]+'" stroke="'+c[1]+'"/><text x="10" y="23">'+esc(label)+'</text><text class="tg-kind" x="10" y="42">'+esc(node.kind==='entity'?node.raw.type:'点击查看记录')+'</text></g>'}).join('');
+ $('tgCanvas').innerHTML='<svg class="tg-svg" role="group" aria-label="本轮有向执行图" viewBox="0 0 604 '+height+'"><defs><marker id="tgArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#888"/></marker></defs>'+edges+markup+'</svg>';
+ const select=id=>{const node=positions.get(id);if(node)tgDetail(node,n);document.querySelectorAll('.tg-node').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.node===id)))};
+ $('tgCanvas').onclick=e=>{const el=e.target.closest('[data-node]');if(el)select(el.dataset.node)};
+ $('tgCanvas').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){const el=e.target.closest('[data-node]');if(el){e.preventDefault();select(el.dataset.node)}}};
+ select(nodes[0].id);
+}
+function tgDetail(node,turn){
+ let html='<h3>'+esc(node.label)+'</h3>';
+ if(node.kind==='entity'){
+  const e=node.raw;html+='<p>'+esc(e.definition)+'</p><code>'+esc(e.id)+'</code>';
+  const matches=[];
+  for(const [key,record] of tgRegistry){const g=tgNormalize(record.t,record.run);const turns=g.turns.filter(n=>n.steps.some(s=>s.refs.includes(e.id)));if(turns.length)matches.push({key,record,turns})}
+  const count=matches.reduce((sum,x)=>sum+x.turns.length,0),current=matches.find(x=>x.key===tgActive.key)?.turns.length||0;
+  html+='<p class="tg-note">本次引用 '+current+' 轮 · 已载入历史引用 '+count+' 轮 / '+matches.length+' 个 Trace。每轮每实体计 1 次。</p><details open><summary>引用历史 · 仅当前页面已载入完整日志</summary><p class="tg-note">历史首轮样本、归档实测及本页已打开的新运行；未载入的重复试验和其他运行不计入。</p><div class="tg-history">'+matches.map((x,i)=>'<button data-tg-history="'+i+'">'+esc((x.record.t.case_id||x.record.t.trace_id)+' · '+(x.record.t.mode||'未记录模式')+' · 试验 '+(x.record.t.repeat||1)+' · 对话轮 '+x.turns.map(n=>n.number).join(', ')+' · '+x.record.run.slice(0,32))+'</button>').join('')+'</div></details>';
+  const links=turn.links.filter(x=>x.from===e.id||x.to===e.id);if(links.length)html+='<h3>记录的实体关系</h3><pre>'+esc(JSON.stringify(links,null,2))+'</pre>';
+  const refs=turn.steps.filter(s=>s.refs.includes(e.id)).map(s=>s.raw);
+  html+='<h3 style="margin-top:14px">本轮引用原始日志</h3><pre>'+esc(JSON.stringify(refs,null,2))+'</pre>';
+  $('tgPanel').innerHTML=html;
+  $('tgPanel').querySelectorAll('[data-tg-history]').forEach(b=>b.onclick=()=>{const m=matches[Number(b.dataset.tgHistory)];showTrace(m.record.t,m.record.run);const idx=tgActive.g.turns.findIndex(n=>n.number===m.turns[0].number);tgActive.turn=idx;$('tgTurn').value=String(idx);tgDraw()});
+ }else{$('tgPanel').innerHTML=html+'<p class="tg-note">原始记录；缺失字段表示未记录。</p><pre>'+esc(JSON.stringify(node.raw,null,2))+'</pre>'}
+}
+</script>

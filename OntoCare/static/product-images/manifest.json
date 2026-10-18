@@ -1,0 +1,37 @@
+{
+  "T2353": {
+    "image": "/product-images/T2353.png",
+    "source": "https://www.eufy.com/eu-fr/products/t2353g11",
+    "original_image": "https://cdn.shopify.com/s/files/1/0568/9691/3539/files/e25solo_7442fede-14b7-46f2-aaae-5ce677730991.png?v=1790069115",
+    "scope": "product_family",
+    "note": "官方系列示意图，颜色与套装以订单SKU为准"
+  },
+  "T2080": {
+    "image": "/product-images/T2080.png",
+    "source": "https://www.eufy.com/ie/products/t2080g11",
+    "original_image": "https://cdn.shopify.com/s/files/1/0709/4049/1966/files/T2080GA1-eufy_Omni_S1_Pro_1.png?v=1757937797",
+    "scope": "product_family",
+    "note": "官方系列示意图，颜色与套装以订单SKU为准"
+  },
+  "T2351": {
+    "image": "/product-images/T2351.png",
+    "source": "https://www.eufy.com/products/t2351121",
+    "original_image": "https://cdn.shopify.com/s/files/1/0504/7094/4954/files/Maskgroup-1.png?v=1773055636",
+    "scope": "product_family",
+    "note": "官方系列示意图，颜色与套装以订单SKU为准"
+  },
+  "T8D04": {
+    "image": "/product-images/T8D04.png",
+    "source": "https://uk.eufy.com/products/t8d04321",
+    "original_image": "http://uk.eufy.com/cdn/shop/files/20260820-141208_600x.png?v=1787206435",
+    "scope": "product_family",
+    "note": "官方系列示意图，颜色与套装以订单SKU为准"
+  },
+  "T2280": {
+    "image": "/product-images/T2280.png",
+    "source": "https://www.eufy.com/products/t2280111",
+    "original_image": "https://cdn.shopify.com/s/files/1/0504/7094/4954/files/C20.png?v=1774240013",
+    "scope": "product_family",
+    "note": "官方系列示意图，颜色与套装以订单SKU为准"
+  }
+}

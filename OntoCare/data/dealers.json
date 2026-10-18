@@ -1,0 +1,17 @@
+[
+  {"id":"DEALER-1","country":"Germany","seller_names":["ABC Electronics GmbH","ABC-Electronics","abc electronics gmbh","ABC Electronics"],"authorized":true},
+  {"id":"DEALER-2","country":"Germany","seller_names":["Amazon EU Gmbh","Amazon.de","Amazon EU GmbH","amazon.de"],"authorized":true},
+  {"id":"DEALER-3","country":"United States","seller_names":["Amazon.com","Amazon.com LLC","Amazon US","amazon.com"],"authorized":true},
+  {"id":"DEALER-4","country":"United States","seller_names":["Best Buy","BestBuy Co","bestbuy"],"authorized":true},
+  {"id":"DEALER-5","country":"United States","seller_names":["Walmart","Wal-Mart Inc","walmart.com"],"authorized":true},
+  {"id":"DEALER-6","country":"United Kingdom","seller_names":["Amazon UK","Amazon.co.uk","amazon uk"],"authorized":true},
+  {"id":"DEALER-7","country":"United Kingdom","seller_names":["Currys","Currys PC World","currys"],"authorized":true},
+  {"id":"DEALER-8","country":"France","seller_names":["Amazon EU Gmbh","Amazon.fr","amazon.fr"],"authorized":true},
+  {"id":"DEALER-9","country":"France","seller_names":["Fnac","Fnac Darty","fnac"],"authorized":true},
+  {"id":"DEALER-10","country":"Germany","seller_names":["MediaMarkt","Media Markt","mediamarkt"],"authorized":true},
+  {"id":"DEALER-11","country":"Germany","seller_names":["Shady Local Shop","ShadyShop","shadylocal"],"authorized":false},
+  {"id":"DEALER-12","country":"France","seller_names":["Small Reseller FR","SmallReseller","tiny reseller"],"authorized":false},
+  {"id":"DEALER-13","country":"United States","seller_names":["NoName Marketplace","NoNameMkt"],"authorized":false},
+  {"id":"DEALER-14","country":"United Kingdom","seller_names":["Grey Market UK","GreyMarket"],"authorized":false},
+  {"id":"DEALER-15","country":"Germany","seller_names":["Private Seller Ebay","Ebay Private"],"authorized":false}
+]

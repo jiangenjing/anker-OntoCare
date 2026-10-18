@@ -1,0 +1,54 @@
+{
+  "files": {
+    "benchmark-results.json": "8352cb8819987f14c5a7b5e848d156c577eb469d7c1aaa6eac04e04b4aabc79e",
+    "build_benchmark.py": "3d882661c35a17b4614692df3313439b677b1ecbb974a220d4efb50809701a06",
+    "persona-results.json": "8b9b83701399b21535dc6d1a4a169879637526895e269d54887db190ec50792a",
+    "ontocare-benchmark-runner.py": "e8117f0c33ebb954cf1eb7df4816432db3c5015f2619a1db230e10b98a71ac69",
+    "benchmark-metrics.json": "b5f9d2cf815dc2b811d691d9961f6e9ed6cd0700649d61bead9a729450af30da",
+    "compute_metrics.py": "7aa9403ec7d3b4c548283444ce9fffe6e2df5bd09b9ce833d78060db24139ff0",
+    "ontocare-adversarial-tests.json": "c31c20e77c477653722a18d8e12587f8e1636acfc60b80ac508adad2ce625ea3",
+    "ontocare-persona-vectors.json": "fb82098bd56dd2fdb27254971ebd9f0d6b01a437e7d061707a8805826bf9be4b",
+    "online-smoke.json": "f2f5cbe1a1c7f5ffeac3ab45e73ed23527a23c7f382ca862251e48adacbc8924",
+    "browser-validation.json": "68e779c45958bde3e3fc2f5fdbc69036f2ed87b8a1390106f43733d124ad181e",
+    "audit_results.py": "d9171d87f9505ef275763aae0be760c3cbca4cd404d54e244d3ae089351dd094",
+    "test_benchmark.py": "6a883cb8d84aa47f5b269a3b306ee62ca819494897a6ebf443d7521f00d1347d",
+    "ontocare-user-test-cases.json": "54ec45eef17c6bab3faf2747abe3da45069792c2853a893e5985427fc8cb158b",
+    "smoke.json": "2b79346c15369da41b22d372c75434853f673b1517696c98a319a428ef306cb7",
+    "render_report.py": "db6d42f90a0dae120478e7cb2c2ca45fff32a79199bd066f86562b663075ac62",
+    "report-template.html": "04368e4bfd8f09c03fd44af943e2c93998b3ddcde2c834b23c93c8fd2f6709f1",
+    "ontocare-benchmark-report.html": "b83d50d3e3e93fc18336c50e1c9d68acdbe118850bf8f7814ec32d1845832822",
+    "finalize_results.py": "1063ae8d7e97f9dcdfe34cb181ca58b9869c76f23f13d003ac0edf7c34317583",
+    "evaluator-audit-before.json": "b1f2a8aaaab47e9e3ee8c10c6260d1ad78114b7b0dd4f9aab191408214c14461"
+  },
+  "validation": {
+    "application_tests_passed": 143,
+    "benchmark_tests_passed": 5,
+    "browser": {
+      "title": "OntoCare Benchmark · 评测工作台",
+      "tabs": {
+        "主报告": "main",
+        "可视化看板": "visual",
+        "稳定性看板": "stability",
+        "产品化看板": "product"
+      },
+      "errors": [],
+      "trialCount": "数据版本 2026-10-17 · 最近汇总 2026/10/17 00:52:17 · 1256 次独立试验",
+      "stats": "核心首轮硬断言\n83.8%\n62 / 74 个场景通过\npass⁸ · 核心任务\n83.8%\n74 个任务具备 8 次记录\n首轮待修场景\n12\n点击用例可查原始输入、回复与源表\n语义裁判覆盖\n101 / 110\n同模型独立提示词；不是人工审核",
+      "chartCount": 7,
+      "drawerHasSource": true,
+      "disambiguationRows": 4,
+      "offlineStats": "核心首轮硬断言\n85.1%\n63 / 74 个场景通过\npass⁸ · 核心任务\n85.1%\n74 个任务具备 8 次记录\n首轮待修场景\n11\n点击用例可查原始输入、回复与源表\n语义裁判覆盖\n0 / 110\n同模型独立提示词；不是人工审核",
+      "download": "ontocare-benchmark-page-evidence.json",
+      "tour": true,
+      "mobileOverflow": false,
+      "fallbackTables": 15,
+      "fallbackFlag": true
+    }
+  },
+  "note": "Recorded run hashes identify executed application and runner versions. Delivered runner additionally has a resume-version guard. Evaluator audit preserved prior judgments; generated customer answers were not changed.",
+  "brand_update": {
+    "asset_sha256": "0a167a26b332fcc4f91bfe10878db4f6db1a880ca530983186f477861b891c1a",
+    "source": "user-provided original PNG",
+    "browser_pages_checked": 4
+  }
+}

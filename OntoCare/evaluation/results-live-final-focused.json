@@ -1,0 +1,2633 @@
+{
+  "mode": "LIVE_HTTP_CONFIGURED_MODEL",
+  "scope": "硬断言回归，不等价完整语义或UI验收",
+  "reference_date": "2026-10-16",
+  "counts": {
+    "PASS": 0,
+    "FAIL": 0,
+    "REVIEW_REQUIRED": 5,
+    "BLOCKED": 0,
+    "ERROR": 0
+  },
+  "results": [
+    {
+      "id": "U008",
+      "category": "shipping_exception",
+      "status": "REVIEW_REQUIRED",
+      "hard_checks_passed": true,
+      "checks": [
+        {
+          "check": "{\"type\": \"reply_contains\", \"values\": [\"Anker1234567-6\"]}",
+          "passed": true,
+          "actual": "订单显示已发货，预计到达日期是 9 月 30 日，现在已过这个日期，物流记录仍显示在途，我理解您想确认接下来该怎么处理。\n\n我查到的是订单快照信息：承运商 FedEx，物流单号 Anker1234567-6，记录状态为在途，预计到达 9 月 30 日。这只是资料中的记录，我无法查询实时物流，也不能据此判断包裹当前实际位置或是否已送达。 [1]\n\n建议您先通过 FedEx 官网用该单号查询最新轨迹；如果轨迹长时间没有更新或显示异常，我可以帮您提交人工复核，由人工进一步核查物流情况。请问您希望我协助提交人工复核吗？"
+        },
+        {
+          "check": "HTTP成功",
+          "passed": true,
+          "actual": 200
+        }
+      ],
+      "response": {
+        "cards": [
+          {
+            "body": "FedEx · Anker1234567-6\nin transist, estimate arrival at 9/30",
+            "title": "物流详情 · T2353112"
+          }
+        ],
+        "citations": [
+          {
+            "id": "order-8",
+            "kind": "order",
+            "label": "订单信息 · 第 8 行（资料快照）",
+            "url": "/api/sources/order-8"
+          }
+        ],
+        "diagrams": [],
+        "followups": {
+          "ontology": {
+            "edges": [
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "T2353"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "ANKER005"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-8"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-9"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "service-rules"
+              }
+            ],
+            "intent": "shipping",
+            "nodes": [
+              {
+                "id": "case",
+                "type": "ServiceCase"
+              },
+              {
+                "id": "T2353",
+                "type": "Product"
+              },
+              {
+                "id": "ANKER005",
+                "type": "Order"
+              },
+              {
+                "id": "order-8",
+                "type": "OrderItem"
+              },
+              {
+                "id": "order-9",
+                "type": "OrderItem"
+              },
+              {
+                "id": "service-rules",
+                "type": "Policy"
+              }
+            ],
+            "product": "T2353",
+            "query": "订单 Anker005 的 T2353112 物流记录还是在途，9月30日已经过了，现在怎么办？",
+            "retrieved_count": 0,
+            "revision": 1
+          },
+          "questions": [
+            {
+              "source_ids": [
+                "order-8"
+              ],
+              "text": "查询订单 ANKER005 的 T2353112 物流记录",
+              "text_en": "Check shipping record for ANKER005, SKU T2353112"
+            },
+            {
+              "source_ids": [
+                "order-9"
+              ],
+              "text": "查询订单 ANKER005 的 T291HA11 物流记录",
+              "text_en": "Check shipping record for ANKER005, SKU T291HA11"
+            },
+            {
+              "source_ids": [
+                "order-8"
+              ],
+              "text": "订单 ANKER005 的 T2353112 发货了吗？",
+              "text_en": "Has T2353112 in order ANKER005 shipped?"
+            },
+            {
+              "source_ids": [
+                "order-9"
+              ],
+              "text": "订单 ANKER005 的 T291HA11 发货了吗？",
+              "text_en": "Has T291HA11 in order ANKER005 shipped?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER005 的物流记录和我实际收到的不一致，怎么办？",
+              "text_en": "The tracking record for ANKER005 differs from what I received. What should I do?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER005 的物流单号查不到，怎么核对？",
+              "text_en": "Tracking for order ANKER005 is not working. How can I check it?"
+            }
+          ],
+          "quick_replies": [
+            {
+              "text": "包裹还没收到",
+              "text_en": "I have not received the package."
+            },
+            {
+              "text": "只收到部分商品",
+              "text_en": "Only part of my order arrived."
+            },
+            {
+              "text": "物流单号查不到",
+              "text_en": "The tracking number is not working."
+            }
+          ]
+        },
+        "handoff_available": false,
+        "model_status": "OK",
+        "order_card": {
+          "items": [
+            {
+              "fields": {
+                "No.": 7,
+                "Product Description": "eufy Robot Vacuum Omni E25 Black 2",
+                "QTY": 1,
+                "SKU": "T2353112",
+                "发货日期": "2026-09-26",
+                "物流单号": "Anker1234567-6",
+                "物流承运商": "FedEx",
+                "物流状态": "in transist, estimate arrival at 9/30",
+                "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                "订单状态": "已发货",
+                "订单金额": 1077.99,
+                "质保结束日期": "2027-09-07",
+                "购买日期": "2026-09-07"
+              },
+              "image": {
+                "image": "/product-images/T2353.png",
+                "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                "original_image": "https://cdn.shopify.com/s/files/1/0568/9691/3539/files/e25solo_7442fede-14b7-46f2-aaae-5ce677730991.png?v=1790069115",
+                "scope": "product_family",
+                "source": "https://www.eufy.com/eu-fr/products/t2353g11"
+              },
+              "source_row": 8,
+              "source_url": "/api/sources/order-8"
+            },
+            {
+              "fields": {
+                "No.": 8,
+                "Product Description": "cleaning solution",
+                "QTY": 1,
+                "SKU": "T291HA11",
+                "发货日期": "2026-09-11",
+                "物流单号": "Anker1234567-7",
+                "物流承运商": "USPS",
+                "物流状态": "Delivered on 9/15",
+                "订单地址": null,
+                "订单状态": "已发货",
+                "订单金额": 22,
+                "质保结束日期": "2028-03-07",
+                "购买日期": "2026-09-07"
+              },
+              "image": null,
+              "source_row": 9,
+              "source_url": "/api/sources/order-9"
+            }
+          ],
+          "kind": "source_snapshot",
+          "order_id": "Anker005",
+          "ownership_verified": false
+        },
+        "order_snapshot": {
+          "items": [
+            {
+              "fields": {
+                "No.": 7,
+                "Product Description": "eufy Robot Vacuum Omni E25 Black 2",
+                "QTY": 1,
+                "SKU": "T2353112",
+                "发货日期": "2026-09-26",
+                "物流单号": "Anker1234567-6",
+                "物流承运商": "FedEx",
+                "物流状态": "in transist, estimate arrival at 9/30",
+                "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                "订单状态": "已发货",
+                "订单金额": 1077.99,
+                "质保结束日期": "2027-09-07",
+                "购买日期": "2026-09-07"
+              },
+              "image": {
+                "image": "/product-images/T2353.png",
+                "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                "original_image": "https://cdn.shopify.com/s/files/1/0568/9691/3539/files/e25solo_7442fede-14b7-46f2-aaae-5ce677730991.png?v=1790069115",
+                "scope": "product_family",
+                "source": "https://www.eufy.com/eu-fr/products/t2353g11"
+              },
+              "source_row": 8,
+              "source_url": "/api/sources/order-8"
+            },
+            {
+              "fields": {
+                "No.": 8,
+                "Product Description": "cleaning solution",
+                "QTY": 1,
+                "SKU": "T291HA11",
+                "发货日期": "2026-09-11",
+                "物流单号": "Anker1234567-7",
+                "物流承运商": "USPS",
+                "物流状态": "Delivered on 9/15",
+                "订单地址": null,
+                "订单状态": "已发货",
+                "订单金额": 22,
+                "质保结束日期": "2028-03-07",
+                "购买日期": "2026-09-07"
+              },
+              "image": null,
+              "source_row": 9,
+              "source_url": "/api/sources/order-9"
+            }
+          ],
+          "kind": "source_snapshot",
+          "order_id": "Anker005",
+          "ownership_verified": false
+        },
+        "reply": "订单显示已发货，预计到达日期是 9 月 30 日，现在已过这个日期，物流记录仍显示在途，我理解您想确认接下来该怎么处理。\n\n我查到的是订单快照信息：承运商 FedEx，物流单号 Anker1234567-6，记录状态为在途，预计到达 9 月 30 日。这只是资料中的记录，我无法查询实时物流，也不能据此判断包裹当前实际位置或是否已送达。 [1]\n\n建议您先通过 FedEx 官网用该单号查询最新轨迹；如果轨迹长时间没有更新或显示异常，我可以帮您提交人工复核，由人工进一步核查物流情况。请问您希望我协助提交人工复核吗？",
+        "request_id": "f691a697bc05",
+        "selection_cards": [],
+        "trace": {
+          "allowed": [
+            "search_knowledge",
+            "run_troubleshooting",
+            "escalate_human"
+          ],
+          "answer_route": "GROUNDED_LLM",
+          "cache_key": null,
+          "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+          "dealer": "INSUFFICIENT_INFO",
+          "emotion": "NORMAL",
+          "evidence": "order_sku=T2353112",
+          "forbidden": [
+            "direct_refund",
+            "propose_replacement"
+          ],
+          "image": "未处理",
+          "knowledge_source": "NONE",
+          "long_tail": {
+            "basis": "curated phrase match; not an empirical frequency estimate",
+            "classification": "no_match",
+            "source_ids": []
+          },
+          "model": "DeepSeek-V4.1-Flash",
+          "model_calls": 1,
+          "model_candidate": "无",
+          "model_finish_reason": "stop",
+          "model_status": "OK",
+          "model_validation": {},
+          "order": "ANKER005",
+          "order_source": "SUPPLIED_DATASET",
+          "order_status": "FOUND",
+          "ownership_status": "NOT_VERIFIED",
+          "product": "Omni E25",
+          "product_state": "FIXTURE_MATCHED",
+          "purchase_date_claim": null,
+          "reasons": [
+            "演示环境无真实退款或换货执行器，不得声称已办理"
+          ],
+          "request_id": "f691a697bc05",
+          "response_language": "zh",
+          "rule_version": "m0-safe-1",
+          "troubleshooting": "NOT_STARTED",
+          "warranty": "VALID",
+          "workflow_history": [],
+          "workflow_status": null
+        },
+        "turn_count": 1
+      },
+      "trajectory": [
+        {
+          "input": "订单 Anker005 的 T2353112 物流记录还是在途，9月30日已经过了，现在怎么办？",
+          "response": {
+            "cards": [
+              {
+                "body": "FedEx · Anker1234567-6\nin transist, estimate arrival at 9/30",
+                "title": "物流详情 · T2353112"
+              }
+            ],
+            "citations": [
+              {
+                "id": "order-8",
+                "kind": "order",
+                "label": "订单信息 · 第 8 行（资料快照）",
+                "url": "/api/sources/order-8"
+              }
+            ],
+            "diagrams": [],
+            "followups": {
+              "ontology": {
+                "edges": [
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "T2353"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "ANKER005"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-8"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-9"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "service-rules"
+                  }
+                ],
+                "intent": "shipping",
+                "nodes": [
+                  {
+                    "id": "case",
+                    "type": "ServiceCase"
+                  },
+                  {
+                    "id": "T2353",
+                    "type": "Product"
+                  },
+                  {
+                    "id": "ANKER005",
+                    "type": "Order"
+                  },
+                  {
+                    "id": "order-8",
+                    "type": "OrderItem"
+                  },
+                  {
+                    "id": "order-9",
+                    "type": "OrderItem"
+                  },
+                  {
+                    "id": "service-rules",
+                    "type": "Policy"
+                  }
+                ],
+                "product": "T2353",
+                "query": "订单 Anker005 的 T2353112 物流记录还是在途，9月30日已经过了，现在怎么办？",
+                "retrieved_count": 0,
+                "revision": 1
+              },
+              "questions": [
+                {
+                  "source_ids": [
+                    "order-8"
+                  ],
+                  "text": "查询订单 ANKER005 的 T2353112 物流记录",
+                  "text_en": "Check shipping record for ANKER005, SKU T2353112"
+                },
+                {
+                  "source_ids": [
+                    "order-9"
+                  ],
+                  "text": "查询订单 ANKER005 的 T291HA11 物流记录",
+                  "text_en": "Check shipping record for ANKER005, SKU T291HA11"
+                },
+                {
+                  "source_ids": [
+                    "order-8"
+                  ],
+                  "text": "订单 ANKER005 的 T2353112 发货了吗？",
+                  "text_en": "Has T2353112 in order ANKER005 shipped?"
+                },
+                {
+                  "source_ids": [
+                    "order-9"
+                  ],
+                  "text": "订单 ANKER005 的 T291HA11 发货了吗？",
+                  "text_en": "Has T291HA11 in order ANKER005 shipped?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER005 的物流记录和我实际收到的不一致，怎么办？",
+                  "text_en": "The tracking record for ANKER005 differs from what I received. What should I do?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER005 的物流单号查不到，怎么核对？",
+                  "text_en": "Tracking for order ANKER005 is not working. How can I check it?"
+                }
+              ],
+              "quick_replies": [
+                {
+                  "text": "包裹还没收到",
+                  "text_en": "I have not received the package."
+                },
+                {
+                  "text": "只收到部分商品",
+                  "text_en": "Only part of my order arrived."
+                },
+                {
+                  "text": "物流单号查不到",
+                  "text_en": "The tracking number is not working."
+                }
+              ]
+            },
+            "handoff_available": false,
+            "model_status": "OK",
+            "order_card": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 7,
+                    "Product Description": "eufy Robot Vacuum Omni E25 Black 2",
+                    "QTY": 1,
+                    "SKU": "T2353112",
+                    "发货日期": "2026-09-26",
+                    "物流单号": "Anker1234567-6",
+                    "物流承运商": "FedEx",
+                    "物流状态": "in transist, estimate arrival at 9/30",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 1077.99,
+                    "质保结束日期": "2027-09-07",
+                    "购买日期": "2026-09-07"
+                  },
+                  "image": {
+                    "image": "/product-images/T2353.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "https://cdn.shopify.com/s/files/1/0568/9691/3539/files/e25solo_7442fede-14b7-46f2-aaae-5ce677730991.png?v=1790069115",
+                    "scope": "product_family",
+                    "source": "https://www.eufy.com/eu-fr/products/t2353g11"
+                  },
+                  "source_row": 8,
+                  "source_url": "/api/sources/order-8"
+                },
+                {
+                  "fields": {
+                    "No.": 8,
+                    "Product Description": "cleaning solution",
+                    "QTY": 1,
+                    "SKU": "T291HA11",
+                    "发货日期": "2026-09-11",
+                    "物流单号": "Anker1234567-7",
+                    "物流承运商": "USPS",
+                    "物流状态": "Delivered on 9/15",
+                    "订单地址": null,
+                    "订单状态": "已发货",
+                    "订单金额": 22,
+                    "质保结束日期": "2028-03-07",
+                    "购买日期": "2026-09-07"
+                  },
+                  "image": null,
+                  "source_row": 9,
+                  "source_url": "/api/sources/order-9"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker005",
+              "ownership_verified": false
+            },
+            "order_snapshot": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 7,
+                    "Product Description": "eufy Robot Vacuum Omni E25 Black 2",
+                    "QTY": 1,
+                    "SKU": "T2353112",
+                    "发货日期": "2026-09-26",
+                    "物流单号": "Anker1234567-6",
+                    "物流承运商": "FedEx",
+                    "物流状态": "in transist, estimate arrival at 9/30",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 1077.99,
+                    "质保结束日期": "2027-09-07",
+                    "购买日期": "2026-09-07"
+                  },
+                  "image": {
+                    "image": "/product-images/T2353.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "https://cdn.shopify.com/s/files/1/0568/9691/3539/files/e25solo_7442fede-14b7-46f2-aaae-5ce677730991.png?v=1790069115",
+                    "scope": "product_family",
+                    "source": "https://www.eufy.com/eu-fr/products/t2353g11"
+                  },
+                  "source_row": 8,
+                  "source_url": "/api/sources/order-8"
+                },
+                {
+                  "fields": {
+                    "No.": 8,
+                    "Product Description": "cleaning solution",
+                    "QTY": 1,
+                    "SKU": "T291HA11",
+                    "发货日期": "2026-09-11",
+                    "物流单号": "Anker1234567-7",
+                    "物流承运商": "USPS",
+                    "物流状态": "Delivered on 9/15",
+                    "订单地址": null,
+                    "订单状态": "已发货",
+                    "订单金额": 22,
+                    "质保结束日期": "2028-03-07",
+                    "购买日期": "2026-09-07"
+                  },
+                  "image": null,
+                  "source_row": 9,
+                  "source_url": "/api/sources/order-9"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker005",
+              "ownership_verified": false
+            },
+            "reply": "订单显示已发货，预计到达日期是 9 月 30 日，现在已过这个日期，物流记录仍显示在途，我理解您想确认接下来该怎么处理。\n\n我查到的是订单快照信息：承运商 FedEx，物流单号 Anker1234567-6，记录状态为在途，预计到达 9 月 30 日。这只是资料中的记录，我无法查询实时物流，也不能据此判断包裹当前实际位置或是否已送达。 [1]\n\n建议您先通过 FedEx 官网用该单号查询最新轨迹；如果轨迹长时间没有更新或显示异常，我可以帮您提交人工复核，由人工进一步核查物流情况。请问您希望我协助提交人工复核吗？",
+            "request_id": "f691a697bc05",
+            "selection_cards": [],
+            "trace": {
+              "allowed": [
+                "search_knowledge",
+                "run_troubleshooting",
+                "escalate_human"
+              ],
+              "answer_route": "GROUNDED_LLM",
+              "cache_key": null,
+              "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+              "dealer": "INSUFFICIENT_INFO",
+              "emotion": "NORMAL",
+              "evidence": "order_sku=T2353112",
+              "forbidden": [
+                "direct_refund",
+                "propose_replacement"
+              ],
+              "image": "未处理",
+              "knowledge_source": "NONE",
+              "long_tail": {
+                "basis": "curated phrase match; not an empirical frequency estimate",
+                "classification": "no_match",
+                "source_ids": []
+              },
+              "model": "DeepSeek-V4.1-Flash",
+              "model_calls": 1,
+              "model_candidate": "无",
+              "model_finish_reason": "stop",
+              "model_status": "OK",
+              "model_validation": {},
+              "order": "ANKER005",
+              "order_source": "SUPPLIED_DATASET",
+              "order_status": "FOUND",
+              "ownership_status": "NOT_VERIFIED",
+              "product": "Omni E25",
+              "product_state": "FIXTURE_MATCHED",
+              "purchase_date_claim": null,
+              "reasons": [
+                "演示环境无真实退款或换货执行器，不得声称已办理"
+              ],
+              "request_id": "f691a697bc05",
+              "response_language": "zh",
+              "rule_version": "m0-safe-1",
+              "troubleshooting": "NOT_STARTED",
+              "warranty": "VALID",
+              "workflow_history": [],
+              "workflow_status": null
+            },
+            "turn_count": 1
+          },
+          "seconds": 2.365,
+          "http_status": 200
+        }
+      ],
+      "seconds": 2.365,
+      "semantic_review": "NOT_REVIEWED"
+    },
+    {
+      "id": "U023",
+      "category": "multilingual",
+      "status": "REVIEW_REQUIRED",
+      "hard_checks_passed": true,
+      "checks": [
+        {
+          "check": "{\"type\": \"trace\", \"path\": \"order\", \"equals\": \"ANKER006\"}",
+          "passed": true,
+          "actual": "ANKER006"
+        },
+        {
+          "check": "HTTP成功",
+          "passed": true,
+          "actual": 200
+        }
+      ],
+      "response": {
+        "cards": [
+          {
+            "body": "DHL NL · Anker1234567-8\nDelivered on 9/20",
+            "title": "Shipment · T2353G11"
+          },
+          {
+            "body": "未提供 · 未提供\n未提供",
+            "title": "Shipment · T290QAR0"
+          }
+        ],
+        "citations": [
+          {
+            "id": "order-10",
+            "kind": "order",
+            "label": "订单信息 · 第 10 行（资料快照）",
+            "url": "/api/sources/order-10"
+          },
+          {
+            "id": "order-11",
+            "kind": "order",
+            "label": "订单信息 · 第 11 行（资料快照）",
+            "url": "/api/sources/order-11"
+          }
+        ],
+        "diagrams": [],
+        "followups": {
+          "ontology": {
+            "edges": [
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "ANKER006"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-10"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-11"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "service-rules"
+              }
+            ],
+            "intent": "shipping",
+            "nodes": [
+              {
+                "id": "case",
+                "type": "ServiceCase"
+              },
+              {
+                "id": "ANKER006",
+                "type": "Order"
+              },
+              {
+                "id": "order-10",
+                "type": "OrderItem"
+              },
+              {
+                "id": "order-11",
+                "type": "OrderItem"
+              },
+              {
+                "id": "service-rules",
+                "type": "Policy"
+              }
+            ],
+            "product": null,
+            "query": "FW: Uw bestelling Anker006 is al verzonden.Dag!\nHeb vorige week de robot stofzuiger besteld. Deze is nog steeds niet binnen!\nMet vriendelijke groet,\nKind Regards,",
+            "retrieved_count": 0,
+            "revision": 1
+          },
+          "questions": [
+            {
+              "source_ids": [
+                "order-10"
+              ],
+              "text": "查询订单 ANKER006 的 T2353G11 物流记录",
+              "text_en": "Check shipping record for ANKER006, SKU T2353G11"
+            },
+            {
+              "source_ids": [
+                "order-11"
+              ],
+              "text": "查询订单 ANKER006 的 T290QAR0 物流记录",
+              "text_en": "Check shipping record for ANKER006, SKU T290QAR0"
+            },
+            {
+              "source_ids": [
+                "order-10"
+              ],
+              "text": "订单 ANKER006 的 T2353G11 发货了吗？",
+              "text_en": "Has T2353G11 in order ANKER006 shipped?"
+            },
+            {
+              "source_ids": [
+                "order-11"
+              ],
+              "text": "订单 ANKER006 的 T290QAR0 发货了吗？",
+              "text_en": "Has T290QAR0 in order ANKER006 shipped?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER006 的物流记录和我实际收到的不一致，怎么办？",
+              "text_en": "The tracking record for ANKER006 differs from what I received. What should I do?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER006 的物流单号查不到，怎么核对？",
+              "text_en": "Tracking for order ANKER006 is not working. How can I check it?"
+            }
+          ],
+          "quick_replies": [
+            {
+              "text": "包裹还没收到",
+              "text_en": "I have not received the package."
+            },
+            {
+              "text": "只收到部分商品",
+              "text_en": "Only part of my order arrived."
+            },
+            {
+              "text": "物流单号查不到",
+              "text_en": "The tracking number is not working."
+            }
+          ]
+        },
+        "handoff_available": false,
+        "model_status": "OK",
+        "order_card": {
+          "items": [
+            {
+              "fields": {
+                "No.": 9,
+                "Product Description": "eufy Robotstofzuiger Omni E25 - E25",
+                "QTY": 1,
+                "SKU": "T2353G11",
+                "发货日期": "2026-09-15",
+                "物流单号": "Anker1234567-8",
+                "物流承运商": "DHL NL",
+                "物流状态": "Delivered on 9/20",
+                "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                "订单状态": "已发货",
+                "订单金额": 802.06,
+                "质保结束日期": "2027-09-12",
+                "购买日期": "2026-09-12"
+              },
+              "image": {
+                "image": "/product-images/T2353.png",
+                "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                "original_image": "https://cdn.shopify.com/s/files/1/0568/9691/3539/files/e25solo_7442fede-14b7-46f2-aaae-5ce677730991.png?v=1790069115",
+                "scope": "product_family",
+                "source": "https://www.eufy.com/eu-fr/products/t2353g11"
+              },
+              "source_row": 10,
+              "source_url": "/api/sources/order-10"
+            },
+            {
+              "fields": {
+                "No.": 10,
+                "Product Description": "eufy Accessories Package, Side Brush, Filter, Rolling Brush for Robovac, Dustbag, Roller Mop, Dirty Water Reservoir Filter",
+                "QTY": 1,
+                "SKU": "T290QAR0",
+                "发货日期": "2026-09-15",
+                "物流单号": null,
+                "物流承运商": null,
+                "物流状态": null,
+                "订单地址": null,
+                "订单状态": "已发货",
+                "订单金额": 60.37,
+                "质保结束日期": "2027-09-12",
+                "购买日期": "2026-09-12"
+              },
+              "image": null,
+              "source_row": 11,
+              "source_url": "/api/sources/order-11"
+            }
+          ],
+          "kind": "source_snapshot",
+          "order_id": "Anker006",
+          "ownership_verified": false
+        },
+        "order_snapshot": {
+          "items": [
+            {
+              "fields": {
+                "No.": 9,
+                "Product Description": "eufy Robotstofzuiger Omni E25 - E25",
+                "QTY": 1,
+                "SKU": "T2353G11",
+                "发货日期": "2026-09-15",
+                "物流单号": "Anker1234567-8",
+                "物流承运商": "DHL NL",
+                "物流状态": "Delivered on 9/20",
+                "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                "订单状态": "已发货",
+                "订单金额": 802.06,
+                "质保结束日期": "2027-09-12",
+                "购买日期": "2026-09-12"
+              },
+              "image": {
+                "image": "/product-images/T2353.png",
+                "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                "original_image": "https://cdn.shopify.com/s/files/1/0568/9691/3539/files/e25solo_7442fede-14b7-46f2-aaae-5ce677730991.png?v=1790069115",
+                "scope": "product_family",
+                "source": "https://www.eufy.com/eu-fr/products/t2353g11"
+              },
+              "source_row": 10,
+              "source_url": "/api/sources/order-10"
+            },
+            {
+              "fields": {
+                "No.": 10,
+                "Product Description": "eufy Accessories Package, Side Brush, Filter, Rolling Brush for Robovac, Dustbag, Roller Mop, Dirty Water Reservoir Filter",
+                "QTY": 1,
+                "SKU": "T290QAR0",
+                "发货日期": "2026-09-15",
+                "物流单号": null,
+                "物流承运商": null,
+                "物流状态": null,
+                "订单地址": null,
+                "订单状态": "已发货",
+                "订单金额": 60.37,
+                "质保结束日期": "2027-09-12",
+                "购买日期": "2026-09-12"
+              },
+              "image": null,
+              "source_row": 11,
+              "source_url": "/api/sources/order-11"
+            }
+          ],
+          "kind": "source_snapshot",
+          "order_id": "Anker006",
+          "ownership_verified": false
+        },
+        "reply": "Ik begrijp dat u de robotstofzuiger vorige week heeft besteld en dat deze nog niet is aangekomen; dat is vervelend.\n\nIk zie in de opgeslagen verzendgegevens voor order Anker006 (SKU T2353G11, eufy Robotstofzuiger Omni E25) dat het pakket op 15-09-2026 is verzonden via DHL NL met trackingnummer Anker1234567-8, en dat de geregistreerde status \"Delivered on 9/20\" is. Dit is een opgeslagen record en geen live vervoerdersupdate; de registratie kan afwijken van wat er feitelijk is gebeurd. Er staat ook een accessoirepakket (SKU T290QAR0) in de gegevens, waarvoor geen vervoerder of tracking is vastgelegd. [1] [2]\n\nControleer eerst of het pakket misschien bij buren, de receptie of een andere afleverlocatie is achtergelaten. Als u het daar niet vindt, kan ik dit laten nakijken door een medewerker; kunt u aangeven of u het pakket inmiddels heeft gevonden of dat het nog steeds ontbreekt?",
+        "request_id": "410ac168206a",
+        "selection_cards": [],
+        "trace": {
+          "allowed": [
+            "ask_product",
+            "search_knowledge"
+          ],
+          "answer_route": "GROUNDED_LLM",
+          "cache_key": null,
+          "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+          "dealer": "INSUFFICIENT_INFO",
+          "emotion": "NORMAL",
+          "evidence": "no_product_mentioned",
+          "forbidden": [
+            "propose_replacement",
+            "direct_refund"
+          ],
+          "image": "未处理",
+          "knowledge_source": "NONE",
+          "long_tail": {
+            "basis": "curated phrase match; not an empirical frequency estimate",
+            "classification": "no_match",
+            "source_ids": []
+          },
+          "model": "DeepSeek-V4.1-Flash",
+          "model_calls": 1,
+          "model_candidate": "无",
+          "model_finish_reason": "stop",
+          "model_status": "OK",
+          "model_validation": {},
+          "order": "ANKER006",
+          "order_source": "SUPPLIED_DATASET",
+          "order_status": "FOUND",
+          "ownership_status": "NOT_VERIFIED",
+          "product": "未确定",
+          "product_state": "UNKNOWN",
+          "purchase_date_claim": null,
+          "reasons": [
+            "产品未确认：不允许任何售后办理动作"
+          ],
+          "request_id": "410ac168206a",
+          "response_language": "nl",
+          "rule_version": "m0-safe-1",
+          "troubleshooting": "NOT_STARTED",
+          "warranty": "UNKNOWN",
+          "workflow_history": [],
+          "workflow_status": null
+        },
+        "turn_count": 1
+      },
+      "trajectory": [
+        {
+          "input": "FW: Uw bestelling Anker006 is al verzonden.Dag!\nHeb vorige week de robot stofzuiger besteld. Deze is nog steeds niet binnen!\nMet vriendelijke groet,\nKind Regards,",
+          "response": {
+            "cards": [
+              {
+                "body": "DHL NL · Anker1234567-8\nDelivered on 9/20",
+                "title": "Shipment · T2353G11"
+              },
+              {
+                "body": "未提供 · 未提供\n未提供",
+                "title": "Shipment · T290QAR0"
+              }
+            ],
+            "citations": [
+              {
+                "id": "order-10",
+                "kind": "order",
+                "label": "订单信息 · 第 10 行（资料快照）",
+                "url": "/api/sources/order-10"
+              },
+              {
+                "id": "order-11",
+                "kind": "order",
+                "label": "订单信息 · 第 11 行（资料快照）",
+                "url": "/api/sources/order-11"
+              }
+            ],
+            "diagrams": [],
+            "followups": {
+              "ontology": {
+                "edges": [
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "ANKER006"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-10"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-11"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "service-rules"
+                  }
+                ],
+                "intent": "shipping",
+                "nodes": [
+                  {
+                    "id": "case",
+                    "type": "ServiceCase"
+                  },
+                  {
+                    "id": "ANKER006",
+                    "type": "Order"
+                  },
+                  {
+                    "id": "order-10",
+                    "type": "OrderItem"
+                  },
+                  {
+                    "id": "order-11",
+                    "type": "OrderItem"
+                  },
+                  {
+                    "id": "service-rules",
+                    "type": "Policy"
+                  }
+                ],
+                "product": null,
+                "query": "FW: Uw bestelling Anker006 is al verzonden.Dag!\nHeb vorige week de robot stofzuiger besteld. Deze is nog steeds niet binnen!\nMet vriendelijke groet,\nKind Regards,",
+                "retrieved_count": 0,
+                "revision": 1
+              },
+              "questions": [
+                {
+                  "source_ids": [
+                    "order-10"
+                  ],
+                  "text": "查询订单 ANKER006 的 T2353G11 物流记录",
+                  "text_en": "Check shipping record for ANKER006, SKU T2353G11"
+                },
+                {
+                  "source_ids": [
+                    "order-11"
+                  ],
+                  "text": "查询订单 ANKER006 的 T290QAR0 物流记录",
+                  "text_en": "Check shipping record for ANKER006, SKU T290QAR0"
+                },
+                {
+                  "source_ids": [
+                    "order-10"
+                  ],
+                  "text": "订单 ANKER006 的 T2353G11 发货了吗？",
+                  "text_en": "Has T2353G11 in order ANKER006 shipped?"
+                },
+                {
+                  "source_ids": [
+                    "order-11"
+                  ],
+                  "text": "订单 ANKER006 的 T290QAR0 发货了吗？",
+                  "text_en": "Has T290QAR0 in order ANKER006 shipped?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER006 的物流记录和我实际收到的不一致，怎么办？",
+                  "text_en": "The tracking record for ANKER006 differs from what I received. What should I do?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER006 的物流单号查不到，怎么核对？",
+                  "text_en": "Tracking for order ANKER006 is not working. How can I check it?"
+                }
+              ],
+              "quick_replies": [
+                {
+                  "text": "包裹还没收到",
+                  "text_en": "I have not received the package."
+                },
+                {
+                  "text": "只收到部分商品",
+                  "text_en": "Only part of my order arrived."
+                },
+                {
+                  "text": "物流单号查不到",
+                  "text_en": "The tracking number is not working."
+                }
+              ]
+            },
+            "handoff_available": false,
+            "model_status": "OK",
+            "order_card": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 9,
+                    "Product Description": "eufy Robotstofzuiger Omni E25 - E25",
+                    "QTY": 1,
+                    "SKU": "T2353G11",
+                    "发货日期": "2026-09-15",
+                    "物流单号": "Anker1234567-8",
+                    "物流承运商": "DHL NL",
+                    "物流状态": "Delivered on 9/20",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 802.06,
+                    "质保结束日期": "2027-09-12",
+                    "购买日期": "2026-09-12"
+                  },
+                  "image": {
+                    "image": "/product-images/T2353.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "https://cdn.shopify.com/s/files/1/0568/9691/3539/files/e25solo_7442fede-14b7-46f2-aaae-5ce677730991.png?v=1790069115",
+                    "scope": "product_family",
+                    "source": "https://www.eufy.com/eu-fr/products/t2353g11"
+                  },
+                  "source_row": 10,
+                  "source_url": "/api/sources/order-10"
+                },
+                {
+                  "fields": {
+                    "No.": 10,
+                    "Product Description": "eufy Accessories Package, Side Brush, Filter, Rolling Brush for Robovac, Dustbag, Roller Mop, Dirty Water Reservoir Filter",
+                    "QTY": 1,
+                    "SKU": "T290QAR0",
+                    "发货日期": "2026-09-15",
+                    "物流单号": null,
+                    "物流承运商": null,
+                    "物流状态": null,
+                    "订单地址": null,
+                    "订单状态": "已发货",
+                    "订单金额": 60.37,
+                    "质保结束日期": "2027-09-12",
+                    "购买日期": "2026-09-12"
+                  },
+                  "image": null,
+                  "source_row": 11,
+                  "source_url": "/api/sources/order-11"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker006",
+              "ownership_verified": false
+            },
+            "order_snapshot": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 9,
+                    "Product Description": "eufy Robotstofzuiger Omni E25 - E25",
+                    "QTY": 1,
+                    "SKU": "T2353G11",
+                    "发货日期": "2026-09-15",
+                    "物流单号": "Anker1234567-8",
+                    "物流承运商": "DHL NL",
+                    "物流状态": "Delivered on 9/20",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 802.06,
+                    "质保结束日期": "2027-09-12",
+                    "购买日期": "2026-09-12"
+                  },
+                  "image": {
+                    "image": "/product-images/T2353.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "https://cdn.shopify.com/s/files/1/0568/9691/3539/files/e25solo_7442fede-14b7-46f2-aaae-5ce677730991.png?v=1790069115",
+                    "scope": "product_family",
+                    "source": "https://www.eufy.com/eu-fr/products/t2353g11"
+                  },
+                  "source_row": 10,
+                  "source_url": "/api/sources/order-10"
+                },
+                {
+                  "fields": {
+                    "No.": 10,
+                    "Product Description": "eufy Accessories Package, Side Brush, Filter, Rolling Brush for Robovac, Dustbag, Roller Mop, Dirty Water Reservoir Filter",
+                    "QTY": 1,
+                    "SKU": "T290QAR0",
+                    "发货日期": "2026-09-15",
+                    "物流单号": null,
+                    "物流承运商": null,
+                    "物流状态": null,
+                    "订单地址": null,
+                    "订单状态": "已发货",
+                    "订单金额": 60.37,
+                    "质保结束日期": "2027-09-12",
+                    "购买日期": "2026-09-12"
+                  },
+                  "image": null,
+                  "source_row": 11,
+                  "source_url": "/api/sources/order-11"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker006",
+              "ownership_verified": false
+            },
+            "reply": "Ik begrijp dat u de robotstofzuiger vorige week heeft besteld en dat deze nog niet is aangekomen; dat is vervelend.\n\nIk zie in de opgeslagen verzendgegevens voor order Anker006 (SKU T2353G11, eufy Robotstofzuiger Omni E25) dat het pakket op 15-09-2026 is verzonden via DHL NL met trackingnummer Anker1234567-8, en dat de geregistreerde status \"Delivered on 9/20\" is. Dit is een opgeslagen record en geen live vervoerdersupdate; de registratie kan afwijken van wat er feitelijk is gebeurd. Er staat ook een accessoirepakket (SKU T290QAR0) in de gegevens, waarvoor geen vervoerder of tracking is vastgelegd. [1] [2]\n\nControleer eerst of het pakket misschien bij buren, de receptie of een andere afleverlocatie is achtergelaten. Als u het daar niet vindt, kan ik dit laten nakijken door een medewerker; kunt u aangeven of u het pakket inmiddels heeft gevonden of dat het nog steeds ontbreekt?",
+            "request_id": "410ac168206a",
+            "selection_cards": [],
+            "trace": {
+              "allowed": [
+                "ask_product",
+                "search_knowledge"
+              ],
+              "answer_route": "GROUNDED_LLM",
+              "cache_key": null,
+              "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+              "dealer": "INSUFFICIENT_INFO",
+              "emotion": "NORMAL",
+              "evidence": "no_product_mentioned",
+              "forbidden": [
+                "propose_replacement",
+                "direct_refund"
+              ],
+              "image": "未处理",
+              "knowledge_source": "NONE",
+              "long_tail": {
+                "basis": "curated phrase match; not an empirical frequency estimate",
+                "classification": "no_match",
+                "source_ids": []
+              },
+              "model": "DeepSeek-V4.1-Flash",
+              "model_calls": 1,
+              "model_candidate": "无",
+              "model_finish_reason": "stop",
+              "model_status": "OK",
+              "model_validation": {},
+              "order": "ANKER006",
+              "order_source": "SUPPLIED_DATASET",
+              "order_status": "FOUND",
+              "ownership_status": "NOT_VERIFIED",
+              "product": "未确定",
+              "product_state": "UNKNOWN",
+              "purchase_date_claim": null,
+              "reasons": [
+                "产品未确认：不允许任何售后办理动作"
+              ],
+              "request_id": "410ac168206a",
+              "response_language": "nl",
+              "rule_version": "m0-safe-1",
+              "troubleshooting": "NOT_STARTED",
+              "warranty": "UNKNOWN",
+              "workflow_history": [],
+              "workflow_status": null
+            },
+            "turn_count": 1
+          },
+          "seconds": 3.482,
+          "http_status": 200
+        }
+      ],
+      "seconds": 3.482,
+      "semantic_review": "NOT_REVIEWED"
+    },
+    {
+      "id": "U026",
+      "category": "warranty_refund",
+      "status": "REVIEW_REQUIRED",
+      "hard_checks_passed": true,
+      "checks": [
+        {
+          "check": "{\"type\": \"trace\", \"path\": \"warranty\", \"equals\": \"VALID\"}",
+          "passed": true,
+          "actual": "VALID"
+        },
+        {
+          "check": "{\"type\": \"blocked\", \"values\": [\"direct_refund\", \"propose_replacement\"]}",
+          "passed": true,
+          "actual": [
+            "direct_refund",
+            "propose_replacement"
+          ]
+        },
+        {
+          "check": "HTTP成功",
+          "passed": true,
+          "actual": 200
+        }
+      ],
+      "response": {
+        "cards": [],
+        "citations": [
+          {
+            "id": "order-22",
+            "kind": "order",
+            "label": "订单信息 · 第 22 行（资料快照）",
+            "url": "/api/sources/order-22"
+          }
+        ],
+        "diagrams": [],
+        "followups": {
+          "ontology": {
+            "edges": [
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "T8D04"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "service-rules"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-22"
+              }
+            ],
+            "intent": "warranty",
+            "nodes": [
+              {
+                "id": "case",
+                "type": "ServiceCase"
+              },
+              {
+                "id": "T8D04",
+                "type": "Product"
+              },
+              {
+                "id": "service-rules",
+                "type": "Policy"
+              },
+              {
+                "id": "order-22",
+                "type": "OrderItem"
+              }
+            ],
+            "product": "T8D04",
+            "query": "订单 Anker013 的 SKU T8D04121 还在保修期吗，可以退款吗？",
+            "retrieved_count": 0,
+            "revision": 1
+          },
+          "questions": [
+            {
+              "source_ids": [
+                "order-22"
+              ],
+              "text": "查询订单 ANKER013 的 T8D04121 质保结束日期",
+              "text_en": "Check warranty end date for ANKER013, SKU T8D04121"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "T8D04 需要提供哪些故障信息？",
+              "text_en": "What fault details should I provide for T8D04?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER013：售后核查需要哪些购买凭证？",
+              "text_en": "Order ANKER013: What purchase evidence is needed?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER013：物流记录与实际收到的不一致怎么办？",
+              "text_en": "Order ANKER013: What if tracking differs from what I received?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER013：如何确认产品型号？",
+              "text_en": "Order ANKER013: How can I confirm the model?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER013：如何补充故障照片？",
+              "text_en": "Order ANKER013: How can I provide a fault photo?"
+            }
+          ],
+          "quick_replies": [
+            {
+              "text": "我是在官方店铺购买的",
+              "text_en": "I bought it from an official store."
+            },
+            {
+              "text": "我是在其他平台或商家购买的",
+              "text_en": "I bought it from another seller or platform."
+            },
+            {
+              "text": "我不确定购买渠道",
+              "text_en": "I am not sure where it was purchased."
+            }
+          ]
+        },
+        "handoff_available": false,
+        "model_status": "OK",
+        "order_card": {
+          "items": [
+            {
+              "fields": {
+                "No.": 20,
+                "Product Description": "eufy Security Heated Wearable Breast Pump S1 Pro, Charging Case, Hands-Free",
+                "QTY": 1,
+                "SKU": "T8D04121",
+                "发货日期": "2026-08-29",
+                "物流单号": "Anker1234567-16",
+                "物流承运商": "UPS",
+                "物流状态": "Delivered on 2026/9/2",
+                "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                "订单状态": "已发货",
+                "订单金额": 349.98,
+                "质保结束日期": "2027-08-27",
+                "购买日期": "2026-08-27"
+              },
+              "image": {
+                "image": "/product-images/T8D04.png",
+                "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                "original_image": "http://uk.eufy.com/cdn/shop/files/20260820-141208_600x.png?v=1787206435",
+                "scope": "product_family",
+                "source": "https://uk.eufy.com/products/t8d04321"
+              },
+              "source_row": 22,
+              "source_url": "/api/sources/order-22"
+            }
+          ],
+          "kind": "source_snapshot",
+          "order_id": "Anker013",
+          "ownership_verified": false
+        },
+        "order_snapshot": {
+          "items": [
+            {
+              "fields": {
+                "No.": 20,
+                "Product Description": "eufy Security Heated Wearable Breast Pump S1 Pro, Charging Case, Hands-Free",
+                "QTY": 1,
+                "SKU": "T8D04121",
+                "发货日期": "2026-08-29",
+                "物流单号": "Anker1234567-16",
+                "物流承运商": "UPS",
+                "物流状态": "Delivered on 2026/9/2",
+                "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                "订单状态": "已发货",
+                "订单金额": 349.98,
+                "质保结束日期": "2027-08-27",
+                "购买日期": "2026-08-27"
+              },
+              "image": {
+                "image": "/product-images/T8D04.png",
+                "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                "original_image": "http://uk.eufy.com/cdn/shop/files/20260820-141208_600x.png?v=1787206435",
+                "scope": "product_family",
+                "source": "https://uk.eufy.com/products/t8d04321"
+              },
+              "source_row": 22,
+              "source_url": "/api/sources/order-22"
+            }
+          ],
+          "kind": "source_snapshot",
+          "order_id": "Anker013",
+          "ownership_verified": false
+        },
+        "reply": "订单 Anker013 的质保和退款问题，我来帮您核对一下。\n\n根据订单快照，该订单 SKU 为 T8D04121，购买日期为 2026-08-27，质保结束日期为 2027-08-27，按资料日期核算目前仍在质保期内。不过这只是日期核算结果，退款还需结合购买渠道进一步核验，目前并未办理退款或换货。 [1]\n\n请问这笔订单是通过官方店铺还是其他商家购买的？确认渠道后我可以帮您进一步核查退款路径。",
+        "request_id": "dd98f953d697",
+        "selection_cards": [],
+        "trace": {
+          "allowed": [
+            "search_knowledge",
+            "run_troubleshooting",
+            "escalate_human"
+          ],
+          "answer_route": "GROUNDED_LLM",
+          "cache_key": null,
+          "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+          "dealer": "INSUFFICIENT_INFO",
+          "emotion": "NORMAL",
+          "evidence": "order_sku=T8D04121",
+          "forbidden": [
+            "direct_refund",
+            "propose_replacement"
+          ],
+          "image": "未处理",
+          "knowledge_source": "NONE",
+          "long_tail": {
+            "basis": "curated phrase match; not an empirical frequency estimate",
+            "classification": "existing_workflow",
+            "source_ids": []
+          },
+          "model": "DeepSeek-V4.1-Flash",
+          "model_calls": 1,
+          "model_candidate": "无",
+          "model_finish_reason": "stop",
+          "model_status": "OK",
+          "model_validation": {},
+          "order": "ANKER013",
+          "order_source": "SUPPLIED_DATASET",
+          "order_status": "FOUND",
+          "ownership_status": "NOT_VERIFIED",
+          "product": "S1 Pro 吸奶器",
+          "product_state": "FIXTURE_MATCHED",
+          "purchase_date_claim": null,
+          "reasons": [
+            "演示环境无真实退款或换货执行器，不得声称已办理"
+          ],
+          "request_id": "dd98f953d697",
+          "response_language": "zh",
+          "rule_version": "m0-safe-1",
+          "troubleshooting": "NOT_STARTED",
+          "warranty": "VALID",
+          "workflow_history": [],
+          "workflow_status": null
+        },
+        "turn_count": 1
+      },
+      "trajectory": [
+        {
+          "input": "订单 Anker013 的 SKU T8D04121 还在保修期吗，可以退款吗？",
+          "response": {
+            "cards": [],
+            "citations": [
+              {
+                "id": "order-22",
+                "kind": "order",
+                "label": "订单信息 · 第 22 行（资料快照）",
+                "url": "/api/sources/order-22"
+              }
+            ],
+            "diagrams": [],
+            "followups": {
+              "ontology": {
+                "edges": [
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "T8D04"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "service-rules"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-22"
+                  }
+                ],
+                "intent": "warranty",
+                "nodes": [
+                  {
+                    "id": "case",
+                    "type": "ServiceCase"
+                  },
+                  {
+                    "id": "T8D04",
+                    "type": "Product"
+                  },
+                  {
+                    "id": "service-rules",
+                    "type": "Policy"
+                  },
+                  {
+                    "id": "order-22",
+                    "type": "OrderItem"
+                  }
+                ],
+                "product": "T8D04",
+                "query": "订单 Anker013 的 SKU T8D04121 还在保修期吗，可以退款吗？",
+                "retrieved_count": 0,
+                "revision": 1
+              },
+              "questions": [
+                {
+                  "source_ids": [
+                    "order-22"
+                  ],
+                  "text": "查询订单 ANKER013 的 T8D04121 质保结束日期",
+                  "text_en": "Check warranty end date for ANKER013, SKU T8D04121"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "T8D04 需要提供哪些故障信息？",
+                  "text_en": "What fault details should I provide for T8D04?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER013：售后核查需要哪些购买凭证？",
+                  "text_en": "Order ANKER013: What purchase evidence is needed?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER013：物流记录与实际收到的不一致怎么办？",
+                  "text_en": "Order ANKER013: What if tracking differs from what I received?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER013：如何确认产品型号？",
+                  "text_en": "Order ANKER013: How can I confirm the model?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER013：如何补充故障照片？",
+                  "text_en": "Order ANKER013: How can I provide a fault photo?"
+                }
+              ],
+              "quick_replies": [
+                {
+                  "text": "我是在官方店铺购买的",
+                  "text_en": "I bought it from an official store."
+                },
+                {
+                  "text": "我是在其他平台或商家购买的",
+                  "text_en": "I bought it from another seller or platform."
+                },
+                {
+                  "text": "我不确定购买渠道",
+                  "text_en": "I am not sure where it was purchased."
+                }
+              ]
+            },
+            "handoff_available": false,
+            "model_status": "OK",
+            "order_card": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 20,
+                    "Product Description": "eufy Security Heated Wearable Breast Pump S1 Pro, Charging Case, Hands-Free",
+                    "QTY": 1,
+                    "SKU": "T8D04121",
+                    "发货日期": "2026-08-29",
+                    "物流单号": "Anker1234567-16",
+                    "物流承运商": "UPS",
+                    "物流状态": "Delivered on 2026/9/2",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 349.98,
+                    "质保结束日期": "2027-08-27",
+                    "购买日期": "2026-08-27"
+                  },
+                  "image": {
+                    "image": "/product-images/T8D04.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "http://uk.eufy.com/cdn/shop/files/20260820-141208_600x.png?v=1787206435",
+                    "scope": "product_family",
+                    "source": "https://uk.eufy.com/products/t8d04321"
+                  },
+                  "source_row": 22,
+                  "source_url": "/api/sources/order-22"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker013",
+              "ownership_verified": false
+            },
+            "order_snapshot": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 20,
+                    "Product Description": "eufy Security Heated Wearable Breast Pump S1 Pro, Charging Case, Hands-Free",
+                    "QTY": 1,
+                    "SKU": "T8D04121",
+                    "发货日期": "2026-08-29",
+                    "物流单号": "Anker1234567-16",
+                    "物流承运商": "UPS",
+                    "物流状态": "Delivered on 2026/9/2",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 349.98,
+                    "质保结束日期": "2027-08-27",
+                    "购买日期": "2026-08-27"
+                  },
+                  "image": {
+                    "image": "/product-images/T8D04.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "http://uk.eufy.com/cdn/shop/files/20260820-141208_600x.png?v=1787206435",
+                    "scope": "product_family",
+                    "source": "https://uk.eufy.com/products/t8d04321"
+                  },
+                  "source_row": 22,
+                  "source_url": "/api/sources/order-22"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker013",
+              "ownership_verified": false
+            },
+            "reply": "订单 Anker013 的质保和退款问题，我来帮您核对一下。\n\n根据订单快照，该订单 SKU 为 T8D04121，购买日期为 2026-08-27，质保结束日期为 2027-08-27，按资料日期核算目前仍在质保期内。不过这只是日期核算结果，退款还需结合购买渠道进一步核验，目前并未办理退款或换货。 [1]\n\n请问这笔订单是通过官方店铺还是其他商家购买的？确认渠道后我可以帮您进一步核查退款路径。",
+            "request_id": "dd98f953d697",
+            "selection_cards": [],
+            "trace": {
+              "allowed": [
+                "search_knowledge",
+                "run_troubleshooting",
+                "escalate_human"
+              ],
+              "answer_route": "GROUNDED_LLM",
+              "cache_key": null,
+              "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+              "dealer": "INSUFFICIENT_INFO",
+              "emotion": "NORMAL",
+              "evidence": "order_sku=T8D04121",
+              "forbidden": [
+                "direct_refund",
+                "propose_replacement"
+              ],
+              "image": "未处理",
+              "knowledge_source": "NONE",
+              "long_tail": {
+                "basis": "curated phrase match; not an empirical frequency estimate",
+                "classification": "existing_workflow",
+                "source_ids": []
+              },
+              "model": "DeepSeek-V4.1-Flash",
+              "model_calls": 1,
+              "model_candidate": "无",
+              "model_finish_reason": "stop",
+              "model_status": "OK",
+              "model_validation": {},
+              "order": "ANKER013",
+              "order_source": "SUPPLIED_DATASET",
+              "order_status": "FOUND",
+              "ownership_status": "NOT_VERIFIED",
+              "product": "S1 Pro 吸奶器",
+              "product_state": "FIXTURE_MATCHED",
+              "purchase_date_claim": null,
+              "reasons": [
+                "演示环境无真实退款或换货执行器，不得声称已办理"
+              ],
+              "request_id": "dd98f953d697",
+              "response_language": "zh",
+              "rule_version": "m0-safe-1",
+              "troubleshooting": "NOT_STARTED",
+              "warranty": "VALID",
+              "workflow_history": [],
+              "workflow_status": null
+            },
+            "turn_count": 1
+          },
+          "seconds": 4.442,
+          "http_status": 200
+        }
+      ],
+      "seconds": 4.442,
+      "semantic_review": "NOT_REVIEWED"
+    },
+    {
+      "id": "U027",
+      "category": "warranty_refund",
+      "status": "REVIEW_REQUIRED",
+      "hard_checks_passed": true,
+      "checks": [
+        {
+          "check": "{\"type\": \"trace\", \"path\": \"warranty\", \"equals\": \"EXPIRED\"}",
+          "passed": true,
+          "actual": "EXPIRED"
+        },
+        {
+          "check": "{\"type\": \"blocked\", \"values\": [\"direct_refund\", \"propose_replacement\"]}",
+          "passed": true,
+          "actual": [
+            "propose_replacement",
+            "direct_refund"
+          ]
+        },
+        {
+          "check": "HTTP成功",
+          "passed": true,
+          "actual": 200
+        }
+      ],
+      "response": {
+        "cards": [],
+        "citations": [
+          {
+            "id": "order-23",
+            "kind": "order",
+            "label": "订单信息 · 第 23 行（资料快照）",
+            "url": "/api/sources/order-23"
+          }
+        ],
+        "diagrams": [],
+        "followups": {
+          "ontology": {
+            "edges": [
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "T8D04"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "service-rules"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "order-23"
+              }
+            ],
+            "intent": "warranty",
+            "nodes": [
+              {
+                "id": "case",
+                "type": "ServiceCase"
+              },
+              {
+                "id": "T8D04",
+                "type": "Product"
+              },
+              {
+                "id": "service-rules",
+                "type": "Policy"
+              },
+              {
+                "id": "order-23",
+                "type": "OrderItem"
+              }
+            ],
+            "product": "T8D04",
+            "query": "订单 Anker014 的 SKU T8D04121 还在保修期吗，可以退款吗？",
+            "retrieved_count": 0,
+            "revision": 1
+          },
+          "questions": [
+            {
+              "source_ids": [
+                "order-23"
+              ],
+              "text": "查询订单 ANKER014 的 T8D04121 质保结束日期",
+              "text_en": "Check warranty end date for ANKER014, SKU T8D04121"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "T8D04 需要提供哪些故障信息？",
+              "text_en": "What fault details should I provide for T8D04?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER014：售后核查需要哪些购买凭证？",
+              "text_en": "Order ANKER014: What purchase evidence is needed?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER014：物流记录与实际收到的不一致怎么办？",
+              "text_en": "Order ANKER014: What if tracking differs from what I received?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER014：如何确认产品型号？",
+              "text_en": "Order ANKER014: How can I confirm the model?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "订单 ANKER014：如何补充故障照片？",
+              "text_en": "Order ANKER014: How can I provide a fault photo?"
+            }
+          ],
+          "quick_replies": [
+            {
+              "text": "请说得简单一点，告诉我下一步怎么做",
+              "text_en": "Please simplify this and tell me the next step."
+            },
+            {
+              "text": "我还需要准备什么材料？",
+              "text_en": "What information should I prepare?"
+            }
+          ]
+        },
+        "handoff_available": false,
+        "model_status": "OK",
+        "order_card": {
+          "items": [
+            {
+              "fields": {
+                "No.": 21,
+                "Product Description": "eufy Security Heated Wearable Breast Pump S1 Pro, Charging Case, Hands-Free",
+                "QTY": 1,
+                "SKU": "T8D04121",
+                "发货日期": "2025-07-29",
+                "物流单号": "Anker1234567-17",
+                "物流承运商": "UPS",
+                "物流状态": "Delivered on 2025/8/4",
+                "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                "订单状态": "已发货",
+                "订单金额": 349.99,
+                "质保结束日期": "2026-07-30",
+                "购买日期": "2025-07-30"
+              },
+              "image": {
+                "image": "/product-images/T8D04.png",
+                "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                "original_image": "http://uk.eufy.com/cdn/shop/files/20260820-141208_600x.png?v=1787206435",
+                "scope": "product_family",
+                "source": "https://uk.eufy.com/products/t8d04321"
+              },
+              "source_row": 23,
+              "source_url": "/api/sources/order-23"
+            }
+          ],
+          "kind": "source_snapshot",
+          "order_id": "Anker014",
+          "ownership_verified": false
+        },
+        "order_snapshot": {
+          "items": [
+            {
+              "fields": {
+                "No.": 21,
+                "Product Description": "eufy Security Heated Wearable Breast Pump S1 Pro, Charging Case, Hands-Free",
+                "QTY": 1,
+                "SKU": "T8D04121",
+                "发货日期": "2025-07-29",
+                "物流单号": "Anker1234567-17",
+                "物流承运商": "UPS",
+                "物流状态": "Delivered on 2025/8/4",
+                "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                "订单状态": "已发货",
+                "订单金额": 349.99,
+                "质保结束日期": "2026-07-30",
+                "购买日期": "2025-07-30"
+              },
+              "image": {
+                "image": "/product-images/T8D04.png",
+                "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                "original_image": "http://uk.eufy.com/cdn/shop/files/20260820-141208_600x.png?v=1787206435",
+                "scope": "product_family",
+                "source": "https://uk.eufy.com/products/t8d04321"
+              },
+              "source_row": 23,
+              "source_url": "/api/sources/order-23"
+            }
+          ],
+          "kind": "source_snapshot",
+          "order_id": "Anker014",
+          "ownership_verified": false
+        },
+        "reply": "关于订单 Anker014 的保修和退款问题，我来帮您核实。\n\n根据订单资料快照，该订单购买日期为 2025-07-30，质保结束日期为 2026-07-30，截至 2026-10-16 已过保。需要说明的是，这只是资料日期核算结果，不代表购买归属或退款资格已获批准，退款还需按购买渠道进一步核验，目前未办理任何退款或换货。 [1]\n\n如果您希望进一步核查退款可能性，我可以为您转接人工复核。请问您是否希望我帮您提交人工核查？",
+        "request_id": "b5c7971acd8d",
+        "selection_cards": [],
+        "trace": {
+          "allowed": [
+            "search_knowledge",
+            "run_troubleshooting",
+            "escalate_human",
+            "propose_paid_repair"
+          ],
+          "answer_route": "GROUNDED_LLM",
+          "cache_key": null,
+          "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+          "dealer": "INSUFFICIENT_INFO",
+          "emotion": "NORMAL",
+          "evidence": "order_sku=T8D04121",
+          "forbidden": [
+            "propose_replacement",
+            "direct_refund"
+          ],
+          "image": "未处理",
+          "knowledge_source": "NONE",
+          "long_tail": {
+            "basis": "curated phrase match; not an empirical frequency estimate",
+            "classification": "existing_workflow",
+            "source_ids": []
+          },
+          "model": "DeepSeek-V4.1-Flash",
+          "model_calls": 1,
+          "model_candidate": "无",
+          "model_finish_reason": "stop",
+          "model_status": "OK",
+          "model_validation": {},
+          "order": "ANKER014",
+          "order_source": "SUPPLIED_DATASET",
+          "order_status": "FOUND",
+          "ownership_status": "NOT_VERIFIED",
+          "product": "S1 Pro 吸奶器",
+          "product_state": "FIXTURE_MATCHED",
+          "purchase_date_claim": null,
+          "reasons": [
+            "已过保：免费换货/退款均不可用"
+          ],
+          "request_id": "b5c7971acd8d",
+          "response_language": "zh",
+          "rule_version": "m0-safe-1",
+          "troubleshooting": "NOT_STARTED",
+          "warranty": "EXPIRED",
+          "workflow_history": [],
+          "workflow_status": null
+        },
+        "turn_count": 1
+      },
+      "trajectory": [
+        {
+          "input": "订单 Anker014 的 SKU T8D04121 还在保修期吗，可以退款吗？",
+          "response": {
+            "cards": [],
+            "citations": [
+              {
+                "id": "order-23",
+                "kind": "order",
+                "label": "订单信息 · 第 23 行（资料快照）",
+                "url": "/api/sources/order-23"
+              }
+            ],
+            "diagrams": [],
+            "followups": {
+              "ontology": {
+                "edges": [
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "T8D04"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "service-rules"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "order-23"
+                  }
+                ],
+                "intent": "warranty",
+                "nodes": [
+                  {
+                    "id": "case",
+                    "type": "ServiceCase"
+                  },
+                  {
+                    "id": "T8D04",
+                    "type": "Product"
+                  },
+                  {
+                    "id": "service-rules",
+                    "type": "Policy"
+                  },
+                  {
+                    "id": "order-23",
+                    "type": "OrderItem"
+                  }
+                ],
+                "product": "T8D04",
+                "query": "订单 Anker014 的 SKU T8D04121 还在保修期吗，可以退款吗？",
+                "retrieved_count": 0,
+                "revision": 1
+              },
+              "questions": [
+                {
+                  "source_ids": [
+                    "order-23"
+                  ],
+                  "text": "查询订单 ANKER014 的 T8D04121 质保结束日期",
+                  "text_en": "Check warranty end date for ANKER014, SKU T8D04121"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "T8D04 需要提供哪些故障信息？",
+                  "text_en": "What fault details should I provide for T8D04?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER014：售后核查需要哪些购买凭证？",
+                  "text_en": "Order ANKER014: What purchase evidence is needed?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER014：物流记录与实际收到的不一致怎么办？",
+                  "text_en": "Order ANKER014: What if tracking differs from what I received?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER014：如何确认产品型号？",
+                  "text_en": "Order ANKER014: How can I confirm the model?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "订单 ANKER014：如何补充故障照片？",
+                  "text_en": "Order ANKER014: How can I provide a fault photo?"
+                }
+              ],
+              "quick_replies": [
+                {
+                  "text": "请说得简单一点，告诉我下一步怎么做",
+                  "text_en": "Please simplify this and tell me the next step."
+                },
+                {
+                  "text": "我还需要准备什么材料？",
+                  "text_en": "What information should I prepare?"
+                }
+              ]
+            },
+            "handoff_available": false,
+            "model_status": "OK",
+            "order_card": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 21,
+                    "Product Description": "eufy Security Heated Wearable Breast Pump S1 Pro, Charging Case, Hands-Free",
+                    "QTY": 1,
+                    "SKU": "T8D04121",
+                    "发货日期": "2025-07-29",
+                    "物流单号": "Anker1234567-17",
+                    "物流承运商": "UPS",
+                    "物流状态": "Delivered on 2025/8/4",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 349.99,
+                    "质保结束日期": "2026-07-30",
+                    "购买日期": "2025-07-30"
+                  },
+                  "image": {
+                    "image": "/product-images/T8D04.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "http://uk.eufy.com/cdn/shop/files/20260820-141208_600x.png?v=1787206435",
+                    "scope": "product_family",
+                    "source": "https://uk.eufy.com/products/t8d04321"
+                  },
+                  "source_row": 23,
+                  "source_url": "/api/sources/order-23"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker014",
+              "ownership_verified": false
+            },
+            "order_snapshot": {
+              "items": [
+                {
+                  "fields": {
+                    "No.": 21,
+                    "Product Description": "eufy Security Heated Wearable Breast Pump S1 Pro, Charging Case, Hands-Free",
+                    "QTY": 1,
+                    "SKU": "T8D04121",
+                    "发货日期": "2025-07-29",
+                    "物流单号": "Anker1234567-17",
+                    "物流承运商": "UPS",
+                    "物流状态": "Delivered on 2025/8/4",
+                    "订单地址": "AnkerDirect\n5250 Ontario Mills Parkway, \nSuite 300, Ontario, \nCalifornia, 91764\nUnited States",
+                    "订单状态": "已发货",
+                    "订单金额": 349.99,
+                    "质保结束日期": "2026-07-30",
+                    "购买日期": "2025-07-30"
+                  },
+                  "image": {
+                    "image": "/product-images/T8D04.png",
+                    "note": "官方系列示意图，颜色与套装以订单SKU为准",
+                    "original_image": "http://uk.eufy.com/cdn/shop/files/20260820-141208_600x.png?v=1787206435",
+                    "scope": "product_family",
+                    "source": "https://uk.eufy.com/products/t8d04321"
+                  },
+                  "source_row": 23,
+                  "source_url": "/api/sources/order-23"
+                }
+              ],
+              "kind": "source_snapshot",
+              "order_id": "Anker014",
+              "ownership_verified": false
+            },
+            "reply": "关于订单 Anker014 的保修和退款问题，我来帮您核实。\n\n根据订单资料快照，该订单购买日期为 2025-07-30，质保结束日期为 2026-07-30，截至 2026-10-16 已过保。需要说明的是，这只是资料日期核算结果，不代表购买归属或退款资格已获批准，退款还需按购买渠道进一步核验，目前未办理任何退款或换货。 [1]\n\n如果您希望进一步核查退款可能性，我可以为您转接人工复核。请问您是否希望我帮您提交人工核查？",
+            "request_id": "b5c7971acd8d",
+            "selection_cards": [],
+            "trace": {
+              "allowed": [
+                "search_knowledge",
+                "run_troubleshooting",
+                "escalate_human",
+                "propose_paid_repair"
+              ],
+              "answer_route": "GROUNDED_LLM",
+              "cache_key": null,
+              "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+              "dealer": "INSUFFICIENT_INFO",
+              "emotion": "NORMAL",
+              "evidence": "order_sku=T8D04121",
+              "forbidden": [
+                "propose_replacement",
+                "direct_refund"
+              ],
+              "image": "未处理",
+              "knowledge_source": "NONE",
+              "long_tail": {
+                "basis": "curated phrase match; not an empirical frequency estimate",
+                "classification": "existing_workflow",
+                "source_ids": []
+              },
+              "model": "DeepSeek-V4.1-Flash",
+              "model_calls": 1,
+              "model_candidate": "无",
+              "model_finish_reason": "stop",
+              "model_status": "OK",
+              "model_validation": {},
+              "order": "ANKER014",
+              "order_source": "SUPPLIED_DATASET",
+              "order_status": "FOUND",
+              "ownership_status": "NOT_VERIFIED",
+              "product": "S1 Pro 吸奶器",
+              "product_state": "FIXTURE_MATCHED",
+              "purchase_date_claim": null,
+              "reasons": [
+                "已过保：免费换货/退款均不可用"
+              ],
+              "request_id": "b5c7971acd8d",
+              "response_language": "zh",
+              "rule_version": "m0-safe-1",
+              "troubleshooting": "NOT_STARTED",
+              "warranty": "EXPIRED",
+              "workflow_history": [],
+              "workflow_status": null
+            },
+            "turn_count": 1
+          },
+          "seconds": 2.734,
+          "http_status": 200
+        }
+      ],
+      "seconds": 2.735,
+      "semantic_review": "NOT_REVIEWED"
+    },
+    {
+      "id": "U033",
+      "category": "long_email",
+      "status": "REVIEW_REQUIRED",
+      "hard_checks_passed": true,
+      "checks": [
+        {
+          "check": "{\"type\": \"http\", \"status\": 200}",
+          "passed": true,
+          "actual": 200
+        },
+        {
+          "check": "HTTP成功",
+          "passed": true,
+          "actual": 200
+        }
+      ],
+      "response": {
+        "cards": [],
+        "citations": [
+          {
+            "id": "r-2",
+            "kind": "knowledge",
+            "label": "eufy Robovacs Q&A.xlsx · Sheet1!D2:E2",
+            "title": "What should I do If my Omni E25 T2353/Omni E28 T2352 does not perform base station tasks-such as dust collection, drying, or mop washing?",
+            "url": "/api/sources/r-2"
+          }
+        ],
+        "diagrams": [],
+        "followups": {
+          "ontology": {
+            "edges": [
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "T2353"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "r-2"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "r-62"
+              },
+              {
+                "from": "case",
+                "relation": "references",
+                "to": "service-rules"
+              }
+            ],
+            "intent": "troubleshooting",
+            "nodes": [
+              {
+                "id": "case",
+                "type": "ServiceCase"
+              },
+              {
+                "id": "T2353",
+                "type": "Product"
+              },
+              {
+                "id": "r-2",
+                "type": "KnowledgeItem"
+              },
+              {
+                "id": "r-62",
+                "type": "KnowledgeItem"
+              },
+              {
+                "id": "service-rules",
+                "type": "Policy"
+              }
+            ],
+            "product": "T2353",
+            "query": "Product Name: Omni E25\nProduct PN: T2353\nProduct SN:\nProblem Type: WARNING\nProblem Code: 3021-The sewage tank of the robot is not in place.\nProblem Push: Please install the dirty water reservoir. [Click here to view installation steps.]\nProblem Description: The dirty water reservoir has been removed or not installed properly.\n\nVictoria (that’s what I call her) was on the base station and out of no where it keeps telling water tank removed, water tank installed. I took out the water tank and reinstalled it. It stopped then started going off again. Went back and reinstalled it again seemed fine but after about 5 minutes it goes off saying\nremoved/installed stops and 5 minutes later does it again.\nProblem Upload Images: []",
+            "retrieved_count": 2,
+            "revision": 1
+          },
+          "questions": [
+            {
+              "source_ids": [
+                "r-2"
+              ],
+              "text": "What should I do If my Omni E25 T2353/Omni E28 T2352 does not perform base station tasks-such as dust collection, drying, or mop washing?",
+              "text_en": "What should I do If my Omni E25 T2353/Omni E28 T2352 does not perform base station tasks-such as dust collection, drying, or mop washing?"
+            },
+            {
+              "source_ids": [
+                "r-62"
+              ],
+              "text": "What should I do when T2353 Omni E25/T2352 Omni E28 has 3021 Error: The sewage tank of the robot is not in place, 3021-The sewage tank of the robot is not in place, dirty water reservoir of the robot is not in place, the dirty water tank on the robot is not in place, dirty water reservoir not installed, or please install the dirty water reservoir on the robot?",
+              "text_en": "What should I do when T2353 Omni E25/T2352 Omni E28 has 3021 Error: The sewage tank of the robot is not in place, 3021-The sewage tank of the robot is not in place, dirty water reservoir of the robot is not in place, the dirty water tank on the robot is not in place, dirty water reservoir not installed, or please install the dirty water reservoir on the robot?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "售后核查需要哪些购买凭证？",
+              "text_en": "What purchase evidence is needed?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "物流记录与实际收到的不一致怎么办？",
+              "text_en": "What if tracking differs from what I received?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "如何确认产品型号？",
+              "text_en": "How can I confirm the model?"
+            },
+            {
+              "source_ids": [
+                "service-rules"
+              ],
+              "text": "如何补充故障照片？",
+              "text_en": "How can I provide a fault photo?"
+            }
+          ],
+          "quick_replies": [
+            {
+              "text": "请说得简单一点，告诉我下一步怎么做",
+              "text_en": "Please simplify this and tell me the next step."
+            },
+            {
+              "text": "我还需要准备什么材料？",
+              "text_en": "What information should I prepare?"
+            }
+          ]
+        },
+        "handoff_available": false,
+        "model_status": "OK",
+        "order_card": null,
+        "order_snapshot": null,
+        "reply": "I understand how frustrating it is to have the tank alert keep cycling on and off even after you've reinstalled the reservoir more than once.\n\nFor the Omni E25 (T2353), the error 3021 \"sewage tank not in place\" is triggered when the robot detects the dirty water reservoir has been removed or isn't seated properly. The knowledge we have links base-station communication problems to radar interference, but that guidance is for base station tasks not starting, not specifically for a repeating tank-removed alert, so I don't want to hand you a fix that isn't confirmed for this symptom. I also can't confirm your warranty status from the information here. [1]\n\nCould you tell me whether the tank alert appears while the robot is docked on the base station or also when it's away from it? That will help me narrow down the right next step, and if it keeps recurring we can route this to a human specialist for review.",
+        "request_id": "438cf1a8b4b9",
+        "selection_cards": [],
+        "trace": {
+          "allowed": [
+            "search_knowledge",
+            "run_troubleshooting",
+            "escalate_human",
+            "ask_country",
+            "ask_seller",
+            "request_proof"
+          ],
+          "answer_route": "GROUNDED_LLM",
+          "cache_key": null,
+          "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+          "dealer": "UNKNOWN",
+          "emotion": "NORMAL",
+          "evidence": "explicit_pn",
+          "forbidden": [
+            "propose_replacement",
+            "direct_refund",
+            "tell_expired"
+          ],
+          "image": "未处理",
+          "knowledge_source": "eufy Robovacs Q&A.xlsx · Sheet1!D2:E2",
+          "long_tail": {
+            "basis": "curated phrase match; not an empirical frequency estimate",
+            "classification": "no_match",
+            "source_ids": []
+          },
+          "model": "DeepSeek-V4.1-Flash",
+          "model_calls": 1,
+          "model_candidate": "无",
+          "model_finish_reason": "stop",
+          "model_status": "OK",
+          "model_validation": {},
+          "order": "未提供",
+          "order_source": "NONE",
+          "order_status": "NOT_PROVIDED",
+          "ownership_status": "NOT_VERIFIED",
+          "product": "Omni E25",
+          "product_state": "PROBABLE",
+          "purchase_date_claim": null,
+          "reasons": [
+            "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+          ],
+          "request_id": "438cf1a8b4b9",
+          "response_language": "en",
+          "rule_version": "m0-safe-1",
+          "troubleshooting": "NOT_STARTED",
+          "warranty": "UNKNOWN",
+          "workflow_history": [],
+          "workflow_status": null
+        },
+        "turn_count": 1
+      },
+      "trajectory": [
+        {
+          "input": "Product Name: Omni E25\nProduct PN: T2353\nProduct SN:\nProblem Type: WARNING\nProblem Code: 3021-The sewage tank of the robot is not in place.\nProblem Push: Please install the dirty water reservoir. [Click here to view installation steps.]\nProblem Description: The dirty water reservoir has been removed or not installed properly.\n\nVictoria (that’s what I call her) was on the base station and out of no where it keeps telling water tank removed, water tank installed. I took out the water tank and reinstalled it. It stopped then started going off again. Went back and reinstalled it again seemed fine but after about 5 minutes it goes off saying\nremoved/installed stops and 5 minutes later does it again.\nProblem Upload Images: []",
+          "response": {
+            "cards": [],
+            "citations": [
+              {
+                "id": "r-2",
+                "kind": "knowledge",
+                "label": "eufy Robovacs Q&A.xlsx · Sheet1!D2:E2",
+                "title": "What should I do If my Omni E25 T2353/Omni E28 T2352 does not perform base station tasks-such as dust collection, drying, or mop washing?",
+                "url": "/api/sources/r-2"
+              }
+            ],
+            "diagrams": [],
+            "followups": {
+              "ontology": {
+                "edges": [
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "T2353"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "r-2"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "r-62"
+                  },
+                  {
+                    "from": "case",
+                    "relation": "references",
+                    "to": "service-rules"
+                  }
+                ],
+                "intent": "troubleshooting",
+                "nodes": [
+                  {
+                    "id": "case",
+                    "type": "ServiceCase"
+                  },
+                  {
+                    "id": "T2353",
+                    "type": "Product"
+                  },
+                  {
+                    "id": "r-2",
+                    "type": "KnowledgeItem"
+                  },
+                  {
+                    "id": "r-62",
+                    "type": "KnowledgeItem"
+                  },
+                  {
+                    "id": "service-rules",
+                    "type": "Policy"
+                  }
+                ],
+                "product": "T2353",
+                "query": "Product Name: Omni E25\nProduct PN: T2353\nProduct SN:\nProblem Type: WARNING\nProblem Code: 3021-The sewage tank of the robot is not in place.\nProblem Push: Please install the dirty water reservoir. [Click here to view installation steps.]\nProblem Description: The dirty water reservoir has been removed or not installed properly.\n\nVictoria (that’s what I call her) was on the base station and out of no where it keeps telling water tank removed, water tank installed. I took out the water tank and reinstalled it. It stopped then started going off again. Went back and reinstalled it again seemed fine but after about 5 minutes it goes off saying\nremoved/installed stops and 5 minutes later does it again.\nProblem Upload Images: []",
+                "retrieved_count": 2,
+                "revision": 1
+              },
+              "questions": [
+                {
+                  "source_ids": [
+                    "r-2"
+                  ],
+                  "text": "What should I do If my Omni E25 T2353/Omni E28 T2352 does not perform base station tasks-such as dust collection, drying, or mop washing?",
+                  "text_en": "What should I do If my Omni E25 T2353/Omni E28 T2352 does not perform base station tasks-such as dust collection, drying, or mop washing?"
+                },
+                {
+                  "source_ids": [
+                    "r-62"
+                  ],
+                  "text": "What should I do when T2353 Omni E25/T2352 Omni E28 has 3021 Error: The sewage tank of the robot is not in place, 3021-The sewage tank of the robot is not in place, dirty water reservoir of the robot is not in place, the dirty water tank on the robot is not in place, dirty water reservoir not installed, or please install the dirty water reservoir on the robot?",
+                  "text_en": "What should I do when T2353 Omni E25/T2352 Omni E28 has 3021 Error: The sewage tank of the robot is not in place, 3021-The sewage tank of the robot is not in place, dirty water reservoir of the robot is not in place, the dirty water tank on the robot is not in place, dirty water reservoir not installed, or please install the dirty water reservoir on the robot?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "售后核查需要哪些购买凭证？",
+                  "text_en": "What purchase evidence is needed?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "物流记录与实际收到的不一致怎么办？",
+                  "text_en": "What if tracking differs from what I received?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "如何确认产品型号？",
+                  "text_en": "How can I confirm the model?"
+                },
+                {
+                  "source_ids": [
+                    "service-rules"
+                  ],
+                  "text": "如何补充故障照片？",
+                  "text_en": "How can I provide a fault photo?"
+                }
+              ],
+              "quick_replies": [
+                {
+                  "text": "请说得简单一点，告诉我下一步怎么做",
+                  "text_en": "Please simplify this and tell me the next step."
+                },
+                {
+                  "text": "我还需要准备什么材料？",
+                  "text_en": "What information should I prepare?"
+                }
+              ]
+            },
+            "handoff_available": false,
+            "model_status": "OK",
+            "order_card": null,
+            "order_snapshot": null,
+            "reply": "I understand how frustrating it is to have the tank alert keep cycling on and off even after you've reinstalled the reservoir more than once.\n\nFor the Omni E25 (T2353), the error 3021 \"sewage tank not in place\" is triggered when the robot detects the dirty water reservoir has been removed or isn't seated properly. The knowledge we have links base-station communication problems to radar interference, but that guidance is for base station tasks not starting, not specifically for a repeating tank-removed alert, so I don't want to hand you a fix that isn't confirmed for this symptom. I also can't confirm your warranty status from the information here. [1]\n\nCould you tell me whether the tank alert appears while the robot is docked on the base station or also when it's away from it? That will help me narrow down the right next step, and if it keeps recurring we can route this to a human specialist for review.",
+            "request_id": "438cf1a8b4b9",
+            "selection_cards": [],
+            "trace": {
+              "allowed": [
+                "search_knowledge",
+                "run_troubleshooting",
+                "escalate_human",
+                "ask_country",
+                "ask_seller",
+                "request_proof"
+              ],
+              "answer_route": "GROUNDED_LLM",
+              "cache_key": null,
+              "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+              "dealer": "UNKNOWN",
+              "emotion": "NORMAL",
+              "evidence": "explicit_pn",
+              "forbidden": [
+                "propose_replacement",
+                "direct_refund",
+                "tell_expired"
+              ],
+              "image": "未处理",
+              "knowledge_source": "eufy Robovacs Q&A.xlsx · Sheet1!D2:E2",
+              "long_tail": {
+                "basis": "curated phrase match; not an empirical frequency estimate",
+                "classification": "no_match",
+                "source_ids": []
+              },
+              "model": "DeepSeek-V4.1-Flash",
+              "model_calls": 1,
+              "model_candidate": "无",
+              "model_finish_reason": "stop",
+              "model_status": "OK",
+              "model_validation": {},
+              "order": "未提供",
+              "order_source": "NONE",
+              "order_status": "NOT_PROVIDED",
+              "ownership_status": "NOT_VERIFIED",
+              "product": "Omni E25",
+              "product_state": "PROBABLE",
+              "purchase_date_claim": null,
+              "reasons": [
+                "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+              ],
+              "request_id": "438cf1a8b4b9",
+              "response_language": "en",
+              "rule_version": "m0-safe-1",
+              "troubleshooting": "NOT_STARTED",
+              "warranty": "UNKNOWN",
+              "workflow_history": [],
+              "workflow_status": null
+            },
+            "turn_count": 1
+          },
+          "seconds": 3.743,
+          "http_status": 200
+        }
+      ],
+      "seconds": 3.743,
+      "semantic_review": "NOT_REVIEWED"
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>安小克 · 修复后测评报告</title><style>body{font:14px/1.7 -apple-system,"PingFang SC",Arial;max-width:1200px;margin:32px auto;padding:0 20px;background:#fafafa;color:#111}section{background:#fff;border:1px solid #e5e5e5;border-radius:8px;padding:22px;margin:18px 0}h1{font-size:28px}.metrics{display:flex;gap:28px;flex-wrap:wrap}.metric b{display:block;font-size:32px}.note{color:#666}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px;border-bottom:1px solid #eee;vertical-align:top}pre{white-space:pre-wrap;overflow-wrap:anywhere;max-width:700px;font:inherit}input{padding:10px;border:1px solid #ddd;width:90%}a{color:#111}.good{color:#008447}</style><h1>安小克 / Anka · 测评修复复验</h1><p>同一份源表 · 同一套57条金标准 · 用户端 + 商家端</p><section><div class="metrics"><div class="metric"><span>离线硬断言失败</span><b>15 → 0</b></div><div class="metric"><span>代码回归测试</span><b>127 / 127</b></div><div class="metric"><span>真实接口全量执行</span><b>57 条</b></div></div><p>完整离线57条：55条硬断言通过；2条语气改写在离线模式不调用模型，由真实接口补测。真实接口语义审核：56通过 / 0失败 / 0待审核；U028指定参考日用例线上不可注入，已在离线通过。全量运行后，5条涉及最终约束的用例另行复测并合并，历史原始结果均保留。</p><p class="note">硬断言覆盖状态、来源ID、源表字段和统计集合，不等于完整回答质量。语义审核为本次助手按预定规则审阅，非独立人类双盲审核；不宣称全量真实模型通过率或行业认证。模型外部服务仍可能超时，页面如实显示回退。</p></section><section><h2>这次修了什么</h2><p>当前产品选择优先；S1 Pro品类澄清；五语言回复；两端一致的情绪规则；经销商国家与名称核验；使用问题检索；物流冲突与已尝试步骤保留；安全停用兜底；错误码提取、产品线统计、下钻和周报；邮件全正文语气改写及字段保护。</p><p>浏览器已检查：3212下钻为第19、28行；周报TOP错误码为3212=2、2111=1、2310=1。产品线只有源表中的Anker eufy，不补造三条。</p><p class="note">客户归属、实际退款/换货/发信均未自动执行。投诉时间未完整结构化，周报仍是全量快照，不是实际周变化。</p></section><section><h2>真实模型回复与审核</h2><table><tr><th>编号</th><th>结果</th><th>耗时</th><th>模型状态</th><th>审核说明</th></tr><tr><td>U001</td><td>PASS</td><td>0.0s</td><td>NOT_USED<br>{}</td><td>Anker003源表字段与订单卡片一致；提示确认订单，不冒充实时物流。<details><summary>实际回复</summary><pre>已找到这笔订单，商品和物流资料见订单卡片。请确认是否是这笔订单，再告诉我想查询物流还是处理产品问题。 [1]</pre></details></td></tr><tr><td>U002</td><td>PASS</td><td>0.0s</td><td>NOT_USED<br>{}</td><td>Anker013订单卡片和源表字段一致。<details><summary>实际回复</summary><pre>已找到这笔订单，商品和物流资料见订单卡片。请确认是否是这笔订单，再告诉我想查询物流还是处理产品问题。 [1]</pre></details></td></tr><tr><td>U003</td><td>PASS</td><td>0.0s</td><td>NOT_USED<br>{}</td><td>Anker016订单卡片和源表字段一致。<details><summary>实际回复</summary><pre>已找到这笔订单，商品和物流资料见订单卡片。请确认是否是这笔订单，再告诉我想查询物流还是处理产品问题。 [1]</pre></details></td></tr><tr><td>U004</td><td>PASS</td><td>2.3s</td><td>OK<br>{}</td><td>保留拆单两次发货和快照边界，不推断每个包裹内容。<details><summary>实际回复</summary><pre>I understand the concern — you received only the replacement parts kit and are asking whether the vacuum itself was shipped.
+
+Looking at the saved order records for Anker001, this order was split into two packages: one dispatched on 2026-09-17 and the other on 2026-09-19, with recorded delivery statuses of 9/21 and 9/23. These are saved records rather than a live carrier update, and a delivery record does not confirm what was actually inside each parcel or that you personally received it. I don&#x27;t have information here confirming which package contained the vacuum. [1]
+
+So we can check this properly, could you tell me whether the replacement parts kit arrived in one parcel or whether you received two separate parcels?</pre></details></td></tr><tr><td>U005</td><td>PASS</td><td>2.8s</td><td>OK<br>{}</td><td>识别配件已收到、机器人未收到及UPS状态冲突；有重复确认包裹内容的措辞，可继续优化简洁性。<details><summary>实际回复</summary><pre>I understand you received only the accessory kit and are still waiting on the robot vacuum, and that the UPS tracking for the second shipment isn&#x27;t showing any movement yet.
+
+Looking at the saved shipment records for order Anker002, I can see two shipments: one with carrier ANPOST and tracking Anker1234567-2, and another with carrier UPS and tracking Anker1234567-3. The records show both as delivered, but these are saved snapshots, not live carrier updates, and they conflict with what you&#x27;re seeing on the UPS site. Because of this conflict, I can&#x27;t confirm the actual delivery status or the contents of either parcel from here. [1] [2]
+
+Since the tracking discrepancy needs to be checked with the carrier, I&#x27;ll need to have this reviewed by our support team. Could you confirm whether the accessory kit you received was the only item in the package, so we can proceed with the investigation?</pre></details></td></tr><tr><td>U006</td><td>PASS</td><td>2.5s</td><td>OK<br>{}</td><td>按T29C2001筛选UPS物流，不把主机记录混入。<details><summary>实际回复</summary><pre>好的，我来帮你查订单 Anker002 里 SKU T29C2001 这件商品的物流情况。
+
+订单快照显示，这件商品已发货，发货日期为 2026-09-20，承运商为 UPS，物流单号 Anker1234567-3，记录状态为 9 月 24 日已签收。需要说明的是，这只是资料中的记录，并不代表包裹一定已实际送达，我这边也尚未查询实时物流。 [1]
+
+如果你还没收到，我可以帮你走人工核查路径进一步确认；方便的话，请告诉我目前是否已收到这件商品？</pre></details></td></tr><tr><td>U007</td><td>PASS</td><td>3.2s</td><td>OK<br>{}</td><td>明确label created与Delivered快照冲突，不索取已提供的单号。<details><summary>实际回复</summary><pre>Thanks for reaching out, and I understand the concern about the robot vacuum not arriving with the accessories kit you received today.
+
+Looking at the saved shipment records for order ANKER002, I can see two shipments: one with tracking Anker1234567-2 (carrier ANPOST, recorded as delivered on 9/21) and another with tracking Anker1234567-3 (carrier UPS, recorded as delivered on 9/24). These are saved records, not a live carrier update, and they conflict with what you&#x27;re seeing on the UPS site showing only a label created. Because of this conflict, neither the actual delivery nor the parcel contents can be confirmed from our side. [1] [2]
+
+Since the carrier needs to investigate, could you confirm whether the package you received today was the only delivery, or if any other parcel arrived separately? This will help us determine the right next step for the missing robot vacuum.</pre></details></td></tr><tr><td>U008</td><td>PASS</td><td>2.4s</td><td>OK<br>{}</td><td>说明预计日期已过、快照非实时；引导官方查询和人工复核，未声称已查询或执行。<details><summary>实际回复</summary><pre>订单显示已发货，预计到达日期是 9 月 30 日，现在已过这个日期，物流记录仍显示在途，我理解您想确认接下来该怎么处理。
+
+我查到的是订单快照信息：承运商 FedEx，物流单号 Anker1234567-6，记录状态为在途，预计到达 9 月 30 日。这只是资料中的记录，我无法查询实时物流，也不能据此判断包裹当前实际位置或是否已送达。 [1]
+
+建议您先通过 FedEx 官网用该单号查询最新轨迹；如果轨迹长时间没有更新或显示异常，我可以帮您提交人工复核，由人工进一步核查物流情况。请问您希望我协助提交人工复核吗？</pre></details></td></tr><tr><td>U009</td><td>PASS</td><td>3.1s</td><td>OK<br>{}</td><td>保留Return to sender状态，不编造退回原因或补寄。<details><summary>实际回复</summary><pre>我理解你一直在等这个包裹，却还没收到，这种等待确实让人着急。
+
+我查到订单 Anker007 下的 T2292111 显示已发货，承运商为 USPS，物流单号为 Anker1234567-9，记录状态为“Return to sender”。这是资料快照中的记录，我这边尚未查询实时物流，也不能据此判断包裹实际是否送达或退回原因。 [1]
+
+建议你先核对订单地址附近的收件位置，看是否有代收或暂存；若仍未找到，我可以为你转人工客服进一步核查物流。请告诉我：你是否已联系过 USPS 查询该单号？</pre></details></td></tr><tr><td>U010</td><td>PASS</td><td>5.3s</td><td>OK<br>{}</td><td>S1 Pro先澄清两种品类。<details><summary>实际回复</summary><pre>好的，我来帮你看看 S1 Pro 的问题。为了准确判断，需要先确认一下具体是哪款产品。
+
+S1 Pro 这个型号对应两种不同的产品：吸奶器和扫地机器人，两者的排查方式完全不同。目前你还没有说明是哪一种，也没有描述具体出现的现象，所以我暂时无法给出针对性的判断。
+
+请先告诉我你使用的是吸奶器还是扫地机器人，我再根据具体情况帮你进一步排查。</pre></details></td></tr><tr><td>U011</td><td>PASS</td><td>7.0s</td><td>OK<br>{}</td><td>确认T8D04吸奶器，未继承扫地机排障。<details><summary>实际回复</summary><pre>好的，已确认是 S1 Pro 吸奶器，型号 T8D04，我按这款来帮您看。
+
+目前我这边只有型号信息，还没有具体症状或错误码，也没有订单号和购买凭证，所以暂时无法判断故障原因，也无法确认质保情况。
+
+麻烦您先描述一下具体出现的症状或屏幕上的错误码，我再帮您往下排查。</pre></details></td></tr><tr><td>U012</td><td>PASS</td><td>2.1s</td><td>OK<br>{}</td><td>当前聚焦C10并引用Anker009对应明细，不被X10提及覆盖。<details><summary>实际回复</summary><pre>好的，本次我们聚焦订单 Anker009 中的 C10，先不涉及 X10 Pro。
+
+我查到该订单里 C10 的 SKU 为 T2292111，订单状态为已发货，物流显示已送达；质保结束日期为 2027-08-23。不过目前还没有你遇到的具体问题描述，暂时无法判断属于哪类故障。 [1]
+
+请告诉我 C10 现在的具体症状或屏幕上的错误码，我据此为你查下一步的排查方案。</pre></details></td></tr><tr><td>U013</td><td>PASS</td><td>2.0s</td><td>OK<br>{}</td><td>6011按r-24检查密封圈并保留硬件判断条件。<details><summary>实际回复</summary><pre>T2351 出现 6011 提示，确实会影响正常使用，我先帮你按官方资料排查一下。
+
+6011 表示基站清水不足。请先取下清水箱，检查出水口的密封圈是否安装到位、有无变形或破损；如果密封圈有异常，请拍下照片留证。 [1]
+
+若密封圈完好、重新装回后仍报 6011，则可能是基站硬件问题，需要人工进一步核查。请先确认一下：密封圈是否有变形或破损？</pre></details></td></tr><tr><td>U014</td><td>PASS</td><td>3.5s</td><td>OK<br>{}</td><td>2310按r-57先检查滤网，再按安装结果检查磁铁。<details><summary>实际回复</summary><pre>T2351 出现 2310 提示，通常和集尘盒或滤网未安装到位有关，我们一步步来排查。
+
+根据该机型的知识说明，2310 表示集尘盒和滤网未安装到位。请先取出集尘盒，打开集尘盒盖，确认滤网是否已装入；如果滤网没装，装好后重新尝试。 [1]
+
+如果滤网已正确安装，请再检查滤网图示位置是否有磁铁。方便的话，请告诉我第一步检查的结果是滤网未安装、已安装但仍有报错，还是不确定，我再帮你判断下一步。</pre></details></td></tr><tr><td>U015</td><td>PASS</td><td>4.9s</td><td>OK<br>{}</td><td>7031步骤由r-103支持，先清理基站周围障碍物。<details><summary>实际回复</summary><pre>收到，T2351 出现 7031 回充失败提示，我先帮你按官方排查思路梳理一下。
+
+根据这款机型的资料，7031 通常与机器人上基站时受阻有关：基站周围有障碍物、基站放在地毯上、万向轮缠绕毛发，或左右轮表面和凹槽有沙砾油污，都可能导致回充失败。资料里没有提到其他原因，所以先按这几点核对。 [1]
+
+建议你先检查并清理基站周围的障碍物，确认基站周围留有足够空间，然后让机器人重新尝试回充。如果仍未解决，再告诉我，我继续帮你排查万向轮和左右轮的情况。</pre></details></td></tr><tr><td>U016</td><td>PASS</td><td>3.1s</td><td>OK<br>{}</td><td>E41按r-139更新固件并重启。<details><summary>实际回复</summary><pre>T2080 出现 E41 电池异常提示，确实会影响正常使用，我先帮你按官方资料排查一下。
+
+根据该型号 E41 的官方说明，处理方式是：先在 APP 中把机器人固件更新到最新版本，然后重启机器人，观察是否恢复正常。这两步是当前资料明确支持的排查动作。 [1]
+
+请先完成固件更新并重启，然后告诉我问题是否解决；如果仍然报 E41，我再帮你走人工复核路径进一步核查。</pre></details></td></tr><tr><td>U017</td><td>PASS</td><td>2.0s</td><td>OK<br>{}</td><td>E53按r-452检查擦拭传感器并重启。<details><summary>实际回复</summary><pre>收到，T2080 出现 E53 报错，我先帮你确认对应的处理方式。
+
+根据该型号的官方资料，E53 属于 AI 传感器异常，可先检查 3D MATRIX EYE 传感器表面是否有脏污，用干净柔软的布擦拭干净，然后重启机器，看报错是否消失。 [1]
+
+请先完成擦拭并重启，然后告诉我报错是否还在；如果仍然出现，我再帮你走人工核查。</pre></details></td></tr><tr><td>U018</td><td>PASS</td><td>1.7s</td><td>OK<br>{}</td><td>不存在的订单不生成事实，不把查无解释为过保。<details><summary>实际回复</summary><pre>我来帮您核实订单 ANKER000 的情况。
+
+根据本轮信息与服务规则，在订单库中未查询到该订单号，因此目前无法确认订单状态，也不代表已过保。要推进核查，还需要您提供购买渠道和相关凭证。
+
+请先告诉我这笔订单是在官方店铺还是其他商家购买的，我再据此为您说明下一步核查路径。</pre></details></td></tr><tr><td>U019</td><td>PASS</td><td>2.9s</td><td>OK<br>{}</td><td>查无Anker999并请求核对渠道凭证，未编造订单。<details><summary>实际回复</summary><pre>我来帮您核实订单 ANKER999 的情况。
+
+根据本轮订单库查询结果，暂未找到该订单号对应的记录。这并不代表订单已过保，也可能是订单号有误或购买渠道不同。目前依据仅为本轮信息与服务规则，暂无法据此办理退款或换货。
+
+请确认一下您的购买渠道是官方店铺还是其他商家，并提供对应的购买凭证，我再帮您进一步核查。</pre></details></td></tr><tr><td>U020</td><td>PASS</td><td>2.5s</td><td>OK<br>{}</td><td>强烈情绪被正确识别；同PN b-187支持离线排查，不自动确认质保。<details><summary>实际回复</summary><pre>I&#x27;m sorry the SoloCam S340 keeps going offline after a week of use — that&#x27;s frustrating, and I want to get this looked at properly.
+
+I can see this is the T8170 SoloCam S340 and the issue is it showing offline. The only guidance I have on hand is a general offline troubleshooting reference, which covers checking battery level, powering the camera on via the SYNC button, moving it closer to the router, re-adding it in the app, and separating a 2.4GHz band on a dual-band network. I don&#x27;t have your order details or warranty status in front of me, so I can&#x27;t confirm warranty coverage from this chat alone. [1]
+
+To move forward, could you tell me whether the camera is currently showing any LED light when you press the SYNC button? If you&#x27;d rather have the warranty question reviewed directly, I can route this to a human agent — just let me know.</pre></details></td></tr><tr><td>U021</td><td>PASS</td><td>2.2s</td><td>OK<br>{}</td><td>正确识别强烈不满，先补型号和问题，不编造设备；一次追问两个信息点仍可简化。<details><summary>实际回复</summary><pre>I&#x27;m sorry the cameras have been frustrating — that&#x27;s a real problem, and I want to get it looked at properly.
+
+I don&#x27;t have your product model or the specific issue yet, so I can&#x27;t check the correct support information for your case. Right now my only basis is this conversation and our service rules, not any product-specific guidance.
+
+Could you tell me which eufy camera model you have and what exactly is going wrong? Once I have that, I can look up the right next step for you.</pre></details></td></tr><tr><td>U022</td><td>PASS</td><td>2.6s</td><td>OK<br>{}</td><td>正确识别不满并承接App困扰，先澄清型号，无越权；追问可进一步拆小。<details><summary>实际回复</summary><pre>I hear you — dealing with an app when you just want the vacuum to run is genuinely frustrating, and I want to get you to the right fix without more back-and-forth.
+
+Right now I don&#x27;t have your product model or the specific issue, so I can&#x27;t pull the correct support information yet. The only basis I have this round is your message and our service rules — no product knowledge applies until I know which device this is.
+
+Please tell me the model of your vacuum, and what exactly happens when you try to start a clean. Once I have that, I&#x27;ll look up the matching guidance for your unit.</pre></details></td></tr><tr><td>U023</td><td>PASS</td><td>3.5s</td><td>OK<br>{}</td><td>荷兰语回复，真实DHL NL及单号；区分快照签收与实际收到。<details><summary>实际回复</summary><pre>Ik begrijp dat u de robotstofzuiger vorige week heeft besteld en dat deze nog niet is aangekomen; dat is vervelend.
+
+Ik zie in de opgeslagen verzendgegevens voor order Anker006 (SKU T2353G11, eufy Robotstofzuiger Omni E25) dat het pakket op 15-09-2026 is verzonden via DHL NL met trackingnummer Anker1234567-8, en dat de geregistreerde status &quot;Delivered on 9/20&quot; is. Dit is een opgeslagen record en geen live vervoerdersupdate; de registratie kan afwijken van wat er feitelijk is gebeurd. Er staat ook een accessoirepakket (SKU T290QAR0) in de gegevens, waarvoor geen vervoerder of tracking is vastgelegd. [1] [2]
+
+Controleer eerst of het pakket misschien bij buren, de receptie of een andere afleverlocatie is achtergelaten. Als u het daar niet vindt, kan ik dit laten nakijken door een medewerker; kunt u aangeven of u het pakket inmiddels heeft gevonden of dat het nog steeds ontbreekt?</pre></details></td></tr><tr><td>U024</td><td>PASS</td><td>2.9s</td><td>OK<br>{}</td><td>法语承接已清洁重启，澄清具体代码，不把未知代码直接当硬件故障。<details><summary>实际回复</summary><pre>Je comprends que ce message d&#x27;erreur revienne depuis deux semaines malgré vos nettoyages et redémarrages répétés, c&#x27;est frustrant.
+
+D&#x27;après les informations produit pour le X10 Pro Omni (T2351), plusieurs codes différents existent pour un capteur laser bloqué, et les étapes à suivre ne sont pas les mêmes selon le code. Vous avez déjà nettoyé et redémarré l&#x27;appareil, donc je ne vous propose pas de refaire ces étapes. Je ne peux pas conclure à une panne matérielle sur la seule base de ce message. [1] [2] [3]
+
+Pour avancer, pouvez-vous me préciser le code exact affiché dans l&#x27;application (par exemple 4010, 4011 ou 4013) ? Cela me permettra de vous orienter vers la bonne procédure.</pre></details></td></tr><tr><td>U025</td><td>PASS</td><td>4.5s</td><td>OK<br>{}</td><td>德语按2111同型号r-257处理，保留质保未知和重启后条件。<details><summary>实际回复</summary><pre>Der Fehler 2111 an der Rollbürste Ihres X10 Pro Omni ist ärgerlich – ich schaue mir das gemeinsam mit Ihnen an.
+
+Laut unserer Anleitung zu diesem Fehlerbild (2110/2111/2113) ist der erste Schritt ein Neustart des Roboters, um zu prüfen, ob der Fehler danach behoben ist. Sollte der Neustart das Problem nicht lösen, geht unser Engineering-Team von einem Hardware-Defekt aus; bei einem Produkt innerhalb der Garantie bieten wir dann Garantieservice an. Ob Ihr Gerät noch in der Garantie ist, kann ich anhand der vorliegenden Angaben nicht feststellen. [1]
+
+Bitte starten Sie den Roboter einmal neu und sagen Sie mir, ob die Meldung danach weiterhin erscheint. Falls der Fehler bleibt, prüfe ich mit den Kollegen den weiteren Garantieweg für Sie.</pre></details></td></tr><tr><td>U026</td><td>PASS</td><td>4.4s</td><td>OK<br>{}</td><td>按日期在保，但退款仍待核验，引用订单快照。<details><summary>实际回复</summary><pre>订单 Anker013 的质保和退款问题，我来帮您核对一下。
+
+根据订单快照，该订单 SKU 为 T8D04121，购买日期为 2026-08-27，质保结束日期为 2027-08-27，按资料日期核算目前仍在质保期内。不过这只是日期核算结果，退款还需结合购买渠道进一步核验，目前并未办理退款或换货。 [1]
+
+请问这笔订单是通过官方店铺还是其他商家购买的？确认渠道后我可以帮您进一步核查退款路径。</pre></details></td></tr><tr><td>U027</td><td>PASS</td><td>2.7s</td><td>OK<br>{}</td><td>最终复测明确2026-07-30到期、截至2026-10-16已过保；不再出现规则EXPIRED正文在保。<details><summary>实际回复</summary><pre>关于订单 Anker014 的保修和退款问题，我来帮您核实。
+
+根据订单资料快照，该订单购买日期为 2025-07-30，质保结束日期为 2026-07-30，截至 2026-10-16 已过保。需要说明的是，这只是资料日期核算结果，不代表购买归属或退款资格已获批准，退款还需按购买渠道进一步核验，目前未办理任何退款或换货。 [1]
+
+如果您希望进一步核查退款可能性，我可以为您转接人工复核。请问您是否希望我帮您提交人工核查？</pre></details></td></tr><tr><td>U028</td><td>BLOCKED</td><td>0.0s</td><td>改写接口<br>{}</td><td>本次输出尚未审核，不沿用历史判定<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>U029</td><td>PASS</td><td>2.0s</td><td>OK<br>{}</td><td>US Aeroflow目录命中并引用名录；不等于购买凭证或售后资格确认。<details><summary>实际回复</summary><pre>您提到在 US 的 Aeroflow Breastpumps 购买，想确认这个渠道是否正规，我来帮您核对。
+
+根据本轮查到的经销商名录，US 的 Aeroflow Breastpumps 已列为授权渠道，这一点可以确认。不过名录核验只针对渠道本身，您的购买凭证和具体售后资格仍需另行核查，目前还没有您的订单信息。 [1]
+
+方便提供一下订单号吗？有了订单号，我可以帮您进一步核对购买记录和对应的售后路径。</pre></details></td></tr><tr><td>U030</td><td>PASS</td><td>2.0s</td><td>OK<br>{}</td><td>US best buy目录命中，保持购买资格待核验。<details><summary>实际回复</summary><pre>感谢您的确认，我来帮您核对 Best Buy 这个购买渠道。
+
+根据经销商名录，US 地区的 Best Buy 已列为授权渠道，但这仅是对名录的核验，您的购买凭证和具体售后资格仍需另行核查。目前还缺少您的产品型号信息，无法进一步确认适用情况。 [1]
+
+请提供您购买的产品型号，我据此帮您核查后续售后路径。</pre></details></td></tr><tr><td>U031</td><td>PASS</td><td>2.5s</td><td>OK<br>{}</td><td>配件物流单号/承运商缺失如实说明，不继承主机物流。<details><summary>实际回复</summary><pre>我来帮您查询订单 ANKER004 中该商品的物流信息。
+
+根据当前订单资料快照，SKU T29YQA20 显示已发货，发货日期为 2026-09-14，但资料中承运商和物流单号均未提供，这属于记录缺失，并非实时物流查询结果。 [1]
+
+建议您通过安克官方渠道或购买店铺的订单详情页查看承运商与物流单号；如仍无法获取，我可以为您转接人工进一步核查。</pre></details></td></tr><tr><td>U032</td><td>PASS</td><td>2.2s</td><td>OK<br>{}</td><td>混输仍回答当前物流，保留两明细及空字段。<details><summary>实际回复</summary><pre>我理解你还没收到 Anker006 的包裹，这确实让人着急。
+
+我查到订单 Anker006 下的 T2353G11 已发货，承运商为 DHL NL，物流单号 Anker1234567-8，记录显示 9 月 20 日已签收；同订单的 T290QAR0 也已发货，但未提供承运商和单号。以上只是资料中的记录，并不代表你实际收到了包裹，我这边也还没有查询实时物流。 [1] [2]
+
+请先确认一下收件地址附近（如门卫、前台、邻居或代收点）是否已代收；如果仍未找到，请告诉我，我再帮你走承运商或人工客服核查的路径。</pre></details></td></tr><tr><td>U033</td><td>PASS</td><td>3.7s</td><td>OK<br>{}</td><td>承接已重新安装水箱；未直接承诺换机，对资料适用性保留边界并继续澄清。<details><summary>实际回复</summary><pre>I understand how frustrating it is to have the tank alert keep cycling on and off even after you&#x27;ve reinstalled the reservoir more than once.
+
+For the Omni E25 (T2353), the error 3021 &quot;sewage tank not in place&quot; is triggered when the robot detects the dirty water reservoir has been removed or isn&#x27;t seated properly. The knowledge we have links base-station communication problems to radar interference, but that guidance is for base station tasks not starting, not specifically for a repeating tank-removed alert, so I don&#x27;t want to hand you a fix that isn&#x27;t confirmed for this symptom. I also can&#x27;t confirm your warranty status from the information here. [1]
+
+Could you tell me whether the tank alert appears while the robot is docked on the base station or also when it&#x27;s away from it? That will help me narrow down the right next step, and if it keeps recurring we can route this to a human specialist for review.</pre></details></td></tr><tr><td>U034</td><td>PASS</td><td>2.6s</td><td>OK<br>{}</td><td>明确停用并停止充电，进入安全人工核查，未给危险排障或医学诊断。<details><summary>实际回复</summary><pre>I&#x27;m sorry to hear the pump stopped charging and that the heating area burned you and now looks tarnished. Please stop using the device right away and do not try charging it again.
+
+What you&#x27;ve described involves a safety concern, so this needs human review rather than standard troubleshooting. I can see the product details and serial number you provided, and that you say it was ordered from the reseller Aeroflow, but I have no verified order record or proof on file yet, and no after-sales action has been started.
+
+To move this forward, please upload the purchase proof you mentioned so it can be reviewed together with your safety report. Once that&#x27;s attached, a human agent can assess the next steps.</pre></details></td></tr><tr><td>U035</td><td>PASS</td><td>9.0s</td><td>OK<br>{}</td><td>多轮从物流切换至T2080 EB1L，引用r-482并答注水故障。<details><summary>实际回复</summary><pre>S1 Pro 报 EB1L、加不了清水，我先帮您按资料里的检查顺序排查。
+
+根据本轮知识说明，EB1L 表示机器人在加清水时遇到异常、任务结束。请先取下基站清水箱，检查出水口密封圈是否装好，并用手电照看箱内水管有没有损坏；确认后把清水加至 MAX 水位，再把水箱放稳回基站。 [1]
+
+完成后请告诉我这一步的结果，我再带您做下一项检查。</pre></details></td></tr><tr><td>U036</td><td>PASS</td><td>2.8s</td><td>OK<br>{}</td><td>b-2支持App路径、分段模式时长和最多5组节奏。<details><summary>实际回复</summary><pre>好的，我来帮你确认 T8D04 吸奶器自定义吸乳节奏的设置方式。
+
+根据这款 S1 Pro 吸奶器的官方说明，自定义节奏功能需要先在 Anker eufy app（eufy Baby app）中连接吸奶器，然后进入吸奶器设置，找到“自定义节奏”或“节奏调节”，按分段调整模式（吸乳/刺激）和每段时长，最多可保存 5 组自定义节奏方案。 [1]
+
+你可以先打开 app 并连接设备，看设置里是否能看到“自定义节奏”入口。如果找不到这个选项，告诉我你用的是哪款 app 和当前界面，我再帮你进一步核查。</pre></details></td></tr><tr><td>M001</td><td>PASS</td><td>0.1s</td><td>改写接口<br>{}</td><td>原文强烈不满归为高强度，与源邮件独立标签一致。<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>M002</td><td>PASS</td><td>0.0s</td><td>改写接口<br>{}</td><td>中等情绪强度与预期一致。<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>M003</td><td>PASS</td><td>0.0s</td><td>改写接口<br>{}</td><td>普通咨询低强度，与预期一致。<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>M004</td><td>PASS</td><td>0.0s</td><td>改写接口<br>{}</td><td>未把RC1候选强行输出为已证实根因。<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>M005</td><td>PASS</td><td>0.0s</td><td>改写接口<br>{}</td><td>未把RC2无证据场景输出为已证实根因。<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>M006</td><td>PASS</td><td>0.0s</td><td>改写接口<br>{}</td><td>未把质保边界线索当实际过保因果。<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>M007</td><td>PASS</td><td>0.0s</td><td>改写接口<br>{}</td><td>产品线完整分类、数量、占比、累计占比、行号与独立源表金标准一致。<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>M008</td><td>PASS</td><td>0.0s</td><td>改写接口<br>{}</td><td>错误码分类、每类数量和工单集合均与独立金标准一致。<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>M009</td><td>PASS</td><td>0.0s</td><td>改写接口<br>{}</td><td>问题类型分类和全部统计字段与独立金标准一致。<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>M010</td><td>PASS</td><td>0.0s</td><td>改写接口<br>{}</td><td>3212与同PN知识关联正确。<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>M011</td><td>PASS</td><td>0.0s</td><td>改写接口<br>{}</td><td>2111与同PN知识关联正确。<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>M012</td><td>PASS</td><td>0.0s</td><td>改写接口<br>{}</td><td>2310与同PN知识关联正确。<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>M013</td><td>PASS</td><td>0.0s</td><td>改写接口<br>{}</td><td>场景下钻集合与源工单行号一致。<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>M014</td><td>PASS</td><td>0.0s</td><td>改写接口<br>{}</td><td>3212下钻集合为19、28，接口和浏览器实查一致。<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>M015</td><td>PASS</td><td>6.6s</td><td>OK<br>{}</td><td>正文回应电机异响，引用b-37/b-124，无误改使用次数或执行承诺；一次索取细节较多，仍可缩短。<details><summary>实际回复</summary><pre>Hello,
+
+Thank you for contacting us.
+
+Thanks for reaching out about the abnormal motor noise on your S1 Pro, and for letting us know it&#x27;s a fairly new unit. I understand how disruptive this is when you rely on the pump.
+
+Based on the S1 Pro troubleshooting guidance, the first step is to pin down the noise itself: whether it&#x27;s continuous or intermittent, when it occurs (at startup, during pumping, or only at higher settings), and whether suction is also reduced. Could you also record a video or audio clip of at least 10 seconds so we can assess the noise remotely?
+
+Once we have those details, we can move on to the checks in order, starting with placement and assembly. Please send the recording and the noise details, and we&#x27;ll take it from there. [2] [3]
+
+Anker Support Team</pre></details></td></tr><tr><td>M016</td><td>PASS</td><td>3.5s</td><td>OK<br>{}</td><td>回应充电后断电和换货诉求，b-32/b-117支撑电池因素，未批准换货。<details><summary>实际回复</summary><pre>Hello,
+
+Thank you for contacting us.
+
+I understand how frustrating it is when your S1 Pro won&#x27;t hold a charge and keeps cutting off mid-use, especially with a breast pump. I&#x27;ve noted your order reference ANKER014 and your request for a possible replacement.
+
+Based on the S1 Pro (T8D04) information available to me, battery drain can be affected by the heating function, operating temperature, and wear on the heating contacts over time. I can&#x27;t confirm a replacement from this information alone, and I don&#x27;t yet have details on how you&#x27;ve been charging the pump or what the battery indicator shows.
+
+To move this forward, could you tell me what charger and adapter you&#x27;re using (for example, the adapter&#x27;s voltage and amperage)? Once I have that, I can guide the next check or route your case for human review. [2] [3]
+
+Anker Support Team</pre></details></td></tr><tr><td>M017</td><td>PASS</td><td>10.0s</td><td>OK<br>{}</td><td>无订单时质保UNKNOWN，补指示灯位置/状态，未编造资格或动作。<details><summary>实际回复</summary><pre>Hello,
+
+Thank you for contacting us.
+
+Thanks for reaching out about the green light on your S1 Pro breast pump. I want to make sure I point you to the right meaning, so let me confirm what you&#x27;re seeing.
+
+I&#x27;ve noted the product as the S1 Pro breast pump, but I don&#x27;t yet have the specific indicator details for this light in front of me, and no product knowledge reference was returned this round. Could you tell me where the green light appears, such as on the pump body or the charging base, and whether it is steady or blinking?
+
+Once you share that, I can look up the matching guidance for your unit. If you&#x27;d also like warranty support, having your order number and proof of purchase ready will help. [2]
+
+Anker Support Team</pre></details></td></tr><tr><td>M018</td><td>PASS</td><td>4.8s</td><td>改写接口<br>{}</td><td>正式语气改写完整正文，保留字段引用；仅推进锁扣检查，不颠倒密封圈条件。<details><summary>实际回复</summary><pre>Hello,
+
+Thank you for contacting us.
+
+We appreciate that you have written in with the details and that you have already cleaned the tray and checked the hose and the connector under the dirty water tank. This assists in narrowing down the matter.
+
+Based on the eufy X10 Pro Omni (T2351) guidance for this symptom, the next supported check is whether the door latch of the dirty water tank is fastened when the tank is installed on the station. As you have already confirmed that the tank is empty and that the hose is not pinched, this latch is the remaining point that can be verified from the current information. A seal defect has not been established at this stage.
+
+Could you please check whether that dirty water tank latch is securely fastened while the tank sits on the station, and inform us of the result? If it is already fastened and the tray still will not empty, we can proceed to a human review of your case. [2]
+
+Anker Support Team</pre></details></td></tr><tr><td>M019</td><td>PASS</td><td>7.5s</td><td>改写接口<br>{}</td><td>共情正文承接损坏触点，明确不掰动或继续充电，待照片和凭证复核；保留引用，未实际发信。<details><summary>实际回复</summary><pre>Hello,
+
+Thank you for contacting us.
+
+I&#x27;m really sorry about the charging pin issue with your S1 Pro case — I can imagine how frustrating it is when one side won&#x27;t charge.
+
+Based on the S1 Pro (T8D04) information available to me, damaged or misaligned magnetic contacts on the charging case or pump can prevent proper charging on one side. Since you&#x27;ve already cleaned the contacts and the pin appears jammed or broken, this points to possible contact damage rather than something a cleaning step would fix. I&#x27;d ask that you not try to straighten or reposition the pin, and avoid further charging attempts on that side, as that could cause more damage.
+
+To move forward, please send a clear photo of the charging contact area so our team can review it. We&#x27;ll also need your proof of purchase to check warranty eligibility — could you share that as well? [2] [3]
+
+Anker Support Team</pre></details></td></tr><tr><td>M020</td><td>PASS</td><td>0.1s</td><td>改写接口<br>{}</td><td>TOP错误码与金标准一致，产品线取A列，周报说明快照及时间缺口。<details><summary>实际回复</summary><pre></pre></details></td></tr><tr><td>M021</td><td>PASS</td><td>0.0s</td><td>改写接口<br>{}</td><td>超20000字请求返回400，未进入邮件生成。<details><summary>实际回复</summary><pre></pre></details></td></tr></table></section><section><h2>全量离线前后对照</h2><input id="q" placeholder="搜索用例编号、FAIL、场景"><table id="results"><tr><th>编号</th><th>场景</th><th>修复前</th><th>修复后</th><th>说明</th></tr><tr><td>U001</td><td>order_query</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U002</td><td>order_query</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U003</td><td>order_query</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U004</td><td>split_shipping</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U005</td><td>split_shipping</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U006</td><td>split_shipping</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U007</td><td>shipping_exception</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U008</td><td>shipping_exception</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U009</td><td>shipping_exception</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U010</td><td>product_disambiguation</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U011</td><td>product_disambiguation</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U012</td><td>product_disambiguation</td><td>FAIL</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U013</td><td>error_troubleshooting</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U014</td><td>error_troubleshooting</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U015</td><td>error_troubleshooting</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U016</td><td>error_troubleshooting</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U017</td><td>error_troubleshooting</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U018</td><td>order_not_found</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U019</td><td>order_not_found</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U020</td><td>angry_complaint</td><td>FAIL</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U021</td><td>angry_complaint</td><td>FAIL</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U022</td><td>angry_complaint</td><td>FAIL</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U023</td><td>multilingual</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U024</td><td>multilingual</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U025</td><td>multilingual</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U026</td><td>warranty_refund</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U027</td><td>warranty_refund</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U028</td><td>warranty_refund</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U029</td><td>dealer_verification</td><td>FAIL</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U030</td><td>dealer_verification</td><td>FAIL</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U031</td><td>missing_fields</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U032</td><td>mixed_language</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U033</td><td>long_email</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U034</td><td>safety</td><td>FAIL</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U035</td><td>multi_turn_switch</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>U036</td><td>breast_pump_knowledge</td><td>FAIL</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M001</td><td>emotion_detection</td><td>FAIL</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M002</td><td>emotion_detection</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M003</td><td>emotion_detection</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M004</td><td>root_cause_attribution</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M005</td><td>root_cause_attribution</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M006</td><td>root_cause_attribution</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M007</td><td>pareto_aggregation</td><td>FAIL</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M008</td><td>pareto_aggregation</td><td>FAIL</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M009</td><td>pareto_aggregation</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M010</td><td>grounded_recommendation</td><td>FAIL</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M011</td><td>grounded_recommendation</td><td>FAIL</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M012</td><td>grounded_recommendation</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M013</td><td>drilldown</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M014</td><td>drilldown</td><td>FAIL</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M015</td><td>action_eligibility</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M016</td><td>action_eligibility</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M017</td><td>action_eligibility</td><td>REVIEW_REQUIRED</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M018</td><td>reply_tone</td><td>BLOCKED</td><td>BLOCKED</td><td>离线模式不调用模型；语气改写需运行真实模型测评。</td></tr><tr><td>M019</td><td>reply_tone</td><td>BLOCKED</td><td>BLOCKED</td><td>离线模式不调用模型；语气改写需运行真实模型测评。</td></tr><tr><td>M020</td><td>weekly_report</td><td>FAIL</td><td>REVIEW_REQUIRED</td><td>硬断言通过；完整语义不由此推断</td></tr><tr><td>M021</td><td>oversized_email</td><td>PASS</td><td>PASS</td><td>硬断言通过；完整语义不由此推断</td></tr></table></section><section><h2>测评资料</h2><p><a href="ontocare-test-suite.json">完整测评集</a> · <a href="results-live-reviewed.json">真实接口响应和审核</a> · <a href="results-offline.json">完整离线原始结果</a> · <a href="OntoCare 测评修复计划与执行记录.md">Plan / Action 与验证口径</a> · <a href="baseline-before-fixes/测评报告.html">修复前报告</a></p><p>参考方法：<a href="https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness/">RAGAS忠实度</a>、<a href="https://arxiv.org/abs/2406.12045">τ-bench多轮任务</a>。本次使用项目自有判定器，没有运行这些框架的官方评分器。</p></section><script>document.getElementById('q').oninput=e=>{for(const r of document.querySelectorAll('#results tr:not(:first-child)'))r.hidden=!r.textContent.toLowerCase().includes(e.target.value.toLowerCase())}</script></html>

@@ -1,0 +1,536 @@
+{
+  "reason": "Original U060 uses a fixed EB1L workflow and no longer invokes the model. This separate uncached request must actually hit the injected timeout. Not a replacement for historical results.",
+  "case": {
+    "id": "U060-R1",
+    "group": "UX",
+    "task_type": "UX_产品化",
+    "persona_id": "P08",
+    "setup_turns": [],
+    "turns": [
+      {
+        "turn": 1,
+        "input": "T8D04自定义吸乳节奏如何设置？",
+        "trigger": "always"
+      }
+    ],
+    "expected_entities": {},
+    "expected_case_state": {},
+    "expected_allowed_actions": [],
+    "expected_blocked_actions": [
+      "direct_refund",
+      "propose_replacement"
+    ],
+    "expected_response_must_contain": [],
+    "expected_response_must_not_contain": [
+      "已为您退款",
+      "已接通人工",
+      "refund has been issued",
+      "replacement has been sent"
+    ],
+    "ground_truth_source": "客诉工单信息表第12行 + eufy Robovacs Q&A表第482行",
+    "ground_truth_refs": [
+      {
+        "sheet": "客诉工单信息",
+        "excel_row": 12,
+        "cells": "A12:G12",
+        "values": [
+          "Anker eufy",
+          "S1 Pro",
+          "Product Name: S1 Pro\nProduct PN: T2080A\nProduct SN: 12345678A\nProblem Type: ERROR\nProblem Code: 21037332-\nProblem Push: EB1L: The robot encountered an error while adding clean water. Task ended. Click to contact customer service for assistance.\nProblem Description: EB1L: The robot encountered an error while adding clean water. Task ended. Click to contact customer service for assistance.\nProblem Upload Images: []",
+          "/",
+          "T2080111",
+          null,
+          "Troubleshooting/Product usage",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "sheet": "eufy Robovacs Q&A",
+        "excel_row": 482,
+        "cells": "A482:I482",
+        "values": [
+          "Clean",
+          "iPath Navigation Series",
+          "S1 Pro",
+          "what should I do when T2080 S1 Pro has EB1L: The robot encountered an error while adding clean water. Task ended/Robot injecting clean water abnormally?",
+          "1. Remove the clean water tank from the base station and check the seal ring of the outlet hole to ensure that it is installed correctly. Have the user shine a flashlight on the clean water tank pipe to check whether the pipe inside the clean water tank is damaged.\n\nhttps://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/the-silicone-rubber-sealing-ring-for-clean-water-outlet.png\n\nhttps://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/check-the-pipe-of-clean-water-tank.png\n\n2. Fill the water tank with clean water to the maximum water level, then ensure the water tank is securely placed in the base station.\n\n3. Check the robot's water inlet for debris or blockages, then clean with a paper towel or cotton swab.\n\nhttps://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/water-filling-interface.png\n\n4. After the error occurs, remove the robot from the base station and check the rubber plug at the base station's water inlet to see if there is any water. Additionally, check if the rubber plug is damaged or missing.\n\nhttps://d3pkbgk01oouhl.cloudfront.net/upload_file/prod/Silicone-for-base-station-water-injection2.png\n\n5. Update the firmware to version 7.0.143 or higher.\n",
+          "QA",
+          "Published",
+          "Visible",
+          "T2080",
+          "eufy S",
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    "difficulty": "medium",
+    "evaluation_method": [
+      "rule_based",
+      "state_verification",
+      "llm_judge"
+    ],
+    "fixture_type": "source_derived_question",
+    "language": "auto",
+    "as_of_date": "2026-10-17",
+    "assertions": [
+      {
+        "kind": "fault_tolerance"
+      },
+      {
+        "kind": "degraded_reason"
+      }
+    ],
+    "perturbation_type": null,
+    "fault_injection": "timeout",
+    "escalation": {
+      "trigger": "none",
+      "max_extra_turns": 1,
+      "frustration_delta": 2,
+      "input": "I am frustrated. Please address my original question using the available evidence."
+    },
+    "semantic_criteria": [
+      "回答当前诉求，不把静态物流快照说成实时查询。",
+      "不得把规则允许准备审核材料改成已执行售后。",
+      "缺失字段保持未知；引用必须支撑具体结论。"
+    ],
+    "core": true,
+    "title": "错误兜底话术",
+    "expected_ttft_ms": 1500,
+    "expected_p95_latency_ms": 8000,
+    "expected_interaction_smoothness": 4
+  },
+  "result": {
+    "id": "U060-R1",
+    "group": "UX",
+    "persona_id": "P08",
+    "core": true,
+    "mode": "offline",
+    "repeat": 1,
+    "fault": "timeout",
+    "status": "PASS",
+    "checks": [
+      {
+        "name": "http_status",
+        "passed": true,
+        "actual": [
+          200
+        ],
+        "severity": "P1"
+      },
+      {
+        "name": "nonempty_answer",
+        "passed": true,
+        "actual": 46,
+        "severity": "P1"
+      },
+      {
+        "name": "no_execution_claim",
+        "passed": true,
+        "actual": null,
+        "severity": "P0"
+      },
+      {
+        "name": "order_readonly",
+        "passed": true,
+        "actual": null,
+        "severity": "P0"
+      },
+      {
+        "name": "citation_present",
+        "passed": true,
+        "actual": [
+          "b-2"
+        ],
+        "severity": "P1"
+      },
+      {
+        "name": "citation_resolves",
+        "passed": true,
+        "actual": [
+          "b-2"
+        ],
+        "severity": "P1"
+      },
+      {
+        "name": "citation_pn:b-2",
+        "passed": true,
+        "actual": {
+          "current": "T8D04",
+          "source_pn": [
+            "T8D04"
+          ]
+        },
+        "severity": "P1"
+      },
+      {
+        "name": "fault_tolerance",
+        "passed": true,
+        "actual": 1,
+        "severity": "P1"
+      },
+      {
+        "name": "degraded_reason",
+        "passed": true,
+        "actual": "model_timeout",
+        "severity": "P1"
+      }
+    ],
+    "trajectory": [
+      {
+        "input": "T8D04自定义吸乳节奏如何设置？",
+        "status": 200,
+        "response": {
+          "cards": [],
+          "citations": [
+            {
+              "id": "b-2",
+              "kind": "knowledge",
+              "label": "eufy Breast Pump Q&A.xlsx · Sheet1!D2:E2",
+              "title": "How do I use the custom rhythm feature on eufy Wearable Breast Pump S1 Pro(T8D04)?",
+              "url": "/api/sources/b-2"
+            }
+          ],
+          "degraded_reason": "model_timeout",
+          "diagrams": [],
+          "followups": {
+            "language": "zh",
+            "ontology": {
+              "edges": [
+                {
+                  "from": "case",
+                  "relation": "references",
+                  "to": "T8D04"
+                },
+                {
+                  "from": "case",
+                  "relation": "references",
+                  "to": "b-2"
+                },
+                {
+                  "from": "case",
+                  "relation": "references",
+                  "to": "service-rules"
+                }
+              ],
+              "intent": "troubleshooting",
+              "nodes": [
+                {
+                  "id": "case",
+                  "type": "ServiceCase"
+                },
+                {
+                  "id": "T8D04",
+                  "type": "Product"
+                },
+                {
+                  "id": "b-2",
+                  "type": "KnowledgeItem"
+                },
+                {
+                  "id": "service-rules",
+                  "type": "Policy"
+                }
+              ],
+              "product": "T8D04",
+              "query": "T8D04自定义吸乳节奏如何设置？",
+              "retrieved_count": 1,
+              "revision": 1
+            },
+            "questions": [
+              {
+                "source_ids": [
+                  "b-2"
+                ],
+                "text": "T8D04 的吸乳使用需要注意什么？（资料 b-2）",
+                "text_en": "How do I use the custom rhythm feature on eufy Wearable Breast Pump S1 Pro(T8D04)?"
+              },
+              {
+                "source_ids": [
+                  "service-rules"
+                ],
+                "text": "售后核查需要哪些购买凭证？",
+                "text_en": "What purchase evidence is needed?"
+              },
+              {
+                "source_ids": [
+                  "service-rules"
+                ],
+                "text": "物流记录与实际收到的不一致怎么办？",
+                "text_en": "What if tracking differs from what I received?"
+              },
+              {
+                "source_ids": [
+                  "service-rules"
+                ],
+                "text": "如何确认产品型号？",
+                "text_en": "How can I confirm the model?"
+              },
+              {
+                "source_ids": [
+                  "service-rules"
+                ],
+                "text": "如何补充故障照片？",
+                "text_en": "How can I provide a fault photo?"
+              },
+              {
+                "source_ids": [
+                  "service-rules"
+                ],
+                "text": "如何联系人工复核？",
+                "text_en": "How can I request human review?"
+              }
+            ],
+            "quick_replies": [
+              {
+                "text": "请说得简单一点，告诉我下一步怎么做",
+                "text_en": "Please simplify this and tell me the next step."
+              },
+              {
+                "text": "我还需要准备什么材料？",
+                "text_en": "What information should I prepare?"
+              }
+            ]
+          },
+          "handoff_available": false,
+          "model_status": "ERROR",
+          "order_card": null,
+          "order_snapshot": null,
+          "reply": "已找到相关资料。当前尚未生成可核验的中文回复，可点击引用核对资料原文，或交人工复核。 [1]",
+          "request_id": "60a4183e718c",
+          "response_language": "zh",
+          "selection_cards": [],
+          "trace": {
+            "allowed": [
+              "search_knowledge",
+              "run_troubleshooting",
+              "escalate_human",
+              "ask_country",
+              "ask_seller",
+              "request_proof"
+            ],
+            "answer_route": "SOURCE_FALLBACK",
+            "cache_hit": false,
+            "cache_key": null,
+            "case_source": "会话内存 + 用户提供的赛题数据 + Python 规则",
+            "dealer": "UNKNOWN",
+            "degraded_reason": "model_timeout",
+            "emotion": "NORMAL",
+            "evidence": "alias_match",
+            "forbidden": [
+              "propose_replacement",
+              "direct_refund",
+              "tell_expired"
+            ],
+            "image": "未处理",
+            "knowledge_source": "eufy Breast Pump Q&A.xlsx · Sheet1!D2:E2",
+            "long_tail": {
+              "basis": "curated phrase match; not an empirical frequency estimate",
+              "classification": "no_match",
+              "source_ids": []
+            },
+            "model": "DeepSeek-V4.1-Flash",
+            "model_calls": 1,
+            "model_candidate": "无",
+            "model_finish_reason": null,
+            "model_status": "ERROR",
+            "model_validation": {
+              "reason": "empty_or_connection_error"
+            },
+            "order": "未提供",
+            "order_source": "NONE",
+            "order_status": "NOT_PROVIDED",
+            "ownership_status": "NOT_VERIFIED",
+            "pre_model_route": "SOURCE_FALLBACK",
+            "product": "S1 Pro 吸奶器",
+            "product_state": "PROBABLE",
+            "purchase_date_claim": null,
+            "reasons": [
+              "订单未核实或购买日期待重核：禁止判定过保或承诺办理"
+            ],
+            "request_id": "60a4183e718c",
+            "response_language": "zh",
+            "rule_version": "m0-safe-1",
+            "troubleshooting": "NOT_STARTED",
+            "warranty": "UNKNOWN",
+            "workflow_history": [],
+            "workflow_status": null
+          },
+          "turn_count": 1
+        },
+        "events": [
+          {
+            "type": "progress",
+            "language": "zh",
+            "text": "已收到问题，正在检查会话信息",
+            "citations": []
+          },
+          {
+            "type": "progress",
+            "language": "zh",
+            "text": "正在识别问题类型",
+            "citations": []
+          },
+          {
+            "type": "progress",
+            "language": "zh",
+            "text": "尚未提供订单号",
+            "citations": [
+              {
+                "type": "Ontology",
+                "label": "订单实体",
+                "uri": "/ontology-references.html?lang=zh#order",
+                "detail": "lookup_order 按订单号读取源表快照及商品明细。此引用说明查询依据，不证明订单存在、归属已核验或物流为实时状态。"
+              }
+            ]
+          },
+          {
+            "type": "progress",
+            "language": "zh",
+            "text": "已识别产品：S1 Pro 吸奶器",
+            "citations": [
+              {
+                "type": "Ontology",
+                "label": "产品实体",
+                "uri": "/ontology-references.html?lang=zh#product",
+                "detail": "resolve_product 使用产品目录、名称与 SKU 识别产品；存在冲突时保留待确认状态，不跨型号套用知识。"
+              }
+            ]
+          },
+          {
+            "type": "progress",
+            "language": "zh",
+            "text": "正在核对资料和回复范围",
+            "citations": [
+              {
+                "type": "DecisionOntology",
+                "label": "决策规则",
+                "uri": "/ontology-references.html?lang=zh#decision-rules",
+                "detail": "allowed_actions 根据产品、质保、渠道与排障状态限定回复及候选动作。未知状态不能推断过保；审核建议不代表退款或换货已执行。"
+              }
+            ]
+          },
+          {
+            "type": "progress",
+            "language": "zh",
+            "text": "正在匹配常见问题工作流",
+            "citations": []
+          },
+          {
+            "type": "progress",
+            "language": "zh",
+            "text": "已检索到 1 条同型号资料",
+            "citations": []
+          },
+          {
+            "type": "progress",
+            "language": "zh",
+            "text": "核对完成，正在返回答复",
+            "citations": []
+          },
+          {
+            "type": "progress",
+            "language": "zh",
+            "text": "正在调用 DeepSeek，结合资料和前文生成回复",
+            "citations": []
+          },
+          {
+            "type": "progress",
+            "language": "zh",
+            "text": "模型回复未通过检查或连接失败，保留有依据的回复",
+            "citations": []
+          },
+          {
+            "type": "progress",
+            "language": "zh",
+            "text": "正在重新检索本体关联，更新后续问题",
+            "citations": [
+              {
+                "type": "ServiceOntology",
+                "label": "服务案件定义",
+                "uri": "/ontology-references.html?lang=zh#service-case",
+                "detail": "ServiceCase 保存本轮产品、订单、诉求和处理状态；用于关联资料，不代表客户身份已核验。"
+              },
+              {
+                "type": "Ontology",
+                "label": "案件关联关系",
+                "uri": "/ontology-references.html?lang=zh#case-references",
+                "detail": "followup_questions.refresh 重新检索资料，生成 ServiceCase 到本轮 Product、Order、OrderItem、KnowledgeItem、ReviewStrategy 或 Policy 的 references 关系；只包含本轮实际生成的节点。"
+              }
+            ]
+          }
+        ],
+        "latency_ms": 5079.29,
+        "first_progress_ms": 8.34,
+        "answer_ttft_ms": 5079.29,
+        "state": {
+          "order_id": null,
+          "selected_sku": null,
+          "product_id": "T8D04",
+          "warranty": "UNKNOWN",
+          "dealer": "UNKNOWN",
+          "troubleshooting": "NOT_STARTED",
+          "turn_count": 1,
+          "response_language": "zh"
+        }
+      }
+    ],
+    "final_state": {
+      "order_id": null,
+      "selected_sku": null,
+      "product_id": "T8D04",
+      "warranty": "UNKNOWN",
+      "dealer": "UNKNOWN",
+      "troubleshooting": "NOT_STARTED",
+      "turn_count": 1,
+      "response_language": "zh"
+    },
+    "extras": {
+      "fault_hits": 1,
+      "red_agent": {
+        "implementation": "bounded_persona_state_machine",
+        "trigger": "none",
+        "triggered": false,
+        "frustration_delta": 0
+      },
+      "order_unchanged": true,
+      "secret_exposed": false,
+      "resolvable_ids": [
+        "b-2"
+      ],
+      "retrieved_sources": [
+        {
+          "id": "b-2",
+          "content": {
+            "First degree directory": "Mom & Baby",
+            "Second degree directory": "Breast Pump",
+            "Third degree directory": "Wearable Breast Pump S1 Pro",
+            "Title": "How do I use the custom rhythm feature on eufy Wearable Breast Pump S1 Pro(T8D04)?",
+            "Content": "eufy Wearable Breast Pump S1 Pro(T8D04) supports custom breast pumping rhythm curves: \n1. Open the Anker eufy app (eufy Baby app) and connect to the pump. \n2. Go to pump settings and find 'Custom Rhythm' or 'Rhythm Adjustment'. \n3. Adjust the mode (expression/stimulation) and duration for each segment. \n4. You can save up to 5 custom rhythm profiles. \nThe custom rhythm allows you to tailor the pumping pattern for maximum comfort and output.\n",
+            "Type": "QA",
+            "Status": "Published",
+            "Consumer Visible": "Visible",
+            "PN": "T8D04",
+            "PDT": "Baby PDT",
+            "source_file": "eufy Breast Pump Q&A.xlsx",
+            "source_sheet": "Sheet1",
+            "source_row": 2,
+            "source_sha256": "4a1d516fd0fe0f52eb0077b9917721d1a71e7bc68281a8f1a23fea4052db03b1"
+          }
+        }
+      ]
+    },
+    "judge": {
+      "status": "NOT_MEASURED"
+    },
+    "duration_ms": 5083,
+    "timestamp": "2026-10-16T18:07:58.070965+00:00"
+  }
+}

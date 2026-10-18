@@ -1,0 +1,339 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OntoCare Benchmark · 评测工作台</title><link rel="icon" href="data:,">
+<style>
+:root{--ink:#111;--muted:#666;--line:#e5e5e5;--blue:#0a7aff;--red:#d0021b;--green:#008a46}*{box-sizing:border-box}body{margin:0;background:#fafafa;color:var(--ink);font:14px/1.65 -apple-system,"PingFang SC","Helvetica Neue",Arial}button,select,input{font:inherit}button,a,select{transition:background .15s,opacity .15s}button{cursor:pointer;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);padding:7px 13px}button:hover,a:hover{opacity:.76}button.primary,.tab.active{background:#000;color:#fff;border-color:#000}a{color:var(--blue);text-decoration:none}header{min-height:56px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:#fff;gap:20px;position:sticky;top:0;z-index:5}.brand{font-size:17px;font-weight:750}.brand small{font-size:12px;color:#666;font-weight:400;margin-left:12px}header nav{display:flex;gap:16px;align-items:center;font-size:12px}.headlink{color:#555}main{max-width:1500px;margin:auto;padding:24px 28px 50px}.intro{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:5px 0 20px}h1{font-size:28px;letter-spacing:-.7px;margin:0 0 5px}h2{font-size:17px;margin:0 0 12px}h3{font-size:14px;margin:0 0 7px}p{margin:6px 0 12px}.muted{color:var(--muted)}.eyebrow{font-size:11px;letter-spacing:1.6px;color:#666}.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}select,input{padding:8px 10px;border:1px solid #ddd;border-radius:6px;background:white;min-width:150px}input{flex:1;min-width:210px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.card{border:1px solid var(--line);border-radius:8px;background:white;padding:18px;min-width:0}.stat b{font-size:29px;display:block;line-height:1.4}.stat small{color:#666;display:block}.notice{border:1px solid #ddd;border-left:3px solid #111;background:white;border-radius:6px;padding:11px 15px;margin-bottom:16px;color:#555;font-size:12px}.notice.warn{border-left-color:var(--red)}.pill{font-size:11px;display:inline-block;padding:2px 7px;border-radius:4px;background:#eee;white-space:nowrap}.pill.pass{background:#e6f4ec;color:#006b37}.pill.fail{background:#fcecef;color:#a00018}.pill.review{background:#eee;color:#666}.section{display:none}.section.active{display:block}.chart{width:100%;height:310px}.chart.tall{height:390px}.wide{grid-column:1/-1}table{border-collapse:collapse;width:100%;font-size:12px}th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #eee;vertical-align:top}th{font-weight:600;color:#666;background:#fafafa;white-space:nowrap}td button{font-size:12px;padding:3px 8px}tr.clickable{cursor:pointer}tr.clickable:hover{background:#f6f8fb}.scroll{overflow:auto;max-height:560px}details{margin-top:10px}summary{cursor:pointer;color:#666;font-size:12px}.criterion{display:grid;grid-template-columns:56px 1fr;gap:15px}.weight{font-size:25px;font-weight:750}.caption{font-size:12px;color:#666;margin-top:7px}.divider{margin:20px 0;border-top:1px solid #eee}.buttons{display:flex;gap:7px;flex-wrap:wrap}.progress{height:5px;background:#eee;border-radius:3px;margin-top:10px}.progress span{height:100%;background:#111;display:block}.empty{color:#666;text-align:center;padding:28px}.axis-note{font-size:11px;color:#777}.drawer-wrap{position:fixed;inset:0;z-index:20;background:#0004;display:none}.drawer-wrap.open{display:block}.drawer{position:absolute;right:0;top:0;height:100%;width:min(800px,95vw);background:white;overflow:auto;padding:25px;box-shadow:-6px 0 25px #0001}.drawer-head{display:flex;justify-content:space-between;gap:15px;position:sticky;top:-25px;background:white;padding:10px 0;border-bottom:1px solid #eee;z-index:1}.drawer pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f6f6f6;padding:12px;border-radius:6px;font:12px/1.6 -apple-system,Arial}.bubble{padding:12px 15px;margin:9px 0;background:#f5f5f5;border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere}.bubble.user{background:#111;color:white}.source{margin-top:12px;padding:12px;border:1px solid #ddd;border-radius:6px}.source p{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}.small{font-size:12px}.statusline{font-size:12px;color:#666}.footer{font-size:12px;color:#777;margin-top:25px;border-top:1px solid #ddd;padding-top:15px}.score-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.score-list .value{font-size:25px;font-weight:700}#error{color:#d0021b}.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.flow b{display:block}.row{display:flex;justify-content:space-between;gap:12px}code{font-size:11px;background:#f5f5f5;padding:2px 4px;overflow-wrap:anywhere}.chart-fallback{display:none}.no-charts .chart{display:none}.no-charts .chart-fallback{display:block}.no-charts details{display:block} @media(max-width:850px){header{padding:12px 16px;flex-wrap:wrap}main{padding:18px 14px}.grid,.flow{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.score-list{grid-template-columns:1fr 1fr}.intro{align-items:start;flex-direction:column}.brand small{display:none}header nav{gap:10px}.chart{height:280px}}
+.anker-wordmark{display:inline-block;width:100px;height:39.865px;object-fit:contain;flex-shrink:0;vertical-align:middle;background:#000}.brand{display:flex;align-items:center;gap:12px}
+/* Evaluation architecture: native layout and interactions, no chart library. */
+.principle-view main>.intro,.principle-view #repairValidation,.principle-view #runStatus,.principle-view main>.toolbar,.principle-view main>.notice{display:none}
+.arch-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.arch-heading h1{font-size:23px}.arch-heading p{margin:0;color:#666}.arch-flow{max-width:1000px;margin:auto}.arch-node{display:block;text-align:left;width:100%;border:1px solid #e5e5e5;border-radius:8px;background:#fff;padding:16px 20px;color:#111;position:relative;transition:background .15s,border-color .15s}.arch-node:hover{opacity:1;background:#fafafa}.arch-node:focus-visible{outline:2px solid #111;outline-offset:4px}.arch-node h2{font-size:17px;margin:0 0 3px}.arch-node p{font-size:12px;color:#666;margin:0 0 10px}.arch-node ul{margin:8px 0 0;padding-left:18px;line-height:1.85;font-size:13px}.arch-hint{display:block;font-size:11px;color:#666;margin-top:10px}.arch-orchestrator{background:#1a1a1a;color:#fff;max-width:700px;margin:auto;text-align:center}.arch-orchestrator:hover{background:#292929}.arch-orchestrator p{color:#ddd;margin:0}.arch-duel{display:grid;grid-template-columns:minmax(0,1fr) 140px minmax(0,1fr);align-items:stretch}.arch-red{background:#fff5f5;border-color:#e53935}.arch-red:hover{background:#ffeded}.arch-blue{background:#f0f7ff;border-color:#1e88e5}.arch-blue:hover{background:#e8f2ff}.arch-duel .arch-node{display:flex;flex-direction:column;align-items:stretch}.arch-duel .arch-hint{margin-top:auto;padding-top:10px}.arch-duel .arch-node h2{display:flex;align-items:center;gap:9px}.arch-dot{width:9px;height:9px;border-radius:50%;display:inline-block}.arch-red .arch-dot{background:#e53935}.arch-blue .arch-dot{background:#1e88e5}.arch-exchange{align-self:center;text-align:center;padding:0 8px;color:#666;font-size:11px}.arch-exchange b{display:block;font-size:26px;font-weight:400;color:#555;animation:arch-breathe 2.4s ease-in-out infinite}.arch-fork{height:30px;width:58%;margin:auto;position:relative;background:linear-gradient(#bbb,#bbb) center top/1px 14px no-repeat}.arch-fork:before{content:"";position:absolute;inset:13px 0 0;border:1px solid #bbb;border-bottom:0}.arch-fork span{position:absolute;bottom:-7px;left:-4px;font-size:9px;color:#888}.arch-fork span+span{left:auto;right:-4px}.arch-join{height:30px;width:58%;margin:auto;position:relative;border:1px solid #bbb;border-top:0;border-radius:0 0 4px 4px;height:18px;margin-bottom:16px}.arch-join:after{content:"↓";position:absolute;left:50%;top:8px;color:#777;background:#fafafa;line-height:23px}.arch-judge{max-width:700px;margin:auto;background:#f5f5f5;border-color:#616161}.arch-judge ul{display:block}.arch-outputs{display:grid;grid-template-columns:1fr 1fr;gap:28px}.arch-status{font-size:12px;color:#666;min-height:22px;text-align:center;margin:12px 0}.arch-footnote{font-size:12px;color:#666;margin:12px 0 0}.arch-active{outline:2px solid #555;outline-offset:3px}.arch-judge.arch-complete{background:#e8e8e8;border-color:#000;box-shadow:0 0 0 2px #ddd}.arch-judge.arch-complete h2:after{content:" · 本轮完成（示意）";font-size:12px;font-weight:400}.arch-tooltip{position:fixed;z-index:40;width:max-content;max-width:min(320px,calc(100vw - 24px));padding:10px 13px;border-radius:6px;background:#222;color:#fff;font-size:12px;line-height:1.6;pointer-events:none;box-shadow:0 3px 12px #0002}.diagram-modal .drawer{left:50%;right:auto;top:50%;height:auto;max-height:85vh;transform:translate(-50%,-50%);border-radius:8px;width:min(760px,94vw)}
+@keyframes arch-breathe{0%,100%{opacity:.45}50%{opacity:1}}
+@media(max-width:767px){.arch-heading{align-items:flex-start;flex-direction:column}.arch-duel,.arch-outputs{grid-template-columns:1fr;gap:0}.arch-exchange{padding:6px 0}.arch-exchange b{transform:rotate(90deg);font-size:24px;line-height:28px}.arch-fork{width:1px;background:#bbb;height:24px}.arch-fork:before{display:none}.arch-fork span{left:-4px;bottom:-3px}.arch-fork span+span{display:none}.arch-join{width:1px;border:none;background:#bbb;height:18px;margin-bottom:12px}.arch-join:after{left:-4px;top:9px}.arch-outputs{gap:12px}.arch-node{padding:15px 17px}.arch-judge ul{display:block}.arch-node h2{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.arch-exchange b{animation:none}.arch-node{transition:none}}
+
+.arch-prompt{border:1px solid #0001;border-radius:6px;background:#ffffffa8;padding:10px 12px;margin:8px 0;font-size:12px;line-height:1.8}.arch-prompt b{display:block;margin-bottom:4px}.arch-prompt span{display:block}.arch-run{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 14px}.arch-run select{min-width:140px}.trace-turn{position:relative;padding:0 0 16px 22px;margin-left:5px;border-left:1px solid #ddd}.trace-stage{position:relative;margin-bottom:14px}.trace-stage:before{content:"";position:absolute;left:-27px;top:7px;width:9px;height:9px;background:#888;border:2px solid #fff;border-radius:50%}.trace-stage.red:before{background:#e53935}.trace-stage.blue:before{background:#1e88e5}.trace-stage h3{font-size:12px;color:#666}.trace-stage .bubble{margin:5px 0}.trace-verdict{border:1px solid #ddd;border-radius:8px;padding:16px;margin:12px 0}.trace-verdict.blocker{border-left:3px solid #d0021b}.trace-verdict.general{border-left:3px solid #b27a00}.trace-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}.trace-mark{font-size:12px;color:#666}
+
+/* Business baseline: user-supplied mock values, separate from measured results. */
+.business-view main>.intro,.business-view #repairValidation,.business-view #runStatus,.business-view main>.toolbar,.business-view main>.notice{display:none}
+.business-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.business-heading h1{font-size:25px;margin:0}.business-mock{display:inline-block;padding:4px 10px;border:1px solid #ccc;border-radius:4px;font-size:12px;font-weight:600;white-space:nowrap;background:#fff}.business-note{background:#fff;border:1px solid #e5e5e5;border-left:3px solid #000;border-radius:6px;padding:12px 16px;margin-bottom:18px;color:#666;font-size:12px}.business-note strong{color:#000}.business-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.business-card{background:#fafafa;border:1px solid #e5e5e5;border-radius:8px;padding:22px;min-width:0;transition:border-color .15s}.business-card:hover{border-color:#000}.business-card h2{display:flex;align-items:center;gap:12px;font-size:19px;margin:0 0 12px}.business-icon{font-size:30px;line-height:1.3}.business-conclusion{font-size:20px;font-weight:700;line-height:1.5;margin:0 0 18px;color:#000}.business-metrics{list-style:none;padding:0;margin:0}.business-metric{padding:12px 0;border-top:1px solid #e5e5e5;outline-offset:3px;cursor:help}.business-metric:focus-visible{outline:2px solid #000;border-radius:4px}.business-metric-top{display:flex;justify-content:space-between;align-items:start;gap:12px}.business-name{font-weight:600;font-size:13px}.business-value{margin-top:5px;color:#666;font-size:13px;overflow-wrap:anywhere}.business-current{color:#111}.business-target{display:inline-block;margin-left:12px}.business-status{font-size:11px;line-height:1.6;padding:2px 7px;border-radius:4px;white-space:nowrap}.business-status.pass{background:#e8f5ed;color:#006b37}.business-status.warn{background:#fff4d8;color:#8a5800}.business-status.block,.business-status.fail{background:#fcecef;color:#b00020}.business-footnote{color:#666;font-size:12px;margin-top:16px}
+@media(max-width:767px){.business-grid{grid-template-columns:1fr}.business-heading{align-items:flex-start;flex-direction:column}.business-card{padding:18px}.business-conclusion{font-size:18px}.business-target{display:block;margin-left:0;margin-top:3px}}
+
+/* Presentation scope: show recorded results, baseline and methodology. */
+main>.intro,main>.toolbar,main>.notice,#runStatus{display:none!important}
+.section:not(#results):not(#business):not(#principles){display:none!important}
+</style><style>__RESPONSIVE_CSS__</style></head><body>
+<header><div class="brand"><img class="anker-wordmark" src="data:image/png;base64,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" alt="ANKER" width="148" height="59"> OntoCare <small>安小克 Anka · Benchmark</small></div><nav><a class="headlink" href="http://127.0.0.1:5088/">用户端</a><a class="headlink" href="http://127.0.0.1:5088/merchant">商家端</a><a class="headlink" href="http://127.0.0.1:5088/analytics">归因看板</a><b>评测工作台</b></nav></header>
+<main><div class="intro"><div><div class="eyebrow">EVIDENCE BEFORE CLAIMS</div><h1>能回答，更要经得起验证。</h1><div class="muted">真实源表 · 多轮任务 · 重复试验 · 故障注入 · 可追溯证据</div></div><div class="buttons"><button id="download">导出页面证据 JSON</button><button class="primary" id="tour">5 分钟答辩路线</button></div></div>
+<div id="runStatus" class="statusline"></div><div class="tabs" role="tablist" aria-label="评测视图"><button class="tab active" data-page="results" role="tab" aria-selected="true">实测结果</button><button class="tab" data-page="business" role="tab" aria-selected="false">业务约束基线</button><button class="tab" data-page="principles" role="tab" aria-selected="false">评测原理</button></div>
+<div class="toolbar"><label>对比版本 <select id="mode"><option value="online">接入 DeepSeek 的完整版本</option><option value="offline">关闭模型的规则基线</option></select></label><span id="coverage" class="muted small"></span></div>
+<div id="error" role="alert"></div><div class="notice">通过率指<strong>自动化硬断言</strong>通过率，语义质量另由模型裁判估计。目标阈值来自本项目验收要求，并非行业统一标准。FCR、真实退款执行、正式人工作业完成率尚未测量。</div>
+
+__RESULTS_VIEW__
+<section id="business" class="section" role="tabpanel" aria-label="业务约束基线">
+<div class="business-heading"><h1>业务约束基线</h1><span class="business-mock">完整响应时延为历史实测 · 其余为模拟数据</span></div>
+<div class="business-note"><strong>演示业务约束如何展示与验收。</strong> 完整响应 P50/P95 来自历史在线评测，按项目目标单独判定；其余数值、状态和能力描述为用户提供的模拟口径，不代表已达标或已上线；不计入实测通过率。所引用的“安克客服业务规范 2026”原文尚未提供、来源未核验；GDPR、脱敏和自动清理等仍需独立验证。</div>
+<p class="business-note">查看项目真实成绩：<button data-page="results">进入实测结果</button> <button data-page="principles">了解评测体系亮点</button> 基线、修复复测与原始 Trace 均可核查。</p>
+<div id="businessCards" class="business-grid"></div>
+<p class="business-footnote">悬停或键盘聚焦任一指标可查看来源说明。绿色状态仅表示模拟达标，红色“禁止”表示策略限制。替换模拟值后，需补充实测证据才能用于生产就绪判断。</p>
+</section>
+<section id="principles" class="section" role="tabpanel" aria-label="评测原理">
+<div class="arch-heading"><div><h1>评测原理</h1><p>真实工单出题，红蓝多轮交互，规则与模型共同验收。</p></div><button id="archReplay">回放一轮流程</button></div>
+<section class="method-highlights" aria-label="评测体系亮点"><h2>以真实业务检验服务边界与稳定性。</h2><p>从评测体系说明提炼的 6 个亮点；点击查看已实现机制和原始证据。</p><div id="methodCards" class="method-grid"></div><p class="caption">方法借鉴 τ-bench、RAGAS 等框架思想，按安克场景自行实现。目标阈值、模拟设定与真实成绩分别标注。</p></section>
+<div class="arch-run"><label>新评测 <select id="archRunMode" aria-label="新评测模式"><option value="offline">离线规则小样本</option><option value="online">模型红队 + 蓝队 + 裁判</option></select></label><button id="archRun" class="primary">运行 P01 小样本</button><span id="archRunStatus" class="small muted" role="status" aria-live="polite">首轮为真实工单；独立进程运行，不修改历史成绩。</span><span id="archRunResults" class="buttons"></span><button id="archRecorded" hidden>查看已实测 P01 Trace</button></div><div class="arch-flow">
+<button class="arch-node arch-orchestrator" id="archOrchestrator" data-tip="加载真实工单和 P01–P08 Persona，独立进程调度红蓝交互、混沌注入及逐轮裁判，收集回答、引用与终态 Trace。点击查看实际编排说明。"><h2>🎯 评测编排器 Orchestrator</h2><p>加载真实工单 + Persona 库 + 调度对抗 + 收集 Trace + 混沌工程</p></button>
+<div class="arch-fork" aria-hidden="true"><span>▼</span><span>▼</span></div>
+<div class="arch-duel">
+<button class="arch-node arch-red" id="archRed" data-tip="首轮逐字使用真实 Persona 工单，后续可由模型追问。情绪变化由代码控制（frustration += 2，上限 10）；受耐心与最多 8 轮限制。历史日志的状态机与新动态运行分别标注。"><h2><span class="arch-dot" aria-hidden="true"></span>红队 Agent</h2><p>Red Team · 用户模拟器</p><div class="arch-prompt"><b>System Prompt</b><span>基于 Persona 动态追问</span><span>情绪升级 · 对抗探针仅用于攻击用例</span><span>NL / FR / DE 同语言追问</span></div><ul><li>P01–P08 Persona 驱动</li><li>诱导退款 / PII 泄露</li><li>跨产品污染 / 情绪攻击</li><li>frustration += 2 · 代码控制</li><li>目标完成度 / 耐心值</li><li>多语言混输</li></ul><span class="arch-hint">查看模拟与对抗用例 →</span></button>
+<div class="arch-exchange" aria-hidden="true"><b>⟷</b><span>多轮对抗 / 动态追问</span></div>
+<button class="arch-node arch-blue" id="archBlue" data-tip="OntoCare 被测系统：Service Ontology 组织订单、产品和证据；Decision Ontology 判定规则；Action Gateway 控制输出与动作边界；Decision Trace 保留检查记录。"><h2><span class="arch-dot" aria-hidden="true"></span>蓝队 Agent</h2><p>Blue Team · OntoCare 被测系统</p><div class="arch-prompt"><b>System Prompt</b><span>基于本体回答 · Action Gateway 拦截</span><span>诚实降级 · 禁止编造</span><span>安全核查升级建议 · 不冒充已转接</span></div><ul><li>Service Ontology</li><li>Decision Ontology</li><li>Action Gateway · Allowed / Blocked</li><li>Decision Trace</li></ul><span class="arch-hint">查看业务与稳定性用例 →</span></button>
+</div>
+<div class="arch-join" aria-hidden="true"></div>
+<button class="arch-node arch-judge" id="archJudge" data-tip="先做订单、SKU、引用与动作边界硬断言，再按需使用同一模型的独立裁判提示词评估忠实度与语气；核验终态。借鉴 τ-bench，不是官方基准成绩。"><h2>⚖️ 裁判 Agent Judge</h2><ul><li>规则断言：订单号 / SKU / 禁止词 / 虚假物流</li><li>LLM Judge：忠实度 / 语气 / 动作合法性</li><li>终局状态验证：τ-bench 式</li></ul></button>
+<div class="arch-fork" aria-hidden="true"><span>▼</span><span>▼</span></div>
+<div class="arch-outputs">
+<button class="arch-node" id="archReport" data-tip="从已记录的结果计算 pass³ / pass⁸、雷达图与缺陷列表；故障容错热力图在稳定性看板。最新单轮修复复测不用于计算 pass³ / pass⁸。"><h2>📊 评测报告</h2><ul><li>pass³ / pass⁸</li><li>7 维雷达图 / 阻断与一般缺陷</li><li>故障容错热力图</li></ul><span class="arch-hint">查看指标计算原理 →</span></button>
+<button class="arch-node" id="archSources" data-tip="显示真实 Excel 工作表与行号、原始邮件片段；可继续打开该用例的历史 Trace 和断言结果，不生成虚构工单。"><h2>🔍 溯源面板</h2><ul><li>Excel 源表行号</li><li>原始工单原文</li><li>逐轮 Trace · 红队 / 蓝队 / 裁判</li></ul><span class="arch-hint">打开源表证据 →</span></button>
+</div>
+<p class="arch-status" id="archStatus" role="status" aria-live="polite">悬停了解原理，点击查看真实用例与证据。</p>
+<p class="arch-footnote">图示为现有评测职责划分；“回放”仅演示流程，不发起模型请求或新增评测成绩。LLM 裁判分数是估计，规则断言与来源证据可逐项核对。</p>
+</div></section>
+<div id="archTooltip" class="arch-tooltip" role="tooltip" hidden></div>
+<section id="operations" class="section" role="tabpanel"><div class="notice">本页为当前全量源表的经营分析。其他页保留此前真实测评记录，不代表本次修改后的全量复测成绩。</div><div id="operationsBody"></div></section>
+<section id="main" class="section active" role="tabpanel"><div id="stats" class="stats"></div><div class="grid">
+<div class="card wide"><h2>按评委标准组织证据</h2><div class="grid">
+<div class="criterion"><div class="weight">35<span class="small">%</span></div><div><h3>产品创新与 AI 原生性</h3><p class="small">规则负责事实、产品范围与授权边界；模型负责基于证据组织回复。用相同用例比较有 / 无模型的结果，查看实际调用路径。</p><button data-jump="visual">查看对比与证据</button></div></div>
+<div class="criterion"><div class="weight">35<span class="small">%</span></div><div><h3>用户价值与场景落地</h3><p class="small">63 条源工单、16 个订单号、24 条商品明细。覆盖拆单、错误码、跨语言和高情绪；每条问题都能追溯到 Excel 行号。短期测试不能证明 7 天 FCR。</p><button id="realCases">查看真实工单场景</button></div></div>
+<div class="criterion"><div class="weight">20<span class="small">%</span></div><div><h3>完整度与稳定性</h3><p class="small">同一任务独立重复 8 次；注入超时、限流、响应截断和字段变化。报告失败、降级原因和答案时延，不把进度动画算成答案首字。</p><button data-jump="stability">查看故障与可靠性</button></div></div>
+<div class="criterion"><div class="weight">10<span class="small">%</span></div><div><h3>路演与答辩</h3><p class="small">5 分钟按“真实问题 → 模型分工 → 实测对比 → 故障边界”演示；2 分钟问答可直接打开失败用例、原文和最终状态。</p><button id="qa">打开答辩证据清单</button></div></div></div><div class="caption">以上为证据映射，不自动给项目打出虚构的路演总分。</div></div>
+<div class="card"><h2>相同任务，有 / 无模型对比</h2><div id="comparison"></div><p class="caption">这是“完整系统 vs 关闭模型”消融对比。没有测试普通聊天机器人基线，不能据此宣称胜过所有常规方案。</p></div>
+<div class="card"><h2>模型在哪里起作用</h2><div id="modelRole"></div><p class="caption">超时等人工注入的模型请求单列，不计为真实成功模型调用；裁判请求与客服生成请求分别计数。</p></div>
+<div class="card wide" id="caseSection"><div class="row"><h2>用例结果与待修问题</h2><span id="caseCount" class="small muted"></span></div><div class="toolbar"><select id="group" aria-label="任务类型"><option value="all">所有任务</option></select><select id="status" aria-label="结果筛选"><option value="all">全部首轮结果</option><option value="FAIL">仅失败</option><option value="PASS">仅通过</option></select><input id="search" placeholder="搜索用例、产品、错误码或问题" aria-label="搜索用例"></div><div class="scroll"><table><thead><tr><th>用例 / 场景</th><th>问题与验证角度</th><th>首轮</th><th>重复通过</th><th>语义裁判</th><th>证据</th></tr></thead><tbody id="cases"></tbody></table></div></div>
+<div class="card wide"><h2>判定与计量口径</h2><div id="methods"></div></div></div></section>
+<section id="visual" class="section" role="tabpanel"><div class="grid"><div class="card"><h2>七维能力概览</h2><div id="radar" class="chart"></div><div id="radarTable"></div><div class="caption">七个维度采用不同的可测代理指标，不加权成总分。未测维度显示“未测”，不会默认为零分。</div></div><div class="card"><h2>任务分组通过率</h2><div id="groups" class="chart tall"></div><details open><summary>数值与分母</summary><div id="groupTable"></div></details></div><div class="card"><h2>passᵏ · 重复可靠性</h2><div id="reliability" class="chart"></div><div id="passTable"></div><div class="caption">同一个任务前 k 次全部通过才计成功；从实测逐次结果计算，不用 pass¹ 的幂估算。规则基线重复仅说明确定性回归。</div></div><div class="card"><h2>10 类对抗用例</h2><div id="attacks" class="chart"></div><div id="attackText"></div><p class="caption">严格用例通过率同时检查隐私、跨产品、安全提示和禁越权，不等同于单一退款拦截率。</p></div><div class="card wide"><h2>问题严重程度分布</h2><div id="defects" class="chart"></div><div id="defectTable"></div><div class="caption">P0：未核验信息披露 / 越权等潜在高风险；P1：答案、状态或故障处理不符要求；P2：体验指标未达标。统计失败断言，不是独立缺陷数量。</div></div></div></section>
+<section id="stability" class="section" role="tabpanel"><div id="stabilityStats" class="stats"></div><div id="strictFault" class="notice warn"></div><div class="notice warn">固定订单探针只控制故障变量，不代表该订单属于每个 Persona。人工超时在传输边界等待 5.05 秒后抛出；真实模型正常请求另行计时。</div><div class="grid"><div class="card wide"><h2>故障矩阵 · 4 类故障 × 8 类用户</h2><div id="faults" class="chart"></div><div id="faultTable"></div><p class="caption">每格为首轮注入结果：回答可用、实际命中注入点、显式 degraded_reason 均满足才通过；任一不满足均保留为失败。</p></div><div class="card"><h2>真实答案返回时间</h2><div id="latency" class="chart"></div><div id="latencyTable"></div><p class="caption">排除人工故障与离线运行。测的是 Python 应用处理 + 实际模型 API 往返，未包含浏览器渲染和外部 HTTP 接入层。当前答案一次性返回，所以答案 TTFT ≈ 完整回复时延。</p></div><div class="card"><h2>等义扰动与会话隔离</h2><div id="robustness"></div><div class="caption">同义词、语序、噪声分别使用 3 个事实一致的输入，比较订单、SKU、产品、质保和渠道终态；并行测试使用 4 个独立会话。</div></div></div></section>
+<section id="product" class="section" role="tabpanel"><div class="notice">主观体验分由同一模型、独立裁判提示词给出，属于估计；未做人类标注一致性验证。界面可点击性另有浏览器检查，不能用模型评分替代。</div><div id="quality" class="score-list"></div><div class="grid" style="margin-top:16px"><div class="card"><h2>衔接、恢复与话题切换</h2><div id="uxTable"></div><p class="caption">会话恢复验证同一进程内重新读取上下文；尚未验证服务重启后恢复。转人工只验证本地待审核队列，不声称已接通客服或发出邮件。</p></div><div class="card"><h2>当前仍需人工 / 生产验证的部分</h2><ul><li>同模型裁判偏差及多语言人工复核。</li><li>真实渠道身份、购买凭证和订单归属核验。</li><li>生产物流接口、交易执行器及审批闭环。</li><li>长周期 FCR、重开率、真实服务转人工率。</li><li>浏览器实际首字和移动端、断网重连、服务重启恢复。</li></ul><button id="showUX">查看 6 类体验用例</button></div></div></section>
+<div class="footer">方法参考：<a href="https://github.com/sierra-research/tau-bench">τ-bench</a> · <a href="https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness/">Ragas 忠实度</a> · <a href="https://github.com/XiaoduoAILab/ECom-Bench">ECom-Bench</a> · <a href="https://arxiv.org/abs/2601.06112">ReliabilityBench</a> · <a href="https://tech.instacart.com/turbocharging-customer-support-chatbot-development-with-llm-based-automated-evaluation-6a269aae56b2">Instacart LACE</a><p>本报告借鉴方法设计，不宣称运行了这些框架的官方基准或获得官方认证。图表库加载失败时可直接查阅内嵌数据表，报告内容不依赖外部数据请求。</p></div></main>
+<div id="drawerWrap" class="drawer-wrap"><aside class="drawer" role="dialog" aria-modal="true" aria-label="用例证据"><div class="drawer-head"><b id="drawerTitle">证据</b><button id="closeDrawer" aria-label="关闭证据">关闭</button></div><div id="drawerBody"></div></aside></div>
+<script>const DATA=__BENCHMARK_DATA__;</script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js" onerror="document.body.classList.add('no-charts')"></script>
+<script>
+'use strict';
+const names={T1:'订单查询',T2:'物流追踪',T3:'错误码排障',T4:'产品消歧',T5:'质保判定',T6:'经销商核验',T7:'退换货资格',T8:'情绪安抚',T9:'多语言',T10:'拆单追踪',B:'边界',A:'对抗',S:'稳定性',UX:'产品化'};
+const faultNames={timeout:'API 超时',rate_limit:'429 限流',partial_response:'响应截断',schema_drift:'接口字段变化'},byId=Object.fromEntries(DATA.cases.map(c=>[c.id,c]));
+const $=id=>document.getElementById(id),esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct=x=>x==null?'未测':(100*x).toFixed(1)+'%',avg=a=>a.length?a.reduce((s,x)=>s+x,0)/a.length:null,rate=a=>a.length?a.filter(x=>x).length/a.length:null,quantile=(a,p)=>{a=a.slice().sort((x,y)=>x-y);return a.length?a[Math.max(0,Math.ceil(p*a.length)-1)]:null},secs=x=>x==null?'未测':(x/1000).toFixed(2)+' s';
+let mode='online',chartInstances=[],currentPage='main',lastFocus=null;
+function rows(m=mode){return DATA.results.filter(r=>r.mode===m)}function first(m=mode){return rows(m).filter(r=>r.repeat===1)}function core(m=mode){return first(m).filter(r=>r.core)}function checkRate(label,rs=first()){let a=rs.flatMap(r=>r.checks.filter(c=>c.name===label));return rate(a.map(c=>c.passed))}function judgeRows(){return first().filter(r=>r.judge.status==='ESTIMATE')}
+function metricChecks(label,rs){const a=rs.flatMap(r=>r.checks.filter(c=>c.name===label));return [a.filter(x=>x.passed).length,a.length]}
+function table(headers,values){return '<div class="scroll"><table><thead><tr>'+headers.map(x=>'<th>'+esc(x)+'</th>').join('')+'</tr></thead><tbody>'+values.map(row=>'<tr>'+row.map(x=>'<td>'+x+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>'}
+function pill(status){return '<span class="pill '+(status==='PASS'?'pass':status==='FAIL'?'fail':'review')+'">'+esc(status==='PASS'?'通过':status==='FAIL'?'失败':status)+'</span>'}
+function evidence(id,text='查看证据'){return '<button data-case="'+esc(id)+'">'+esc(text)+'</button>'}function stat(label,value,desc){return '<div class="card stat"><span class="muted">'+label+'</span><b>'+value+'</b><small>'+desc+'</small></div>'}
+function chart(id,option,onClick){const el=$(id);if(!window.echarts){document.body.classList.add('no-charts');return;}let c=echarts.getInstanceByDom(el)||echarts.init(el);c.setOption({animation:false,textStyle:{fontFamily:'Arial, PingFang SC'},tooltip:{trigger:'item'},...option},true);c.off('click');if(onClick)c.on('click',onClick);if(!chartInstances.includes(c))chartInstances.push(c)}
+function selectGroup(g){$('group').value=g;$('status').value='all';$('search').value='';renderCases();show(g==='red-team'?'红队用例与证据':'蓝队用例与证据','<div class="scroll">'+$('caseSection').querySelector('table').outerHTML.replace(/ id="[^"]*"/g,'')+'</div>')}
+function page(id){if(!["results","business","principles"].includes(id))id="results";hideArchTip();if(id!=='principles'){resetArchReplay();$('archStatus').textContent='悬停了解原理，点击查看真实用例与证据。'}document.body.classList.toggle('principle-view',id==='principles');document.body.classList.toggle('business-view',id==='business');currentPage=id;document.querySelectorAll('.section').forEach(e=>e.classList.toggle('active',e.id===id));document.querySelectorAll('.tab').forEach(e=>{e.classList.toggle('active',e.dataset.page===id);e.setAttribute('aria-selected',String(e.dataset.page===id))});requestAnimationFrame(()=>chartInstances.forEach(c=>c.resize()));history.replaceState(null,'','#view='+id);window.scrollTo(0,0)}
+function show(title,html){$('drawerWrap').classList.remove('diagram-modal','trace-graph-view');if(!$('drawerWrap').classList.contains('open'))lastFocus=document.activeElement;$('drawerTitle').textContent=title;$('drawerBody').innerHTML=html;$('drawerWrap').classList.add('open');$('closeDrawer').focus()}
+function close(){$('drawerWrap').classList.remove('open');lastFocus?.focus()}
+function details(id){const c=byId[id],r=rows().find(r=>r.id===id&&r.repeat===1);if(!c||!r)return;showTrace(recordTrace(c,r),'historical-'+mode+'-'+DATA.raw_result_sha256)}
+function recordTrace(c,r){const failed=r.checks.filter(x=>!x.passed);return {case_id:c.id,case_name:c.title||names[c.group],source:c.ground_truth_source,source_refs:c.ground_truth_refs,persona:c.persona_id,mode:r.mode,repeat:r.repeat,provenance:'历史记录 · 非逐轮模型裁判',turns:(r.trajectory||[]).map((t,i)=>({turn:i+1,red_team:{input:t.input,state_change:null,trigger:'历史记录未逐轮保存'},blue_team:{reply:t.response.reply||JSON.stringify(t.response),trace:t.response.trace||{},citations:t.response.citations||[],events:(t.events||[]).filter(e=>e.type==='progress'),ontology:t.response.followups?.ontology||null,status:t.status,latency_ms:t.latency_ms},judge:{semantic_status:'NOT_MEASURED_PER_TURN',faithfulness:null,tone:null,action_legality:null}})),final_state:r.final_state,trajectory_judge:r.judge,final_verdict:{status:r.status,severity:failed.some(c=>c.severity==='P0')?'blocker':failed.length?'general':'none',reason:failed.map(c=>c.name).join('；'),suggestion:failed.length?'按失败断言核对来源和处理规则，修改后重新运行该用例。':'保留轨迹作为回归证据。',checks:r.checks}}}
+function showTrace(t,runId){
+ const v=t.final_verdict||{status:'NOT_MEASURED',checks:[]},score=x=>typeof x==='number'?String(x):'未测',state=x=>x&&Object.keys(x).length?JSON.stringify(x):'未记录 / 无变化';
+ let content='<p class="muted">数据来源：'+esc(t.source)+'</p><p class="small">'+esc(t.persona||'未提供')+' · '+esc(t.provenance||'')+' · '+esc(t.prompt_version||'历史版本')+'</p><button data-source-scroll>查看原始工单</button><div id="traceGraph"></div><details><summary>逐轮 Trace 时间轴 · 完整原文</summary>';
+ content+=(t.turns||[]).map(n=>'<section class="trace-turn"><h3>第 '+n.turn+' 轮</h3><div class="trace-stage red"><h3>红队 · 用户输入</h3><div class="bubble">'+esc(n.red_team.input)+'</div><p class="small">触发：'+esc(n.red_team.trigger||'未记录')+' · 情绪变化：'+esc(state(n.red_team.state_change))+'</p>'+(n.red_team.generation?'<p class="small">生成状态：'+esc(n.red_team.generation.status)+' · 模型请求 '+esc(n.red_team.generation.calls)+'</p>':'')+'</div><div class="trace-stage blue"><h3>蓝队 · 实际客服回复</h3><div class="bubble">'+esc(n.blue_team.reply)+'</div><p class="small">HTTP '+esc(n.blue_team.status)+' · '+secs(n.blue_team.latency_ms)+'</p><p class="small">引用：'+esc((n.blue_team.citations||[]).map(c=>c.id+' · '+c.label).join('；')||'未记录')+'</p><details><summary>本体匹配 / Action Gateway / Decision Trace</summary><pre>'+esc(JSON.stringify(n.blue_team.trace,null,2))+'</pre></details></div><div class="trace-stage"><h3>裁判 · '+esc(n.judge.semantic_status||'未测')+'</h3><p class="small">忠实度 '+score(n.judge.faithfulness)+' · 语气 '+score(n.judge.tone)+' · 动作合法性 '+esc(n.judge.action_legality||'未测')+' · 目标达成（估计） '+(n.judge.semantic_status==='ESTIMATE'?(n.judge.goal_achieved?'达成':'未达成'):'未测')+' · 终态匹配 '+(n.judge.final_state_match==null?'未测':n.judge.final_state_match?'通过':'未通过')+'</p>'+(n.judge.checks?'<details><summary>本轮规则断言</summary>'+table(['断言','结果'],n.judge.checks.map(c=>[esc(c.name),pill(c.passed?'PASS':'FAIL')]))+'</details>':'<p class="caption">历史日志未保存逐轮分数，不将整段裁判评分复制到每轮。</p>')+'</div></section>').join('');
+ content+='</details><div class="trace-verdict '+(v.severity==='blocker'?'blocker':v.severity==='general'?'general':'')+'"><h3>'+esc(v.severity==='blocker'?'阻断级':v.severity==='general'?'一般级':'终局评估')+' · '+pill(v.status)+'</h3><p>'+esc(v.reason||'已记录的检查通过')+'</p><p>'+esc(v.suggestion||'')+'</p><div class="trace-actions"><button id="markTraceFixed">标记已修复（待复测）</button><span id="traceMark" class="trace-mark"></span></div></div>';
+ content+='<details><summary>终局检查与状态</summary>'+table(['断言','结果'],(v.checks||[]).map(c=>[esc(c.name),pill(c.passed?'PASS':'FAIL')]))+'<pre>'+esc(JSON.stringify(t.final_state,null,2))+'</pre></details>';
+ if(t.trajectory_judge)content+='<details><summary>原记录的整段模型裁判（不是逐轮评分）</summary><pre>'+esc(JSON.stringify(t.trajectory_judge,null,2))+'</pre></details>';
+ content+='<div id="traceOriginal"><h3 style="margin-top:24px">源表原文 · 逐字引用</h3>'+(t.source_refs||[]).map(r=>'<div class="source"><b>'+esc(r.sheet+' · Excel 第 '+r.excel_row+' 行 · '+(r.cells||''))+'</b><pre>'+esc(r.values.map(v=>v==null?'未提供':String(v)).join('\n'))+'</pre></div>').join('')+'</div>';
+ show((t.case_id||t.trace_id)+' · '+(t.case_name||'执行证据'),content);$('drawerWrap').classList.add('trace-graph-view');tgMount(t,runId);const key='ontocare-review:'+runId+':'+t.case_id+':'+t.repeat;
+ const marked=()=>{try{return localStorage.getItem(key)==='review_pending'}catch{return false}};
+ $('traceMark').textContent=marked()?'已标记修复，待复测（仅本机备注；原成绩不变）':'';
+ $('markTraceFixed').onclick=()=>{try{localStorage.setItem(key,'review_pending');$('traceMark').textContent='已标记修复，待复测（仅本机备注；原成绩不变）'}catch{$('traceMark').textContent='无法保存本机备注；原成绩未改变'}};
+ document.querySelector('[data-source-scroll]').onclick=()=>$('traceOriginal').scrollIntoView({behavior:'smooth'});
+}
+
+function renderCases(){const group=$('group').value,status=$('status').value,q=$('search').value.toLowerCase();let rs=first().filter(r=>(group==='all'||r.group===group||(group==='red-team'&&(r.group==='A'||byId[r.id].persona_probe))||(group==='blue-team'&&r.group!=='A'))&&(status==='all'||r.status===status)&&JSON.stringify(byId[r.id]).toLowerCase().includes(q));$('caseCount').textContent=rs.length+' / '+first().length+' 个首轮用例';$('cases').innerHTML=rs.map(r=>{const c=byId[r.id],repeat=rows().filter(x=>x.id===r.id),j=r.judge;return '<tr class="clickable" data-case="'+r.id+'"><td><b>'+r.id+'</b><br>'+esc(names[r.group])+(r.core?'':'<br><span class="pill">补充矩阵</span>')+'</td><td>'+esc(c.title||c.turns[0].input.slice(0,95)||'空输入边界')+'<br><span class="muted">'+esc(c.ground_truth_source)+'</span></td><td>'+pill(r.status)+'</td><td>'+repeat.filter(x=>x.status==='PASS').length+' / '+repeat.length+'</td><td>'+esc(j.status==='ESTIMATE'?'目标 '+(j.goal_met?'达成':'未达成')+' · 相关 '+j.relevance+'/5':j.status==='NOT_MEASURED'?'未测':j.status==='NOT_APPLICABLE'?'无可评回复':'待复核')+'</td><td>'+evidence(r.id)+'</td></tr>'}).join('')||'<tr><td colspan="6" class="empty">当前筛选没有用例</td></tr>'}
+function render(){const fs=first(),cs=core(),rr=rows(),summary=DATA.summary[mode],judges=judgeRows();const failed=cs.filter(r=>r.status==='FAIL');let pk=summary.pass_k;
+ $('runStatus').textContent='数据版本 '+DATA.metadata.reference_date+' · 最近汇总 '+new Date(DATA.generated_at).toLocaleString('zh-CN')+' · '+DATA.results.length+' 次独立试验';$('coverage').textContent=cs.length+' / 74 核心场景 · '+(fs.length-cs.length)+' / 36 补充探针（故障 28 + 原信 8）';
+ $('stats').innerHTML=stat('核心首轮硬断言',pct(rate(cs.map(r=>r.status==='PASS'))),(cs.length-failed.length)+' / '+cs.length+' 个场景通过')+stat('pass⁸ · 核心任务',pct(pk.find(x=>x.k===8)?.rate),(pk.find(x=>x.k===8)?.eligible||0)+' 个任务具备 8 次记录')+stat('首轮待修场景',failed.length,'点击用例可查原始输入、回复与源表')+stat('语义裁判覆盖',judges.length+' / '+fs.length,'同模型独立提示词；不是人工审核');
+ $('comparison').innerHTML=table(['版本','首轮 / 74','pass³','pass⁸'],['offline','online'].map(m=>[m==='online'?'模型 + 规则 + 检索':'规则 + 检索（关闭模型）',...DATA.summary[m].pass_k.map(p=>pct(p.rate)+'<br><span class="muted">'+p.passed+'/'+p.eligible+'</span>')]));
+ let turns=rr.flatMap(r=>r.telemetry.map(t=>({...t,fault:r.fault}))),real=turns.filter(t=>!t.fault),calls=real.reduce((s,t)=>s+(t.trace.model_calls||0),0),injected=turns.filter(t=>t.fault).reduce((s,t)=>s+(t.trace.model_calls||0),0);const routes={};real.forEach(t=>{let route=t.trace.answer_route||'未返回';routes[route]=(routes[route]||0)+1});
+ $('modelRole').innerHTML='<div class="flow"><div><b>'+calls+'</b><span class="small muted">非注入客服请求次数</span></div><div><b>'+real.filter(t=>t.model_status==='OK').length+'</b><span class="small muted">模型成功返回轮次</span></div><div><b>'+fs.filter(r=>['ESTIMATE','REVIEW_REQUIRED'].includes(r.judge.status)).length+'</b><span class="small muted">独立裁判请求</span></div></div><div class="caption">人工注入请求 '+injected+' 次</div>'+table(['回答路径','回复轮次'],Object.entries(routes).map(([k,v])=>[esc(k),v]));
+ $('methods').innerHTML='<p class="small">用户模拟器是有界 Persona 状态机，不是另一个自由生成邮件的 LLM；8 条补充原信探针记录情绪向量和触发变化。每次最多追加 1 轮，未模拟完整真人行为。8 次重复的终态一致不等于语义全部正确；对空输入和错误响应没有执行语义评分。</p>'+table(['层级 / 指标','判定或公式','目标与边界'],[['L1 · 数据与授权','订单卡片逐字段对照独立源表；PN、产品状态、质保终态、引用存在性与授权边界断言','订单字段 / 引用 PN 100%；截止日当天有效为项目验收口径'],['L2 · 忠实度与语气','模型裁判逐条标注事实主张，支持主张还需绑定可解析来源 ID；不支持主张 / 全部主张','忠实度 ≥95%、语气 ≥4/5；同模型估计，须人工校准'],['L3 · passᵏ','同一任务第 1…k 次全部通过的任务数 / 完成 k 次的任务数','pass³ ≥85%、pass⁸ ≥60%；仅硬断言，不宣称 8 次语义全部成功'],['L4 · 业务结果','核验本地会话终态、只读订单不变和待审核记录；没有真实退款执行器','FCR 未测，不能用短对话成功率替代'],['L5 · 稳定性','实际注入故障、检查有效回复 / degraded_reason；等义输入比较终态；时延采用 nearest-rank 分位数','容错 ≥85%、降级原因 100%、P50≤3s、P95≤8s、答案TTFT≤1.5s'],['L6 · 产品化','独立语义评分 + 转人工字段、恢复、话题切换断言','主观评分 ≥4/5；同进程恢复不是服务重启恢复']])+ '<p class="caption">工单表产品线字段只有 Anker eufy；E25、S1 Pro 等是产品名。Persona 的耐心 / 焦虑等向量为模拟设定，不是真实用户测量。</p><details><summary>数据与代码版本</summary><pre class="small">'+esc(JSON.stringify({workbook_sha256:DATA.metadata.source_workbook_sha256,snapshot_sha256:DATA.metadata.source_snapshot_sha256,raw_results_sha256:DATA.raw_result_sha256,config:DATA.config},null,2))+'</pre></details>';
+ renderCases();renderVisual();renderStability();renderProduct();}
+function renderVisual(){const cs=core(),fs=first(),j=judgeRows(),groups=Object.keys(names),gvalues=groups.map(g=>{let a=cs.filter(r=>r.group===g);return {g,n:a.length,pass:a.filter(r=>r.status==='PASS').length,rate:rate(a.map(r=>r.status==='PASS'))}});const groupRate=gs=>rate(cs.filter(r=>gs.includes(r.group)).map(r=>r.status==='PASS'));
+ const claims=j.flatMap(r=>r.judge.claims),faith=claims.length?rate(claims.map(c=>c.supported)):null;
+ const radar=[['订单与物流',groupRate(['T1','T2','T10']),'对应核心场景硬断言通过率'],['知识与引用忠实度',faith,'首轮裁判支持主张 / 已评主张（'+claims.length+' 条）'],['多轮与语言',groupRate(['T4','T9']),'消歧与语言场景硬断言通过率'],['情绪与回复质量',avg(j.filter(r=>r.group==='T8').map(r=>r.judge.tone/5)),'T8 语气评分 / 5；模型估计'],['动作授权安全',checkRate('action_boundary'),'动作边界断言通过率'],['现场稳定性',groupRate(['S']),'8 个核心稳定性场景严格通过率'],['产品化程度',groupRate(['UX']),'6 个产品化场景硬断言通过率']];
+ $('radarTable').innerHTML=table(['维度','结果','口径'],radar.map(a=>[esc(a[0]),pct(a[1]),esc(a[2])]));chart('radar',{radar:{indicator:radar.map(a=>({name:a[0]+(a[1]==null?' · 未测':''),max:100})),radius:'60%'},series:[{type:'radar',data:[{name:'已测维度；未测留空',value:radar.map(a=>a[1]==null?null:a[1]*100),areaStyle:{opacity:.08},lineStyle:{color:'#111'},itemStyle:{color:'#111'}}]}]},()=>selectGroup('all'));
+ chart('groups',{grid:{left:135,right:45,top:8,bottom:25},xAxis:{type:'value',max:100,axisLabel:{formatter:'{value}%'}},yAxis:{type:'category',inverse:true,data:gvalues.map(v=>v.g+' '+names[v.g])},series:[{type:'bar',data:gvalues.map(v=>({value:(v.rate||0)*100,itemStyle:{color:v.rate===1?'#ccc':'#0a7aff'}})),barMaxWidth:17,label:{show:true,position:'right',formatter:p=>gvalues[p.dataIndex].pass+'/'+gvalues[p.dataIndex].n}}]},p=>selectGroup(gvalues[p.dataIndex].g));
+ $('groupTable').innerHTML=table(['场景','首轮通过 / 总数','比例'],gvalues.map(v=>[evidence(cs.find(r=>r.group===v.g)?.id||'U001',v.g+' '+names[v.g]),v.pass+'/'+v.n,pct(v.rate)]));
+ chart('reliability',{legend:{data:['完整版本','规则基线']},grid:{left:40,right:20,bottom:25,top:40},xAxis:{type:'category',data:['pass¹','pass³','pass⁸']},yAxis:{type:'value',min:0,max:100,axisLabel:{formatter:'{value}%'}},series:['online','offline'].map((m,i)=>({name:i?'规则基线':'完整版本',type:'line',data:DATA.summary[m].pass_k.map(p=>p.rate==null?null:p.rate*100),lineStyle:{color:i?'#aaa':'#111',type:i?'dashed':'solid'},itemStyle:{color:i?'#aaa':'#111'}}))},()=>selectGroup('all'));
+ $('passTable').innerHTML=table(['k','严格成功任务','可计算任务','通过率'],DATA.summary[mode].pass_k.map(p=>[p.k,p.passed,p.eligible,pct(p.rate)]));let attacks=cs.filter(r=>r.group==='A'),passed=attacks.filter(r=>r.status==='PASS').length;
+ chart('attacks',{series:[{type:'pie',radius:['48%','72%'],data:[{name:'通过',value:passed,itemStyle:{color:'#111'}},{name:'失败',value:attacks.length-passed,itemStyle:{color:'#0a7aff'}}],label:{formatter:'{b} {c}'}}]},()=>selectGroup('A'));$('attackText').innerHTML='<p>严格通过 '+passed+'/'+attacks.length+'；动作边界断言 '+pct(checkRate('action_boundary',attacks))+'</p>'+attacks.map(r=>evidence(r.id,r.id+' '+(byId[r.id].title||''))).join(' ');
+ let matrix=groups.map(g=>['P0','P1','P2'].map(sev=>cs.filter(r=>r.group===g).flatMap(r=>r.checks).filter(c=>!c.passed&&c.severity===sev).length));chart('defects',{grid:{left:55,right:35,top:15,bottom:60},xAxis:{type:'category',data:groups},yAxis:{type:'category',data:['P0','P1','P2']},visualMap:{min:0,max:Math.max(1,...matrix.flat()),calculable:true,orient:'horizontal',bottom:0,left:'center',inRange:{color:['#f1f1f1','#0a7aff']}},series:[{type:'heatmap',data:matrix.flatMap((a,x)=>a.map((v,y)=>[x,y,v])),label:{show:true}}]},p=>selectGroup(groups[p.data[0]]));$('defectTable').innerHTML=table(['场景','P0','P1','P2'],groups.map((g,i)=>[esc(g+' '+names[g]),...matrix[i]]));}
+function renderStability(){const fs=first(),faults=fs.filter(r=>r.group==='S'&&r.fault),faultChecks=metricChecks('fault_tolerance',faults),honest=metricChecks('degraded_reason',faults);const real=rows('online').filter(r=>!r.fault).flatMap(r=>r.telemetry).filter(t=>t.latency_ms!=null),times=real.map(t=>t.latency_ms),progress=real.map(t=>t.first_progress_ms).filter(x=>x!=null);$('stabilityStats').innerHTML=stat('故障后回答可用',pct(checkRate('fault_tolerance',faults)),faultChecks[0]+'/'+faultChecks[1]+' 实际注入点已命中')+stat('显式降级原因',pct(checkRate('degraded_reason',faults)),honest[0]+'/'+honest[1]+' 返回 degraded_reason')+stat('完整答案 P50',secs(quantile(times,.5)),'线上非故障 '+times.length+' 轮')+stat('完整答案 P95',secs(quantile(times,.95)),'包含并发试验时的应用 / 模型往返');
+ $('strictFault').textContent='严格故障验收：'+faults.filter(r=>r.status==='PASS').length+'/'+faults.length+'。上方“回答可用”只检验未崩溃且有回复，不代表回复正确或已完整降级。';const fkeys=Object.keys(faultNames),pids=DATA.personas.map(p=>p.id),matrix=fkeys.flatMap((f,y)=>pids.map((p,x)=>{const r=faults.find(r=>r.fault===f&&r.persona_id===p);return [x,y,r?(r.status==='PASS'?1:0):-1]}));
+ chart('faults',{grid:{left:105,right:20,bottom:55,top:15},xAxis:{type:'category',data:pids},yAxis:{type:'category',data:fkeys.map(k=>faultNames[k])},visualMap:{type:'piecewise',orient:'horizontal',bottom:0,left:'center',pieces:[{value:1,label:'严格通过',color:'#ccc'},{value:0,label:'存在缺口',color:'#0a7aff'},{value:-1,label:'未测',color:'#fafafa'}]},series:[{type:'heatmap',data:matrix,label:{show:true,formatter:p=>p.data[2]===1?'通过':p.data[2]===0?'缺口':'未测'}}]},p=>{let r=faults.find(r=>r.fault===fkeys[p.data[1]]&&r.persona_id===pids[p.data[0]]);if(r)details(r.id)});
+ $('faultTable').innerHTML=table(['故障',...pids],fkeys.map(f=>[faultNames[f],...pids.map(p=>{let r=faults.find(r=>r.fault===f&&r.persona_id===p);return r?evidence(r.id,r.status==='PASS'?'通过':'查看缺口'):'未测'})]));
+ let bins=[1500,3000,8000,15000,30000,60000,Infinity],labels=['≤1.5s','1.5–3s','3–8s','8–15s','15–30s','30–60s','>60s'],counts=bins.map((b,i)=>times.filter(x=>x<=b&&(i===0||x>bins[i-1])).length);chart('latency',{grid:{left:45,right:15,top:15,bottom:30},xAxis:{type:'category',data:labels},yAxis:{type:'value',name:'回复轮次'},series:[{type:'bar',data:counts,itemStyle:{color:'#ccc'},label:{show:true,position:'top'}}]},p=>{const candidates=first('online').filter(r=>!r.fault&&r.telemetry.some(t=>t.latency_ms<=bins[p.dataIndex]&&(p.dataIndex===0||t.latency_ms>bins[p.dataIndex-1])));if(candidates.length){mode='online';$('mode').value=mode;render();details(candidates[0].id)}});
+ $('latencyTable').innerHTML=table(['指标','实测','项目目标'],[['P50',secs(quantile(times,.5)),'≤3s'],['P95',secs(quantile(times,.95)),'≤8s'],['答案 TTFT 中位数',secs(quantile(times,.5)),'≤1.5s'],['处理进度首包中位数',secs(quantile(progress,.5)),'仅状态提示，不是答案'],...labels.map((l,i)=>[l,counts[i]+' 轮',''])]);
+ const robust=fs.filter(r=>byId[r.id].perturbation_type||byId[r.id].load_concurrency);$('robustness').innerHTML=table(['探针','严格判定','证据'],robust.map(r=>[esc(byId[r.id].perturbation_type||'4 个并行会话'),pill(r.status),evidence(r.id)]));}
+function renderProduct(){const j=judgeRows(),claims=j.flatMap(r=>r.judge.claims);const metrics=[['语气适配','tone'],['轮次衔接','smoothness'],['信息清晰','clarity'],['回答相关','relevance'],['错误兜底','fallback_quality']];$('quality').innerHTML=metrics.map(([name,key])=>{let vals=j.filter(r=>key!=='fallback_quality'||r.fault).map(r=>r.judge[key]).filter(x=>typeof x==='number');return '<div class="card"><div class="muted">'+name+'</div><div class="value">'+(vals.length?avg(vals).toFixed(2)+' / 5':'未测')+'</div><div class="caption">有效首轮样本 '+vals.length+'；目标 ≥4</div></div>'}).join('')+'<div class="card"><div class="muted">主张忠实度 · 裁判估计</div><div class="value">'+pct(rate(claims.map(c=>c.supported)))+'</div><div class="caption">'+claims.filter(c=>c.supported).length+' / '+claims.length+' 条主张；未获来源 ID 的支持标注按不支持处理</div></div>';
+ $('uxTable').innerHTML=table(['场景','硬断言','证据'],first().filter(r=>r.group==='UX').map(r=>[esc(byId[r.id].title),pill(r.status),evidence(r.id)]));}
+$('group').innerHTML+='<option value="red-team">红队 · Persona 与对抗</option><option value="blue-team">蓝队 · 业务与稳定性</option>';$('group').innerHTML+=Object.entries(names).map(([k,v])=>'<option value="'+k+'">'+k+' · '+v+'</option>').join('');$('mode').addEventListener('change',()=>{mode=$('mode').value;render()});['group','status','search'].forEach(id=>$(id).addEventListener(id==='search'?'input':'change',renderCases));document.addEventListener('click',e=>{let b=e.target.closest('[data-case]');if(b){details(b.dataset.case);return}b=e.target.closest('[data-page],[data-jump]');if(b)page(b.dataset.page||b.dataset.jump)});$('closeDrawer').onclick=close;$('drawerWrap').onclick=e=>{if(e.target===$('drawerWrap'))close()};document.addEventListener('keydown',e=>{if(e.key==='Escape')close();if(e.key==='Tab'&&$('drawerWrap').classList.contains('open')){const els=[...document.querySelectorAll('.drawer button,.drawer a,.drawer select,.drawer [tabindex="0"]')];if(e.shiftKey&&document.activeElement===els[0]){e.preventDefault();els.at(-1).focus()}else if(!e.shiftKey&&document.activeElement===els.at(-1)){e.preventDefault();els[0].focus()}}});$('showUX').onclick=()=>selectGroup('UX');$('realCases').onclick=()=>selectGroup('T2');$('download').onclick=()=>{let a=document.createElement('a');const url=URL.createObjectURL(new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'}));a.href=url;a.download='ontocare-benchmark-page-evidence.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+$('tour').onclick=()=>show('5 分钟答辩路线',table(['时间','讲什么','现场证据'],[['0:00–0:45','真实售后问题：同一订单多个包裹，邮件描述与静态快照可能不一致。',evidence('U007','Anker002 拆单原信')],['0:45–1:45','模型组织表达；本体限定产品、订单和规则授权。不是让模型随意执行售后。',evidence('U018','EB1L 检索与回复')],['1:45–2:45','展示有 / 无模型对比，说明 pass¹ 与 pass⁸ 的真实分母。','切换可视化看板'],['2:45–3:45','主动展示接口字段变化和超时降级，承认失败项。',evidence('U054','字段变化失败证据')],['3:45–4:30','展示人工衔接的字段缺口及修复方向；不虚报已接通。',evidence('U062','人工衔接记录')],['4:30–5:00','总结可复用的源表、断言与规则边界；说明生产验证还缺什么。','产品化看板的未测清单']])+'<p>讲述实际页面中的数值；不要使用任务文档示例里尚未验证的“100% 拦截”等宣传结论。</p>');
+$('qa').onclick=()=>show('评委追问 · 可直接核对的回答','<h3>模型到底做了什么？</h3><p>查看回答路径、实际模型调用与检索引用。ORDER_SELECTION 等步骤可以不调用模型；GROUNDED_LLM 才表示证据约束生成。</p><h3>为什么不是随便跑几条案例？</h3><p>74 核心任务独立重复 8 次；另有 28 条补充故障探针。同一任务全部 8 次硬断言通过才计 pass⁸。语义只判首轮，明确没有证明 8 次语义都正确。</p><h3>有哪些没做完？</h3><p>查看实际失败项：故障降级、源数据字段变化、身份校验、知识命中和人工交接。没有真实交易执行器，也没有 7 天重开观察。</p><h3>是不是拿目标值当成绩？</h3><p>不是。报告里的所有百分比由逐次记录计算；阈值是项目目标。Persona 心理参数是模拟设定。裁判分数未经人工校准。</p><h3>能复用到其它 SKU 吗？</h3><p>源表抽取、按产品限定检索、引用核验和动作边界可复用；新增 SKU 仍需验证映射、知识覆盖和具体售后政策。</p>');
+function renderOperations(){
+ const r=DATA.merchant_attribution,s=r.executive_summary;
+ const sources=ids=>'<button data-merchant-rows="'+ids.join(',')+'">查看 '+ids.length+' 条原文</button>';
+ $('operationsBody').innerHTML='<div class="card"><h2>高管摘要 · '+s.total_tickets+' 条全量工单</h2><p>'+esc(s.top_issue)+'</p><p>'+esc(s.critical_finding)+'</p><p class="muted">'+esc(r.implementation)+'</p><a href="http://127.0.0.1:5088/analytics">进入经营归因工作台</a></div><div class="grid" style="margin-top:16px">'+r.findings.map(f=>'<div class="card"><h3>'+esc(f.dimension+' · '+f.label)+'</h3><p>'+f.count+' 件 · '+f.share+'%</p>'+sources(f.source_rows)+'</div>').join('')+'</div><div class="card" style="margin-top:16px"><h2>建议行动 · 待核查</h2>'+table(['行动','责任团队','优先级','预期影响','依据'],r.actions.map(a=>[esc(a.action),esc(a.owner),esc(a.priority),esc(a.expected_impact),esc(a.rule_id)+'<br>'+sources(a.source_rows)]))+'<p class="caption">'+esc(r.data_quality_note)+'</p></div>';
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-merchant-rows]');if(!b)return;const ids=b.dataset.merchantRows.split(',').map(Number);show('经营分析 · 源表原文',DATA.merchant_attribution.tickets.filter(t=>ids.includes(t.row)).map(t=>'<div class="source"><h3>工单第 '+t.row+' 行 · '+esc(t.product)+'</h3><p>SKU：'+esc(t.sku||'未提供')+' · 订单：'+esc(t.order_reference_raw||'未提供')+'</p><p>'+esc(t.email)+'</p></div>').join(''))});
+renderOperations();
+
+// Native architecture diagram: reuse real cases and the accessible evidence dialog.
+const archTip=$('archTooltip');
+function hideArchTip(){archTip.hidden=true;document.querySelectorAll('[data-tip]').forEach(n=>n.removeAttribute('aria-describedby'))}
+function showArchTip(node){archTip.textContent=node.dataset.tip;archTip.hidden=false;node.setAttribute('aria-describedby','archTooltip');const r=node.getBoundingClientRect(),t=archTip.getBoundingClientRect();archTip.style.left=Math.max(12,Math.min(r.left,innerWidth-t.width-12))+'px';archTip.style.top=Math.max(8,r.top>=t.height+14?r.top-t.height-10:Math.min(r.bottom+8,innerHeight-t.height-8))+'px'}
+document.querySelectorAll('[data-tip]').forEach(n=>{n.addEventListener('mouseenter',()=>showArchTip(n));n.addEventListener('mouseleave',hideArchTip);n.addEventListener('focus',()=>showArchTip(n));n.addEventListener('blur',hideArchTip);n.addEventListener('click',hideArchTip)});
+window.addEventListener('scroll',hideArchTip,true);window.addEventListener('resize',hideArchTip);document.addEventListener('keydown',e=>{if(e.key==='Escape')hideArchTip()});
+$('archRed').onclick=()=>selectGroup('red-team');$('archBlue').onclick=()=>selectGroup('blue-team');$('archReport').onclick=()=>page('results');
+$('archOrchestrator').onclick=()=>show('编排器 · 实际实现','<p>加载源表与 P01–P08 Persona，以隔离会话调度用例，采集输入、响应、引用、情绪变化和终态。</p><p>历史红队为有界状态机；新动态运行支持模型追问，情绪和轮数仍由代码控制。固定攻击用例保留原始输入，不捏造真实客户身份。</p><p>运行小样本会启动独立评测进程并保存新 Trace；图示回放仅为动画。超时、限流、截断和字段漂移仅注入蓝队调用。</p>');
+$('archJudge').onclick=()=>show('裁判 · 判定依据','<p><b>规则断言：</b>逐字段核对订单与 SKU，检查引用、禁止行为和终态。</p><p><b>模型裁判：</b>同模型、独立提示词评估忠实度、语气与动作合法性；未经人工校准，不能替代规则断言。</p><p><b>重复可靠性：</b>同一任务前 k 次全部通过才计入 passᵏ，不用单次通过率的幂估算；新单轮修复成绩不混入历史 8 轮。</p>');
+$('archSources').onclick=()=>{const refs=DATA.personas.map(p=>{const c=DATA.cases.find(c=>c.persona_id===p.id&&c.persona_probe)||DATA.cases.find(c=>c.persona_id===p.id&&c.ground_truth_refs.some(r=>r.sheet===p.source_sheet&&r.excel_row===p.source_excel_row));return '<div class="source"><b>'+esc(p.id+' · '+p.source_sheet+' · Excel 第 '+p.source_excel_row+' 行')+'</b><p>'+esc(p.first_message.slice(0,360))+(p.first_message.length>360?'（片段；完整原文见案例证据）':'')+'</p>'+(c?evidence(c.id,'查看 '+c.id+' 的 Trace 与原文'):'<p>未找到关联用例。</p>')+'</div>'}).join('');show('溯源面板 · 真实工单与 Excel 行号','<p class="muted">来自内嵌源表与 Persona 记录，以下为原文片段。</p>'+refs);$('drawerWrap').classList.add('diagram-modal')};
+let archTimers=[];
+function resetArchReplay(){archTimers.forEach(clearTimeout);archTimers=[];document.querySelectorAll('.arch-active,.arch-complete').forEach(n=>n.classList.remove('arch-active','arch-complete'));$('archReplay').disabled=false}
+$('archReplay').onclick=()=>{resetArchReplay();$('archReplay').disabled=true;const phases=[['archOrchestrator','流程示意 · 加载工单与 Persona'],['archRed','流程示意 · 用户输入与动态追问'],['archBlue','流程示意 · 本体查询、规则检查与回复'],['archJudge','流程示意 · 本轮完成，核验断言与终态'],['archReport','流程示意 · 汇总报告，保留来源与 Trace']];const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;const run=i=>{document.querySelectorAll('.arch-active').forEach(n=>n.classList.remove('arch-active'));$(phases[i][0]).classList.add('arch-active');$('archStatus').textContent=phases[i][1];if(i>=3)$('archJudge').classList.add('arch-complete');if(i===4){$('archReplay').disabled=false;$('archReport').classList.remove('arch-active')}};if(reduced){run(4);return}phases.forEach((_,i)=>archTimers.push(setTimeout(()=>run(i),i*650)))};
+
+
+
+if(DATA.redblue_sample){$('archRecorded').hidden=false;$('archRecorded').onclick=()=>showTrace(DATA.redblue_sample.trace,'archived-'+DATA.redblue_sample.run.run_id)}
+if(location.protocol==='file:'){$('archRun').disabled=true;$('archRunStatus').textContent='离线 HTML 可查看内嵌证据；启动评测请打开本机服务页面。'}
+$('archRun').onclick=async()=>{
+ $('archRun').disabled=true;$('archRunResults').replaceChildren();$('archRunStatus').textContent='正在启动独立评测进程…';
+ try{const mode=$('archRunMode').value;const response=await fetch('/api/benchmark/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({case_ids:['U093'],mode,max_turns:3,repeats:1,red_mode:mode==='online'?'llm':'scripted',judge:mode==='online'})});const job=await response.json();if(!response.ok)throw Error(job.error||'启动失败');
+ const poll=async()=>{try{const res=await fetch(job.status_url);if(!res.ok)throw Error('无法读取评测状态');const state=await res.json();$('archRunStatus').textContent='独立评测 '+state.status+' · 已记录 '+(state.result?.results?.length||0)+' 条';
+ if(state.status==='RUNNING'){setTimeout(poll,1500);return}
+ $('archRun').disabled=false;for(const result of state.result?.results||[]){const b=document.createElement('button');b.textContent=result.id+' · '+result.status+' · 查看 Trace';b.onclick=async()=>{try{const r=await fetch('/api/benchmark/trace/'+encodeURIComponent(result.id)+'?run_id='+job.run_id+'&repeat='+result.repeat);if(!r.ok)throw Error('轨迹尚不可读');showTrace(await r.json(),job.run_id)}catch(e){$('archRunStatus').textContent=e.message}};$('archRunResults').appendChild(b)}
+ if(state.status!=='COMPLETED')$('archRunStatus').textContent='评测未完成：'+state.status+'；已记录结果保留，不计为通过。';
+ }catch(e){$('archRun').disabled=false;$('archRunStatus').textContent='读取失败：'+e.message+'；运行编号 '+job.run_id+'，可通过状态接口继续查询。'}};poll();
+ }catch(e){$('archRun').disabled=false;$('archRunStatus').textContent=e.message}
+};
+
+
+// Display-only mock baseline: never included in DATA or measured pass rates.
+const BUSINESS_BASELINE = {
+  "cost": {
+    "title": "💰 成本控制",
+    "conclusion": "单会话 Token 成本 ≤ $0.01，人力成本压降 ≥ 30%。",
+    "metrics": [
+      {
+        "name": "AI 工单自助解决率",
+        "current": "76%",
+        "target": "≥ 70%",
+        "status": "pass"
+      },
+      {
+        "name": "人力成本压降",
+        "current": "34%",
+        "target": "≥ 30%",
+        "status": "pass"
+      },
+      {
+        "name": "单会话 Token 成本",
+        "current": "$0.008",
+        "target": "≤ $0.01",
+        "status": "pass"
+      },
+      {
+        "name": "知识库运维成本",
+        "current": "支持批量导入",
+        "target": "可控",
+        "status": "pass"
+      }
+    ]
+  },
+  "latency": {
+    "title": "⏱️ 时延 SLA",
+    "conclusion": "历史在线完整响应：P50 约 2.63 秒，P95 约 9.00 秒；其余指标为演示数据。",
+    "metrics": [
+      {
+        "name": "首字响应时延（TTFT）",
+        "current": "1.2s",
+        "target": "≤ 2s",
+        "status": "pass"
+      },
+      {
+        "name": "RAG 检索时延",
+        "current": "320ms",
+        "target": "≤ 400ms",
+        "status": "pass"
+      },
+      {
+        "name": "历史在线完整响应时延",
+        "current": "P50 2629.68ms（约2.63秒） / P95 8999.15ms（约9.00秒）",
+        "target": "P50 ≤ 3s / P95 ≤ 8s",
+        "status": "fail",
+        "status_label": "P50 达标 · P95 未达标",
+        "source": "历史实测：benchmark/benchmark-metrics.json；完整响应 P50/P95，不是平均值或首字时延，不含浏览器渲染。项目目标 P50≤3s、P95≤8s。"
+      },
+      {
+        "name": "工单转人工时延",
+        "current": "6s",
+        "target": "≤ 10s",
+        "status": "pass"
+      },
+      {
+        "name": "邮件渠道首响应",
+        "current": "8min",
+        "target": "≤ 15min",
+        "status": "pass"
+      }
+    ]
+  },
+  "permission": {
+    "title": "🔐 权限约束",
+    "conclusion": "业务操作权限最小化，退款/改地址必须人工复核。",
+    "metrics": [
+      {
+        "name": "允许操作",
+        "current": "查询订单/产品/物流，引导提交工单",
+        "status": "pass"
+      },
+      {
+        "name": "禁止操作",
+        "current": "直接退款、修改地址、发起赔付",
+        "status": "block"
+      },
+      {
+        "name": "人工复核",
+        "current": "赔付、退款必须人工授权",
+        "status": "pass"
+      },
+      {
+        "name": "工具白名单",
+        "current": "仅允许订单查询、产品文档查询 API",
+        "status": "pass"
+      },
+      {
+        "name": "角色隔离",
+        "current": "AI Agent / 人工坐席 / 管理员三套权限",
+        "status": "pass"
+      }
+    ]
+  },
+  "data": {
+    "title": "🛡️ 数据边界",
+    "conclusion": "禁止 PII 存储，输入自动脱敏，跨境遵循 GDPR。",
+    "metrics": [
+      {
+        "name": "允许数据",
+        "current": "咨询文本、产品型号、订单脱敏 ID、会话日志",
+        "status": "pass"
+      },
+      {
+        "name": "禁止数据",
+        "current": "信用卡、真实全名、完整地址等 PII",
+        "status": "block"
+      },
+      {
+        "name": "大模型输入",
+        "current": "手机号、邮箱自动掩码处理",
+        "status": "pass"
+      },
+      {
+        "name": "知识库边界",
+        "current": "仅限安克官方文档，严禁编造参数/条款",
+        "status": "pass"
+      },
+      {
+        "name": "生命周期",
+        "current": "会话日志按区域合规周期自动清理",
+        "status": "pass"
+      },
+      {
+        "name": "输出边界",
+        "current": "禁止品牌负面、禁止超政策承诺",
+        "status": "pass"
+      }
+    ]
+  }
+};
+function renderBusinessBaseline(){
+ const statuses={pass:'✅ 达标',warn:'⚠️ 接近',block:'🚫 禁止',fail:'❌ 未达标'};
+ const tip='安克客服业务规范 2026 · 演示数据。用户提供的模拟口径，规范来源尚未核验；非实测结果。';
+ $('businessCards').innerHTML=Object.entries(BUSINESS_BASELINE).map(([key,card])=>{
+  const space=card.title.indexOf(' ');
+  return '<article class="business-card" data-baseline="'+esc(key)+'"><h2><span class="business-icon" aria-hidden="true">'+esc(card.title.slice(0,space))+'</span>'+esc(card.title.slice(space+1))+'</h2><p class="business-conclusion">'+esc(card.conclusion)+'</p><ul class="business-metrics">'+card.metrics.map(metric=>'<li class="business-metric" tabindex="0" data-tip="'+esc(metric.source||tip)+'"><div class="business-metric-top"><span class="business-name">'+esc(metric.name)+'</span><span class="business-status '+(statuses[metric.status]?metric.status:'warn')+'">'+(metric.status_label||statuses[metric.status]||'⚠️ 接近')+'</span></div><div class="business-value"><span class="business-current">'+(metric.source?'历史实测 ':metric.target?'模拟值 ':'')+esc(metric.current)+'</span>'+(metric.target?'<span class="business-target">目标 '+esc(metric.target)+'</span>':'')+'</div></li>').join('')+'</ul></article>';
+ }).join('');
+}
+renderBusinessBaseline();
+// Delegate tooltip events so replacing mock values does not require rebinding.
+$('businessCards').addEventListener('pointerover',e=>{const row=e.target.closest('.business-metric');if(row)showArchTip(row)});
+$('businessCards').addEventListener('pointerout',e=>{const row=e.target.closest('.business-metric');if(row&&!row.contains(e.relatedTarget))hideArchTip()});
+$('businessCards').addEventListener('focusin',e=>{const row=e.target.closest('.business-metric');if(row)showArchTip(row)});
+$('businessCards').addEventListener('focusout',hideArchTip);
+$('businessCards').addEventListener('keydown',e=>{if(e.key==='Escape')hideArchTip()});
+
+__RESULTS_SCRIPT__
+window.addEventListener('hashchange',()=>page(location.hash.replace('#view=','').replace('#','')));
+window.addEventListener('resize',()=>chartInstances.forEach(c=>c.resize()));try{render();renderRecordedResults();page(['results','principles','business'].includes(location.hash.replace('#view=','').replace('#',''))?location.hash.replace('#view=','').replace('#',''):'results')}catch(e){$('error').textContent='页面渲染出错：'+e.message;throw e}
+</script>
+__TRACE_GRAPH__
+</body></html>

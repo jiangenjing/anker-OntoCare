@@ -1,0 +1,2951 @@
+{
+  "knowledge_base": "Anker eufy 售后长尾问题双语知识库",
+  "version": "v3.0",
+  "data_source": [
+    "黑客松智能服务赛题资料.xlsx",
+    "eufy Robovacs Q&A.xlsx",
+    "eufy Breast Pump Q&A.xlsx"
+  ],
+  "total_entries": 290,
+  "entries": [
+    {
+      "id": "L001",
+      "category": "logistics",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "Only received the replacement parts kit, not the vacuum",
+      "question_cn": "只收到配件包，主机没到",
+      "synonyms_en": [
+        "got parts but no vacuum",
+        "only accessories arrived",
+        "missing the main unit",
+        "partial delivery",
+        "replacement kit arrived instead"
+      ],
+      "synonyms_cn": [
+        "配件到了机器没到",
+        "只收到替换件",
+        "主机没到",
+        "包裹不完整",
+        "少发主机",
+        "分开发货只收到一个"
+      ],
+      "ontology_slots": ["Order.status", "Order.tracking1", "Order.tracking2"],
+      "strategy": "split_package_tracking",
+      "response_en": "Your order Anker001 was split into 2 packages: Parts kit tracking Anker1234567 (delivered 9/21), Main unit tracking Anker1234567-1 (delivered 9/23). If the main unit still hasn't arrived, I'll launch an internal investigation immediately.",
+      "response_cn": "我查到您的订单 Anker001 拆分为 2 个包裹 发出：配件包单号 Anker1234567（已签收 9/21），主机包裹单号 Anker1234567-1（已签收 9/23）。如主机仍未收到，我立即为您启动内部核查。"
+    },
+    {
+      "id": "L002",
+      "category": "logistics",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "Tracking shows label created but no further updates",
+      "question_cn": "物流单号显示 label created 后无更新",
+      "synonyms_en": [
+        "tracking number not working",
+        "no tracking info",
+        "label created stuck",
+        "tracking number invalid",
+        "no movement in tracking"
+      ],
+      "synonyms_cn": [
+        "单号查不到",
+        "物流不动",
+        "没有物流信息",
+        "label created 卡住",
+        "查不到包裹",
+        "快递信息不刷新"
+      ],
+      "ontology_slots": ["Order.carrier", "Order.trackingStatus"],
+      "strategy": "explain_label_creation_gap",
+      "response_en": "Label Created means the carrier has received the shipping info. Physical pickup usually takes 1-2 business days. Your tracking Anker1234567-2 currently shows Delivered on 9/21. If no update after 3 business days, I'll initiate a carrier inquiry.",
+      "response_cn": "标签创建（Label Created）表示承运商已收到发货信息，实物揽收通常需要 1-2 个工作日。您的包裹单号 Anker1234567-2 目前状态为 Delivered on 9/21，如超 3 个工作日仍无更新，我为您发起承运商查询。"
+    },
+    {
+      "id": "L003",
+      "category": "logistics",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "Package shows in transit but ETA has passed",
+      "question_cn": "物流显示 in transit，预计到达时间已过",
+      "synonyms_en": [
+        "package overdue",
+        "delivery late",
+        "still in transit past delivery date",
+        "tracking stuck in transit",
+        "where is my package"
+      ],
+      "synonyms_cn": [
+        "包裹超时未到",
+        "物流一直 in transit",
+        "预计到达过了还没到",
+        "delivery overdue",
+        "一直显示 in transit",
+        "快递太慢",
+        "物流停滞"
+      ],
+      "ontology_slots": ["Order.trackingStatus"],
+      "strategy": "proactive_verify_next_steps",
+      "response_en": "Your order Anker005 is currently in transit, estimated arrival 9/30. That date has passed. I'm launching a carrier inquiry with FedEx right now, typically 1-2 business days for feedback.",
+      "response_cn": "您的订单 Anker005 当前状态为 in transit，预计到达 9/30。已过预计时间，我立即为您向 FedEx 发起物流查询，通常 1-2 个工作日有反馈。"
+    },
+    {
+      "id": "L004",
+      "category": "logistics",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "Tracking shows Return to sender but no refund received",
+      "question_cn": "物流显示 Return to sender，但我没收到退款",
+      "synonyms_en": [
+        "package returned",
+        "shipment sent back",
+        "return to sender meaning",
+        "package returned no refund",
+        "did not receive refund"
+      ],
+      "synonyms_cn": [
+        "包裹被退回",
+        "快递退回去了",
+        "return to sender 什么意思",
+        "包裹退件",
+        "被退回没收到钱",
+        "退货了但没退款"
+      ],
+      "ontology_slots": ["Order.trackingStatus"],
+      "strategy": "proactive_register_offer_options",
+      "response_en": "Your order Anker007 shows Return to sender. Possible reasons: incorrect address or multiple failed delivery attempts. Would you prefer re-shipment (please confirm new address) or a full refund? I'll register it immediately.",
+      "response_cn": "我查到订单 Anker007 的包裹状态为 Return to sender（退回寄件人），原因可能是地址有误或多次投递无人接收。您希望我们重新寄送（确认新地址）还是直接退款？我立即为您登记。"
+    },
+    {
+      "id": "L005",
+      "category": "logistics",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "Order shows not shipped but pre-order date has passed",
+      "question_cn": "订单显示未发货，但已过预售发货日期",
+      "synonyms_en": [
+        "pre-order delay",
+        "when will it ship",
+        "pre-order late",
+        "still not shipped",
+        "backorder delay"
+      ],
+      "synonyms_cn": [
+        "预售什么时候发",
+        "pre-order 发货时间",
+        "还没发货",
+        "预售产品 delay",
+        "订单一直未发货",
+        "预购什么时候到"
+      ],
+      "ontology_slots": ["Order.status", "Order.shipDate"],
+      "strategy": "confirm_preorder_date_offer_cancellation",
+      "response_en": "Your order Anker008 is a pre-order product, estimated ship date 2026/10/20. The filters you received are accessories (shipped separately). If you don't want to wait for the main unit, I can cancel and fully refund it.",
+      "response_cn": "您的订单 Anker008 为预售产品，预计 2026/10/20 发货。您已收到的滤网是订单中的配件（单独发货）。如您不想继续等待主机，我可以为您取消主机订单并全额退款。"
+    },
+    {
+      "id": "L006",
+      "category": "logistics",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "Order number not found in system",
+      "question_cn": "订单号查不到，但客户坚称已下单",
+      "synonyms_en": [
+        "order not found",
+        "cannot find my order",
+        "I definitely placed an order",
+        "order number invalid",
+        "system shows no record"
+      ],
+      "synonyms_cn": [
+        "查不到我的订单",
+        "order not found",
+        "订单不存在",
+        "我明明下单了",
+        "系统查无此单",
+        "订单号对不上"
+      ],
+      "ontology_slots": ["Order.orderNo"],
+      "strategy": "order_not_found_not_cancelled",
+      "response_en": "I searched for your order number and could not find it in our system. Please confirm the order number, or provide the purchase channel (Amazon / official website / offline store) + purchase receipt screenshot. Order not found does not mean it was cancelled.",
+      "response_cn": "我查询了您提供的订单号，在系统中暂未找到对应记录。请确认订单号是否正确，或提供购买渠道（Amazon / 官网 / 线下店）+ 购买凭证截图，我帮您进一步核实。订单查无不代表被取消。"
+    },
+    {
+      "id": "L007",
+      "category": "logistics",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "One package delivered, one missing from split shipment",
+      "question_cn": "同一订单拆成两个包裹，一个签收一个丢失",
+      "synonyms_en": [
+        "partial delivery",
+        "only one of two packages arrived",
+        "split shipment incomplete",
+        "one tracking delivered one missing"
+      ],
+      "synonyms_cn": [
+        "一个包裹到了一个没到",
+        "拆单只收到一个",
+        "两个单号只收到一个",
+        "partial delivery",
+        "另一个包裹丢了"
+      ],
+      "ontology_slots": ["Order.status", "Order.trackingStatus1", "Order.trackingStatus2"],
+      "strategy": "verify_each_tracking_separately",
+      "response_en": "Your order was split into 2 packages. Package 1 Anker1234567 delivered 9/21; Package 2 Anker1234567-1 delivered 9/23. If Package 2 wasn't received, I'll launch a separate lost package investigation for Package 2.",
+      "response_cn": "您的订单拆分为 2 个包裹。包裹1 Anker1234567 已签收 9/21；包裹2 Anker1234567-1 已签收 9/23。如包裹2 实际未收到，我为您单独发起包裹2 的丢失调查。"
+    },
+    {
+      "id": "L008",
+      "category": "logistics",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "Tracking shows Delivered but customer did not receive",
+      "question_cn": "物流状态显示 Delivered，但客户未收到",
+      "synonyms_en": [
+        "delivered but not received",
+        "shows delivered but nothing arrived",
+        "package marked delivered not found",
+        "left outside stolen"
+      ],
+      "synonyms_cn": [
+        "显示已签收但我没收到",
+        "delivered but not received",
+        "显示签收没收到货",
+        "被代收了",
+        "放门口丢了"
+      ],
+      "ontology_slots": ["Order.trackingStatus"],
+      "strategy": "launch_carrier_lost_investigation",
+      "response_en": "Your package Anker1234567-11 shows delivered on 9/25, but you haven't received it. I'm launching a carrier lost package investigation with USPS, typically 3-5 business days. Please also confirm if the shipping address is correct.",
+      "response_cn": "系统显示您的包裹 Anker1234567-11 已于 9/25 签收，但您未收到。我立即为您发起承运商（USPS）丢失调查，通常 3-5 个工作日有结果。同时请确认收货地址是否为正确地址。"
+    },
+    {
+      "id": "L009",
+      "category": "logistics",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "Customer requests specific carrier",
+      "question_cn": "客户要求指定承运商",
+      "synonyms_en": [
+        "can I choose carrier",
+        "don't want UPS",
+        "switch courier",
+        "specify shipping company"
+      ],
+      "synonyms_cn": [
+        "能换快递吗",
+        "不想用 UPS",
+        "can I choose carrier",
+        "指定物流",
+        "不要用 FedEx"
+      ],
+      "ontology_slots": ["Order.carrier"],
+      "strategy": "explain_auto_assignment_note_preference",
+      "response_en": "Carriers are automatically assigned by the warehouse based on your address; specific carriers cannot be requested. I'll note your preference, and the warehouse will try to accommodate. If you've had a bad experience, I'll pass it to our logistics team.",
+      "response_cn": "目前承运商由仓库根据您的地址自动匹配，暂不支持指定。但我会为您备注偏好，仓库会尽量参考。如对当前承运商有不良体验，我帮您向物流团队反馈。"
+    },
+    {
+      "id": "L010",
+      "category": "logistics",
+      "product_pn": null,
+      "error_code": null,
+      "question_en": "Customer asks to change shipping address",
+      "question_cn": "客户询问订单地址是否可修改",
+      "synonyms_en": [
+        "change address",
+        "I'm moving",
+        "can I update address",
+        "wrong address",
+        "modify shipping address"
+      ],
+      "synonyms_cn": [
+        "能改地址吗",
+        "我要搬家了",
+        "change shipping address",
+        "地址填错了",
+        "能改收货地址吗"
+      ],
+      "ontology_slots": ["Order.status", "Order.address"],
+      "strategy": "check_shipment_status",
+      "response_en": "Your order status is {status}. If not shipped, address can be changed — please provide the new address. If shipped, already handed to {carrier}; I'll try to intercept and reroute, but cannot guarantee success.",
+      "response_cn": "您的订单当前状态为 {status}。未发货可以修改地址，请提供新地址。已发货包裹已交给 {carrier}，我会尝试联系承运商拦截改派，但不保证成功。"
+    },
+    {
+      "id": "R001",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "6011",
+      "question_en": "Clean water tank full but says empty",
+      "question_cn": "清水箱已加满但 App 仍提示不足",
+      "synonyms_en": [
+        "tank full error",
+        "water tank says empty",
+        "6011 error",
+        "clean water tank error"
+      ],
+      "synonyms_cn": [
+        "水加满了提示没水",
+        "6011 什么意思",
+        "清水箱报错",
+        "水箱满的但说没水"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_seal_ring_magnet",
+      "response_en": "For 6011: 1. Check seal ring on water outlet for deformation/damage; 2. Check magnet at bottom of tank; 3. Reinstall and ensure click sound. If error persists, likely base station hardware issue — I'll arrange replacement.",
+      "response_cn": "关于 6011 错误：1. 取出清水箱，检查出水口密封圈是否变形/破损；2. 检查清水箱底部磁铁是否在位；3. 重新安装并确保听到卡扣声。如仍报错，可能是基站硬件问题，我为您安排换新。"
+    },
+    {
+      "id": "R002",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352",
+      "error_code": "6018",
+      "question_en": "Water injection failed",
+      "question_cn": "基站注水失败",
+      "synonyms_en": [
+        "adding water failed",
+        "water injection error",
+        "6018",
+        "base station not taking water"
+      ],
+      "synonyms_cn": [
+        "adding water failed",
+        "加不上水",
+        "注水报错",
+        "6018 错误",
+        "基站不进水"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "upgrade_firmware_first",
+      "response_en": "For 6018: Latest firmware has optimized water injection strategy. Please update firmware in the app and retry. If still failing and under warranty, we'll provide warranty service.",
+      "response_cn": "关于 6018 错误：新版固件已优化注水策略。请在 App 中升级至最新固件后重新执行拖地任务。如仍失败，且在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R003",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "2010",
+      "question_en": "Suction fan error",
+      "question_cn": "吸力风扇错误",
+      "synonyms_en": [
+        "no suction",
+        "fan error",
+        "2010",
+        "suction not working",
+        "lost suction power"
+      ],
+      "synonyms_cn": [
+        "吸力没了",
+        "风扇报错",
+        "吸不进东西",
+        "2010 错误",
+        "突然没吸力了"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "2010 is a hardware failure — the machine cannot self-recover. Rest assured, if under warranty, we'll immediately arrange a warranty replacement.",
+      "response_cn": "经核查，2010 错误属于硬件故障，机器无法自行恢复。请放心，如在保，我们立即为您安排保修换新。"
+    },
+    {
+      "id": "R004",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "5112",
+      "question_en": "Robot-base station communication error",
+      "question_cn": "机器人与基站通信错误",
+      "synonyms_en": [
+        "communication error",
+        "robot and station disconnected",
+        "5112",
+        "lost connection",
+        "base station not recognized"
+      ],
+      "synonyms_cn": [
+        "communication error",
+        "机器人和基站连不上",
+        "5112 错误",
+        "通信异常",
+        "lost connection",
+        "基站和机器人断开"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "5112 indicates communication anomaly between robot and base station — a hardware issue. If under warranty, we'll provide warranty service.",
+      "response_cn": "5112 错误表示机器人与基站通信异常，属于硬件问题。如在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R005",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "4090",
+      "question_en": "Wall sensor error",
+      "question_cn": "墙体传感器异常",
+      "synonyms_en": [
+        "wall sensor error",
+        "4090",
+        "wall sensor not working",
+        "edge sensor error"
+      ],
+      "synonyms_cn": [
+        "wall sensor error",
+        "墙体传感器报错",
+        "4090 错误",
+        "wall sensor not working",
+        "沿墙传感器异常"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "4090 is a wall sensor hardware failure. If under warranty, we'll arrange a replacement.",
+      "response_cn": "4090 错误为墙体传感器异常，属于硬件问题。如在保，我们为您安排换新。"
+    },
+    {
+      "id": "R006",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "6012;6013",
+      "question_en": "Base station clean water pump/sprinkler error",
+      "question_cn": "基站清水泵/洒水器错误",
+      "synonyms_en": [
+        "sprinkler error",
+        "clean water pump error",
+        "6012 6013",
+        "water injection abnormal"
+      ],
+      "synonyms_cn": [
+        "sprinkler error",
+        "清水泵报错",
+        "洒水器错误",
+        "6012 6013",
+        "clean water pump error"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "6012/6013 is a base station clean water pump/sprinkler hardware failure. If under warranty, we'll provide warranty replacement.",
+      "response_cn": "6012/6013 为基站清水泵/洒水器硬件故障。如在保，我们为您提供保修换新。"
+    },
+    {
+      "id": "R007",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "7053",
+      "question_en": "Robot tilted",
+      "question_cn": "设备倾斜",
+      "synonyms_en": [
+        "robot tilted",
+        "7053",
+        "device not level",
+        "robot not flat"
+      ],
+      "synonyms_cn": [
+        "robot tilted",
+        "机器斜了",
+        "7053 错误",
+        "设备不平",
+        "robot not level"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_flat_surface_then_log",
+      "response_en": "7053: Move the robot to a flat surface before starting. If error persists on flat ground, please enable log upload in the app — our engineers will analyze.",
+      "response_cn": "7053 错误：请先将机器移至平整地面启动。如平整地面仍报错，请在 App 中开启日志上传，我们的工程师会帮您分析。"
+    },
+    {
+      "id": "R008",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "4040",
+      "question_en": "Camera no data",
+      "question_cn": "摄像头无数据",
+      "synonyms_en": [
+        "camera no data",
+        "camera error",
+        "4040",
+        "camera abnormality"
+      ],
+      "synonyms_cn": [
+        "camera no data",
+        "摄像头报错",
+        "4040 错误",
+        "camera abnormality"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "4040 is a camera hardware failure. If under warranty, we'll provide warranty service.",
+      "response_cn": "4040 错误为摄像头无数据，属于硬件问题。如在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R009",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "7003",
+      "question_en": "Robot not touching ground",
+      "question_cn": "机器人未接触地面",
+      "synonyms_en": [
+        "not touching ground",
+        "robot floating",
+        "7003",
+        "chassis off ground"
+      ],
+      "synonyms_cn": [
+        "not touching ground",
+        "机器人悬空",
+        "7003 错误",
+        "robot floating",
+        "底盘没着地"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_flat_surface_then_log",
+      "response_en": "7003: Move the robot to a flat surface. If error persists, enable log upload in the app — our engineers will help.",
+      "response_cn": "7003 错误：请将机器移至平整地面。如平整地面仍报错，请在 App 中开启日志上传，工程师帮您分析。"
+    },
+    {
+      "id": "R010",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "4120;4121",
+      "question_en": "Carpet detection/ultrasonic sensor error",
+      "question_cn": "地毯检测传感器/超声波传感器错误",
+      "synonyms_en": [
+        "carpet sensor error",
+        "4120 4121",
+        "ultrasonic sensor error",
+        "carpet detection failed"
+      ],
+      "synonyms_cn": [
+        "carpet detection sensor error",
+        "地毯传感器报错",
+        "4120 4121",
+        "ultrasonic sensor error"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "4120/4121 is a carpet detection/ultrasonic sensor hardware failure. If under warranty, we'll arrange a replacement.",
+      "response_cn": "4120/4121 为地毯检测传感器/超声波传感器硬件故障。如在保，我们为您安排换新。"
+    },
+    {
+      "id": "R011",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "4020",
+      "question_en": "Gyroscope error",
+      "question_cn": "陀螺仪错误",
+      "synonyms_en": [
+        "gyroscope error",
+        "4020",
+        "gyroscope malfunction"
+      ],
+      "synonyms_cn": [
+        "gyroscope error",
+        "陀螺仪报错",
+        "4020 错误",
+        "gyroscope malfunction"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "4020 is a gyroscope hardware failure. If under warranty, we'll provide warranty service.",
+      "response_cn": "4020 为陀螺仪硬件故障。如在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R012",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "3030;3031",
+      "question_en": "Robot dirty water pump error",
+      "question_cn": "机器人污水泵错误",
+      "synonyms_en": [
+        "dirty water pump error",
+        "3030 3031",
+        "water pump error"
+      ],
+      "synonyms_cn": [
+        "dirty water pump error",
+        "污水泵报错",
+        "3030 3031",
+        "robot water pump error"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "3030/3031 is a robot dirty water pump hardware failure. If under warranty, we'll provide warranty service.",
+      "response_cn": "3030/3031 为机器人污水泵硬件故障。如在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R013",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "3010;3011",
+      "question_en": "Robot clean water pump error",
+      "question_cn": "机器人清水泵错误",
+      "synonyms_en": [
+        "clean water pump error",
+        "3010 3011",
+        "water pump error"
+      ],
+      "synonyms_cn": [
+        "clean water pump error",
+        "清水泵报错",
+        "3010 3011",
+        "robot water pump error"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "3010/3011 is a robot clean water pump hardware failure. If under warranty, we'll provide warranty service.",
+      "response_cn": "3010/3011 为机器人清水泵硬件故障。如在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R014",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "2235",
+      "question_en": "Extendable side brush error",
+      "question_cn": "可伸缩边刷错误",
+      "synonyms_en": [
+        "extendable side brush error",
+        "2235",
+        "side brush malfunction"
+      ],
+      "synonyms_cn": [
+        "extendable side brush error",
+        "边刷报错",
+        "2235 错误",
+        "side brush malfunction"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "2235 is an extendable side brush hardware failure. If under warranty, we'll provide warranty service.",
+      "response_cn": "2235 为可伸缩边刷硬件故障。如在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R015",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "4010",
+      "question_en": "Laser sensor error",
+      "question_cn": "激光传感器错误",
+      "synonyms_en": [
+        "laser sensor error",
+        "4010",
+        "laser sensor anomaly"
+      ],
+      "synonyms_cn": [
+        "laser sensor error",
+        "激光传感器报错",
+        "4010 错误",
+        "laser sensor anomaly"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "4010 is a laser sensor hardware failure. If under warranty, we'll provide warranty service.",
+      "response_cn": "4010 为激光传感器硬件故障。如在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R016",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "3210",
+      "question_en": "Roller mop motor error",
+      "question_cn": "滚筒拖布电机错误",
+      "synonyms_en": [
+        "roller mop motor error",
+        "3210",
+        "mop lifting abnormal"
+      ],
+      "synonyms_cn": [
+        "roller mop motor error",
+        "拖布电机报错",
+        "3210 错误",
+        "abnormal lifting of roller mop"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "3210 is a roller mop motor hardware failure. If under warranty, we'll provide warranty service.",
+      "response_cn": "3210 为滚筒拖布电机硬件故障。如在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R017",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "2113",
+      "question_en": "Roller brush error",
+      "question_cn": "滚刷模块错误",
+      "synonyms_en": [
+        "roller brush error",
+        "2113",
+        "rolling brush module error"
+      ],
+      "synonyms_cn": [
+        "roller brush error",
+        "滚刷报错",
+        "2113 错误",
+        "rolling brush module error"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "2113 is a roller brush module hardware failure. If under warranty, we'll provide warranty service.",
+      "response_cn": "2113 为滚刷模块硬件故障。如在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R018",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "2220;2221;2224;2225",
+      "question_en": "Side brush error",
+      "question_cn": "边刷错误",
+      "synonyms_en": [
+        "side brush error",
+        "2220 2221 2224 2225",
+        "side brush abnormal"
+      ],
+      "synonyms_cn": [
+        "side brush error",
+        "边刷报错",
+        "2220 2221 2224 2225",
+        "side brush abnormal"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "2220/2221/2224/2225 is a side brush hardware failure. If under warranty, we'll provide warranty service.",
+      "response_cn": "2220/2221/2224/2225 为边刷硬件故障。如在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R019",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "5017",
+      "question_en": "Battery pack malfunction",
+      "question_cn": "电池组故障",
+      "synonyms_en": [
+        "battery pack malfunction",
+        "5017",
+        "battery error"
+      ],
+      "synonyms_cn": [
+        "battery pack malfunction",
+        "电池报错",
+        "5017 错误",
+        "battery error"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "5017 is a battery pack hardware failure. If under warranty, we'll provide warranty service.",
+      "response_cn": "5017 为电池组硬件故障。如在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R020",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "2234",
+      "question_en": "Extendable side brush cannot retract",
+      "question_cn": "可伸缩边刷无法收回",
+      "synonyms_en": [
+        "side brush cannot retract",
+        "2234",
+        "extendable side brush stuck"
+      ],
+      "synonyms_cn": [
+        "side brush cannot retract",
+        "边刷收不回来",
+        "2234 错误",
+        "extendable side brush stuck"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_foreign_objects_then_warranty",
+      "response_en": "2234: Check if extendable side brush is tangled with strings/cables/plastic bags/hair. Clean and ensure free movement. If error persists, we'll arrange a replacement.",
+      "response_cn": "2234 错误：请检查可伸缩边刷是否被绳索/数据线/塑料袋/头发缠绕，清理后确保边刷可自由移动。如仍报错，我们为您安排换新。"
+    },
+    {
+      "id": "R021",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "1013;1023",
+      "question_en": "Wheels stuck",
+      "question_cn": "轮子卡住",
+      "synonyms_en": [
+        "wheels stuck",
+        "1013 1023",
+        "wheel stuck",
+        "wheels not turning"
+      ],
+      "synonyms_cn": [
+        "wheels stuck",
+        "轮子卡了",
+        "1013 1023",
+        "wheel stuck",
+        "轮子不转"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_foreign_objects_set_no_go_zone",
+      "response_en": "1013/1023: Check side wheels for tangled cables/hair. Clean and ensure wheels rotate freely. If robot frequently gets stuck in specific areas, set a no-go zone in the app.",
+      "response_cn": "1013/1023 错误：请检查侧轮是否被线缆/头发缠绕，清理后确保轮子正常转动。如机器常在特定位置卡住，建议在 App 中设置禁区。"
+    },
+    {
+      "id": "R022",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "4091",
+      "question_en": "Wall sensor blocked",
+      "question_cn": "墙体传感器被遮挡",
+      "synonyms_en": [
+        "wall sensor blocked",
+        "4091",
+        "sensor blocked",
+        "wall sensor dirty"
+      ],
+      "synonyms_cn": [
+        "wall sensor blocked",
+        "墙体传感器被挡",
+        "4091 错误",
+        "sensor blocked",
+        "沿墙传感器脏了"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "clean_sensor_restart",
+      "response_en": "4091: Gently wipe the right wall sensor with a soft cloth, then place on flat ground and restart.",
+      "response_cn": "4091 错误：请用软布轻轻擦拭机器人右侧墙体传感器表面，然后置于平整地面重启。"
+    },
+    {
+      "id": "R023",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "6080;6081",
+      "question_en": "Sewage extraction fan error",
+      "question_cn": "污水抽取风扇不工作",
+      "synonyms_en": [
+        "sewage extraction fan error",
+        "6080 6081",
+        "dirty water fan error"
+      ],
+      "synonyms_cn": [
+        "sewage extraction fan error",
+        "污水风扇报错",
+        "6080 6081",
+        "污水抽不出来"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "6080/6081 is a sewage extraction fan hardware failure. If under warranty, we'll provide warranty service.",
+      "response_cn": "6080/6081 为污水抽取风扇硬件故障。如在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R024",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "7009",
+      "question_en": "Return robot to base station for self-cleaning",
+      "question_cn": "多楼层任务中提示放回基站清洗拖布",
+      "synonyms_en": [
+        "put back alert",
+        "7009",
+        "return to base station",
+        "mop washing alert"
+      ],
+      "synonyms_cn": [
+        "put back alert",
+        "提示放回基站",
+        "7009 错误",
+        "return robot to base station"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "explain_downgrade_logic",
+      "response_en": "In multi-floor tasks, the robot cannot wash the mop on floors without a base station and will automatically downgrade to vacuum-only mode. To mop, please return the robot to the base station to wash the mop first. Use Multi-Map Saving feature.",
+      "response_cn": "多楼层任务中，机器无法在无基站的楼层清洗拖布，会自动降级为纯扫地模式。如需拖地，请先将机器放回基站清洗拖布。可使用 Multi-Map Saving 功能。"
+    },
+    {
+      "id": "R025",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "7040",
+      "question_en": "Unable to leave station",
+      "question_cn": "无法离开基站",
+      "synonyms_en": [
+        "unable to leave station",
+        "7040",
+        "robot stuck at station"
+      ],
+      "synonyms_cn": [
+        "unable to leave station",
+        "出不了基站",
+        "7040 错误",
+        "robot stuck at station"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_obstacles_around_station",
+      "response_en": "7040: The robot encountered an obstacle while leaving the base station. Check and remove obstacles around the base station.",
+      "response_cn": "7040 错误：机器人离开基站时遇到障碍。请检查基站周围并移除障碍物。"
+    },
+    {
+      "id": "R026",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "1012;1022",
+      "question_en": "Left/right wheel motor error",
+      "question_cn": "左/右轮电机错误",
+      "synonyms_en": [
+        "left/right wheel motor error",
+        "1012 1022",
+        "wheel abnormality"
+      ],
+      "synonyms_cn": [
+        "left/right wheel motor error",
+        "左右轮电机报错",
+        "1012 1022",
+        "wheel abnormality"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "1012/1022 is a left/right wheel motor hardware failure. If under warranty, we'll provide warranty service.",
+      "response_cn": "1012/1022 为左/右轮电机硬件故障。如在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R027",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "6061;6062",
+      "question_en": "Station wastewater or dust collection device error",
+      "question_cn": "基站废水或集尘装置错误",
+      "synonyms_en": [
+        "station wastewater error",
+        "6061 6062",
+        "dust collection device error"
+      ],
+      "synonyms_cn": [
+        "station wastewater or dust collection device error",
+        "基站废水装置报错",
+        "6061 6062"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "hardware_failure_warranty",
+      "response_en": "6061/6062 is a base station wastewater/dust collection device hardware failure. If under warranty, we'll provide warranty service.",
+      "response_cn": "6061/6062 为基站废水或集尘装置硬件故障。如在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R028",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "2310",
+      "question_en": "Dust bin or filter not in place",
+      "question_cn": "尘盒或滤网未安装到位",
+      "synonyms_en": [
+        "dust bin not in place",
+        "2310",
+        "filter not in place",
+        "please insert dustbin and filter"
+      ],
+      "synonyms_cn": [
+        "dust bin not in place",
+        "尘盒没装好",
+        "2310 错误",
+        "filter not in place",
+        "请插入尘盒和滤网"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_magnet_reinstall",
+      "response_en": "2310: 1. Remove dust bin, open lid, check if filter is installed; 2. Check if filter has magnet; 3. Reinstall and ensure clips click into place. Please provide photos for further diagnosis.",
+      "response_cn": "2310 错误：1. 取出尘盒，打开盖子检查滤网是否安装；2. 检查滤网是否有磁铁；3. 重新安装并确保卡扣到位。请提供相关照片，我们帮您进一步判断。"
+    },
+    {
+      "id": "R029",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "6026",
+      "question_en": "Base station dirty water pump error",
+      "question_cn": "基站污水泵错误/污水未排空",
+      "synonyms_en": [
+        "dirty water pump error",
+        "6026",
+        "base station pumping failure",
+        "dirty water not emptying"
+      ],
+      "synonyms_cn": [
+        "dirty water pump error",
+        "污水泵报错",
+        "6026 错误",
+        "base station pumping failure"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "scenario_based_troubleshoot",
+      "response_en": "6026: 1. If water in tray, check dirty tank latch and tray installation; 2. If no water in tray, gently shake dirty water reservoir to confirm white float moves freely. If not recoverable, we'll replace the dirty water tank.",
+      "response_cn": "6026 错误：1. 如托盘有积水，检查污水箱卡扣是否卡紧、托盘是否安装到位；2. 如托盘无积水，轻摇机器人污水箱，确认白色浮球可上下移动。如无法恢复，我们为您更换污水箱。"
+    },
+    {
+      "id": "R030",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "6025",
+      "question_en": "Dirty water tank full or not in place",
+      "question_cn": "基站污水箱已满或未安装",
+      "synonyms_en": [
+        "dirty water tank full",
+        "6025",
+        "sewage tank full",
+        "tank not installed"
+      ],
+      "synonyms_cn": [
+        "dirty water tank full or not in place",
+        "污水箱满了",
+        "6025 错误",
+        "sewage tank full"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "confirm_tank_status_warranty",
+      "response_en": "6025: Confirm dirty water tank is properly installed and not full. If already emptied and correctly installed but error persists and under warranty, we'll ship a replacement tank.",
+      "response_cn": "6025 错误：请确认污水箱已正确安装且未满。如已清空并正确安装仍报错，且在保，我们为您寄送替换污水箱。"
+    },
+    {
+      "id": "R031",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "3021",
+      "question_en": "Robot sewage tank not in place",
+      "question_cn": "机器人污水箱未到位",
+      "synonyms_en": [
+        "sewage tank not in place",
+        "3021",
+        "dirty water reservoir not installed"
+      ],
+      "synonyms_cn": [
+        "sewage tank of the robot is not in place",
+        "机器人污水箱没装",
+        "3021 错误"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "temporary_fix_warranty",
+      "response_en": "3021: Try applying a small piece of tape to the right side of the robot's back to secure the dirty water reservoir detection sensor. If unwilling to try, and under warranty, we'll provide warranty service.",
+      "response_cn": "3021 错误：可尝试在机器人背面右侧贴一小块胶带，固定污水箱检测传感器。如不愿尝试，且在保，我们为您提供保修服务。"
+    },
+    {
+      "id": "R032",
+      "category": "robovac_error",
+      "product_line": "E25/E28",
+      "product_pn": "T2352;T2353",
+      "error_code": "6010",
+      "question_en": "Base station clean water tank not in place",
+      "question_cn": "基站清水箱未到位",
+      "synonyms_en": [
+        "clean water tank not in place",
+        "6010",
+        "clean water tank not connected"
+      ],
+      "synonyms_cn": [
+        "clean water tank not in place",
+        "清水箱没装好",
+        "6010 错误",
+        "clean water tank not connected"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "confirm_installation_warranty",
+      "response_en": "6010: Confirm clean water tank is properly installed. If error persists and under warranty, we'll ship a replacement clean water tank.",
+      "response_cn": "6010 错误：请确认清水箱已正确安装。如仍报错，且在保，我们为您寄送替换清水箱。"
+    },
+    {
+      "id": "R033",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "3122",
+      "question_en": "Mop pad holder motor error",
+      "question_cn": "拖布支架电机错误",
+      "synonyms_en": [
+        "mop pad holder motor error",
+        "3122",
+        "mop abnormality"
+      ],
+      "synonyms_cn": [
+        "mop pad holder motor error",
+        "拖布支架电机报错",
+        "3122 错误"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "restart_then_warranty",
+      "response_en": "3122: Please restart the robot first. If error persists after restart, it's a hardware failure — under warranty, we'll replace.",
+      "response_cn": "3122 错误：请先重启机器人。如重启后仍报错，属于硬件故障，在保可换新。"
+    },
+    {
+      "id": "R034",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "6011",
+      "question_en": "Clean water tank full but says empty",
+      "question_cn": "基站清水箱不足（已加满仍报错）",
+      "synonyms_en": [
+        "tank full error",
+        "6011",
+        "water tank says empty"
+      ],
+      "synonyms_cn": [
+        "clean water tank empty but full",
+        "清水箱满了还说没水",
+        "6011 错误"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_seal_ring_magnet",
+      "response_en": "6011: 1. Check seal ring on water outlet; 2. Check magnet at bottom of tank. If error persists, likely base station hardware issue.",
+      "response_cn": "6011 错误：1. 取出清水箱，检查出水口密封圈是否变形/破损；2. 检查清水箱底部磁铁是否在位。如仍报错，可能是基站硬件问题。"
+    },
+    {
+      "id": "R035",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "2310",
+      "question_en": "Dust bin or filter not in place",
+      "question_cn": "尘盒或滤网未安装到位",
+      "synonyms_en": [
+        "dust box not in place",
+        "2310",
+        "filter not in place"
+      ],
+      "synonyms_cn": [
+        "dust box or filter not in place",
+        "尘盒滤网没装好",
+        "2310 错误"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_magnet_reinstall",
+      "response_en": "2310: 1. Check if filter is installed; 2. Check if filter has magnet; 3. Reinstall and ensure clips click. Provide photos for further diagnosis.",
+      "response_cn": "2310 错误：1. 取出尘盒，检查滤网是否安装；2. 检查滤网是否有磁铁；3. 重新安装并确保卡扣到位。请提供照片，我们帮您判断。"
+    },
+    {
+      "id": "R036",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "6012;6013",
+      "question_en": "Sprinkler/clean water pump error",
+      "question_cn": "洒水器/基站清水泵错误",
+      "synonyms_en": [
+        "sprinkler error",
+        "6012 6013",
+        "clean water pump error"
+      ],
+      "synonyms_cn": [
+        "sprinkler error",
+        "清水泵报错",
+        "6012 6013",
+        "base station clean water pump error"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "power_cycle_then_warranty",
+      "response_en": "6012/6013: Unplug base station power (wait 10s, replug), restart cleaning. If error persists, it's a hardware failure — under warranty, we'll replace.",
+      "response_cn": "6012/6013 错误：请先拔插基站电源（拔掉后等 10 秒再插回），重启清洁任务。如仍报错，属于硬件故障，在保可换新。"
+    },
+    {
+      "id": "R037",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "5016;5017;5010",
+      "question_en": "Battery error",
+      "question_cn": "电池错误",
+      "synonyms_en": [
+        "battery error",
+        "5016 5017 5010",
+        "battery abnormality"
+      ],
+      "synonyms_cn": [
+        "battery error",
+        "电池报错",
+        "5016 5017 5010",
+        "battery abnormality"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "reinstall_battery_then_warranty",
+      "response_en": "5016/5017/5010: Reinstall the battery per video, then restart. If error persists, battery needs replacement.",
+      "response_cn": "5016/5017/5010 错误：请按视频重新安装电池，然后重启机器人。如仍报错，需更换电池。"
+    },
+    {
+      "id": "R038",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "1012;1022",
+      "question_en": "Left/right wheel module error",
+      "question_cn": "左/右轮模块错误",
+      "synonyms_en": [
+        "left/right wheel error",
+        "1012 1022",
+        "wheel abnormality"
+      ],
+      "synonyms_cn": [
+        "left/right wheel module error",
+        "左右轮报错",
+        "1012 1022",
+        "wheel abnormality"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "restart_then_warranty",
+      "response_en": "1012/1022: Please restart the robot. If error persists, it's a hardware failure — under warranty, we'll replace.",
+      "response_cn": "1012/1022 错误：请先重启机器人。如重启后仍报错，属于硬件故障，在保可换新。"
+    },
+    {
+      "id": "R039",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "2010",
+      "question_en": "Suction fan error",
+      "question_cn": "吸力风扇错误",
+      "synonyms_en": [
+        "no suction",
+        "fan error",
+        "2010",
+        "lost suction"
+      ],
+      "synonyms_cn": [
+        "suction fan error",
+        "吸力没了",
+        "2010 错误",
+        "fan abnormality"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "restart_then_warranty",
+      "response_en": "2010: Please restart the robot. If error persists, it's a hardware failure — under warranty, we'll replace.",
+      "response_cn": "2010 错误：请先重启机器人。如重启后仍报错，属于硬件故障，在保可换新。"
+    },
+    {
+      "id": "R040",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "4010",
+      "question_en": "Laser sensor error",
+      "question_cn": "激光传感器错误",
+      "synonyms_en": [
+        "laser sensor error",
+        "4010",
+        "sensor anomaly"
+      ],
+      "synonyms_cn": [
+        "laser sensor error",
+        "激光传感器报错",
+        "4010 错误",
+        "sensor anomaly"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "restart_then_warranty",
+      "response_en": "4010: Please restart the robot. If error persists, it's a hardware failure — under warranty, we'll replace.",
+      "response_cn": "4010 错误：请先重启机器人。如重启后仍报错，属于硬件故障，在保可换新。"
+    },
+    {
+      "id": "R041",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "4020",
+      "question_en": "Gyroscope error",
+      "question_cn": "陀螺仪错误",
+      "synonyms_en": [
+        "gyroscope error",
+        "4020",
+        "sensor anomaly"
+      ],
+      "synonyms_cn": [
+        "gyroscope error",
+        "陀螺仪报错",
+        "4020 错误",
+        "sensor anomaly"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "restart_then_warranty",
+      "response_en": "4020: Please restart the robot. If error persists, it's a hardware failure — under warranty, we'll replace.",
+      "response_cn": "4020 错误：请先重启机器人。如重启后仍报错，属于硬件故障，在保可换新。"
+    },
+    {
+      "id": "R042",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "4120;4121",
+      "question_en": "Ultrasonic/carpet sensor error",
+      "question_cn": "超声波/地毯检测传感器错误",
+      "synonyms_en": [
+        "ultrasonic sensor error",
+        "4120 4121",
+        "carpet detection error"
+      ],
+      "synonyms_cn": [
+        "ultrasonic sensor error",
+        "超声波传感器报错",
+        "4120 4121",
+        "carpet detection sensor error"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "restart_then_warranty",
+      "response_en": "4120/4121: Please restart the robot. If error persists, it's a hardware failure — under warranty, we'll replace.",
+      "response_cn": "4120/4121 错误：请先重启机器人。如重启后仍报错，属于硬件故障，在保可换新。"
+    },
+    {
+      "id": "R043",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "6022;6023",
+      "question_en": "Base station dirty water pump error",
+      "question_cn": "基站污水泵错误",
+      "synonyms_en": [
+        "station pump error",
+        "6022 6023",
+        "dirty water pump error"
+      ],
+      "synonyms_cn": [
+        "station pump error",
+        "污水泵报错",
+        "6022 6023",
+        "base station dirty water pump error"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "power_cycle_then_warranty",
+      "response_en": "6022/6023: Unplug base station power (wait 10s, replug), restart. If error persists, it's a hardware failure — under warranty, we'll replace.",
+      "response_cn": "6022/6023 错误：请先拔插基站电源（等 10 秒再插回），重启任务。如仍报错，属于硬件故障，在保可换新。"
+    },
+    {
+      "id": "R044",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "6040;6041",
+      "question_en": "Air dryer error",
+      "question_cn": "风干机错误",
+      "synonyms_en": [
+        "air dryer error",
+        "6040 6041",
+        "drying abnormality"
+      ],
+      "synonyms_cn": [
+        "air dryer error",
+        "风干机报错",
+        "6040 6041",
+        "drying abnormality"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "power_cycle_then_warranty",
+      "response_en": "6040/6041: Unplug base station power (wait 10s, replug), restart. If error persists, it's a hardware failure — under warranty, we'll replace.",
+      "response_cn": "6040/6041 错误：请先拔插基站电源（等 10 秒再插回），重启任务。如仍报错，属于硬件故障，在保可换新。"
+    },
+    {
+      "id": "R045",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "6110",
+      "question_en": "Base station input voltage abnormal",
+      "question_cn": "基站输入电压不匹配",
+      "synonyms_en": [
+        "voltage mismatch",
+        "6110",
+        "voltage error"
+      ],
+      "synonyms_cn": [
+        "input voltage abnormal",
+        "电压不匹配",
+        "6110 错误",
+        "base station voltage error"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_nameplate_voltage",
+      "response_en": "6110: Check nameplate voltage on back of base station vs. local voltage. If matched, unplug/replug after 10s. If voltage unstable, use a voltage stabilizer.",
+      "response_cn": "6110 错误：请核对基站背面铭牌电压是否与当地电压匹配。如匹配，拔插电源 10 秒后重启；如电压不稳，建议配备稳压器。"
+    },
+    {
+      "id": "R046",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "5112",
+      "question_en": "Robot-base station communication error",
+      "question_cn": "机器人与基站通信错误",
+      "synonyms_en": [
+        "communication error",
+        "5112",
+        "communication anomaly"
+      ],
+      "synonyms_cn": [
+        "communication error",
+        "机器人和基站连不上",
+        "5112 错误",
+        "communication anomaly"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "clean_infrared_avoid_interference",
+      "response_en": "5112: 1. Clean infrared lamp lens on station and robot; 2. Ensure no interference from other robot stations; 3. Restart robot, power cycle station.",
+      "response_cn": "5112 错误：1. 清洁基站与机器人红外灯透镜；2. 确保基站周围无其他机器人基站干扰；3. 重启机器人，基站断电后重新上电。"
+    },
+    {
+      "id": "R047",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "6021",
+      "question_en": "Base station dirty water tank full",
+      "question_cn": "基站污水箱已满",
+      "synonyms_en": [
+        "dirty water tank full",
+        "6021",
+        "sewage tank full"
+      ],
+      "synonyms_cn": [
+        "dirty water tank full",
+        "污水箱满了",
+        "6021 错误",
+        "sewage tank full"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "empty_tank_check_float",
+      "response_en": "6021: Empty the dirty water tank. If already empty but error persists, open tank lid and check float for free movement.",
+      "response_cn": "6021 错误：请清空污水箱。如已清空仍报错，打开污水箱盖检查浮球是否在位、是否可上下移动。"
+    },
+    {
+      "id": "R048",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "6020",
+      "question_en": "Clean/dirty water tank not connected",
+      "question_cn": "清水箱/污水箱未连接",
+      "synonyms_en": [
+        "water tank not connected",
+        "6020",
+        "tank not installed"
+      ],
+      "synonyms_cn": [
+        "clean water tank or dirty water tank not connected",
+        "清水箱污水箱没连上",
+        "6020 错误"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "reinstall_check_float",
+      "response_en": "6020: Reinstall the dirty water tank. If error persists, open lid and check float for free movement.",
+      "response_cn": "6020 错误：请重新安装污水箱。如仍报错，打开污水箱盖检查浮球是否在位、是否可上下移动。"
+    },
+    {
+      "id": "R049",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "6010",
+      "question_en": "Clean water tank not in place",
+      "question_cn": "清水箱未到位",
+      "synonyms_en": [
+        "clean water tank not in place",
+        "6010",
+        "tank not connected"
+      ],
+      "synonyms_cn": [
+        "clean water tank not in place",
+        "清水箱没装好",
+        "6010 错误",
+        "clean water tank not connected"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "reinstall_check_magnet",
+      "response_en": "6010: Reinstall the clean water tank. If error persists, check magnet at bottom of tank.",
+      "response_cn": "6010 错误：请重新安装清水箱。如仍报错，检查清水箱底部磁铁是否在位。"
+    },
+    {
+      "id": "R050",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "6025",
+      "question_en": "Dirty water tank full or not in place",
+      "question_cn": "污水箱已满或未到位",
+      "synonyms_en": [
+        "dirty water tank full",
+        "6025",
+        "sewage tank full"
+      ],
+      "synonyms_cn": [
+        "dirty water tank full or not in place",
+        "污水箱满了",
+        "6025 错误",
+        "sewage tank full"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_installation_empty_float",
+      "response_en": "6025: 1. Check tank installation; 2. Remove tank and confirm it's empty; 3. Check float position.",
+      "response_cn": "6025 错误：1. 检查污水箱是否安装到位；2. 取出污水箱，确认已清空；3. 检查浮球是否在位。"
+    },
+    {
+      "id": "R051",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "4091",
+      "question_en": "Wall sensor blocked",
+      "question_cn": "墙体传感器被遮挡",
+      "synonyms_en": [
+        "wall sensor not working",
+        "4091",
+        "sensor blocked"
+      ],
+      "synonyms_cn": [
+        "wall sensor not working",
+        "墙体传感器被挡",
+        "4091 错误",
+        "sensor blocked"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "clean_sensor_restart",
+      "response_en": "4091: Wipe right wall sensor with soft cloth, place on flat ground and restart.",
+      "response_cn": "4091 错误：请用软布擦拭机器人右侧墙体传感器，置于平整地面重启。"
+    },
+    {
+      "id": "R052",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "7000;7001;7002;7003",
+      "question_en": "Robot trapped / not touching ground / floating",
+      "question_cn": "机器人被困/未接触地面/悬空",
+      "synonyms_en": [
+        "robot trapped",
+        "7000 7001 7002 7003",
+        "not touching ground",
+        "robot floating"
+      ],
+      "synonyms_cn": [
+        "robot trapped",
+        "机器人卡住了",
+        "7000 7001 7002 7003",
+        "robot not touching ground"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "move_to_flat_ground_log",
+      "response_en": "7000/7001/7002/7003: Move robot to open flat ground. If error persists, enable log upload — our engineers will analyze.",
+      "response_cn": "7000/7001/7002/7003 错误：请将机器人移至开阔平整地面启动。如平整地面仍报错，请开启日志上传，工程师帮您分析。"
+    },
+    {
+      "id": "R053",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "4011;4012;4013;4130",
+      "question_en": "Laser sensor blocked/stuck",
+      "question_cn": "激光传感器被遮挡/卡住",
+      "synonyms_en": [
+        "laser sensor blocked",
+        "4011 4012 4013 4130",
+        "sensor stuck"
+      ],
+      "synonyms_cn": [
+        "laser sensor blocked",
+        "激光传感器被挡",
+        "4011 4012 4013 4130",
+        "sensor stuck"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "clean_radar_remove_film",
+      "response_en": "4011/4012/4013/4130: 1. Ensure top panel protective film is removed; 2. Remove foreign objects around radar; 3. Clean radar transmitting/receiving holes with cotton swab; 4. Manually rotate radar to confirm free movement.",
+      "response_cn": "4011/4012/4013/4130 错误：1. 确保顶部面板保护膜已撕除；2. 移除雷达周围异物；3. 用棉签清洁雷达收发孔；4. 手动转动雷达确认可自由旋转。"
+    },
+    {
+      "id": "R054",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "4111;4112",
+      "question_en": "Front bumper stuck",
+      "question_cn": "前撞板卡住",
+      "synonyms_en": [
+        "front bumper stuck",
+        "4111 4112",
+        "bumper stuck"
+      ],
+      "synonyms_cn": [
+        "front bumper stuck",
+        "前撞板卡住",
+        "4111 4112",
+        "bumper stuck"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "tap_bumper_check_rebound",
+      "response_en": "4111/4112: Tap the front bumper gently to check if it rebounds. If not, try to pull out the stuck part. Under warranty, we'll replace.",
+      "response_cn": "4111/4112 错误：请轻拍前撞板，确认可正常回弹。如无法回弹，尝试拉出卡住部位。在保可换新。"
+    },
+    {
+      "id": "R055",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "7033",
+      "question_en": "Failed to return to station",
+      "question_cn": "返回基站失败",
+      "synonyms_en": [
+        "failed to return",
+        "7033",
+        "return failed",
+        "cannot find station"
+      ],
+      "synonyms_cn": [
+        "failed to return to station",
+        "回不了基站",
+        "7033 错误",
+        "return failed"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "confirm_power_open_doors_rebuild_map",
+      "response_en": "7033: 1. Confirm base station is powered on (white light steady); 2. Confirm doors on return path are open and no obstacles; 3. If map mismatch, rebuild map.",
+      "response_cn": "7033 错误：1. 确认基站通电、白灯常亮；2. 确认机器人回充路径门已打开、无障碍物；3. 如地图与实际不符，建议重建地图。"
+    },
+    {
+      "id": "R056",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "7031",
+      "question_en": "Return failed - clear area around station",
+      "question_cn": "返回基站失败（基站周围有障碍）",
+      "synonyms_en": [
+        "return failed clear area",
+        "7031",
+        "failed to dock"
+      ],
+      "synonyms_cn": [
+        "return failed clear area around station",
+        "基站周围有障碍",
+        "7031 错误"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "clear_around_station_check_wheel",
+      "response_en": "7031: 1. Clear obstacles around the base station, ensure sufficient space; 2. Do not place station on carpet; 3. Check swivel wheel for severe hair entanglement.",
+      "response_cn": "7031 错误：1. 清理基站周围障碍物，确保周围有足够空间；2. 不要将基站放在地毯上；3. 检查机器人万向轮是否严重缠绕头发。"
+    },
+    {
+      "id": "R057",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "7011",
+      "question_en": "On the carpet by mistake",
+      "question_cn": "误入地毯",
+      "synonyms_en": [
+        "stray onto carpet",
+        "7011",
+        "carpet detection error"
+      ],
+      "synonyms_cn": [
+        "on the carpet by mistake",
+        "跑到地毯上了",
+        "7011 错误",
+        "stray onto carpet"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "remove_obstacles_clean_sensor",
+      "response_en": "7011: 1. Remove obstacles at carpet edges; 2. Check carpet detection sensor for dirt — clean with cotton swab and restart.",
+      "response_cn": "7011 错误：1. 移除地毯边缘障碍物；2. 检查地毯检测传感器是否脏污，用棉签清洁后重启任务。"
+    },
+    {
+      "id": "R058",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "7010",
+      "question_en": "Entered no-go zone by mistake",
+      "question_cn": "误入禁区",
+      "synonyms_en": [
+        "stray into restricted area",
+        "7010",
+        "no-go zone error"
+      ],
+      "synonyms_cn": [
+        "entered no-go zone by mistake",
+        "跑到禁区了",
+        "7010 错误",
+        "stray into restricted area"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "move_out_enlarge_no_go_zone",
+      "response_en": "7010: Move robot outside the no-go zone. If frequent, enlarge the no-go zone in the app.",
+      "response_cn": "7010 错误：请将机器人移出禁区启动。如频繁误入，建议在 App 中扩大禁区范围。"
+    },
+    {
+      "id": "R059",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "7032",
+      "question_en": "Failed to find station/dock",
+      "question_cn": "找不到基站/充电座",
+      "synonyms_en": [
+        "failed to find station",
+        "7032",
+        "cannot find dock"
+      ],
+      "synonyms_cn": [
+        "failed to find station",
+        "找不到基站",
+        "7032 错误",
+        "cannot find dock"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "confirm_power_start_from_station_rebuild_map",
+      "response_en": "7032: 1. If no station on this floor, manually return; 2. If station present, confirm powered on (white light); 3. Start cleaning from the station; 4. If map abnormal, rebuild map.",
+      "response_cn": "7032 错误：1. 如本层无基站，手动放回即可；2. 如本层有基站，确认通电且白灯常亮；3. 建议从基站启动清洁任务；4. 如地图异常，建议重建地图。"
+    },
+    {
+      "id": "R060",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "7020;7021",
+      "question_en": "Unable to identify position / positioning failure",
+      "question_cn": "无法识别位置/重定位失败",
+      "synonyms_en": [
+        "unable to identify position",
+        "7020 7021",
+        "positioning failure"
+      ],
+      "synonyms_cn": [
+        "unable to identify position",
+        "定位失败",
+        "7020 7021",
+        "positioning failure"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "rebuild_map",
+      "response_en": "7020/7021: Environment change caused positioning failure. Please rebuild map and start a new task.",
+      "response_cn": "7020/7021 错误：环境变化较大导致定位失败。请重建地图后启动新任务。"
+    },
+    {
+      "id": "R061",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "7052",
+      "question_en": "Route unavailable",
+      "question_cn": "路径不可达",
+      "synonyms_en": [
+        "route unavailable",
+        "7052",
+        "cannot reach target"
+      ],
+      "synonyms_cn": [
+        "route unavailable",
+        "路径不可用",
+        "7052 错误",
+        "cannot reach target"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_obstacles_rebuild_map",
+      "response_en": "7052: 1. Check for obstacles, closed doors, incorrect virtual walls/no-go zones, pets blocking; 2. If map mismatch, rebuild map.",
+      "response_cn": "7052 错误：1. 检查障碍物、关闭的门、错误虚拟墙/禁区、宠物是否阻挡；2. 如地图与实际不符，建议重建地图。"
+    },
+    {
+      "id": "R062",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "7050",
+      "question_en": "Certain zones not cleaned",
+      "question_cn": "部分区域无法到达",
+      "synonyms_en": [
+        "certain zones not cleaned",
+        "7050",
+        "cannot access areas"
+      ],
+      "synonyms_cn": [
+        "certain zones not cleaned",
+        "有些区域没扫到",
+        "7050 错误",
+        "cannot access areas"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_obstacles_redraw_map",
+      "response_en": "7050: 1. Check for doors, virtual walls/no-go zones, pets blocking; 2. If map mismatch, redraw map.",
+      "response_cn": "7050 错误：1. 检查大门、虚拟墙/禁区、宠物是否阻挡；2. 如地图与实际不符，建议重绘地图。"
+    },
+    {
+      "id": "R063",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "7053",
+      "question_en": "Robot tilted",
+      "question_cn": "设备倾斜",
+      "synonyms_en": [
+        "robot tilted",
+        "7053",
+        "robot not level"
+      ],
+      "synonyms_cn": [
+        "robot tilted",
+        "机器斜了",
+        "7053 错误",
+        "robot not level"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "move_to_flat_restart",
+      "response_en": "7053: Move robot to flat surface before starting. If error persists, restart robot.",
+      "response_cn": "7053 错误：请将机器人移至平整地面启动。如平整地面仍报错，请重启机器人。"
+    },
+    {
+      "id": "R064",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "7034",
+      "question_en": "Unable to find starting point",
+      "question_cn": "找不到起点",
+      "synonyms_en": [
+        "unable to find starting point",
+        "7034",
+        "cannot return to start"
+      ],
+      "synonyms_cn": [
+        "unable to find starting point",
+        "找不到起点",
+        "7034 错误",
+        "cannot return to start"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "place_on_station_restart",
+      "response_en": "7034: Robot started without base station and cannot return to start point due to obstacles. Please place robot on base station to charge and start a new task.",
+      "response_cn": "7034 错误：机器人非从基站出发，清洁完成后需返回起点，但被障碍物/门阻挡。请将机器人放回基站充电，重新启动任务。"
+    },
+    {
+      "id": "R065",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "4041",
+      "question_en": "Camera blocked",
+      "question_cn": "摄像头被遮挡",
+      "synonyms_en": [
+        "camera blocked",
+        "4041",
+        "camera obstruction"
+      ],
+      "synonyms_cn": [
+        "camera blocked",
+        "摄像头被挡",
+        "4041 错误",
+        "camera obstruction"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "clean_camera_restart",
+      "response_en": "4041: Wipe camera surface with soft cloth, place robot on flat ground and restart.",
+      "response_cn": "4041 错误：请用软布擦拭机器人摄像头表面，置于平整地面重启。"
+    },
+    {
+      "id": "R066",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "4040",
+      "question_en": "Camera abnormal",
+      "question_cn": "摄像头异常",
+      "synonyms_en": [
+        "camera abnormal",
+        "4040",
+        "camera error"
+      ],
+      "synonyms_cn": [
+        "camera abnormal",
+        "摄像头报错",
+        "4040 错误",
+        "camera error"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "restart_robot",
+      "response_en": "4040: Please restart the robot and confirm if the alert is cleared.",
+      "response_cn": "4040 错误：请重启机器人，确认提示是否消除。"
+    },
+    {
+      "id": "R067",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "2110;2111;2113",
+      "question_en": "Roller brush error",
+      "question_cn": "滚刷错误",
+      "synonyms_en": [
+        "roller brush error",
+        "2110 2111 2113",
+        "abnormal roller brush"
+      ],
+      "synonyms_cn": [
+        "roller brush error",
+        "滚刷报错",
+        "2110 2111 2113",
+        "abnormal roller brush"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "restart_then_warranty",
+      "response_en": "2110/2111/2113: Please restart the robot. If error persists, it's a hardware failure — under warranty, we'll replace.",
+      "response_cn": "2110/2111/2113 错误：请先重启机器人。如仍报错，属于硬件故障，在保可换新。"
+    },
+    {
+      "id": "R068",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "2210;2211;2213",
+      "question_en": "Side brush module error",
+      "question_cn": "边刷模块错误",
+      "synonyms_en": [
+        "side brush module error",
+        "2210 2211 2213",
+        "side brush anomaly"
+      ],
+      "synonyms_cn": [
+        "side brush module error",
+        "边刷报错",
+        "2210 2211 2213",
+        "side brush anomaly"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "restart_then_warranty",
+      "response_en": "2210/2211/2213: Please restart the robot. If error persists, it's a hardware failure — under warranty, we'll replace.",
+      "response_cn": "2210/2211/2213 错误：请先重启机器人。如仍报错，属于硬件故障，在保可换新。"
+    },
+    {
+      "id": "R069",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "3123;3133",
+      "question_en": "Mop pad holder stuck",
+      "question_cn": "拖布支架卡住",
+      "synonyms_en": [
+        "mop pad holder stuck",
+        "3123 3133",
+        "mop stuck"
+      ],
+      "synonyms_cn": [
+        "mop pad holder stuck",
+        "拖布支架卡住",
+        "3123 3133",
+        "mop stuck"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "flip_clean_foreign_objects",
+      "response_en": "3123/3133: Flip robot over, remove mop pad holder, clean foreign objects and hair.",
+      "response_cn": "3123/3133 错误：请翻面机器人，取下拖布支架，清理异物和头发。"
+    },
+    {
+      "id": "R070",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "6112;6113;6114;6115",
+      "question_en": "Dust bag full/not installed/fan cooling/pressure abnormal",
+      "question_cn": "尘袋满/未安装/风扇冷却/压力异常",
+      "synonyms_en": [
+        "dust bag full",
+        "6112 6113 6114 6115",
+        "no dust bag",
+        "fan cooling"
+      ],
+      "synonyms_cn": [
+        "dust bag full",
+        "尘袋满了",
+        "6112 6113 6114 6115",
+        "no dust bag",
+        "尘袋没装"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "corresponding_action",
+      "response_en": "6112: Replace dust bag, check duct blockage. 6113: Reinstall dust bag. 6114: Wait 15 min for cooling. 6115: Unplug/replug power after 10s.",
+      "response_cn": "6112：更换新尘袋，检查风道堵塞。6113：重新安装尘袋。6114：等待 15 分钟散热后重试。6115：拔插电源 10 秒后重试。"
+    },
+    {
+      "id": "R071",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "6030;6031;6032",
+      "question_en": "Cleaning tray not installed / water level abnormal / sewage pump error",
+      "question_cn": "清洁托盘未安装/水位异常/污水泵异常",
+      "synonyms_en": [
+        "cleaning tray not installed",
+        "6030 6031 6032",
+        "tray water level abnormal"
+      ],
+      "synonyms_cn": [
+        "cleaning tray not installed",
+        "清洁托盘没装",
+        "6030 6031 6032",
+        "tray water level abnormal"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_tray_seal_ring",
+      "response_en": "6030/6031/6032: 1. Check cleaning tray installation; 2. Check tray float installation; 3. Check dirty water tank seal ring for collapse — manually pull flat.",
+      "response_cn": "6030/6031/6032 错误：1. 检查清洁托盘是否安装正确；2. 检查托盘浮标是否安装正确；3. 检查污水箱密封圈是否塌陷，手动拉平。"
+    },
+    {
+      "id": "R072",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "6028",
+      "question_en": "Base station water leakage / abnormal sewage pumping",
+      "question_cn": "基站可能漏水/污水泵异常",
+      "synonyms_en": [
+        "base station water leakage",
+        "6028",
+        "abnormal sewage pumping"
+      ],
+      "synonyms_cn": [
+        "base station may have water leakage",
+        "基站漏水",
+        "6028 错误",
+        "abnormal sewage pumping"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "clean_tray_grille",
+      "response_en": "6028: Check cleaning tray grille for sediment/foreign object blockage, clean the tray.",
+      "response_cn": "6028 错误：请检查基站清洁托盘格栅是否被泥沙/异物堵塞，清理托盘。"
+    },
+    {
+      "id": "R073",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "6111",
+      "question_en": "Station lid not closed",
+      "question_cn": "基站盖未关闭",
+      "synonyms_en": [
+        "station lid not closed",
+        "6111",
+        "dustbin not secured"
+      ],
+      "synonyms_cn": [
+        "station lid not closed",
+        "基站盖没关",
+        "6111 错误",
+        "dustbin not secured"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "confirm_lid_closed",
+      "response_en": "6111: Check if the dust collection station lid is fully closed.",
+      "response_cn": "6111 错误：请检查集尘站盖子是否完全关闭。"
+    },
+    {
+      "id": "R074",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "5023;5024",
+      "question_en": "High/low charging temperature",
+      "question_cn": "充电温度过高/过低",
+      "synonyms_en": [
+        "charging temperature abnormal",
+        "5023 5024",
+        "temperature protection"
+      ],
+      "synonyms_cn": [
+        "high/low charging temperature",
+        "充电温度异常",
+        "5023 5024",
+        "temperature protection"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "adjust_environment_temperature",
+      "response_en": "5023/5024: Robot pauses charging to protect battery when temp is below 7°C or too high. Move to suitable temperature environment — charging resumes automatically.",
+      "response_cn": "5023/5024 错误：环境温度过低（<7°C）或过高时，机器人会暂停充电以保护电池。请移至适宜温度环境，温度恢复后自动继续充电。"
+    },
+    {
+      "id": "R075",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "5015",
+      "question_en": "Low battery - scheduled cleaning failed",
+      "question_cn": "低电量无法启动定时任务",
+      "synonyms_en": [
+        "low battery scheduled cleaning failed",
+        "5015",
+        "scheduled task failed"
+      ],
+      "synonyms_cn": [
+        "low battery failed to start scheduled cleaning",
+        "电量低定时任务失败",
+        "5015 错误"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "charge_and_retry",
+      "response_en": "5015: Robot battery too low to start scheduled task. Please charge and retry.",
+      "response_cn": "5015 错误：机器人电量低，无法启动定时任务。请充电后重试。"
+    },
+    {
+      "id": "R076",
+      "category": "robovac_error",
+      "product_line": "X10 Pro Omni",
+      "product_pn": "T2351",
+      "error_code": "7035",
+      "question_en": "Return failed - station not powered",
+      "question_cn": "返回基站失败（基站未通电）",
+      "synonyms_en": [
+        "return failed station not powered",
+        "7035",
+        "station not powered"
+      ],
+      "synonyms_cn": [
+        "return failed check if station is powered",
+        "回充失败基站没电",
+        "7035 错误"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "confirm_station_power",
+      "response_en": "7035: Confirm base station is powered on (white light steady). If power cord is connected but light off, check back socket for tight connection.",
+      "response_cn": "7035 错误：请确认基站通电、白灯常亮。如电源线已连接但灯不亮，检查基站背面插座是否插紧。"
+    },
+    {
+      "id": "B001",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "No suction after power on",
+      "question_cn": "开机后无吸力",
+      "synonyms_en": [
+        "no suction",
+        "not suctioning",
+        "pump not working",
+        "zero suction"
+      ],
+      "synonyms_cn": [
+        "no suction",
+        "没有吸力",
+        "吸不出来",
+        "not suctioning",
+        "吸力为零"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "reset_test_hub",
+      "response_en": "1. Press and hold power button for 12 seconds to reset; 2. Remove pump hub, place suction port on palm, turn on — if suction felt, issue is accessories; if no suction, hub needs repair.",
+      "response_cn": "1. 长按电源键 12 秒重置。如无效，取下主机，将吸入口对准手掌，开机测试是否有吸力。如主机有吸力，问题在配件；如无吸力，主机需维修。"
+    },
+    {
+      "id": "B002",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Suction suddenly weak",
+      "question_cn": "吸力突然变弱",
+      "synonyms_en": [
+        "weak suction",
+        "suction decreased",
+        "low suction",
+        "not as strong"
+      ],
+      "synonyms_cn": [
+        "weak suction",
+        "吸力变小",
+        "吸力变弱",
+        "suction suddenly weak",
+        "吸力不足"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_valve_diaphragm_bowl",
+      "response_en": "1. Check duckbill valve for cracks/deformation/reversed installation; 2. Check diaphragm for damage; 3. Check elasticity bowl for compression/rebound. Duckbill valves and elasticity bowls are consumable parts — replace every 3-6 months.",
+      "response_cn": "请检查：1. 鸭嘴阀是否有裂纹、变形或安装反了；2. 隔膜是否有破损；3. 弹力碗是否能正常压缩回弹。鸭嘴阀和弹力碗是易耗品，建议每 3-6 个月更换。"
+    },
+    {
+      "id": "B003",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Won't turn on at all",
+      "question_cn": "主机无法开机",
+      "synonyms_en": [
+        "won't turn on",
+        "cannot power on",
+        "dead",
+        "no response"
+      ],
+      "synonyms_cn": [
+        "won't turn on",
+        "开不了机",
+        "can't power on",
+        "开机没反应"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "reset_check_charging_warranty",
+      "response_en": "1. Press and hold power button for 12 seconds to reset; 2. Try placing pump in charging case at a different angle; 3. Confirm magnetic contacts; 4. If still not working and buttons undamaged, provide shipping address for replacement.",
+      "response_cn": "请先长按电源键 12 秒重置。如无效，尝试将吸奶器换个角度放入充电盒，确认磁吸触点接触良好。如仍无法开机，且按钮无损坏，请提供收货地址，我们为您换新。"
+    },
+    {
+      "id": "B004",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Charging case not charging pump",
+      "question_cn": "充电盒无法给主机充电",
+      "synonyms_en": [
+        "case not charging",
+        "charging case broken",
+        "case not working"
+      ],
+      "synonyms_cn": [
+        "charging case not charging",
+        "充电盒充不进电",
+        "盒子充不了",
+        "case not working"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "clean_contacts_cross_test",
+      "response_en": "1. Clean magnetic contacts on both case and pump hub with dry cloth; 2. Ensure charging case itself has charge (charge case first); 3. Cross-test: place other pump in this case, or this pump in another case, to identify issue.",
+      "response_cn": "请1. 将充电盒内磁吸触点和主机充电触点用干布清洁；2. 确认充电盒自身有电（先给充电盒充电）；3. 交叉测试：将另一只主机放入此充电盒，或将此主机放入另一充电盒，判断是盒问题还是主机问题。"
+    },
+    {
+      "id": "B005",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Won't fully charge - stuck at low battery",
+      "question_cn": "充不满电，一直停留在低电量",
+      "synonyms_en": [
+        "won't fully charge",
+        "low battery level",
+        "not charging fully"
+      ],
+      "synonyms_cn": [
+        "won't fully charge",
+        "充不满",
+        "一直低电量",
+        "low battery level"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_contacts_charging_duration_reset",
+      "response_en": "1. Confirm magnetic contacts (listen for click, indicator flashes white); 2. Confirm charging duration: pump 1.7 hours, case 3.2 hours; 3. Try different charger/cable; 4. Press and hold power button for 12 seconds to reset.",
+      "response_cn": "请1. 确认磁吸触点接触良好（听到“咔哒”声、指示灯闪白）；2. 确认充电时长：主机充满约 1.7 小时，充电盒充满约 3.2 小时；3. 尝试更换充电线/充电头；4. 长按电源键 12 秒重置。"
+    },
+    {
+      "id": "B006",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Heating function not working",
+      "question_cn": "加热功能不工作",
+      "synonyms_en": [
+        "heating not working",
+        "not heating",
+        "heating function failed"
+      ],
+      "synonyms_cn": [
+        "heating not working",
+        "加热坏了",
+        "不加热",
+        "heating function not working"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_pin_contacts_temperature_reset",
+      "response_en": "1. Press heating pin firmly into container oval slot, then install hub and press to seal; 2. Clean metal contacts with dry cloth; 3. Confirm operating temperature -20°C to 42°C; 4. Press and hold power button for 12 seconds to reset.",
+      "response_cn": "请1. 将加热针用力按入容器椭圆槽，再安装主机并按压密封；2. 用干布清洁加热盖与主机连接的金属触点；3. 确认工作温度在 -20°C 至 42°C 之间；4. 长按电源键 12 秒重置。"
+    },
+    {
+      "id": "B007",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Left and right motors perform differently",
+      "question_cn": "左右两侧吸力不一致",
+      "synonyms_en": [
+        "left/right differ",
+        "one side stronger",
+        "uneven suction"
+      ],
+      "synonyms_cn": [
+        "left and right motors perform differently",
+        "左右吸力不一样",
+        "一边强一边弱"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_assembly_test_reset",
+      "response_en": "1. Confirm both sides have silicone breast shields, duckbill valves, elasticity bowls correctly installed; 2. Remove pump hub, test suction on palm for each side; 3. Press and hold power button for 12 seconds to reset; 4. Press and hold power + “+” buttons for 5 seconds for factory reset.",
+      "response_cn": "请1. 确认两侧硅胶护罩、鸭嘴阀、弹力碗安装正确、无损坏或装反；2. 分别取下主机，对准手掌测试两侧吸力；3. 长按电源键 12 秒重置；4. 同时长按电源键和+键 5 秒恢复出厂设置。"
+    },
+    {
+      "id": "B008",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Shuts off automatically during pumping",
+      "question_cn": "使用中突然自动关机",
+      "synonyms_en": [
+        "shuts off",
+        "auto shutdown",
+        "cuts off while in use"
+      ],
+      "synonyms_cn": [
+        "shuts off automatically",
+        "自动关机",
+        "突然关机",
+        "cuts off while in use"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_battery_reset_environment",
+      "response_en": "1. Confirm battery sufficient — low battery may cause auto-shutdown; 2. Press and hold power button for 12 seconds to reset; 3. Press and hold power + “+” buttons for 5 seconds for factory reset; 4. Check buttons for sticking/water ingress; ensure room temperature >10°C.",
+      "response_cn": "请1. 确认电量充足，低电量可能导致自动关机；2. 长按电源键 12 秒重置；3. 同时长按电源键和+键 5 秒恢复出厂设置；4. 检查按钮是否卡住、是否进水，确保在室温（>10°C）下使用。"
+    },
+    {
+      "id": "B009",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Gets too hot during use",
+      "question_cn": "使用中过热",
+      "synonyms_en": [
+        "too hot",
+        "overheating",
+        "gets hot",
+        "burning hot"
+      ],
+      "synonyms_cn": [
+        "gets too hot",
+        "太热了",
+        "发烫",
+        "overheating"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "stop_use_cool_check_vent",
+      "response_en": "1. Stop using immediately, cool in well-ventilated area; 2. Ensure room temperature >10°C, avoid high-temp environments; 3. Ensure ventilation vents unobstructed; 4. If overheating persists, stop use and contact support.",
+      "response_cn": "请1. 立即停止使用，置于阴凉通风处冷却；2. 确保在室温（>10°C）下使用，避免高温环境；3. 确保通风口未被堵塞；4. 如持续过热，请停止使用并联系技术支持。"
+    },
+    {
+      "id": "B010",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Charging case or parts melted",
+      "question_cn": "充电盒或配件熔化",
+      "synonyms_en": [
+        "case melted",
+        "parts melted",
+        "melted",
+        "deformed"
+      ],
+      "synonyms_cn": [
+        "charging case or parts melted",
+        "充电盒熔化",
+        "配件熔化",
+        "parts melted"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "confirm_sterilization_method",
+      "response_en": "Melting is most likely caused by incorrect sterilization methods. Please confirm: 1. Charging case is NOT washable — wipe with damp cloth only; 2. Only washable parts can be steam sterilized (5 minutes recommended); 3. Do NOT microwave sterilize.",
+      "response_cn": "熔化最可能由错误的消毒方式引起。请确认：1. 充电盒不可水洗，只能用湿布擦拭；2. 仅可水洗部件可蒸汽消毒（建议 5 分钟）；3. 禁止微波消毒。"
+    },
+    {
+      "id": "B011",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Burning smell",
+      "question_cn": "有烧焦味",
+      "synonyms_en": [
+        "burning smell",
+        "burnt odor",
+        "plastic smell"
+      ],
+      "synonyms_cn": [
+        "burning smell",
+        "烧焦味",
+        "有糊味",
+        "burning plastic smell"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "distinguish_new_vs_abnormal",
+      "response_en": "1. New pump may have slight odor from silicone vulcanization — normal and safe. Boil 5 minutes or air out a few hours to eliminate; 2. If abnormal burning smell, stop use immediately and confirm no incorrect sterilization (e.g., microwave) was used.",
+      "response_cn": "1. 新品可能有轻微气味（硅胶硫化过程），属正常，煮沸 5 分钟或通风数小时即可消除；2. 如为异常烧焦味，请立即停止使用，并确认是否使用了错误消毒方式（如微波）。"
+    },
+    {
+      "id": "B012",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Abnormal noise",
+      "question_cn": "有异常噪音",
+      "synonyms_en": [
+        "abnormal noise",
+        "loud noise",
+        "weird sound",
+        "noisy"
+      ],
+      "synonyms_cn": [
+        "abnormal noise",
+        "噪音大",
+        "有杂音",
+        "making abnormal noise"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "step_by_step_diagnose",
+      "response_en": "1. Place pump on flat sturdy surface to avoid resonance; 2. Fully disassemble and reassemble all accessories; 3. Check silicone valve and sealing ring for damage/dirt; 4. Compare noise at low vs. high settings; 5. If persists, record 10+ second video/audio and share with support.",
+      "response_cn": "请1. 将吸奶器放在平稳坚固表面，避免共振；2. 完全拆装所有配件；3. 检查硅胶阀和密封圈是否损坏或脏污；4. 对比低档和高档噪音变化；5. 如仍异常，请录制 10 秒以上视频/音频，我们转交技术团队分析。"
+    },
+    {
+      "id": "B013",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Not producing enough milk",
+      "question_cn": "出奶量少",
+      "synonyms_en": [
+        "low output",
+        "not enough milk",
+        "low milk supply"
+      ],
+      "synonyms_cn": [
+        "not producing enough milk",
+        "奶量少",
+        "吸不出奶",
+        "low milk output"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_suction_size_technique",
+      "response_en": "1. Check duckbill valve and diaphragm for damage; 2. Use nipple measurement card to confirm flange size; 3. Ensure nipple is centered in flange tunnel; 4. Start with letdown mode, then switch to expression mode; 5. Pump in a relaxed environment.",
+      "response_cn": "请1. 检查鸭嘴阀和隔膜是否损坏；2. 用乳头测量卡确认喇叭罩尺寸；3. 确保乳头居中于喇叭罩通道；4. 先使用催乳模式刺激奶阵，再切换到吸乳模式；5. 在放松环境下吸奶。"
+    },
+    {
+      "id": "B014",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Nipple pain or bleeding",
+      "question_cn": "导致乳头疼痛或出血",
+      "synonyms_en": [
+        "nipple pain",
+        "bleeding",
+        "painful pumping"
+      ],
+      "synonyms_cn": [
+        "nipple pain or bleeding",
+        "乳头疼",
+        "乳头出血",
+        "pain during pumping"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "adjust_suction_size_mode",
+      "response_en": "1. Start from lowest setting, gradually increase to comfort level; 2. Confirm correct flange size; 3. Ensure nipple centered in flange tunnel; 4. Try Gentle Flow mode in app; 5. If pain persists, consult a lactation consultant.",
+      "response_cn": "请1. 从最低档开始，逐步调至舒适档位；2. 确认喇叭罩尺寸合适；3. 确保乳头居中于喇叭罩通道；4. 如仍疼痛，可尝试 App 中的 Gentle Flow 模式；5. 如持续疼痛，建议咨询哺乳顾问。"
+    },
+    {
+      "id": "B015",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Leaking milk",
+      "question_cn": "漏奶",
+      "synonyms_en": [
+        "leaking milk",
+        "milk leakage",
+        "leaking"
+      ],
+      "synonyms_cn": [
+        "leaking milk",
+        "漏奶",
+        "漏了",
+        "milk leakage"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "identify_leak_location_check_valve",
+      "response_en": "1. Identify leak location (flange opening or bottle connection); 2. If from flange opening, check duckbill valve installation and cracks; 3. If from bottle connection, check flange and connector assembly; 4. Use full-coverage nursing bra; 5. Do not lean back during pumping.",
+      "response_cn": "请1. 确认漏奶位置（喇叭罩口 or 瓶身连接处）；2. 如从喇叭罩口漏，检查鸭嘴阀是否安装正确、是否有裂纹；3. 如从瓶身连接处漏，检查喇叭罩与连接器是否安装紧密；4. 使用全罩杯哺乳文胸确保密封；5. 吸奶时不要后仰。"
+    },
+    {
+      "id": "B016",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "How to sterilize parts",
+      "question_cn": "配件如何消毒",
+      "synonyms_en": [
+        "how to sterilize",
+        "sterilization",
+        "how to clean"
+      ],
+      "synonyms_cn": [
+        "how to sterilize",
+        "怎么消毒",
+        "如何杀菌",
+        "sterilization method"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "first_use_vs_daily",
+      "response_en": "1. First use: Boil all washable parts for no more than 5 minutes (stir continuously) or steam sterilize; 2. Daily use: Rinse with warm soapy water, air dry; 3. Dishwasher: washable parts on top rack; 4. Do NOT microwave sterilize.",
+      "response_cn": "1. 首次使用：所有可水洗部件煮沸不超过 5 分钟（持续搅动防粘底），或蒸汽消毒；2. 日常使用：温水+肥皂水冲洗，风干；3. 洗碗机：可水洗部件放顶层；4. 禁止微波消毒。"
+    },
+    {
+      "id": "B017",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "How to clean charging case",
+      "question_cn": "充电盒如何清洁",
+      "synonyms_en": [
+        "how to clean case",
+        "case cleaning",
+        "case washable"
+      ],
+      "synonyms_cn": [
+        "how to clean charging case",
+        "充电盒怎么洗",
+        "盒子怎么清洁",
+        "case cleaning"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "not_washable_wipe_only",
+      "response_en": "Charging case is NOT washable. Wipe inside and outside with damp cloth (including magnetic charging port), air dry completely before placing pump back. Do NOT submerge in water or put in dishwasher.",
+      "response_cn": "充电盒不可水洗。请用湿布擦拭内外表面（包括磁吸充电口），风干后再放入主机。禁止浸泡水中或放入洗碗机。"
+    },
+    {
+      "id": "B018",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Warranty policy",
+      "question_cn": "保修政策",
+      "synonyms_en": [
+        "warranty",
+        "warranty period",
+        "warranty duration"
+      ],
+      "synonyms_cn": [
+        "warranty policy",
+        "保修多久",
+        "保修期",
+        "warranty period"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "warranty_period",
+      "response_en": "1. Pump hub: 1-year warranty; 2. Washable parts (duckbill valves, diaphragms, flanges, etc.): 3-month warranty.",
+      "response_cn": "1. 主机：1 年保修；2. 可水洗部件（鸭嘴阀、隔膜、喇叭罩等）：3 个月保修。"
+    },
+    {
+      "id": "B019",
+      "category": "breast_pump",
+      "product_line": "Wearable Breast Pump S1 Pro",
+      "product_pn": "T8D04",
+      "error_code": null,
+      "question_en": "Return policy",
+      "question_cn": "退货政策",
+      "synonyms_en": [
+        "return",
+        "refund",
+        "return policy"
+      ],
+      "synonyms_cn": [
+        "return policy",
+        "能退货吗",
+        "退货政策",
+        "refund policy"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "medical_device_return_conditions",
+      "response_en": "As a medical and personal hygiene device, returns are accepted only if: 1. Item is new, unopened with intact seals, unused; 2. Original packaging; 3. Requested within 30 days of purchase. If you've started pumping and experience issues, please contact us for assistance.",
+      "response_cn": "作为医疗和个人卫生设备，退货需满足：1. 商品为全新未开封状态、密封完整、未使用；2. 原包装完好；3. 购买后 30 天内申请。如已开始使用并遇到问题，我们鼓励您联系我们获取帮助。"
+    },
+    {
+      "id": "C001",
+      "category": "camera",
+      "product_line": "SoloCam S340",
+      "product_pn": "T8170",
+      "error_code": null,
+      "question_en": "Camera offline",
+      "question_cn": "摄像头离线",
+      "synonyms_en": [
+        "offline",
+        "disconnected",
+        "not connecting",
+        "showing offline"
+      ],
+      "synonyms_cn": [
+        "offline",
+        "离线了",
+        "连不上",
+        "camera offline"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "8_step_troubleshoot",
+      "response_en": "1. Check battery level — charge if low; 2. Press SYNC button to confirm power on (LED off → hold 2 seconds to power on); 3. If recently relocated, move closer to router; 4. Check signal strength; 5. Remove and re-add camera in app; 6. HomeBase Settings > General > Working Mode > Performance (Beta); 7. Enable HomeBase Wi-Fi repeater; 8. If still offline, provide SN and logs.",
+      "response_cn": "请1. 检查电池电量，过低请充电；2. 按 SYNC 键确认是否开机（LED 不亮则长按 2 秒开机）；3. 如最近移动过位置，请移近路由器；4. 检查信号强度；5. 从 App 删除并重新添加摄像头；6. HomeBase 设置 > 通用 > 工作模式 > Performance (Beta)；7. 开启 HomeBase Wi-Fi 中继功能；8. 如仍离线，提供设备 SN 和日志。"
+    },
+    {
+      "id": "C002",
+      "category": "camera",
+      "product_line": "SoloCam S340",
+      "product_pn": "T8170",
+      "error_code": null,
+      "question_en": "Cannot connect to Wi-Fi",
+      "question_cn": "无法连接到 Wi-Fi",
+      "synonyms_en": [
+        "WiFi connection failed",
+        "cannot connect to network",
+        "network error"
+      ],
+      "synonyms_cn": [
+        "cannot connect to WiFi",
+        "连不上 WiFi",
+        "WiFi 连不上",
+        "can't connect to network"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_2.4ghz_password_signal",
+      "response_en": "1. Confirm router is 2.4GHz (5GHz not supported); 2. Confirm Wi-Fi password correct; 3. Confirm SSID not hidden, security protocol WPA/WPA2; 4. Ensure camera battery sufficient; 5. Keep camera and HomeBase within 3m during pairing.",
+      "response_cn": "请1. 确认路由器为 2.4GHz（不支持 5GHz）；2. 确认 Wi-Fi 密码正确；3. 确认 SSID 未隐藏，安全协议为 WPA/WPA2；4. 确保摄像头电量充足；5. 配对时保持摄像头与 HomeBase 3 米内。"
+    },
+    {
+      "id": "C003",
+      "category": "camera",
+      "product_line": "SoloCam S340",
+      "product_pn": "T8170",
+      "error_code": null,
+      "question_en": "Cannot add camera to app",
+      "question_cn": "无法添加到 App",
+      "synonyms_en": [
+        "fail to add",
+        "cannot add",
+        "pairing failed",
+        "scan failed"
+      ],
+      "synonyms_cn": [
+        "fail to add",
+        "添加失败",
+        "加不进去",
+        "can't add to app"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "5_step_troubleshoot",
+      "response_en": "1. Remove camera lens protective film; 2. Hold SYNC button for at least 2 seconds until beep (no beep → charge first); 3. Keep camera and HomeBase within 3m during pairing; 4. Ensure QR code clear, phone brightness high, scan distance ~40cm; 5. Confirm Wi-Fi is 2.4GHz.",
+      "response_cn": "请1. 移除摄像头镜头保护膜；2. 长按 SYNC 键至少 2 秒，听到“滴”声（无滴声则先充电）；3. 配对时保持摄像头与 HomeBase 3 米内；4. 确保 QR 码清晰、手机亮度高、扫描距离约 40cm；5. 确认 Wi-Fi 为 2.4GHz。"
+    },
+    {
+      "id": "C004",
+      "category": "camera",
+      "product_line": "SoloCam S340",
+      "product_pn": "T8170",
+      "error_code": null,
+      "question_en": "Poor night vision",
+      "question_cn": "夜视效果差",
+      "synonyms_en": [
+        "night vision poor",
+        "bad night vision",
+        "dark at night",
+        "poor IR"
+      ],
+      "synonyms_cn": [
+        "night vision poor",
+        "夜视差",
+        "晚上看不清",
+        "poor night vision"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "clean_lens_adjust_angle",
+      "response_en": "1. Clean camera lens with soft cloth; 2. Avoid installing camera near walls or light sources (IR reflection causes overexposure); 3. Adjust angle to keep obstacles out of view.",
+      "response_cn": "请1. 用软布清洁镜头；2. 避免将摄像头安装在墙壁或灯源附近（红外反射导致过曝）；3. 调整角度，确保障碍物不在视野内。"
+    },
+    {
+      "id": "C005",
+      "category": "camera",
+      "product_line": "SoloCam S340",
+      "product_pn": "T8170",
+      "error_code": null,
+      "question_en": "Image blurry",
+      "question_cn": "图像模糊",
+      "synonyms_en": [
+        "blurry",
+        "unclear",
+        "fuzzy image",
+        "out of focus"
+      ],
+      "synonyms_cn": [
+        "image blurry",
+        "画面模糊",
+        "看不清",
+        "blurry image"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "clean_lens_check_condensation",
+      "response_en": "1. Clean lens gently with soft dry cloth; 2. Check for water condensation on lens — wipe and confirm if image clears; 3. Ensure camera is not installed near walls or reflective surfaces.",
+      "response_cn": "请1. 用软干布轻轻清洁镜头；2. 检查镜头是否有水汽凝结，擦拭后确认图像是否清晰；3. 确保摄像头未安装在墙壁或反光表面附近。"
+    },
+    {
+      "id": "C006",
+      "category": "camera",
+      "product_line": "SoloCam S340",
+      "product_pn": "T8170",
+      "error_code": null,
+      "question_en": "Motion detection not triggering",
+      "question_cn": "运动检测不触发",
+      "synonyms_en": [
+        "motion detection not working",
+        "not detecting motion",
+        "no alert"
+      ],
+      "synonyms_cn": [
+        "motion detection not working",
+        "移动侦测不触发",
+        "不报警",
+        "motion not detecting"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "increase_sensitivity_side_mount_check_mode",
+      "response_en": "1. Increase motion detection sensitivity; 2. Side-mount camera (PIR lateral detection is better); 3. Confirm motion detection enabled and correct security mode; 4. Confirm battery sufficient (low battery reduces sensitivity); 5. Update camera firmware.",
+      "response_cn": "请1. 提高运动检测灵敏度；2. 将摄像头侧装（PIR 横向检测更优）；3. 确认运动检测已开启且当前处于正确的安全模式；4. 确认电量充足（低电量会降低传感器灵敏度）；5. 升级摄像头固件至最新版。"
+    },
+    {
+      "id": "C007",
+      "category": "camera",
+      "product_line": "SoloCam S340",
+      "product_pn": "T8170",
+      "error_code": null,
+      "question_en": "Too many false alarms",
+      "question_cn": "误报太多",
+      "synonyms_en": [
+        "false alarms",
+        "false triggers",
+        "too many alerts",
+        "random alerts"
+      ],
+      "synonyms_cn": [
+        "too many false alarms",
+        "误报太多",
+        "乱报警",
+        "false triggers"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "lower_sensitivity_activity_zone_adjust_angle",
+      "response_en": "1. Lower detection sensitivity; 2. Set Activity Zone to exclude roads, sidewalks, high-traffic areas; 3. Adjust camera angle — avoid pointing at heat sources, moving trees, or roads; 4. Ensure camera not pointed at strong lights or reflective surfaces.",
+      "response_cn": "请1. 降低检测灵敏度；2. 设置活动区域，排除马路、人行道等高频触发区域；3. 调整摄像头角度，避免朝向热源、移动树木或道路；4. 确保摄像头不直射强光源或反光表面。"
+    },
+    {
+      "id": "C008",
+      "category": "camera",
+      "product_line": "SoloCam S340",
+      "product_pn": "T8170",
+      "error_code": null,
+      "question_en": "Not charging via solar panel",
+      "question_cn": "太阳能板无法充电",
+      "synonyms_en": [
+        "solar not charging",
+        "solar panel not working",
+        "not charging"
+      ],
+      "synonyms_cn": [
+        "not charging via solar panel",
+        "太阳能充不进电",
+        "太阳能不充电",
+        "solar charging not working"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_connection_sunlight_temperature",
+      "response_en": "1. Confirm solar panel cable firmly connected and not damaged; 2. Confirm solar panel unobstructed, receives several hours of direct sunlight daily; 3. Confirm charging temperature 0-45°C; 4. Check Power Source setting in app.",
+      "response_cn": "请1. 确认太阳能板与摄像头连接牢固、未损坏；2. 确认太阳能板无遮挡，每天接受数小时直射阳光；3. 确认充电温度在 0-45°C 之间；4. 在 App 中确认 Power Source 设置正确。"
+    },
+    {
+      "id": "C009",
+      "category": "camera",
+      "product_line": "SoloCam S340",
+      "product_pn": "T8170",
+      "error_code": null,
+      "question_en": "Solar charging slow / battery draining quickly",
+      "question_cn": "太阳能充电慢/电量下降快",
+      "synonyms_en": [
+        "solar charging slow",
+        "battery drains fast",
+        "slow charging"
+      ],
+      "synonyms_cn": [
+        "solar charging slow",
+        "太阳能充电慢",
+        "电量下降",
+        "battery draining quickly"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "optimize_installation_reduce_power",
+      "response_en": "1. Confirm solar panel direct sunlight, unobstructed; 2. Temporarily disable motion detection to check if battery rises — identify if frequent triggers cause drain; 3. Select Optimal Battery Life mode, lower sensitivity, enable Human Only, configure Activity Zone; 4. Clean solar panel surface; 5. Check if solar charging icon appears in app.",
+      "response_cn": "请1. 确认太阳能板接受直射阳光、无遮挡；2. 暂时关闭运动检测，观察电量是否上升，判断是否因频繁触发导致耗电过快；3. 选择 Optimal Battery Life 模式，降低灵敏度，开启 Human Only 模式，配置活动区域；4. 清洁太阳能板表面；5. 检查 App 中是否显示太阳能充电图标。"
+    },
+    {
+      "id": "C010",
+      "category": "camera",
+      "product_line": "SoloCam S340",
+      "product_pn": "T8170",
+      "error_code": null,
+      "question_en": "Short battery life",
+      "question_cn": "电池续航短",
+      "synonyms_en": [
+        "battery life short",
+        "battery drains fast",
+        "short runtime"
+      ],
+      "synonyms_cn": [
+        "battery life short",
+        "电池不耐用",
+        "续航短",
+        "battery drains fast"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "optimize_settings",
+      "response_en": "1. Select Power Save working mode; 2. Select Human Only detection mode; 3. Lower motion detection sensitivity; 4. Enable Activity Zone to reduce invalid recordings; 5. Ensure solar panel receives maximum direct sunlight.",
+      "response_cn": "请1. 选择 Power Save 工作模式；2. 选择 Human Only 检测模式；3. 降低运动检测灵敏度；4. 启用活动区域，减少无效录制；5. 确保太阳能板接受最大直射阳光。"
+    },
+    {
+      "id": "C011",
+      "category": "camera",
+      "product_line": "SoloCam S340",
+      "product_pn": "T8170",
+      "error_code": null,
+      "question_en": "AI false detection (pet detected as human)",
+      "question_cn": "AI 误识别（宠物识别为人）",
+      "synonyms_en": [
+        "AI false detection",
+        "pet as human",
+        "misidentification"
+      ],
+      "synonyms_cn": [
+        "AI false detection",
+        "AI 误识别",
+        "宠物当人",
+        "pet detected as human"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "set_human_only_submit_training_data",
+      "response_en": "1. AI detection algorithm continuously optimized — send original video for AI training; 2. If only human detection needed, set Detection Type = Human Only; 3. Update camera and HomeBase firmware to latest.",
+      "response_cn": "1. AI 检测算法持续优化中，请将原始视频发送给我们，用于 AI 训练；2. 如仅需检测人，请设置 Detection Type = Human Only；3. 升级摄像头和 HomeBase 固件至最新版。"
+    },
+    {
+      "id": "C012",
+      "category": "camera",
+      "product_line": "SoloCam S340",
+      "product_pn": "T8170",
+      "error_code": null,
+      "question_en": "Face recognition inaccurate",
+      "question_cn": "人脸识别不准",
+      "synonyms_en": [
+        "face recognition not accurate",
+        "wrong person",
+        "facial recognition inaccurate"
+      ],
+      "synonyms_cn": [
+        "face recognition not accurate",
+        "人脸识别不准",
+        "认错人",
+        "facial recognition inaccurate"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_installation_add_multi_angle_faces",
+      "response_en": "1. Effective face recognition range: within 6m front-facing; 2. Add multi-angle, clear face photos, update when appearance changes; 3. Face recognition not supported in B&W infrared night vision mode; 4. Update HomeBase firmware.",
+      "response_cn": "1. 有效人脸识别范围：正面 6 米内；2. 添加多角度、清晰的人脸照片，并在外貌变化时更新；3. 夜间红外模式下不支持人脸识别；4. 升级 HomeBase 固件至最新版。"
+    },
+    {
+      "id": "C013",
+      "category": "camera",
+      "product_line": "SoloCam S340",
+      "product_pn": "T8170",
+      "error_code": null,
+      "question_en": "Firmware update failed",
+      "question_cn": "固件升级失败",
+      "synonyms_en": [
+        "firmware update failed",
+        "update fails",
+        "firmware stuck"
+      ],
+      "synonyms_cn": [
+        "firmware update failed",
+        "固件升级失败",
+        "升级不了",
+        "update fails"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_network_led_status",
+      "response_en": "1. Ensure stable network; 2. Check camera LED status: Red-blue alternating = updating, wait ~5 min; LED off = press SYNC, blue flash = powered on, red flash = low battery, charge and retry.",
+      "response_cn": "请1. 确保网络稳定；2. 检查摄像头 LED 状态：红蓝交替闪烁 = 正在升级，等待约 5 分钟；LED 熄灭 = 按 SYNC 键，蓝闪 = 已开机，红闪 = 电量低，请充电后重试。"
+    },
+    {
+      "id": "C014",
+      "category": "camera",
+      "product_line": "SoloCam S340",
+      "product_pn": "T8170",
+      "error_code": null,
+      "question_en": "Video lag / delay",
+      "question_cn": "画面卡顿/延迟",
+      "synonyms_en": [
+        "video lag",
+        "delay",
+        "choppy",
+        "stuttering"
+      ],
+      "synonyms_cn": [
+        "video lag",
+        "画面卡顿",
+        "直播延迟",
+        "live streaming delay"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "check_network_reduce_quality",
+      "response_en": "1. Ensure phone has stable Wi-Fi or cellular connection; 2. If camera signal weak, move closer to router; 3. Check camera-to-HomeBase signal strength.",
+      "response_cn": "请1. 确保手机有稳定的 Wi-Fi 或蜂窝连接；2. 如摄像头信号弱，请移近路由器；3. 检查摄像头与 HomeBase 之间的信号强度。"
+    },
+    {
+      "id": "C015",
+      "category": "camera",
+      "product_line": "SoloCam S340",
+      "product_pn": "T8170",
+      "error_code": null,
+      "question_en": "Recording stops earlier than expected",
+      "question_cn": "录制时间比预期短",
+      "synonyms_en": [
+        "recording stops early",
+        "short recording",
+        "stops recording"
+      ],
+      "synonyms_cn": [
+        "recording stops early",
+        "录像时间短",
+        "录一会儿就停",
+        "stops recording earlier"
+      ],
+      "ontology_slots": ["Product.PN"],
+      "strategy": "adjust_working_mode",
+      "response_en": "Recording stops based on: 1. Maximum recording duration (Battery Life: 20s / Surveillance: 60s); 2. AI detects no human/vehicle/pet for sustained period. For longer recordings, switch to Optimal Surveillance mode or Customize Recording mode.",
+      "response_cn": "录制停止取决于以下条件之一：1. 达到最大录制时长（Battery Life 模式 20 秒 /

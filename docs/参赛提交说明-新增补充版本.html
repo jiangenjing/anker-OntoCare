@@ -1,0 +1,4694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>document.documentElement.classList.add('js-on');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>OntoCare 参赛提交说明｜项目总览、成果展示与源码入口</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+<style>
+/* ---------- Tokens ---------- */
+:root {
+  /* Base palette — warm hue 85° anchors both modes */
+  --bg:           oklch(0.972 0.012 85);
+  --bg-elevated:  oklch(0.945 0.014 85);
+  --bg-code:      oklch(0.935 0.014 85);
+  --bg-mark:      oklch(0.93  0.05  35);
+
+  --text:         oklch(0.22  0.018 85);
+  --text-muted:   oklch(0.45  0.014 85);
+  --text-subtle:  oklch(0.58  0.012 85);
+  --text-faint:   oklch(0.72  0.010 85);
+
+  --rule:         oklch(0.86  0.012 85);
+  --rule-strong:  oklch(0.78  0.014 85);
+
+  --accent:       oklch(0.50  0.135 35);
+  --accent-soft:  oklch(0.92  0.04  35);
+  --accent-ring:  oklch(0.55  0.16  35 / 0.40);
+
+  /* Syntax — three colors only */
+  --syn-keyword:  oklch(0.50  0.135 35);
+  --syn-string:   oklch(0.48  0.075 200);
+  --syn-comment:  oklch(0.58  0.010 85);
+
+  /* Type */
+  --font-body:  'Newsreader', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --font-ui:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --fs-body:    1.125rem;   /* 18px */
+  --lh-body:    1.6;
+  --measure:    68ch;
+
+  /* 4pt scale */
+  --s-1: 0.25rem; --s-2: 0.5rem; --s-3: 0.75rem;
+  --s-4: 1rem;    --s-6: 1.5rem; --s-8: 2rem;
+  --s-12: 3rem;   --s-16: 4rem;  --s-24: 6rem;
+}
+
+[data-theme="dark"] {
+  /* Ink-dark — near-black with a faint cool cast, terracotta accent kept */
+  --bg:           oklch(0.135 0.008 260);
+  --bg-elevated:  oklch(0.175 0.008 260);
+  --bg-code:      oklch(0.185 0.008 260);
+  --bg-mark:      oklch(0.32  0.08  35);
+
+  --text:         oklch(0.94  0.006 260);
+  --text-muted:   oklch(0.72  0.006 260);
+  --text-subtle:  oklch(0.55  0.006 260);
+  --text-faint:   oklch(0.40  0.006 260);
+
+  --rule:         oklch(0.27  0.008 260);
+  --rule-strong:  oklch(0.38  0.008 260);
+
+  --accent:       oklch(0.74  0.13  35);
+  --accent-soft:  oklch(0.30  0.08  35);
+  --accent-ring:  oklch(0.74  0.14  35 / 0.45);
+
+  --syn-keyword:  oklch(0.74  0.13  35);
+  --syn-string:   oklch(0.78  0.10  175);
+  --syn-comment:  oklch(0.55  0.006 260);
+}
+
+/* ---------- Reset & base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; tab-size: 4; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-optical-sizing: auto;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  background: var(--bg);
+  color: var(--text);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 200ms cubic-bezier(.22,1,.36,1), color 200ms cubic-bezier(.22,1,.36,1);
+}
+[data-theme="dark"] body { font-weight: 380; }
+
+/* Selection */
+::selection { background: var(--accent-soft); color: var(--text); }
+[data-theme="dark"] ::selection { background: var(--accent-soft); color: var(--text); }
+
+/* Focus */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------- Skip link ---------- */
+.skip-link {
+  position: fixed;
+  top: -100px; left: var(--s-4);
+  z-index: 100;
+  padding: var(--s-2) var(--s-4);
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  text-decoration: none;
+  transition: top 150ms ease-out;
+}
+.skip-link:focus-visible { top: var(--s-4); }
+
+/* ---------- Reading progress ---------- */
+.progress {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: transparent;
+  z-index: 50;
+  pointer-events: none;
+}
+.progress__bar {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  transform-origin: left;
+  transition: width 90ms linear;
+}
+
+/* ---------- Top edge fade ---------- */
+.page-fade-top {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 24px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+  z-index: 22;
+}
+
+/* ---------- Topbar ---------- */
+.topbar {
+  position: fixed;
+  top: var(--s-4); right: var(--s-4);
+  z-index: 30;
+  display: flex;
+  gap: var(--s-2);
+  align-items: center;
+}
+.topbar__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  min-height: 36px;
+  background: var(--bg);
+  color: var(--text-muted);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: color 150ms, border-color 150ms, background 150ms;
+}
+.topbar__btn:hover { color: var(--text); border-color: var(--rule-strong); }
+a.topbar__btn { text-decoration: none; }
+.topbar__btn svg { width: 16px; height: 16px; }
+.topbar__btn .label { display: none; }
+.topbar__btn.is-active { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+#review-comment-toggle { display: none; }
+[data-review-mode="true"] #review-comment-toggle { display: inline-flex; }
+@media (min-width: 640px) {
+  .topbar__btn .label { display: inline; }
+}
+
+/* ---------- Section indicator (phase 3) ---------- */
+.section-indicator {
+  position: fixed;
+  top: var(--s-4); left: var(--s-4);
+  z-index: 30;
+  display: flex; align-items: center;
+  min-height: 36px;
+  padding: var(--s-2) var(--s-3);
+  font-family: var(--font-ui);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  max-width: 32ch;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  opacity: 0;
+  transition: opacity 200ms cubic-bezier(.22, 1, .36, 1);
+  pointer-events: none;
+}
+.section-indicator.is-visible { opacity: 1; }
+
+@media (max-width: 640px) { .section-indicator { display: none; } }
+
+/* ---------- Edit mode ---------- */
+[data-edit-mode="true"] .article { outline: none; }
+[data-edit-mode="true"] .article :focus { outline: none; }
+[data-edit-mode="true"] .article *[contenteditable="true"]:focus,
+[data-edit-mode="true"] .article:focus { outline: none; }
+[data-edit-mode="true"] .article h1,
+[data-edit-mode="true"] .article h2,
+[data-edit-mode="true"] .article h3,
+[data-edit-mode="true"] .article h4,
+[data-edit-mode="true"] .article p,
+[data-edit-mode="true"] .article li,
+[data-edit-mode="true"] .article dt,
+[data-edit-mode="true"] .article dd,
+[data-edit-mode="true"] .article td,
+[data-edit-mode="true"] .article th,
+[data-edit-mode="true"] .article figcaption,
+[data-edit-mode="true"] .article blockquote,
+[data-edit-mode="true"] .article pre {
+  border-radius: 2px;
+  transition: background 120ms;
+}
+[data-edit-mode="true"] .article *:hover:not(svg):not(path):not(circle):not(line):not(g) {
+  background: color-mix(in oklch, var(--accent-soft) 35%, transparent);
+}
+[data-edit-mode="true"] .article *:focus-within:not(svg) {
+  background: color-mix(in oklch, var(--accent-soft) 60%, transparent);
+}
+[data-edit-mode="true"] .heading-anchor,
+[data-edit-mode="true"] .codeblock__copy,
+[data-edit-mode="true"] .fn-back {
+  display: none !important;
+}
+[data-edit-mode="true"] .fnref {
+  pointer-events: none;
+}
+[data-edit-mode="true"] .article {
+  caret-color: var(--accent);
+}
+.edit-status {
+  position: fixed;
+  left: var(--s-4);
+  bottom: var(--s-4);
+  z-index: 25;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  color: var(--text-subtle);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--bg-elevated);
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 200ms, transform 200ms;
+  pointer-events: none;
+}
+[data-edit-mode="true"] .edit-status {
+  opacity: 1;
+  transform: translateY(0);
+}
+.edit-status .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: var(--s-2);
+  border-radius: 50%;
+  background: var(--accent);
+  vertical-align: middle;
+}
+
+/* ---------- Review comments ---------- */
+[data-review-mode="true"] [data-comment-mode="true"] [data-report-block-id] {
+  cursor: cell;
+}
+[data-review-mode="true"] [data-comment-mode="true"] [data-report-block-id]:hover {
+  outline: 1px solid color-mix(in oklch, var(--accent) 45%, transparent);
+  outline-offset: 4px;
+  background: color-mix(in oklch, var(--accent-soft) 28%, transparent);
+}
+.report-comment-margin {
+  display: grid;
+  gap: var(--s-3);
+  margin: var(--s-2) 0 var(--s-6);
+  padding-left: var(--s-3);
+  border-left: 1px solid color-mix(in oklch, var(--accent) 48%, var(--rule));
+  font-family: var(--font-ui);
+}
+@media (min-width: 1180px) {
+  .report-comment-margin {
+    float: right;
+    clear: right;
+    width: 15rem;
+    margin: calc(-1 * var(--s-2)) calc(-15rem - var(--s-8)) var(--s-6) var(--s-8);
+    padding-left: var(--s-3);
+  }
+}
+.report-comment-note {
+  position: relative;
+  display: grid;
+  gap: var(--s-2);
+  color: var(--text-muted);
+}
+.report-comment-note + .report-comment-note {
+  padding-top: var(--s-2);
+  border-top: 1px solid color-mix(in oklch, var(--rule) 70%, transparent);
+}
+.report-comment-note::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--s-3) - 4px);
+  top: 0.35rem;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+.report-comment-note[data-report-comment-status="resolved"] {
+  opacity: 0.72;
+}
+.report-comment-note[data-report-comment-status="resolved"]::before {
+  background: var(--text-subtle);
+}
+.report-comment-note.is-active {
+  opacity: 1;
+}
+.report-comment-note.is-active::before {
+  box-shadow: 0 0 0 4px var(--accent-ring);
+}
+.report-comment-note__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  width: fit-content;
+  color: var(--accent);
+  font: 700 0.6875rem/1 var(--font-mono);
+  letter-spacing: 0.07em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.report-comment-note__meta[data-report-comment-status="resolved"] {
+  color: var(--text-subtle);
+}
+.report-comment-note__meta.is-active {
+  outline: 2px solid var(--accent-ring);
+  outline-offset: 3px;
+}
+.report-comment-note__id {
+  color: currentColor;
+  opacity: 0.72;
+}
+.report-comment-note__body,
+.report-comment-note__resolved {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.48;
+}
+.report-comment-note__resolved {
+  color: var(--text-subtle);
+}
+[data-report-block-id].is-review-active {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+[data-report-block-id].is-review-flash {
+  animation: reviewFlash 1300ms ease-out;
+}
+@keyframes reviewFlash {
+  0% { background: color-mix(in oklch, var(--accent-soft) 70%, transparent); }
+  100% { background: transparent; }
+}
+.review-mode-banner {
+  position: fixed;
+  left: 50%;
+  top: var(--s-4);
+  z-index: 35;
+  display: none;
+  align-items: center;
+  gap: var(--s-3);
+  transform: translateX(-50%);
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--text);
+  font: 600 0.8125rem/1.2 var(--font-ui);
+}
+[data-review-mode="true"] [data-comment-mode="true"] .review-mode-banner {
+  display: inline-flex;
+}
+.review-mode-banner button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 1px solid color-mix(in oklch, var(--accent) 45%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  font: 700 0.875rem/1 var(--font-ui);
+}
+.review-rail {
+  display: none;
+  gap: var(--s-2);
+}
+[data-review-mode="true"] .review-rail {
+  display: inline-flex;
+}
+.review-rail:hover,
+.review-rail[aria-expanded="true"] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.review-rail__label {
+  display: none;
+}
+.review-rail__counts {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-1);
+  min-width: 0;
+  padding: var(--s-1) var(--s-2);
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+@media (min-width: 640px) {
+  .review-rail__label {
+    display: inline;
+  }
+}
+.review-tray {
+  position: fixed;
+  top: 4.75rem;
+  right: var(--s-4);
+  bottom: var(--s-4);
+  z-index: 28;
+  width: min(360px, calc(100vw - 2rem));
+  padding: var(--s-4);
+  overflow-y: auto;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: color-mix(in oklch, var(--bg) 96%, transparent);
+  box-shadow: 0 18px 60px oklch(0 0 0 / 0.16);
+  font-family: var(--font-ui);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(calc(100% + var(--s-6)));
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+[data-review-mode="true"] .review-tray.review-tray--open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+.review-tray__header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-bottom: var(--s-3);
+}
+.review-tray__title {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.review-tray__counts {
+  margin: var(--s-1) 0 0;
+  font-size: 0.75rem;
+  color: var(--text-subtle);
+}
+.review-tray__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  cursor: pointer;
+  font: 700 1rem/1 var(--font-ui);
+}
+.review-tray__close:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.review-tray__filter {
+  display: flex;
+  gap: var(--s-1);
+  margin-bottom: var(--s-4);
+}
+.review-tray__filter button,
+.review-tray__action {
+  min-height: 30px;
+  padding: var(--s-1) var(--s-2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  font: 600 0.75rem/1 var(--font-ui);
+  cursor: pointer;
+}
+.review-tray__filter button[aria-pressed="true"],
+.review-tray__action:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.review-tray__list {
+  display: grid;
+  gap: var(--s-2);
+}
+.review-tray__empty {
+  margin: var(--s-6) 0;
+  color: var(--text-subtle);
+  font-size: 0.875rem;
+}
+.review-tray__item {
+  width: 100%;
+  padding: var(--s-3);
+  text-align: left;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+.review-tray__item.is-active {
+  border-color: var(--accent);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.review-tray__item-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-2);
+  margin-bottom: var(--s-2);
+  font: 600 0.6875rem/1.3 var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+.review-tray__item-body {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+.review-tray__links,
+.review-tray__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+}
+.review-tray__links a {
+  font-size: 0.75rem;
+  color: var(--text-subtle);
+}
+@media (max-width: 900px) {
+  .review-tray {
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-height: 45vh;
+    border-radius: 8px 8px 0 0;
+    transform: translateY(calc(100% + var(--s-4)));
+  }
+  [data-review-mode="true"] .review-tray.review-tray--open {
+    transform: translateY(0);
+  }
+}
+/* ---------- Comment popup (unified atom) ---------- */
+.report-comment-pop {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--rule-strong);
+  border-radius: 6px;
+  width: min(320px, 100%);
+  box-sizing: border-box;
+  opacity: 1;
+  animation: report-comment-pop-fade 120ms ease-out;
+}
+@keyframes report-comment-pop-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .report-comment-pop { animation: none; }
+}
+.report-comment-pop--rail {
+  position: sticky;
+  top: var(--s-4);
+  bottom: var(--s-4);
+  margin: var(--s-2) 0;
+}
+.report-comment-pop--rail::before {
+  content: "";
+  position: absolute;
+  left: -22px;
+  top: 18px;
+  width: 22px;
+  height: 1px;
+  background: var(--rule-strong);
+}
+.report-comment-pop--rail::after {
+  content: "";
+  position: absolute;
+  left: -24px;
+  top: 15px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.report-comment-pop--float {
+  position: absolute;
+  z-index: 70;
+  box-shadow: 0 8px 24px oklch(0 0 0 / 0.08), 0 2px 6px oklch(0 0 0 / 0.04);
+}
+.report-comment-pop--float::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 24px;
+  width: 10px;
+  height: 10px;
+  background: var(--bg);
+  border-top: 1px solid var(--rule-strong);
+  border-left: 1px solid var(--rule-strong);
+  transform: rotate(45deg);
+}
+.report-comment-pop--float[data-tail-side="above"]::before {
+  top: auto;
+  bottom: -6px;
+  border-top: none;
+  border-left: none;
+  border-bottom: 1px solid var(--rule-strong);
+  border-right: 1px solid var(--rule-strong);
+}
+.report-comment-pop__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--s-2) var(--s-3);
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.7rem;
+  color: var(--text-subtle);
+}
+.report-comment-pop__id {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--text-mute);
+}
+.report-comment-pop__status {
+  color: var(--text-subtle);
+}
+.report-comment-pop__pill {
+  border: 1px solid var(--rule);
+  border-radius: 9999px;
+  padding: 1px 8px;
+  margin-left: var(--s-2);
+  font-size: 0.66rem;
+  background: var(--bg-elevated);
+  color: var(--text-subtle);
+  cursor: pointer;
+}
+.report-comment-pop__pill:hover { border-color: var(--accent); color: var(--accent); }
+.report-comment-pop__body {
+  padding: var(--s-3);
+}
+.report-comment-pop__field {
+  width: 100%;
+  min-height: 84px;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--text);
+  padding: var(--s-2) var(--s-3);
+  font: 0.92rem/1.5 var(--font-ui);
+  resize: vertical;
+  box-sizing: border-box;
+}
+.report-comment-pop__field:focus { outline: none; border-color: var(--accent); }
+.report-comment-pop__hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--s-2) var(--s-3) var(--s-3);
+  font-size: 0.72rem;
+  color: var(--text-mute);
+  gap: var(--s-2);
+}
+.report-comment-pop__keys kbd {
+  display: inline-block;
+  border: 1px solid var(--rule);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  background: var(--bg-elevated);
+  color: var(--text-subtle);
+}
+.report-comment-pop__actions {
+  display: flex;
+  gap: var(--s-3);
+  align-items: center;
+}
+.report-comment-pop__actions button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: var(--text-subtle);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 3px;
+}
+.report-comment-pop__actions button:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+.report-comment-pop__actions button[data-action="save"] {
+  color: var(--accent);
+  font-weight: 600;
+}
+.report-comment-pop__actions button[data-action="delete"]:hover {
+  color: oklch(0.55 0.18 30);
+  text-decoration-color: oklch(0.55 0.18 30);
+}
+.report-comment-pop__actions button[disabled] { opacity: 0.4; cursor: default; }
+.report-comment-pop__message {
+  min-height: 1rem;
+  color: var(--text-subtle);
+}
+/* ---------- /Comment popup ---------- */
+
+/* ---------- Layout ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 100%;
+  padding: var(--s-24) var(--s-6) var(--s-16);
+}
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: 220px minmax(0, 68ch);
+    column-gap: var(--s-12);
+    justify-content: center;
+    padding: var(--s-24) var(--s-8);
+  }
+}
+@media (min-width: 1280px) {
+  .layout {
+    grid-template-columns: 220px minmax(0, 68ch) 240px;
+    column-gap: var(--s-12);
+  }
+}
+
+/* ---------- Table of contents ---------- */
+.toc {
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+.toc__heading {
+  font-family: var(--font-ui);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin: 0 0 var(--s-3);
+}
+.toc__list { list-style: none; padding: 0; margin: 0; }
+.toc__list .toc__list { padding-left: var(--s-4); margin-top: var(--s-1); margin-bottom: var(--s-2); }
+.toc__item { position: relative; }
+.toc__link {
+  display: block;
+  padding: 4px 0 4px 14px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-left: 1px solid transparent;
+  transition: color 120ms, border-color 120ms;
+}
+.toc__link:hover { color: var(--text); }
+.toc__link.is-active {
+  color: var(--accent);
+  font-weight: 600;
+}
+.toc__link.is-active::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  color: var(--accent);
+  font-size: 0.7rem;
+  line-height: 1.55;
+}
+
+/* Mobile/tablet ToC = sticky accordion at top */
+@media (max-width: 1023px) {
+  .toc-rail {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in oklch, var(--bg) 92%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    margin: calc(var(--s-24) * -1) calc(var(--s-6) * -1) var(--s-12);
+    padding: var(--s-4) var(--s-6);
+    border-bottom: 1px solid var(--rule);
+  }
+  .toc-rail__toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: none;
+    border: 0;
+    padding: 0;
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .toc-rail__toggle svg {
+    transition: transform 200ms cubic-bezier(.22,1,.36,1);
+  }
+  .toc-rail[data-open="true"] .toc-rail__toggle svg {
+    transform: rotate(180deg);
+  }
+  .toc {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 250ms cubic-bezier(.22,1,.36,1);
+  }
+  .toc-rail[data-open="true"] .toc {
+    max-height: 70vh;
+    overflow-y: auto;
+    margin-top: var(--s-4);
+    scrollbar-width: none;
+  }
+  .toc-rail[data-open="true"] .toc::-webkit-scrollbar { display: none; }
+  .toc__heading { display: none; }
+}
+
+@media (min-width: 1024px) {
+  .toc-rail {
+    position: sticky;
+    top: var(--s-12);
+    align-self: start;
+    max-height: calc(100vh - var(--s-24));
+    overflow-y: auto;
+    padding-right: var(--s-4);
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 32px), transparent);
+            mask-image: linear-gradient(to bottom, #000 calc(100% - 32px), transparent);
+  }
+  .toc-rail::-webkit-scrollbar { display: none; }
+  .toc-rail__toggle { display: none; }
+}
+
+/* ---------- Sidenote rail ---------- */
+.sidenote-rail {
+  position: relative;
+}
+@media (max-width: 1279px) {
+  .sidenote-rail { display: none; }
+}
+
+/* ---------- Article ---------- */
+.article {
+  max-width: 68ch;
+  margin: 0 auto;
+  position: relative; /* so sidenotes can absolute-position into the right rail */
+}
+
+.article-header { margin-bottom: var(--s-16); }
+
+.eyebrow {
+  font-family: var(--font-ui);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 var(--s-4);
+}
+
+h1 {
+  font-family: var(--font-body);
+  font-size: clamp(2rem, 1.6rem + 1.8vw, 2.875rem);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+  margin: 0 0 var(--s-4);
+  color: var(--text);
+}
+
+.lede {
+  font-family: var(--font-body);
+  font-size: 1.3125rem;
+  font-style: italic;
+  font-weight: 350;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0 0 var(--s-12);
+  text-wrap: pretty;
+  max-width: 60ch;
+}
+
+/* Metadata block */
+.meta {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--s-1) var(--s-6);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  padding: var(--s-4) 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  color: var(--text-muted);
+  margin: 0;
+}
+.meta dt {
+  color: var(--text-subtle);
+  font-weight: 400;
+  text-transform: lowercase;
+  letter-spacing: 0.01em;
+}
+.meta dd {
+  margin: 0;
+  color: var(--text);
+}
+.meta dd .tag {
+  display: inline;
+  margin-right: var(--s-2);
+  color: var(--text-muted);
+}
+.meta dd .tag::before { content: "#"; color: var(--text-subtle); }
+
+/* Section */
+section { margin-top: var(--s-16); }
+
+h2 {
+  font-family: var(--font-body);
+  font-size: 1.875rem;
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+  margin: 0 0 var(--s-4);
+  color: var(--text);
+  scroll-margin-top: var(--s-12);
+  position: relative;
+}
+h2::before {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 1px;
+  background: var(--rule-strong);
+  margin-bottom: var(--s-6);
+}
+
+h3 {
+  font-family: var(--font-body);
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.008em;
+  text-wrap: balance;
+  margin: var(--s-12) 0 var(--s-3);
+  color: var(--text);
+  scroll-margin-top: var(--s-12);
+}
+
+h4 {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin: var(--s-8) 0 var(--s-3);
+}
+
+/* Anchor link on hover */
+.heading-anchor {
+  position: absolute;
+  left: -1.4em;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1em; height: 1em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-faint);
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 150ms, color 150ms;
+}
+h2:hover .heading-anchor,
+h3:hover .heading-anchor,
+h2 .heading-anchor:focus-visible,
+h3 .heading-anchor:focus-visible { opacity: 1; }
+.heading-anchor:hover { color: var(--accent); }
+@media (max-width: 768px) {
+  .heading-anchor { display: none; }
+}
+
+/* Body text */
+p, ul, ol, dl, blockquote, figure, table, pre {
+  margin: 0 0 var(--s-6);
+}
+p {
+  font-feature-settings: "kern", "liga", "onum";
+  text-wrap: pretty;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  overflow-wrap: anywhere;
+}
+.section-lede {
+  font-style: italic;
+  font-size: 1.1875rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin-bottom: var(--s-8);
+  max-width: 60ch;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in oklch, var(--accent) 50%, transparent);
+  transition: text-decoration-color 120ms;
+}
+a:hover { text-decoration-color: var(--accent); }
+
+strong { font-weight: 600; color: var(--text); }
+em { font-style: italic; }
+mark {
+  background: var(--bg-mark);
+  color: var(--text);
+  padding: 0 0.15em;
+  border-radius: 1px;
+}
+small { font-size: 0.875em; color: var(--text-muted); }
+abbr[title] { text-decoration: underline dotted; cursor: help; }
+kbd {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.8125em;
+  padding: 0.1em 0.4em;
+  background: var(--bg-elevated);
+  border: 1px solid var(--rule);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  color: var(--text);
+}
+
+/* Lists */
+ul, ol {
+  padding-left: 1.4em;
+}
+li {
+  margin-bottom: var(--s-2);
+}
+li::marker { color: var(--text-faint); }
+ul li::marker { content: "— "; }
+ol { list-style-type: decimal; }
+ol li::marker { font-family: var(--font-mono); font-size: 0.85em; }
+ul ul, ol ol, ul ol, ol ul { margin-top: var(--s-2); margin-bottom: 0; }
+
+dl.def {
+  display: grid;
+  grid-template-columns: minmax(8em, max-content) 1fr;
+  gap: var(--s-2) var(--s-6);
+  margin-bottom: var(--s-6);
+}
+dl.def dt {
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  padding-top: 0.15em;
+}
+dl.def dd { margin: 0; color: var(--text-muted); }
+
+/* Inline code */
+:not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  font-feature-settings: "ss01", "calt" off;
+  font-variant-ligatures: none;
+  background: var(--bg-code);
+  color: var(--text);
+  padding: 0.12em 0.35em;
+  border-radius: 3px;
+  border: 1px solid var(--rule);
+  white-space: nowrap;
+}
+
+/* Code blocks */
+.codeblock {
+  position: relative;
+  margin: var(--s-8) 0;
+  background: var(--bg-code);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.codeblock__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-2) var(--s-4);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-subtle);
+  letter-spacing: 0.02em;
+}
+.codeblock__path {
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.codeblock__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  flex-shrink: 0;
+}
+.codeblock__lang {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.codeblock__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--text-muted);
+  padding: var(--s-1) var(--s-3);
+  font-family: var(--font-ui);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 200ms cubic-bezier(.22,1,.36,1), color 150ms, border-color 150ms;
+}
+.codeblock__copy svg { width: 12px; height: 12px; }
+.codeblock:hover .codeblock__copy,
+.codeblock:focus-within .codeblock__copy { opacity: 1; }
+@media (hover: none) {
+  .codeblock__copy { opacity: 1; }
+}
+.codeblock__copy:hover { color: var(--text); border-color: var(--rule-strong); }
+.codeblock__copy.is-copied { color: var(--accent); border-color: var(--accent); }
+.codeblock pre {
+  margin: 0;
+  padding: var(--s-4) 0;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--text);
+  font-variant-ligatures: none;
+}
+.codeblock pre code {
+  display: block;
+  padding: 0 var(--s-4);
+  font-family: inherit;
+  font-size: inherit;
+  background: none;
+  border: 0;
+  white-space: pre;
+}
+
+/* Syntax (3 colors) */
+.tk-kw { color: var(--syn-keyword); font-weight: 500; }
+.tk-str { color: var(--syn-string); }
+.tk-com { color: var(--syn-comment); font-style: italic; }
+.tk-num { color: var(--syn-keyword); }
+.tk-fn { color: var(--text); font-weight: 500; }
+
+/* Diff hints */
+.tk-add { background: color-mix(in oklch, var(--accent-soft) 50%, transparent); display: inline-block; width: 100%; }
+.tk-del { background: color-mix(in oklch, var(--bg-mark) 25%, transparent); display: inline-block; width: 100%; opacity: 0.85; }
+
+/* Blockquote */
+blockquote {
+  margin: var(--s-8) 0;
+  padding-left: var(--s-6);
+  border-left: 1px solid var(--rule-strong);
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 1.125rem;
+}
+blockquote cite {
+  display: block;
+  margin-top: var(--s-2);
+  font-style: normal;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+/* Pull quote */
+.pullquote {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 350;
+  font-size: clamp(1.5rem, 1.3rem + 0.7vw, 1.875rem);
+  line-height: 1.3;
+  text-wrap: balance;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  text-align: left;
+  margin: var(--s-12) 0;
+  padding: 0;
+  border: 0;
+  max-width: 22em;
+}
+
+/* Callouts — typographic only (NOTE / INSIGHT / CAUTION / ASIDE) */
+.callout {
+  margin: var(--s-8) 0;
+  padding-left: var(--s-6);
+  border: 0;
+  border-left: 1px solid var(--rule-strong);
+  font-style: normal;
+  color: var(--text);
+}
+.callout__label {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--s-2);
+}
+.callout[data-callout="caution"] .callout__label { color: oklch(0.50 0.13 25); }
+[data-theme="dark"] .callout[data-callout="caution"] .callout__label { color: oklch(0.78 0.12 25); }
+.callout[data-callout="aside"] .callout__label { color: var(--text-subtle); }
+.callout p:last-child { margin-bottom: 0; }
+.callout em { color: var(--text-muted); }
+
+/* Callouts — boxed variants (INFO / WARNING / TIP / DANGER)
+   Subtle low-chroma tinted bg + thin colored border + icon. Not alert boxes. */
+.callout-box {
+  --cb-bg:     oklch(0.96 0.025 240);
+  --cb-border: oklch(0.78 0.06  240);
+  --cb-fg:     oklch(0.45 0.13  240);
+  margin: var(--s-8) 0;
+  padding: var(--s-4) var(--s-6);
+  background: var(--cb-bg);
+  border: 1px solid var(--cb-border);
+  border-radius: 6px;
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  column-gap: var(--s-4);
+  align-items: start;
+  color: var(--text);
+}
+.callout-box__icon {
+  width: 22px; height: 22px;
+  color: var(--cb-fg);
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+.callout-box__icon svg { width: 100%; height: 100%; }
+.callout-box__body { min-width: 0; }
+.callout-box__body > :first-child { margin-top: 0; }
+.callout-box__body > :last-child  { margin-bottom: 0; }
+.callout-box__body p { margin-bottom: var(--s-3); }
+.callout-box__body p:last-child { margin-bottom: 0; }
+.callout-box__body strong { color: var(--cb-fg); }
+.callout-box__body code {
+  background: color-mix(in oklch, var(--cb-fg) 8%, transparent);
+  border-color: color-mix(in oklch, var(--cb-fg) 22%, transparent);
+}
+.callout-box__body a { color: var(--cb-fg); }
+
+/* WARNING — amber */
+.callout-box[data-callout="warning"] {
+  --cb-bg:     oklch(0.96 0.045 75);
+  --cb-border: oklch(0.78 0.10  75);
+  --cb-fg:     oklch(0.50 0.13  75);
+}
+/* TIP — green */
+.callout-box[data-callout="tip"] {
+  --cb-bg:     oklch(0.96 0.030 145);
+  --cb-border: oklch(0.75 0.08  145);
+  --cb-fg:     oklch(0.45 0.12  145);
+}
+/* DANGER — rose */
+.callout-box[data-callout="danger"] {
+  --cb-bg:     oklch(0.96 0.040 25);
+  --cb-border: oklch(0.78 0.10  25);
+  --cb-fg:     oklch(0.48 0.15  25);
+}
+
+/* Dark — deeper, lower-saturation panels with brighter ink for readability */
+[data-theme="dark"] .callout-box {
+  --cb-bg:     oklch(0.20 0.04 240);
+  --cb-border: oklch(0.40 0.08 240);
+  --cb-fg:     oklch(0.80 0.10 240);
+}
+[data-theme="dark"] .callout-box[data-callout="warning"] {
+  --cb-bg:     oklch(0.22 0.04 75);
+  --cb-border: oklch(0.42 0.10 75);
+  --cb-fg:     oklch(0.84 0.13 75);
+}
+[data-theme="dark"] .callout-box[data-callout="tip"] {
+  --cb-bg:     oklch(0.20 0.04 145);
+  --cb-border: oklch(0.40 0.08 145);
+  --cb-fg:     oklch(0.80 0.12 145);
+}
+[data-theme="dark"] .callout-box[data-callout="danger"] {
+  --cb-bg:     oklch(0.22 0.06 25);
+  --cb-border: oklch(0.45 0.10 25);
+  --cb-fg:     oklch(0.80 0.14 25);
+}
+
+/* Tables. Premise: tables are document figures, not prose. They claim more
+   width than the 68ch body column whenever the layout grid offers room, and
+   prose inside them wraps on word boundaries — only inline code and links
+   are allowed to break anywhere. */
+.table-wrap {
+  margin: var(--s-8) 0;
+  position: relative;
+}
+@media (max-width: 767px) {
+  .table-wrap { overflow-x: auto; }
+}
+/* By default at ≥1280px tables breakout into the empty right rail.
+   Opt out per-table with <table class="narrow">.
+   Assumes no sidenote rendered at the same vertical span. */
+@media (min-width: 1280px) {
+  .table-wrap:not(:has(> table.narrow)):not(.narrow) {
+    margin-right: calc((240px + var(--s-12)) * -1);
+  }
+  /* The right rail is shared territory: when a row inside this table is the
+     target of a review comment, the pin lives in that rail. Stay inside the
+     article so the OPEN/RESOLVED pins don't sit on top of cell content. */
+  .table-wrap[data-report-has-comment="true"]:not(:has(> table.narrow)):not(.narrow) {
+    margin-right: 0;
+  }
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  table-layout: auto;
+}
+th, td {
+  text-align: left;
+  padding: var(--s-3) var(--s-4) var(--s-3) 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+/* Long unbreakable tokens (inline code, URLs) are allowed to split.
+   Plain prose stays on word boundaries. */
+th code, td code, th a, td a { overflow-wrap: anywhere; }
+th {
+  font-family: var(--font-ui);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  border-bottom: 1px solid var(--rule-strong);
+  padding-bottom: var(--s-2);
+  min-width: 7ch;
+}
+td.num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; text-align: right; padding-right: var(--s-6); }
+
+/* Figures */
+figure { margin: var(--s-8) 0; }
+figure img, figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+}
+figcaption {
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  color: var(--text-subtle);
+  margin-top: var(--s-3);
+  font-style: normal;
+  line-height: 1.5;
+  max-width: 60ch;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Framed figure — subtle panel + click-to-zoom */
+figure.framed {
+  background: var(--bg-elevated);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: var(--s-6) var(--s-6) var(--s-4);
+  margin: var(--s-8) 0;
+}
+figure.framed > figcaption {
+  margin-top: var(--s-4);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--rule);
+}
+figure.framed .zoomable {
+  cursor: zoom-in;
+  transition: opacity 200ms cubic-bezier(.22,1,.36,1);
+}
+figure.framed .zoomable:hover { opacity: 0.92; }
+figure.framed .zoomable:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: color-mix(in oklch, var(--bg) 6%, oklch(0 0 0));
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-8);
+  cursor: zoom-out;
+  opacity: 0;
+  transition: opacity 220ms cubic-bezier(.22,1,.36,1);
+}
+.lightbox[data-open="true"] {
+  display: flex;
+  opacity: 1;
+}
+.lightbox__inner {
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-4);
+}
+.lightbox__stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: min(1200px, 100%);
+  max-height: calc(100vh - 8rem);
+  width: 100%;
+  background: var(--bg-elevated);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: var(--s-8);
+  box-shadow: 0 24px 64px -16px color-mix(in oklch, oklch(0 0 0) 40%, transparent);
+}
+.lightbox__stage img,
+.lightbox__stage svg {
+  max-width: 100%;
+  max-height: calc(100vh - 12rem);
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+.lightbox__caption {
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  color: oklch(0.85 0.005 260);
+  text-align: center;
+  max-width: 60ch;
+}
+.lightbox__close {
+  position: absolute;
+  top: var(--s-6);
+  right: var(--s-6);
+  background: transparent;
+  border: 1px solid color-mix(in oklch, oklch(1 0 0) 40%, transparent);
+  color: oklch(0.92 0.005 260);
+  width: 36px; height: 36px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+  transition: border-color 150ms, color 150ms, background 150ms;
+}
+.lightbox__close:hover { background: color-mix(in oklch, oklch(1 0 0) 14%, transparent); border-color: color-mix(in oklch, oklch(1 0 0) 70%, transparent); }
+.lightbox__close svg { width: 16px; height: 16px; }
+
+/* Drop cap on the first paragraph of an article */
+.dropcap::first-letter {
+  font-family: var(--font-body);
+  font-size: 3.4em;
+  font-weight: 500;
+  line-height: 0.85;
+  float: left;
+  padding: 0.05em 0.08em 0 0;
+  color: var(--text);
+}
+
+/* Sidenote fade-in motion (phase 2) — degrades to opacity 1 without JS */
+.sidenote { transition: opacity 240ms cubic-bezier(.22, 1, .36, 1); }
+.js-on .sidenote { opacity: 0; }
+.js-on .sidenote.is-revealed { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js-on .sidenote { opacity: 1; }
+}
+
+/* Sidenotes — desktop wide */
+.sidenote {
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  font-style: italic;
+}
+.sidenote .sidenote__num {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.6875rem;
+  color: var(--accent);
+  margin-right: var(--s-2);
+  letter-spacing: 0.05em;
+}
+@media (min-width: 1280px) {
+  .sidenote {
+    position: absolute;
+    left: calc(100% + var(--s-8));
+    width: 240px;
+    max-width: calc(100vw - 68ch - 220px - 12rem);
+    margin: 0;
+    padding: 0;
+  }
+}
+@media (max-width: 1279px) {
+  .sidenote {
+    display: block;
+    margin: var(--s-4) 0 var(--s-6) var(--s-4);
+    padding-left: var(--s-4);
+    border-left: 1px solid var(--rule);
+  }
+}
+
+/* Footnote refs / hover popovers */
+.fnref {
+  font-family: var(--font-mono);
+  font-size: 0.7em;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  vertical-align: super;
+  line-height: 0;
+  padding: 0 0.15em;
+  letter-spacing: 0.02em;
+  position: relative;
+}
+.fnref:hover { color: var(--text); }
+.fnref-popover {
+  position: absolute;
+  z-index: 40;
+  max-width: 360px;
+  padding: var(--s-3) var(--s-4);
+  background: var(--bg);
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  box-shadow: 0 8px 24px -8px color-mix(in oklch, var(--text) 12%, transparent);
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text-muted);
+  letter-spacing: 0;
+  vertical-align: baseline;
+  pointer-events: none;
+}
+.fnref-popover[data-visible="true"] { pointer-events: auto; }
+
+/* Footnotes block */
+.footnotes ol { padding-left: 1.6em; }
+.footnotes li {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin-bottom: var(--s-3);
+}
+.footnotes li:target { color: var(--text); }
+.fn-back {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  margin-left: 0.4em;
+  text-decoration: none;
+  color: var(--text-faint);
+}
+.fn-back:hover { color: var(--accent); }
+
+/* Sources block */
+.sources ol { padding-left: 1.6em; }
+.sources li {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin-bottom: var(--s-3);
+}
+.sources li::marker { font-family: var(--font-mono); font-size: 0.85em; }
+
+/* Glossary */
+.glossary-list dt {
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+dfn { font-style: italic; border-bottom: 1px dotted var(--text-faint); cursor: help; }
+
+/* End-of-doc CTA */
+.end-actions {
+  margin: var(--s-16) 0 var(--s-12);
+  padding-top: var(--s-8);
+  border-top: 1px solid var(--rule);
+  text-align: left;
+}
+.end-actions a {
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--accent);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.end-actions a:hover { text-decoration: underline; }
+.end-actions a svg { width: 14px; height: 14px; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: var(--s-6);
+  right: var(--s-6);
+  z-index: 60;
+  padding: var(--s-3) var(--s-4);
+  background: var(--text);
+  color: var(--bg);
+  border-radius: 4px;
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  box-shadow: 0 12px 32px -12px color-mix(in oklch, var(--text) 30%, transparent);
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 220ms cubic-bezier(.22,1,.36,1), transform 220ms cubic-bezier(.22,1,.36,1);
+}
+.toast[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.toast code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: color-mix(in oklch, var(--bg) 18%, transparent);
+  padding: 0 0.35em;
+  border-radius: 2px;
+  color: var(--bg);
+  border: 0;
+  white-space: nowrap;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  html { scroll-behavior: auto; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* ---------- Print ---------- */
+@media print {
+  :root {
+    --bg: #ffffff;
+    --text: #1a1a1a;
+    --text-muted: #444;
+    --text-subtle: #666;
+    --rule: #ddd;
+    --accent: #6b3a23;
+  }
+  .topbar, .progress, .page-fade-top, .section-indicator, .skip-link, .toc-rail, .sidenote-rail,
+  .codeblock__copy, .end-actions, .toast, .lightbox { display: none !important; }
+  .layout { display: block !important; padding: 0 !important; }
+  .article { max-width: 100% !important; }
+  body { font-size: 11pt; line-height: 1.5; }
+  h1 { font-size: 24pt; }
+  h2 { font-size: 16pt; page-break-after: avoid; }
+  h3 { font-size: 13pt; page-break-after: avoid; }
+  pre, table, figure { page-break-inside: avoid; }
+  a { color: var(--text); text-decoration: underline; }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #666;
+    word-break: break-all;
+  }
+  .sidenote { display: block; margin: 0.5em 0; padding-left: 1em; border-left: 1px solid #ccc; }
+  .fnref-popover { display: none !important; }
+}
+
+/* ---------- Report switcher (Cmd-O overlay) ---------- */
+.sr-only {
+  position: absolute !important; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+.report-switcher {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 14vh;
+  background: oklch(0.10 0.008 260 / 0.18);
+  backdrop-filter: blur(1.5px);
+  animation: rsw-fade 120ms cubic-bezier(.22,1,.36,1);
+}
+.report-switcher[hidden] { display: none; }
+.report-switcher__panel {
+  width: min(92vw, 540px);
+  background: var(--bg);
+  border: 1px solid var(--rule-strong);
+  border-radius: 8px;
+  box-shadow: 0 24px 60px -20px oklch(0.10 0.008 260 / 0.40);
+  overflow: hidden;
+}
+.report-switcher__input-row {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--rule);
+}
+.report-switcher__kbd {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--text-subtle);
+  border: 1px solid var(--rule-strong);
+  padding: 1px 5px; border-radius: 3px;
+}
+.report-switcher__input {
+  flex: 1;
+  border: 0; outline: 0; background: transparent;
+  font-family: var(--font-ui); font-size: 0.95rem;
+  color: var(--text);
+}
+.report-switcher__close {
+  border: 0; background: transparent; cursor: pointer;
+  color: var(--text-subtle); font-size: 1.1rem; padding: 0 0.2rem;
+}
+.report-switcher__close:hover { color: var(--text); }
+.report-switcher__list { margin: 0; padding: 0.3rem 0; list-style: none; max-height: 50vh; overflow-y: auto; }
+.report-switcher__item {
+  display: grid;
+  grid-template-columns: 5rem 1fr auto;
+  gap: 0.7rem;
+  padding: 0.5rem 0.9rem;
+  font-family: var(--font-body);
+  align-items: baseline;
+  cursor: pointer;
+}
+.report-switcher__item.is-active { background: var(--accent-soft); }
+.report-switcher__item-date { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-subtle); }
+.report-switcher__item-title { font-size: 0.92rem; color: var(--text); }
+.report-switcher__item-key { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-subtle); }
+.report-switcher__empty {
+  padding: 1rem; text-align: center; font-style: italic; color: var(--text-subtle);
+}
+.report-switcher__hint {
+  display: flex; justify-content: space-between;
+  padding: 0.5rem 0.9rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-ui); font-size: 0.68rem;
+  color: var(--text-subtle); letter-spacing: 0.04em;
+}
+.report-switcher__count { font-family: var(--font-mono); }
+@media (prefers-reduced-motion: reduce) {
+  .report-switcher { animation: none; }
+}
+@keyframes rsw-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (max-width: 640px) {
+  .report-switcher { padding-top: 0; }
+  .report-switcher__panel {
+    width: 100vw;
+    min-height: 100dvh;
+    border-radius: 0;
+    border: 0;
+  }
+  .report-switcher__item-key { display: none; }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#article">Skip to article</a>
+
+<div class="progress" aria-hidden="true">
+  <div class="progress__bar" id="progress-bar"></div>
+</div>
+
+<div class="section-indicator" id="section-indicator" aria-hidden="true">
+  <span class="section-indicator__label"></span>
+</div>
+
+<div class="topbar">
+  <a class="topbar__btn" id="report-index-link" href="index.html" aria-label="Open reports index" title="All reports">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="3" y="3" width="4" height="4"/>
+      <rect x="9" y="3" width="4" height="4"/>
+      <rect x="3" y="9" width="4" height="4"/>
+      <rect x="9" y="9" width="4" height="4"/>
+    </svg>
+    <span class="label">Index</span>
+  </a>
+  <button class="topbar__btn" id="theme-toggle" type="button" aria-label="Switch theme" title="Toggle theme (T)">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path class="theme-icon-sun" d="M8 1.5v1.5M8 13v1.5M14.5 8H13M3 8H1.5M12.6 3.4l-1.06 1.06M4.46 11.54L3.4 12.6M12.6 12.6l-1.06-1.06M4.46 4.46L3.4 3.4M8 11.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z"/>
+      <path class="theme-icon-moon" d="M13.5 9.5A6 6 0 016.5 2.5a6 6 0 107 7z" style="display:none"/>
+    </svg>
+    <span class="label">Theme</span>
+  </button>
+  <button class="topbar__btn" id="edit-toggle" type="button" aria-label="Toggle edit mode" aria-pressed="false" title="Edit (Option+E)">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M11.5 2.5l2 2-8.5 8.5H3v-2.5z"/>
+      <path d="M10 4l2 2"/>
+    </svg>
+    <span class="label">Edit</span>
+  </button>
+  <button class="topbar__btn" id="review-comment-toggle" type="button" aria-label="Start comment mode" aria-pressed="false" title="Start comment mode">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 3.5h10v6.5H7l-3.5 2.5V10H3z"/>
+      <path d="M6 6.5h4"/>
+    </svg>
+    <span class="label">Comment</span>
+  </button>
+  <button class="topbar__btn review-rail" id="review-rail" type="button" aria-label="Open review comments" aria-expanded="false" title="Open review comments">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 3.5h10M3 8h10M3 12.5h6"/>
+    </svg>
+    <span class="review-rail__label">Review</span>
+    <span class="review-rail__counts"><span data-review-rail-open-count>0</span><span>/</span><span data-review-rail-total-count>0</span></span>
+  </button>
+  <button class="topbar__btn" id="open-report-switcher" type="button" aria-label="Open another report" title="Open another report (⌘O)">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 8h10M9 4l4 4-4 4"/>
+    </svg>
+    <span class="label">Reports</span>
+  </button>
+  <button class="topbar__btn" id="save-md" type="button" aria-label="Save report as Markdown" title="Save as Markdown (Option+S)">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M8 2v8M4.5 6.5L8 10l3.5-3.5M2.5 13.5h11"/>
+    </svg>
+    <span class="label">Save as MD</span>
+  </button>
+</div>
+
+<div class="page-fade-top" aria-hidden="true"></div>
+
+<div class="review-mode-banner" id="review-mode-banner" role="status" aria-live="polite">
+  <span>Comment mode on · click a report block · Esc to exit</span>
+  <button type="button" id="review-mode-banner-close" aria-label="Exit comment mode">×</button>
+</div>
+
+<div class="layout">
+
+  <nav class="toc-rail" id="toc-rail" aria-label="On this page">
+    <button class="toc-rail__toggle" type="button" aria-expanded="false" aria-controls="toc">
+      <span>On this page</span>
+      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="toc" id="toc">
+      <h2 class="toc__heading">On this page</h2>
+      <ol class="toc__list"><li class="toc__item"><a class="toc__link" href="#">基于本体论与自进化闭环的经营归因智能客服系统</a></li><li class="toc__item"><a class="toc__link" href="#">基本信息</a></li><li class="toc__item"><a class="toc__link" href="#">项目总览</a><ol class="toc__list"><li class="toc__item"><a class="toc__link" href="#21">2\.1 项目阐述</a></li><li class="toc__item"><a class="toc__link" href="#22">2\.2 产品逻辑与技术架构</a></li><li class="toc__item"><a class="toc__link" href="#">产品逻辑与技术方案</a></li><li class="toc__item"><a class="toc__link" href="#">架构图</a></li><li class="toc__item"><a class="toc__link" href="#">架构选型理由</a></li><li class="toc__item"><a class="toc__link" href="#">局限性与领先性</a></li><li class="toc__item"><a class="toc__link" href="#">赛道标注</a></li></ol></li><li class="toc__item"><a class="toc__link" href="#">成果展示</a><ol class="toc__list"><li class="toc__item"><a class="toc__link" href="#31">3\.1 交付物</a></li><li class="toc__item"><a class="toc__link" href="#">交付物链接</a></li><li class="toc__item"><a class="toc__link" href="#">全链路体验录屏必交</a></li><li class="toc__item"><a class="toc__link" href="#32-presentation">3\.2 Presentation 材料</a></li></ol></li><li class="toc__item"><a class="toc__link" href="#">源代码</a></li><li class="toc__item"><a class="toc__link" href="#">团队风采展示</a><ol class="toc__list"><li class="toc__item"><a class="toc__link" href="#">团队成员</a></li></ol></li></ol>
+    </div>
+  </nav>
+
+  <main id="article">
+    <article class="article">
+
+      <header class="article-header">
+  
+  <h1>OntoCare 参赛提交说明｜项目总览、成果展示与源码入口</h1>
+  <p class="lede">OntoCare 本体队 · 决赛作品 · ANKER 首届黑客松挑战赛</p>
+  <dl class="meta">
+    <dt>generated by</dt> <dd>Codex</dd>
+    <dt>date</dt> <dd>2026-10-19</dd>
+    <dt>reading time</dt> <dd id="reading-time">~? min read</dd>
+    
+    
+    
+  </dl>
+</header>
+
+      <p data-report-block-id="block:b1"><strong>OntoCare 本体队</strong></p><ul><li data-report-block-id="block:b2"><a href="https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#s1">基本信息</a></li><li data-report-block-id="block:b3"><a href="https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#s2">项目总览</a></li><li data-report-block-id="block:b4"><a href="https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#s3">成果展示</a></li><li data-report-block-id="block:b5"><a href="https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#s4">源代码</a></li><li data-report-block-id="block:b6"><a href="https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#s5">团队风采</a></li></ul><figure class="framed" data-report-block-id="block:b7">
+        <div class="zoomable" tabindex="0" role="button" aria-label="Open image in viewer"><img src="https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=OWQ1YjI1ODdjMjA4NzdkYWNlYmFmOWMzMTk5ZGE3ZDlfMDIxYmRjNTY4OTJhNjY4MTkwNjc0NzI1NDZiZmJjYTNfSUQ6NzY5NzYwMzkwNDc4MzE0MTkyMF8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM" alt="Image" loading="lazy"></div>
+        <figcaption>Image</figcaption>
+      </figure><p data-report-block-id="block:b8">决赛作品 · ANKER 首届黑客松挑战赛</p>
+<section aria-labelledby="">
+<h2 id="" data-report-block-id="block:b9">基于本体论与自进化闭环的经营归因智能客服系统<a class="heading-anchor" href="#" aria-label="Link to 基于本体论与自进化闭环的经营归因智能客服系统">#</a></h2><p class="dropcap" data-report-block-id="block:b10">面向安克复杂 L3 售后，以双本体架构锁定业务边界，以自进化飞轮突破多跳幻觉，以全局归因反哺经营决策，三位一体打造出真正能在规则边界内安全办事的“抗幻觉”智能售后引擎。</p><p data-report-block-id="block:b11">团队OntoCare 本体队赛道智能服务</p><p data-report-block-id="block:b12"><a href="https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#s3">体验作品观看演示录屏</a><a href="https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#s4">源代码</a></p><hr data-report-block-id="block:b13"><p data-report-block-id="block:b14"><strong>PART 01</strong></p></section>
+<section aria-labelledby="">
+<h2 id="" data-report-block-id="block:b15">基本信息<a class="heading-anchor" href="#" aria-label="Link to 基本信息">#</a></h2><p data-report-block-id="block:b16">项目与团队的身份信息，作为评审与联络依据。</p><p data-report-block-id="block:b17"><strong>项目名称</strong></p><p data-report-block-id="block:b18">基于本体论与自进化闭环的经营归因智能客服系统（OntoCare）</p><p data-report-block-id="block:b19"><strong>参赛赛道</strong></p><p data-report-block-id="block:b20">智能服务</p><p data-report-block-id="block:b21"><strong>团队名称</strong></p><p data-report-block-id="block:b22">OntoCare 本体队</p><p data-report-block-id="block:b23"><strong>组长姓名 / 联系方式</strong></p><p data-report-block-id="block:b24">蒋恩晶（队长）｜ 1391648196@qq\.com ｜ 18042474095</p><p data-report-block-id="block:b25"><strong>团队成员</strong></p><ol><li data-report-block-id="block:b26">蒋恩晶【清华大学】— 负责整体方案架构设计、产品设计及路演答辩</li><li data-report-block-id="block:b27">叶品驿【浙江工业大学】— 负责 Agent 后端开发</li><li data-report-block-id="block:b28">雷景喻【南京大学】— 负责 Agent 评测、前端页面开发</li></ol><hr data-report-block-id="block:b29"><p data-report-block-id="block:b30"><strong>PART 02</strong></p></section>
+<section aria-labelledby="">
+<h2 id="" data-report-block-id="block:b31">项目总览<a class="heading-anchor" href="#" aria-label="Link to 项目总览">#</a></h2><p data-report-block-id="block:b32">讲清楚做了什么、为什么这样做，以及方案的边界。</p><h3 id="21" data-report-block-id="block:b33">2\.1 项目阐述<a class="heading-anchor" href="#21" aria-label="Link to 2\.1 项目阐述">#</a></h3><p data-report-block-id="block:b34">OntoCare 面向安克复杂 L3 售后，用 Service Ontology 统一业务语义、用 Decision Ontology 约束动作空间， 让 AI 从“能调用工具”升级为“能在明确业务规则边界内安全办事”——把客户问题转化为有依据的答复、可追溯的经营核查与可复用的改进策略。</p><figure class="framed" data-report-block-id="block:b35">
+        <div class="zoomable" tabindex="0" role="button" aria-label="Open image in viewer"><img src="https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=ZDViYTk5YzJlYThjYjhjNDliOTM5OWZmNGM1ODU3YzlfYTFlZDMwNGRhZmVhMzAyN2VhZjU0YjIyOTI3ZWQ0MDNfSUQ6NzY5NzYwMzkwMzAzNDE0OTg4MV8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM" alt="Image" loading="lazy"></div>
+        <figcaption>Image</figcaption>
+      </figure><p data-report-block-id="block:b36"><strong>立即体验 · LIVE DEMO</strong></p><h4 data-report-block-id="block:b37">扫码打开 OntoCare 智能售后工作台</h4><p data-report-block-id="block:b38">手机扫码即可进入真实运行环境，无需配置任何密钥。可直接体验用户端多轮对话、产品消歧、带引用答复，以及商家端邮件草稿与经营归因看板。</p><p data-report-block-id="block:b39">https://web\-production\-195cd\.up\.railway\.app/</p><h4 data-report-block-id="block:b40">解决什么问题</h4><p data-report-block-id="block:b41">产品包含用户端与商家端，目标用户不仅包含外部消费者，也覆盖了安克内部的客服与经营管理团队。</p><p data-report-block-id="block:b42"><strong>外部 · 消费者</strong></p><p data-report-block-id="block:b43">需要更准的答案与更快的闭环：不再答非所问、反复追问，也不必在长链路里来回拉扯。</p><p data-report-block-id="block:b44"><strong>内部 · 商家</strong></p><p data-report-block-id="block:b45">一线客服需要快速接管复杂 Case；GTM 策略与业务管理者需要真实的全局洞察来优化流程。</p><h4 data-report-block-id="block:b46">做了什么</h4><p data-report-block-id="block:b47">产品是双视图工作台：用户端「看懂问题、找对对象，给出有依据的下一步」，商家端「高效处理客户来信，让工单积累为经营线索」。</p><p data-report-block-id="block:b48"><strong>USER</strong></p><h4 data-report-block-id="block:b49">用户端 · 看懂问题、找对对象，给出有依据的下一步</h4><p data-report-block-id="block:b50">文本 / 故障图片 / 视频均可发起求助</p><p data-report-block-id="block:b51"><strong>1</strong></p><p data-report-block-id="block:b52">##### 多模态理解与「猜你想问」：让用户更容易表达问题</p><p data-report-block-id="block:b53">用户可以通过文字、故障图片或视频发起求助。系统先将图片和视频采样画面转化为可见现象、型号线索和错误码等文字证据，再结合用户描述进行检索。每轮对话同步更新「猜你想问」和快捷选项，减少反复打字。</p><p data-report-block-id="block:b54"><strong>2</strong></p><p data-report-block-id="block:b55">##### 主动订单关联与连续排障：让服务跟得上上下文</p><p data-report-block-id="block:b56">面对「S1 Pro 不吸了」等模糊描述，系统结合品类、订单 SKU 与对话信息区分产品，展示带图片、订单号和购买日期的候选卡片。确认后限定知识范围，保留已尝试步骤继续推进排障，并根据情绪调整沟通方式。</p><p data-report-block-id="block:b57"><strong>3</strong></p><p data-report-block-id="block:b58">##### 带引用的答复与人工交接：让建议有依据，疑难问题有出口</p><p data-report-block-id="block:b59">回复附带来源引用和可折叠的处理摘要。遇到信息不足、产品冲突或高风险诉求时，系统提示需要补充的证据或人工复核，并整理当前上下文与处理记录，支持后续接管。</p><p data-report-block-id="block:b60"><strong>技术底色 · 双本体让业务关联与处理边界清晰可查</strong></p><p data-report-block-id="block:b61">##### Service Ontology · 连接产品、订单、知识与证据</p><p data-report-block-id="block:b62">帮助系统确认「<strong>当前处理谁的问题、哪些资料适用</strong>」，从源头避免跨型号知识混用。</p><p data-report-block-id="block:b63">##### Decision Ontology · 计算允许与禁止的动作</p><p data-report-block-id="block:b64">结合案件状态输出 Allowed / Blocked，<strong>AI 越不了权</strong>。</p><p data-report-block-id="block:b65">##### 规则 \+ 固定工作流 \+ LLM 协同</p><p data-report-block-id="block:b66">再通过引用、关键字段及业务承诺校验，<strong>降低错误风险</strong>。</p><p data-report-block-id="block:b67"><strong>MERCHANT</strong></p><h4 data-report-block-id="block:b68">商家端 · 高效处理客户来信，让工单积累为经营线索</h4><p data-report-block-id="block:b69">邮件辅助 · 经营看板 · 归因助手</p><p data-report-block-id="block:b70"><strong>1</strong></p><p data-report-block-id="block:b71">##### 邮件辅助处理：从客户原文到可编辑的回复草稿</p><p data-report-block-id="block:b72">商家可以选择已有工单或粘贴邮件正文，系统结合产品、订单、物流、质保与知识生成回复草稿，支持语气调整、多版本生成及多语言翻译。引用随草稿保留，方便核对后使用。</p><p data-report-block-id="block:b73"><strong>2</strong></p><p data-report-block-id="block:b74">##### 经营可视化看板：从统计数字下钻到原始工单</p><p data-report-block-id="block:b75">聚合全量工单快照，展示产品工单占比、咨询场景、错误码及知识覆盖情况。点击图表或归因候选，即可查看关联工单、Excel 行号和原始邮件，帮助管理者识别值得优先核查的问题。</p><p data-report-block-id="block:b76"><strong>3</strong></p><p data-report-block-id="block:b77">##### 经营归因助手：围绕一组工单追问，形成可核查的行动建议</p><p data-report-block-id="block:b78">商家可以直接询问「这些工单有什么共同特征？」「下一步应该核查什么？」，助手读取本体关联与归因 Trace，生成附带证据链的分析建议。例如：</p><p data-report-block-id="block:b79">支持产品核查：E25、E28 的两条工单包含 3212 错误码及相似拖布阻塞描述，建议按型号分别检查维护步骤和复现条件，再决定是否提交工程调查。</p><p data-report-block-id="block:b80">优化服务流程：针对「只收到配件」等拆单咨询，建议逐件展示包裹与物流记录，并核对客户实际收到的商品。</p><p data-report-block-id="block:b81"><strong>技术底色 · 同一份业务证据，贯通统计、规则与建议</strong></p><p data-report-block-id="block:b82">##### 统计由程序计算</p><p data-report-block-id="block:b83">看板与经营助手共用<strong>同一份源表快照</strong>，数字可回溯。</p><p data-report-block-id="block:b84">##### 归因依据显式规则</p><p data-report-block-id="block:b85">结论绑定规则 ID 与工单行号，不靠模型猜。</p><p data-report-block-id="block:b86">##### LLM 组织解释与建议</p><p data-report-block-id="block:b87">结合证据生成核查建议；红蓝对抗 \+ LLM Judge 发现 Bad Case，人工审核后回归验证。</p><p data-report-block-id="block:b88"><strong>当前 Demo 边界</strong></p><p data-report-block-id="block:b89">提供客服建议、邮件草稿和经营核查辅助；真实退款、换货及外部发送仍需审批与执行系统接入。</p><h4 data-report-block-id="block:b90">亮点是什么</h4><p data-report-block-id="block:b91"><strong>01</strong></p><h4 data-report-block-id="block:b92">本体（Ontology）路线 —— 从“牵一发而动全身”到真正的业务敏捷</h4><p data-report-block-id="block:b93"><strong>现有方案痛点 · 传统 Coding \+ Skill 路线</strong></p><p data-report-block-id="block:b94">传统的智能客服架构把规则硬编码在代码或流程里，属于「牵一发而动全身」。一旦安克新增了品类、调整了售后政策，底层代码、API 和 Prompt 全都要跟着重写，维护成本极高。</p><p data-report-block-id="block:b95"><strong>我们的创新 · 本体论降维打击</strong></p><p data-report-block-id="block:b96">我们彻底摒弃硬编码，采用 Service Ontology \+ Decision Ontology 双本体路线，将业务实体和售后 SOP 沉淀为一张可视化的知识图谱。</p><p data-report-block-id="block:b97"><strong>💡</strong></p><p data-report-block-id="block:b98">##### 核心价值 · 为什么这对安克重要</p><p data-report-block-id="block:b99">对于安克这种一定要越做越大的企业，<strong>多 SKU、多国家政策是常态</strong>。传统路线会让系统越改越臃肿，而我们的本体路线实现了<strong>真正的业务敏捷</strong>，让系统架构随着业务的扩张而无限延展。我们不仅保留了确定性，更赋予了系统生命力。</p><p data-report-block-id="block:b100"><strong>确定性！友好性！</strong></p><p data-report-block-id="block:b101">可视化打消评委疑虑：演示页面将直接展示本体的可视化图谱与流程图——产品、订单、故障、政策如何通过节点与连线串联一目了然。业务变动时只需在图谱中修改节点连线或属性，完全无需改动底层代码。</p><p data-report-block-id="block:b102"><strong>02</strong></p><h4 data-report-block-id="block:b103">基于红蓝对抗降噪与 Bad Case 驱动的自进化飞轮</h4><p data-report-block-id="block:b104">现有方案痛点：售后场景的“致命伤”是幻觉——AI 容易自由发挥、产生不合规回答；传统 RAG 面对复杂多轮对话极易崩溃（多跳能力弱），且无法从错误中学习，普遍缺乏知识库精调与降噪的闭环机制。</p><p data-report-block-id="block:b105"><strong>STEP 01</strong></p><p data-report-block-id="block:b106">##### 红蓝对抗</p><p data-report-block-id="block:b107">用 Persona 模拟不同性格买家（急躁型、技术型、情绪宣泄型、利益导向型等），与客服 Agent 多轮对话，收集海量、真实、带对抗性的问答数据。</p><p data-report-block-id="block:b108"><strong>STEP 02</strong></p><p data-report-block-id="block:b109">##### Judge 评估</p><p data-report-block-id="block:b110">引入 LLM as a Judge，从事实性、安全性、相关性、合规性等维度打分；再由 Supervisor 复核，不合格的打上 Bad Case 标签并定位失败原因。</p><p data-report-block-id="block:b111"><strong>STEP 03</strong></p><p data-report-block-id="block:b112">##### 降噪与剔除</p><p data-report-block-id="block:b113">靶向修正：检索召回了错误知识就降低权重或剔除；知识不够权威就修正 FAQ 条目；规则缺失就更新 Decision Ontology。</p><p data-report-block-id="block:b114"><strong>STEP 04</strong></p><p data-report-block-id="block:b115">##### 人工审核回流</p><p data-report-block-id="block:b116">修正后的知识必须通过运营人员人工审核，通过后再写回知识库与 Ontology，形成完整的系统自进化闭环。</p><p data-report-block-id="block:b117">核心价值与数据：引入学术界常用于评估 Agent 稳定性的 pass^8 指标（基于 τ\-bench 基准方法），在模拟复杂售后场景的 8 轮对话测试中发现：</p><p data-report-block-id="block:b118"><strong>≈ 50%</strong></p><p data-report-block-id="block:b119">传统 RAG 路线</p><p data-report-block-id="block:b120">对话解决率，意味着极高的对话失败率</p><p data-report-block-id="block:b121"><strong>83%</strong></p><p data-report-block-id="block:b122">自进化飞轮优化后</p><p data-report-block-id="block:b123">解决率跃升，失败率降至 10%</p><p data-report-block-id="block:b124"><strong>pass^8</strong></p><p data-report-block-id="block:b125">评测口径</p><p data-report-block-id="block:b126">基于 τ\-bench 基准方法，衡量 8 轮连续对话的一致稳定性，而非单轮通过率</p><p data-report-block-id="block:b127"><strong>📈</strong></p><p data-report-block-id="block:b128">##### 质的飞跃</p><p data-report-block-id="block:b129">8 轮连续对话测试中，解决率从 <strong>≈50%</strong> 提升到 <strong>83%</strong>，失败率降至 <strong>10%</strong>。</p><p data-report-block-id="block:b130"><strong>03</strong></p><h4 data-report-block-id="block:b131">业务经营归因 —— 从“单点工单”到“全局经营决策”</h4><p data-report-block-id="block:b132">行业现状与痛点：现有客服 Agent 只处理“单个工单”的问答，缺乏全局洞察。安克业务繁杂，单纯靠人工追踪海量 Bad Case 并反哺业务，几乎不可能。</p><p data-report-block-id="block:b133">我们的创新：推出面向商家的归因 Agent，处理的是“工单的集合”——自动将快照数据转化为带责任归属与规则 ID 的决策建议。</p><p data-report-block-id="block:b134"><strong>典型场景举例</strong></p><p data-report-block-id="block:b135">案例 1 · 反哺产品设计：系统自动发现 X10 Pro 报错「3212（拖布阻塞）」的客诉激增，追溯至 Excel 具体行号，直接给产品部下达建议——「该批次高频出现故障，建议专项排查传感器设计」。</p><p data-report-block-id="block:b136">案例 2 · 反哺物流流程：系统发现多起「只收到配件、未收到主机」的客诉。归因分析指出是「拆单物流信息展示不清」导致，建议物流团队优化订单页面的包裹拆分展示逻辑。</p><p data-report-block-id="block:b137"><strong>系统级效果</strong>三个创新点强强联合形成<strong>数据飞轮</strong>，最终达到的系统级效果，就是<strong>抗幻觉</strong>。</p><h3 id="22" data-report-block-id="block:b138">2\.2 产品逻辑与技术架构<a class="heading-anchor" href="#22" aria-label="Link to 2\.2 产品逻辑与技术架构">#</a></h3><h3 id="" data-report-block-id="block:b139">产品逻辑与技术方案<a class="heading-anchor" href="#" aria-label="Link to 产品逻辑与技术方案">#</a></h3><p data-report-block-id="block:b140">OntoCare 全链路技术架构与自进化机制：处理流程参考业界领先的 GraphRAG 思想，并结合安克售后场景做了深度的「本体化」改造。系统采用「图谱 \+ 向量」混合架构与严密的幻觉拦截机制，全链路分为六个步骤。</p><p data-report-block-id="block:b141"><strong>Step 1</strong></p><p data-report-block-id="block:b142">##### 多模态输入与降维解析</p><p data-report-block-id="block:b143">用户发起求助时，支持文本或图片 / 视频输入。若是图片或视频，系统先调用多模态大模型 API，提取可见现象、型号线索、错误码及不确定项，转化为结构化文字描述。这段文字与用户原输入组合，作为精准的 Query 进入主链路。</p><p data-report-block-id="block:b144">多模态 API可见现象 / 型号线索 / 错误码不确定项标注Query 合成</p><p data-report-block-id="block:b145"><strong>Step 2</strong></p><p data-report-block-id="block:b146">##### 自上而下的数据清洗与双本体图谱构建离线</p><p data-report-block-id="block:b147">我们不采用自下而上让模型盲目抽取的方式（那会带来极大的图谱噪声）。我们采用预先定义 Schema 框架的本体构建模式，由售后业务专家深度参与，梳理实体、关系与规则——前期虽有人工成本，但换来了极高的数据纯净度。同时结合 HyperAuto 自动化集成理念，将安克产品、订单、SOP 映射为 Service Ontology 和 Decision Ontology，存入图数据库与向量库。</p><p data-report-block-id="block:b148">预定义 Schema业务专家参与高数据纯净度HyperAuto 自动化集成图数据库 \+ 向量库</p><p data-report-block-id="block:b149"><strong>Step 3</strong></p><p data-report-block-id="block:b150">##### 实体限定与「图谱 \+ 向量」混合召回</p><p data-report-block-id="block:b151">用户 Query 进入后先进行实体消歧，将检索范围死锁在唯一产品的知识子图内，随后执行混合召回：</p><p data-report-block-id="block:b152">##### 本体图谱 · 权威来源</p><p data-report-block-id="block:b153">依靠本体图谱完成图推理与业务决策（如查订单、定型号、匹配置信动作），这是<strong>结果可靠性的基石</strong>。</p><p data-report-block-id="block:b154">##### 向量检索 · 语义补充</p><p data-report-block-id="block:b155">仅作为辅助，用于在子图内召回长尾的 FAQ、SOP 文本素材。两者结合，兼顾了业务规则的确切性与自然语言的泛化性。</p><p data-report-block-id="block:b156">实体消歧死锁知识子图图推理 \+ 业务决策长尾 FAQ / SOP 语义召回</p><p data-report-block-id="block:b157"><strong>Step 4</strong></p><p data-report-block-id="block:b158">##### 上下文组装、大模型生成与「二次拦截校验」</p><p data-report-block-id="block:b159">系统将召回的知识、用户 Query、本体节点关系以及 Allowed / Blocked Actions 组装进 Prompt，喂给核心的 DeepSeek LLM。生成回复后，系统绝不直接输出，而是叠加幻觉检测与校验环节：对 Agent 输出的业务结论、引用来源以及工具调用动作进行服务端二次拦截校验。一旦发现无依据承诺或越权，立即强制回退，多层次抑制大模型幻觉。</p><p data-report-block-id="block:b160">上下文组装DeepSeek LLM服务端二次拦截校验无依据承诺 / 越权 → 强制回退</p><p data-report-block-id="block:b161"><strong>Step 5</strong></p><p data-report-block-id="block:b162">##### 用户反馈与 Bad Case 捕获</p><p data-report-block-id="block:b163">答案输出给用户后，界面提供点赞与点踩。一旦用户点踩，该条对话轨迹、检索来源、案件状态与 Decision Trace 会被立刻打包，自动打上 Bad Case 标签进入待排查队列。</p><p data-report-block-id="block:b164">点赞 / 点踩对话轨迹检索来源案件状态 \+ Decision TraceBad Case 标签</p><p data-report-block-id="block:b165"><strong>Step 6</strong></p><p data-report-block-id="block:b166">##### 靶向归因与自进化闭环</p><p data-report-block-id="block:b167">针对捕获的 Bad Case，系统沿处理链路进行根因定位与靶向修复：</p><p data-report-block-id="block:b168">##### ① 长尾策略补充与安全兜底</p><p data-report-block-id="block:b169">如果是超出当前知识库覆盖的长尾问题，将修复经验补充进长尾策略库，并要求人工复核校验；若毫无可靠匹配，系统诚实追问或转人工。</p><p data-report-block-id="block:b170">##### ② 降噪剔除与规则更新</p><p data-report-block-id="block:b171">如果是常见问题，排查是否知识错误（降权剔除 / 修正 FAQ）或规则缺失（直接更新 Decision Ontology）。</p><p data-report-block-id="block:b172">##### ③ 引用校验与持续改进</p><p data-report-block-id="block:b173">新失败经人工审核修复后，加入回归测试集。后续在保持产品过滤的前提下，系统将持续评估引入 HyDE 与重排（Rerank）技术，让系统越用越聪明。</p><p data-report-block-id="block:b174"><strong>🧬</strong></p><p data-report-block-id="block:b175">##### 「图谱 \+ 向量」混合架构 · 幻觉拦截机制</p><p data-report-block-id="block:b176"><strong>本体图谱负责权威决策，向量检索只做语义补充</strong>；生成后经服务端<strong>二次拦截校验</strong>，发现无依据承诺或越权立即强制回退。用户点踩即捕获 Bad Case，经根因定位、靶向修复与人工审核后回写知识库与双本体，形成越用越聪明的数据飞轮。</p><h4 data-report-block-id="block:b177">技术方案选型与对比</h4><p data-report-block-id="block:b178">为什么是这套架构：四个备选方案的取舍，以及最终选型的理由。</p><h3 id="" data-report-block-id="block:b179">架构图<a class="heading-anchor" href="#" aria-label="Link to 架构图">#</a></h3><figure class="framed" data-report-block-id="block:b180">
+        <div class="zoomable" tabindex="0" role="button" aria-label="Open image in viewer"><img src="https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MjM4ZGQ5MjYxYzZmOTEzNTczZTFmMTA4MDdlZDgxZWJfNzlkNzY2ZmFkMjdhZTIwMzZmMjFhNmM3ODA2MDExNTZfSUQ6NzY5NzYwMzkwMzY3NTkxMTQzNl8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM" alt="Image" loading="lazy"></div>
+        <figcaption>Image</figcaption>
+      </figure><p data-report-block-id="block:b181">安克智能客服 Agent 架构 ｜ 双本体驱动 · 多路召回 · 自进化闭环 —— 点击可放大查看</p><p data-report-block-id="block:b182"><strong>Ontology\-Constrained Service Agent</strong></p><h4 data-report-block-id="block:b183">六层分级架构：模型负责理解，<em>本体组织证据</em>，确定性规则限定动作</h4><p data-report-block-id="block:b184">所有关键判断均可追踪、可解释、可升级 —— 上层负责交互与理解，下层负责事实、边界与执行。</p><p data-report-block-id="block:b185">交互与感知本体层 ★ 统一业务语义决策层 ★ 限定动作空间数据与运行底座</p><p data-report-block-id="block:b186"><strong>01</strong></p><p data-report-block-id="block:b187">用户体验层EXPERIENCE</p><p data-report-block-id="block:b188">客服对话<em>中 / English · 多轮案件</em></p><p data-report-block-id="block:b189">图片与案例<em>故障图上传 · 黄金路径</em></p><p data-report-block-id="block:b190">决策追踪<em>阶段 · 证据 · Why</em></p><p data-report-block-id="block:b191">结果呈现<em>资料卡 · 人工交接草稿</em></p><p data-report-block-id="block:b192"><strong>02</strong></p><p data-report-block-id="block:b193">接口与会话层API \&amp; SESSION</p><p data-report-block-id="block:b194">Flask Web API*/api/chat · /api/upload*</p><p data-report-block-id="block:b195">案件状态机<em>CONSULTATION → VERIFY → TROUBLESHOOT</em></p><p data-report-block-id="block:b196">案件记忆<em>最近 4 轮脱敏上下文</em></p><p data-report-block-id="block:b197">会话标识<em>浏览器 sessionStorage</em></p><p data-report-block-id="block:b198"><strong>03</strong></p><p data-report-block-id="block:b199">AI 证据理解层AI \&amp; EVIDENCE</p><p data-report-block-id="block:b200">OpenAI 兼容 LLM*意图理解 · 话题判断*</p><p data-report-block-id="block:b201">多模态视觉模型<em>仅取图片可见事实</em></p><p data-report-block-id="block:b202">产品限定检索<em>TF\-IDF · 仅当前产品 KB</em></p><p data-report-block-id="block:b203">AI 输出边界<em>只生成候选理解，不授予动作</em></p><p data-report-block-id="block:b204"><strong>04</strong></p><p data-report-block-id="block:b205">服务本体层 ★SERVICE ONTOLOGY</p><p data-report-block-id="block:b206">实体模型<em>Customer · Order · SKU · Product</em></p><p data-report-block-id="block:b207">关系约束<em>CONTAINS · SOLD\_BY · HAS\_ISSUE</em></p><p data-report-block-id="block:b208">证据来源<em>USER\_CLAIM · DEMO\_KB</em></p><p data-report-block-id="block:b209">来源标签<em>NOT\_VERIFIED · TEST\_FIXTURE</em></p><p data-report-block-id="block:b210"><strong>05</strong></p><p data-report-block-id="block:b211">决策与动作层 ★DECISION ONTOLOGY</p><p data-report-block-id="block:b212">业务事实核验<em>resolve\_product · lookup\_order</em></p><p data-report-block-id="block:b213">规则前置条件<em>订单 · 质保 · 经销商 · 30 天</em></p><p data-report-block-id="block:b214">动作空间<em>Allowed / Forbidden</em></p><p data-report-block-id="block:b215">受控输出<em>只形成待审材料，不写真实业务</em></p><p data-report-block-id="block:b216"><strong>06</strong></p><p data-report-block-id="block:b217">数据运行底座DATA \&amp; RUNTIME</p><p data-report-block-id="block:b218">模拟业务数据<em>10 产品 · 20 订单 · 15 知识条目</em></p><p data-report-block-id="block:b219">Python 服务运行时<em>Python 3\.11\+ · Flask 3</em></p><p data-report-block-id="block:b220">外部模型接口<em>LLM\_BASE\_URL · VISION\_BASE\_URL</em></p><p data-report-block-id="block:b221">云端部署<em>Anker Launch 公网部署</em></p><p data-report-block-id="block:b222">##### Service Ontology 实体关系图</p><p data-report-block-id="block:b223">同一套实体与关系，同时服务于回答、邮件、归因与评测 —— 不是各写各的规则。</p><p data-report-block-id="block:b224">业务对象（客户 / 订单 / SKU / 产品）故障与证据（Issue / Evidence）政策与规则（Policy）案件（Case）</p><p data-report-block-id="block:b225">当前 M0 实现边界：模拟订单 / 政策 / 知识 · 单 worker 内存会话 · 无真实退款、换货、工单写入</p><p data-report-block-id="block:b226">AI proposes</p><p data-report-block-id="block:b227">Rules decide</p><p data-report-block-id="block:b228">Human reviews</p><h3 id="" data-report-block-id="block:b229">架构选型理由<a class="heading-anchor" href="#" aria-label="Link to 架构选型理由">#</a></h3><p data-report-block-id="block:b230">我们评估了四条可选路线，最终选择「轻量 Schema \+ 规则引擎 \+ 在线模型 API」，理由是：本赛题的关键变量是业务规则执行的确定性，而不是模型能力本身。</p><h3 id="" data-report-block-id="block:b231">局限性与领先性<a class="heading-anchor" href="#" aria-label="Link to 局限性与领先性">#</a></h3><h4 data-report-block-id="block:b232">局限性（客观边界）</h4><h4 data-report-block-id="block:b233">领先性（确定性与友好性，降维打击）</h4><p data-report-block-id="block:b234">相比于现有的传统 Workflow 或纯 RAG 方案，我们的方案具备极强的技术先进性与企业级复用价值：</p><p data-report-block-id="block:b235">01 · 业务敏捷的确定性</p><h4 data-report-block-id="block:b236">降维打击</h4><p data-report-block-id="block:b237">突破传统 Workflow 的「牵一发而动全身」。业务变动只需在本体图谱中修改节点连线或属性，无需修改底层代码，实现了真正的业务敏捷。大模型负责模糊理解，确定性程序负责业务边界。</p><p data-report-block-id="block:b238">02 · 战略级全局资产</p><h4 data-report-block-id="block:b239">数字孪生底座</h4><p data-report-block-id="block:b240">系统沉淀的是企业专属业务数字孪生知识图谱，统一了业务语义、数据标准与动作边界。它独立于大模型存在，不会被模型迭代或微调所同化，是可长期复用、跨部门传承的企业固有资产。</p><p data-report-block-id="block:b241">03 · 面向未来的多 Agent 协同</p><h4 data-report-block-id="block:b242">MCP 适配</h4><p data-report-block-id="block:b243">依托统一的本体语义，系统能完美对齐未来所有智能体的上下文，原生适配 MCP 等上下文协议。随着业务拓展，长期演进仅需优化知识图谱，底层架构永久稳定，实现全域协同统一化。</p><h3 id="" data-report-block-id="block:b244">赛道标注<a class="heading-anchor" href="#" aria-label="Link to 赛道标注">#</a></h3><p data-report-block-id="block:b245">智能服务赛道（知识数据召回的策略是什么？图片信息如何处理？）</p><p data-report-block-id="block:b246"><strong>一</strong></p><h4 data-report-block-id="block:b247">知识数据召回策略 · 先限定适用范围，再检索可用证据</h4><p data-report-block-id="block:b248">从业务对象建模，到引用校验的五步链路</p><p data-report-block-id="block:b249"><strong>1</strong></p><p data-report-block-id="block:b250">##### 数据结构化：基于本体论先建立业务对象和处理规则</p><p data-report-block-id="block:b251">将订单、客诉工单、经销商和两份 Q\&amp;A 作为输入，<strong>保留来源文件、Sheet、原始行号及校验信息</strong>。知识条目依据发布状态和客户可见状态过滤，作为后续引用与核查的基础。</p><p data-report-block-id="block:b252"><strong>2</strong></p><p data-report-block-id="block:b253">##### 先确认产品，再限定知识范围</p><p data-report-block-id="block:b254">结合用户描述、SKU、订单及对话状态定位产品。同名或冲突信息未澄清时，<strong>先展示候选选项</strong>；确认后按产品 PN 限定检索范围，减少跨型号知识混用。</p><p data-report-block-id="block:b255"><strong>3</strong></p><p data-report-block-id="block:b256">##### 按问题类型召回</p><p data-report-block-id="block:b257">对<strong>错误码优先精确匹配</strong>；对一般现象使用关键词、同义词和相关度匹配，选取少量适用条目。条件明确的常见问题可命中带来源校验的<strong>固定 FAQ</strong>，减少重复生成。</p><p data-report-block-id="block:b258"><strong>4</strong></p><p data-report-block-id="block:b259">##### 长尾策略补充与安全兜底</p><p data-report-block-id="block:b260">常见路径不能覆盖时，检索长尾策略和 Bad Case 修复经验，结合当前证据交给模型组织建议。补充策略与官方产品知识<strong>分别标识</strong>；没有可靠匹配时继续补充信息或人工核查。</p><p data-report-block-id="block:b261"><strong>5</strong></p><p data-report-block-id="block:b262">##### 引用校验与持续改进</p><p data-report-block-id="block:b263">答复附带来源 ID，服务端检查引用有效性和部分业务一致性。新失败经人工审核修复后加入策略与回归测试。当前<strong>尚未使用向量检索</strong>；后续可在保持产品过滤与来源约束的前提下，评估语义召回、混合检索和重排。</p><h4 data-report-block-id="block:b264">自进化闭环</h4><p data-report-block-id="block:b265">离线构建 → 在线多路召回 → 反馈进化，三个阶段形成完整数据飞轮。</p><p data-report-block-id="block:b266"><strong>1</strong></p><p data-report-block-id="block:b267">##### 离线数据与本体构建</p><p data-report-block-id="block:b268">源系统：工单 / 订单 / Q\&amp;A*Source Systems*</p><p data-report-block-id="block:b269">▼</p><p data-report-block-id="block:b270">HyperAuto 自动集成<em>Automated Integration</em></p><p data-report-block-id="block:b271">▼</p><p data-report-block-id="block:b272">双本体引擎<em>Ontology Engine</em></p><p data-report-block-id="block:b273">▼</p><p data-report-block-id="block:b274">Service Ontology*产品 / 订单 / 证据*</p><p data-report-block-id="block:b275">Decision Ontology*SOP / 动作边界*</p><p data-report-block-id="block:b276">▼</p><p data-report-block-id="block:b277">业务图谱 / 知识库<em>Knowledge Graph \&amp; KB</em></p><p data-report-block-id="block:b278"><strong>2</strong></p><p data-report-block-id="block:b279">##### 在线服务与多路召回</p><p data-report-block-id="block:b280">用户输入：文本 / 图片 / 视频</p><p data-report-block-id="block:b281">▼</p><p data-report-block-id="block:b282">多模态 API 降维转译<em>Query \+ Evidence</em></p><p data-report-block-id="block:b283">▼</p><p data-report-block-id="block:b284">实体消歧：锁定唯一产品</p><p data-report-block-id="block:b285">▼</p><p data-report-block-id="block:b286">多策略路由</p><p data-report-block-id="block:b287">▼</p><p data-report-block-id="block:b288"><strong>精确</strong>明确错误码 → 精确匹配</p><p data-report-block-id="block:b289"><strong>语义</strong>现象口语化 → 语义 / 关键词检索</p><p data-report-block-id="block:b290"><strong>FAQ</strong>高频标准件 → 固定 FAQ 命中</p><p data-report-block-id="block:b291"><strong>兜底</strong>知识盲区 → 长尾策略</p><p data-report-block-id="block:b292">▼</p><p data-report-block-id="block:b293">上下文组装<em>知识 \+ 当前 Case State</em></p><p data-report-block-id="block:b294">▼</p><p data-report-block-id="block:b295">LLM 生成<em>受 Decision Ontology 规则校验</em></p><p data-report-block-id="block:b296">▼</p><p data-report-block-id="block:b297">输出给用户<em>带引用与 Trace</em></p><p data-report-block-id="block:b298"><strong>3</strong></p><p data-report-block-id="block:b299">##### 自进化闭环</p><p data-report-block-id="block:b300">采集对话<em>Conversation Capture</em></p><p data-report-block-id="block:b301">▼</p><p data-report-block-id="block:b302">Persona 红蓝对抗<em>Adversarial Simulation</em></p><p data-report-block-id="block:b303">▼</p><p data-report-block-id="block:b304">LLM as a Judge 评估<em>事实 / 安全 / 相关性 / 合规</em></p><p data-report-block-id="block:b305">▼</p><p data-report-block-id="block:b306"><strong>Bad Case</strong>降噪剔除 / 靶向修正</p><p data-report-block-id="block:b307">▼</p><p data-report-block-id="block:b308">人工审核<em>Human Review</em></p><p data-report-block-id="block:b309">▼</p><p data-report-block-id="block:b310">修正知识 → 写回 Service Ontology</p><p data-report-block-id="block:b311">修正规则 → 更新 Decision Ontology</p><h4 data-report-block-id="block:b312">针对 Bad Case 的靶向修复链路</h4><p data-report-block-id="block:b313">逐层判断失败发生在哪一环，再对症修复；所有修复都必须经人工审核后回写知识库与双本体。</p><p data-report-block-id="block:b314"><strong>发现 Bad Case</strong></p><p data-report-block-id="block:b315">Q1 · Query 超出业务边界？</p><p data-report-block-id="block:b316">是 → 诚实兜底追问补充信息，或转人工处理</p><p data-report-block-id="block:b317">Q2 · 检索召回正确知识？</p><p data-report-block-id="block:b318">否 → ③ 降噪剔除错误知识降权 / 剔除，修正 FAQ，长尾策略补全</p><p data-report-block-id="block:b319">Q3 · Decision Ontology 规则计算正确？</p><p data-report-block-id="block:b320">否 → ③ 更新决策本体修补前置条件，调整 Allowed / Blocked 边界</p><p data-report-block-id="block:b321">Q4 · LLM 生成合规且无幻觉？</p><p data-report-block-id="block:b322">否 → ② Judge 靶向纠偏强化引用校验，补充 Few\-shot 例子</p><p data-report-block-id="block:b323"><strong>✓ 正确生成 / 安全兜底</strong></p><p data-report-block-id="block:b324"><strong>输出符合业务边界</strong></p><p data-report-block-id="block:b325"><strong>④ 人工审核回流 · 写回双本体与知识库</strong><em>所有修复路径统一经人工审核，通过后更新知识库与 Ontology，并加入回归测试</em></p><p data-report-block-id="block:b326"><strong>二</strong></p><h4 data-report-block-id="block:b327">图片与视频处理 · 先生成文字证据，再进入原有业务链路</h4><p data-report-block-id="block:b328">多模态只做证据提取，不直接下结论</p><p data-report-block-id="block:b329"><strong>1</strong></p><p data-report-block-id="block:b330">##### 多模态 API 转译</p><p data-report-block-id="block:b331">用户上传故障图片或视频后，系统调用多模态大模型 API，提取<strong>可见现象、型号线索、错误码及不确定项</strong>，生成结构化文字描述。</p><p data-report-block-id="block:b332"><strong>2</strong></p><p data-report-block-id="block:b333">##### 生成检索 Query</p><p data-report-block-id="block:b334">将多模态提取的文字与用户原输入合并，作为新的 Query 注入业务检索链路，<strong>精准触发上述分层召回策略</strong>。</p><p data-report-block-id="block:b335"><strong>3</strong></p><p data-report-block-id="block:b336">##### 证据状态绑定</p><p data-report-block-id="block:b337">识别结果不直接作为认定产品身份或质保资格的唯一凭证，而是强制标记为<strong>「待核验」（PROBABLE / UNKNOWN）</strong>，参与后续与订单 SKU 的交叉核对，确保多模态处理的安全严谨。</p><hr data-report-block-id="block:b338"><p data-report-block-id="block:b339"><strong>PART 03</strong></p></section>
+<section aria-labelledby="">
+<h2 id="" data-report-block-id="block:b340">成果展示<a class="heading-anchor" href="#" aria-label="Link to 成果展示">#</a></h2><p data-report-block-id="block:b341">可体验的作品、全链路录屏与路演材料。</p><h3 id="31" data-report-block-id="block:b342">3\.1 交付物<a class="heading-anchor" href="#31" aria-label="Link to 3\.1 交付物">#</a></h3><h3 id="" data-report-block-id="block:b343">交付物链接<a class="heading-anchor" href="#" aria-label="Link to 交付物链接">#</a></h3><p data-report-block-id="block:b344"><a href="https://web-production-195cd.up.railway.app/">**WEB**</a></p><p data-report-block-id="block:b345"><a href="https://web-production-195cd.up.railway.app/">体验地址 · OntoCare 智能售后工作台</a></p><p data-report-block-id="block:b346"><a href="https://web-production-195cd.up.railway.app/">公网部署，打开即用、无需配置密钥，支持中英文切换 ｜ web\-production\-195cd\.up\.railway\.app</a></p><p data-report-block-id="block:b347"><a href="https://github.com/dddiu030jy/anker-Intelligent-Service">**GIT**</a></p><p data-report-block-id="block:b348"><a href="https://github.com/dddiu030jy/anker-Intelligent-Service">源代码仓库 · GitHub</a></p><p data-report-block-id="block:b349"><a href="https://github.com/dddiu030jy/anker-Intelligent-Service">dddiu030jy/anker\-Intelligent\-Service ｜ 项目简介 / 安装步骤 / 使用方法见 README\.md</a></p><p data-report-block-id="block:b350"><a href="https://launch-hackathon.oss-cn-shenzhen.aliyuncs.com/skill-assets/13858469609/2a981474ca9f4272b11cf38915d040f7/OntoCare-%E8%AF%84%E5%A7%94%E5%85%AC%E7%BD%91%E9%83%A8%E7%BD%B2%E7%89%88.zip">**ZIP**</a></p><p data-report-block-id="block:b351"><a href="https://launch-hackathon.oss-cn-shenzhen.aliyuncs.com/skill-assets/13858469609/2a981474ca9f4272b11cf38915d040f7/OntoCare-%E8%AF%84%E5%A7%94%E5%85%AC%E7%BD%91%E9%83%A8%E7%BD%B2%E7%89%88.zip">可复现代码包 · 一键下载</a></p><p data-report-block-id="block:b352"><a href="https://launch-hackathon.oss-cn-shenzhen.aliyuncs.com/skill-assets/13858469609/2a981474ca9f4272b11cf38915d040f7/OntoCare-%E8%AF%84%E5%A7%94%E5%85%AC%E7%BD%91%E9%83%A8%E7%BD%B2%E7%89%88.zip">含完整源码、Mock Dataset、Golden Case 与机制断言；解压后按 README 即可本地复跑 ｜ OntoCare\-评委公网部署版\.zip（14\.4 MB）</a></p><h3 id="" data-report-block-id="block:b353">全链路体验录屏必交<a class="heading-anchor" href="#" aria-label="Link to 全链路体验录屏必交">#</a></h3><p data-report-block-id="block:b354">\[\]</p><p data-report-block-id="block:b355">全链路体验录屏：覆盖用户从发起到完成核心任务的完整操作流程。点击视频可全屏播放。</p><h3 id="32-presentation" data-report-block-id="block:b356">3\.2 Presentation 材料<a class="heading-anchor" href="#32-presentation" aria-label="Link to 3\.2 Presentation 材料">#</a></h3><p data-report-block-id="block:b357"><strong>5min</strong></p><p data-report-block-id="block:b358">路演时长</p><p data-report-block-id="block:b359"><strong>21:9</strong></p><p data-report-block-id="block:b360">固定画幅比例</p><p data-report-block-id="block:b361"><strong>6912×2808</strong></p><p data-report-block-id="block:b362">分辨率（px）</p><p data-report-block-id="block:b363"><strong>4–5页</strong></p><p data-report-block-id="block:b364">PPT 数量</p><p data-report-block-id="block:b365">内容建议顺序：</p><p data-report-block-id="block:b366">视频→方案设计→产品介绍→技术架构→未来规划</p><p data-report-block-id="block:b367"><a href="https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#">**PPTX**</a></p><p data-report-block-id="block:b368"><a href="https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#">【项目名称】\- 总决赛路演\.pptx</a></p><p data-report-block-id="block:b369"><a href="https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#">（替换为 PPT 下载链接）</a></p><hr data-report-block-id="block:b370"><p data-report-block-id="block:b371"><strong>PART 04</strong></p></section>
+<section aria-labelledby="">
+<h2 id="" data-report-block-id="block:b372">源代码<a class="heading-anchor" href="#" aria-label="Link to 源代码">#</a></h2><p data-report-block-id="block:b373">提交可复现的代码仓库，并做好敏感信息自查。</p><p data-report-block-id="block:b374"><a href="https://github.com/dddiu030jy/anker-Intelligent-Service">**GIT**</a></p><p data-report-block-id="block:b375"><a href="https://github.com/dddiu030jy/anker-Intelligent-Service">dddiu030jy/anker\-Intelligent\-Service</a></p><p data-report-block-id="block:b376"><a href="https://github.com/dddiu030jy/anker-Intelligent-Service">https://github\.com/dddiu030jy/anker\-Intelligent\-Service · 项目简介 / 安装步骤 / 使用方法见 README\.md</a></p><p data-report-block-id="block:b377"><strong>安全声明</strong></p><p data-report-block-id="block:b378">本项目代码仓库、文档及链接中不包含明文 API Key、账号密码等敏感凭证，也不包含安克 SDK 完整源码或通信协议信息。</p><hr data-report-block-id="block:b379"><p data-report-block-id="block:b380"><strong>PART 05</strong></p></section>
+<section aria-labelledby="">
+<h2 id="" data-report-block-id="block:b381">团队风采展示<a class="heading-anchor" href="#" aria-label="Link to 团队风采展示">#</a></h2><p data-report-block-id="block:b382">认识一下做出这个项目的人。</p><h3 id="" data-report-block-id="block:b383">团队成员<a class="heading-anchor" href="#" aria-label="Link to 团队成员">#</a></h3><h4 data-report-block-id="block:b384">三所高校，三种专长。</h4><p data-report-block-id="block:b385">融合产品与业务、系统工程、Agent 算法与评测能力，将业务规则转化为可运行、可验证的 AI 产品。</p><figure class="framed" data-report-block-id="block:b386">
+        <div class="zoomable" tabindex="0" role="button" aria-label="Open image in viewer"><img src="https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MmIxYTk0OTRiMTNjNTQyOWM1MTYzYWFjYWFmMjZiOTlfMGQ3N2ZlYmQ2NGY3ZTUzMjAwN2Y4MDE3Nzk2NzM1Y2VfSUQ6NzY5NzYwMzkwNTczMTAzODQ0Nl8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM" alt="Image" loading="lazy"></div>
+        <figcaption>Image</figcaption>
+      </figure><figure class="framed" data-report-block-id="block:b387">
+        <div class="zoomable" tabindex="0" role="button" aria-label="Open image in viewer"><img src="https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MGRlZmI2MzVjM2IzYWMxMGU3NDA1NzEwOTZlMGMyZDJfYjUxYTcxMGY5Zjc3Yzk0MzlhZmViNmExNTNlYzcwNDlfSUQ6NzY5NzYwMzkwMTQyMzcxNzM3Nl8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM" alt="Image" loading="lazy"></div>
+        <figcaption>Image</figcaption>
+      </figure><p data-report-block-id="block:b388">产品与业务</p><h4 data-report-block-id="block:b389">蒋恩晶 队长</h4><p data-report-block-id="block:b390">清华大学深圳国际研究生院</p><p data-report-block-id="block:b391">硕士</p><p data-report-block-id="block:b392"><a href="https://github.com/jiangenjing">GitHub ↗</a><a href="https://xhslink.cn/o/Aym0oPhPO59">小红书 ↗</a></p><p data-report-block-id="block:b393">曾赴加州大学伯克利分校交换，具有追踪海外 GTM 实习经历，关注用户需求、AI Agent 应用与产品落地。</p><p data-report-block-id="block:b394"><strong>本次负责</strong></p><p data-report-block-id="block:b395">整体方案架构设计、产品设计及路演答辩；Service / Decision Ontology 设计、售后规则建模与业务场景验证。</p><p data-report-block-id="block:b396"><strong>代表作品</strong></p><ul><li data-report-block-id="block:b397"><a href="https://github.com/jiangenjing/servicemind-agent-demo">ServiceMind 客服 Agent ↗</a></li><li data-report-block-id="block:b398"><a href="https://github.com/jiangenjing/shell-hangzhou-ai-energy-brain">AI＋能源商业方案 ↗</a></li></ul><figure class="framed" data-report-block-id="block:b399">
+        <div class="zoomable" tabindex="0" role="button" aria-label="Open image in viewer"><img src="https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=ZTBkMzcxNTZmYzU0ODRjY2ExOTU5YzcwNGVlN2ZlNDJfZjFkNTE5ZjAwNTkyZGIyZGUwYjcyNDA3ZTQ5MzYwZGFfSUQ6NzY5NzYwMzkwNjY0MTEyMDUwNF8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM" alt="Image" loading="lazy"></div>
+        <figcaption>Image</figcaption>
+      </figure><p data-report-block-id="block:b400">工程集成与系统实现</p><h4 data-report-block-id="block:b401">叶品驿</h4><p data-report-block-id="block:b402">浙江工业大学 · 健行学院</p><p data-report-block-id="block:b403">通信工程 · 本科生</p><p data-report-block-id="block:b404"><a href="https://github.com/ye056343-collab">GitHub ↗</a><a href="https://xhslink.cn/o/2h8YnsbnMNE">小红书 · 吟 ↗</a></p><p data-report-block-id="block:b405">小红书号：902102864</p><p data-report-block-id="block:b406">研究与实践涉及无线通信、边缘计算、深度强化学习和 ROS 机器人，注重算法与工程系统的结合。</p><p data-report-block-id="block:b407"><strong>本次负责</strong></p><p data-report-block-id="block:b408">Agent 后端开发：模型 API、案件状态管理、规则运行时、Tool Calling 与前后端联调。</p><p data-report-block-id="block:b409"><strong>代表作品</strong></p><ul><li data-report-block-id="block:b410"><a href="https://github.com/ye056343-collab/yep">UAV\-MEC 仿真项目 ↗</a></li><li data-report-block-id="block:b411">ROS 室内服务机器人相关工程实践</li></ul><figure class="framed" data-report-block-id="block:b412">
+        <div class="zoomable" tabindex="0" role="button" aria-label="Open image in viewer"><img src="https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MDhhZGFlNmI3YTA4NzhlZmIzZDMwMTM1MjMwMTgwMTJfNTU3ODEwMGEyMjZhODhjYjBkNDM1OTU3MzQ3ZmU1NGNfSUQ6NzY5NzYwMzkwMzI4OTkzNzEzMV8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM" alt="Image" loading="lazy"></div>
+        <figcaption>Image</figcaption>
+      </figure><p data-report-block-id="block:b413">Agent 算法与数据评测</p><h4 data-report-block-id="block:b414">雷景喻</h4><p data-report-block-id="block:b415">南京大学</p><p data-report-block-id="block:b416">管理科学与工程 · 硕士</p><p data-report-block-id="block:b417"><a href="https://github.com/dddiu030jy">GitHub ↗</a></p><p data-report-block-id="block:b418">本科毕业于中央民族大学应用统计学专业，曾任美团数据分析实习生，关注大模型智能体、自动建模与优化。</p><p data-report-block-id="block:b419"><strong>本次负责</strong></p><p data-report-block-id="block:b420">Agent 评测与前端页面开发：知识检索、模拟数据集、Golden Case、规则断言与决策追踪评测。</p><p data-report-block-id="block:b421"><strong>代表作品</strong></p><ul><li data-report-block-id="block:b422"><a href="https://github.com/dddiu030jy/literature-review-agent">LitReview Agent ↗</a></li></ul><p data-report-block-id="block:b423"><strong>协作流程需求定义→本体建模→系统开发→数据评测→迭代优化</strong></p><p data-report-block-id="block:b424">基于本体论与自进化闭环的经营归因智能客服系统 · OntoCare 本体队</p><p data-report-block-id="block:b425">ANKER 首届黑客松挑战赛 · 让创造发生 · 让世界看见</p></section>
+
+      <div class="end-actions">
+        <a href="#" id="save-md-end">
+          Save this report as Markdown
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M8 2v8M4.5 6.5L8 10l3.5-3.5M2.5 13.5h11"/>
+          </svg>
+        </a>
+      </div>
+
+      
+
+      
+
+      
+
+    </article>
+
+    <aside class="sidenote-rail" aria-hidden="true"></aside>
+
+  </main>
+</div>
+
+<aside class="review-tray" id="review-tray" aria-label="Review comments" aria-hidden="true"></aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="edit-status" id="edit-status" aria-live="polite"><span class="dot"></span>Editing — Option+E to exit, Option+S to save</div>
+
+<div class="lightbox" id="lightbox" data-open="false" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lightbox__close" id="lightbox-close" type="button" aria-label="Close image viewer">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+      <path d="M4 4l8 8M12 4l-8 8"/>
+    </svg>
+  </button>
+  <div class="lightbox__inner">
+    <div class="lightbox__stage" id="lightbox-stage"></div>
+    <div class="lightbox__caption" id="lightbox-caption"></div>
+  </div>
+</div>
+
+<!-- BEGIN: REPORT SWITCHER (Cmd-O overlay) -->
+<div class="report-switcher" id="report-switcher" role="dialog" aria-modal="true" aria-labelledby="report-switcher-title" hidden>
+  <h2 id="report-switcher-title" class="sr-only">Open another report</h2>
+  <div class="report-switcher__panel">
+    <div class="report-switcher__input-row">
+      <span class="report-switcher__kbd">⌘O</span>
+      <input type="text" id="report-switcher-input" class="report-switcher__input"
+        placeholder="Open another report…" autocomplete="off" spellcheck="false" />
+      <button type="button" class="report-switcher__close" id="report-switcher-close" aria-label="Close switcher">×</button>
+    </div>
+    <ul id="report-switcher-list" class="report-switcher__list" role="listbox"></ul>
+    <div class="report-switcher__hint">
+      <span>↑↓ navigate · ↵ open · ⌘↵ new tab · 1–8 jump · esc close</span>
+      <span id="report-switcher-count" class="report-switcher__count"></span>
+    </div>
+  </div>
+</div>
+<!-- END: REPORT SWITCHER -->
+
+<script id="report-index" type="application/json">
+{
+  "generated_at": "2026-10-18T20:25:23.863Z",
+  "report_count": 1,
+  "reports": [
+    {
+      "slug": "参赛提交说明-新增补充版本",
+      "href": "参赛提交说明-新增补充版本.html",
+      "title": "OntoCare 参赛提交说明｜项目总览、成果展示与源码入口",
+      "summary": "OntoCare 本体队 · 决赛作品 · ANKER 首届黑客松挑战赛",
+      "date": "2026-10-19",
+      "status": "final",
+      "reading_time_min": 6,
+      "word_count": 1366,
+      "last_modified": "2026-10-18T20:25:23.861Z",
+      "generated_by": "Codex"
+    }
+  ],
+  "current_slug": "参赛提交说明-新增补充版本"
+}
+</script>
+
+<script id="source-md" type="text/markdown" data-source-path="source.md">
+---
+title: OntoCare 参赛提交说明｜项目总览、成果展示与源码入口
+summary: OntoCare 本体队 · 决赛作品 · ANKER 首届黑客松挑战赛
+generated_by: Codex
+date: 2026-10-19
+status: final
+---
+
+
+**OntoCare 本体队**
+
+- [基本信息](https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#s1)
+- [项目总览](https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#s2)
+- [成果展示](https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#s3)
+- [源代码](https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#s4)
+- [团队风采](https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#s5)
+
+![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=OWQ1YjI1ODdjMjA4NzdkYWNlYmFmOWMzMTk5ZGE3ZDlfMDIxYmRjNTY4OTJhNjY4MTkwNjc0NzI1NDZiZmJjYTNfSUQ6NzY5NzYwMzkwNDc4MzE0MTkyMF8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM)
+
+决赛作品 · ANKER 首届黑客松挑战赛
+
+## 基于本体论与自进化闭环的经营归因智能客服系统
+
+面向安克复杂 L3 售后，以双本体架构锁定业务边界，以自进化飞轮突破多跳幻觉，以全局归因反哺经营决策，三位一体打造出真正能在规则边界内安全办事的“抗幻觉”智能售后引擎。
+
+团队OntoCare 本体队赛道智能服务
+
+[体验作品观看演示录屏](https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#s3)[源代码](https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#s4)
+
+---
+
+**PART 01**
+
+## 基本信息
+
+项目与团队的身份信息，作为评审与联络依据。
+
+**项目名称**
+
+基于本体论与自进化闭环的经营归因智能客服系统（OntoCare）
+
+**参赛赛道**
+
+智能服务
+
+**团队名称**
+
+OntoCare 本体队
+
+**组长姓名 / 联系方式**
+
+蒋恩晶（队长）｜ 1391648196@qq\.com ｜ 18042474095
+
+**团队成员**
+
+1. 蒋恩晶【清华大学】— 负责整体方案架构设计、产品设计及路演答辩
+2. 叶品驿【浙江工业大学】— 负责 Agent 后端开发
+3. 雷景喻【南京大学】— 负责 Agent 评测、前端页面开发
+
+---
+
+**PART 02**
+
+## 项目总览
+
+讲清楚做了什么、为什么这样做，以及方案的边界。
+
+### 2\.1 项目阐述
+
+OntoCare 面向安克复杂 L3 售后，用 Service Ontology 统一业务语义、用 Decision Ontology 约束动作空间， 让 AI 从“能调用工具”升级为“能在明确业务规则边界内安全办事”——把客户问题转化为有依据的答复、可追溯的经营核查与可复用的改进策略。
+
+![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=ZDViYTk5YzJlYThjYjhjNDliOTM5OWZmNGM1ODU3YzlfYTFlZDMwNGRhZmVhMzAyN2VhZjU0YjIyOTI3ZWQ0MDNfSUQ6NzY5NzYwMzkwMzAzNDE0OTg4MV8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM)
+
+**立即体验 · LIVE DEMO**
+
+#### 扫码打开 OntoCare 智能售后工作台
+
+手机扫码即可进入真实运行环境，无需配置任何密钥。可直接体验用户端多轮对话、产品消歧、带引用答复，以及商家端邮件草稿与经营归因看板。
+
+https://web\-production\-195cd\.up\.railway\.app/
+
+#### 解决什么问题
+
+产品包含用户端与商家端，目标用户不仅包含外部消费者，也覆盖了安克内部的客服与经营管理团队。
+
+**外部 · 消费者**
+
+需要更准的答案与更快的闭环：不再答非所问、反复追问，也不必在长链路里来回拉扯。
+
+**内部 · 商家**
+
+一线客服需要快速接管复杂 Case；GTM 策略与业务管理者需要真实的全局洞察来优化流程。
+
+#### 做了什么
+
+产品是双视图工作台：用户端「看懂问题、找对对象，给出有依据的下一步」，商家端「高效处理客户来信，让工单积累为经营线索」。
+
+**USER**
+
+#### 用户端 · 看懂问题、找对对象，给出有依据的下一步
+
+文本 / 故障图片 / 视频均可发起求助
+
+**1**
+
+##### 多模态理解与「猜你想问」：让用户更容易表达问题
+
+用户可以通过文字、故障图片或视频发起求助。系统先将图片和视频采样画面转化为可见现象、型号线索和错误码等文字证据，再结合用户描述进行检索。每轮对话同步更新「猜你想问」和快捷选项，减少反复打字。
+
+**2**
+
+##### 主动订单关联与连续排障：让服务跟得上上下文
+
+面对「S1 Pro 不吸了」等模糊描述，系统结合品类、订单 SKU 与对话信息区分产品，展示带图片、订单号和购买日期的候选卡片。确认后限定知识范围，保留已尝试步骤继续推进排障，并根据情绪调整沟通方式。
+
+**3**
+
+##### 带引用的答复与人工交接：让建议有依据，疑难问题有出口
+
+回复附带来源引用和可折叠的处理摘要。遇到信息不足、产品冲突或高风险诉求时，系统提示需要补充的证据或人工复核，并整理当前上下文与处理记录，支持后续接管。
+
+**技术底色 · 双本体让业务关联与处理边界清晰可查**
+
+##### Service Ontology · 连接产品、订单、知识与证据
+
+帮助系统确认「**当前处理谁的问题、哪些资料适用**」，从源头避免跨型号知识混用。
+
+##### Decision Ontology · 计算允许与禁止的动作
+
+结合案件状态输出 Allowed / Blocked，**AI 越不了权**。
+
+##### 规则 \+ 固定工作流 \+ LLM 协同
+
+再通过引用、关键字段及业务承诺校验，**降低错误风险**。
+
+**MERCHANT**
+
+#### 商家端 · 高效处理客户来信，让工单积累为经营线索
+
+邮件辅助 · 经营看板 · 归因助手
+
+**1**
+
+##### 邮件辅助处理：从客户原文到可编辑的回复草稿
+
+商家可以选择已有工单或粘贴邮件正文，系统结合产品、订单、物流、质保与知识生成回复草稿，支持语气调整、多版本生成及多语言翻译。引用随草稿保留，方便核对后使用。
+
+**2**
+
+##### 经营可视化看板：从统计数字下钻到原始工单
+
+聚合全量工单快照，展示产品工单占比、咨询场景、错误码及知识覆盖情况。点击图表或归因候选，即可查看关联工单、Excel 行号和原始邮件，帮助管理者识别值得优先核查的问题。
+
+**3**
+
+##### 经营归因助手：围绕一组工单追问，形成可核查的行动建议
+
+商家可以直接询问「这些工单有什么共同特征？」「下一步应该核查什么？」，助手读取本体关联与归因 Trace，生成附带证据链的分析建议。例如：
+
+支持产品核查：E25、E28 的两条工单包含 3212 错误码及相似拖布阻塞描述，建议按型号分别检查维护步骤和复现条件，再决定是否提交工程调查。
+
+优化服务流程：针对「只收到配件」等拆单咨询，建议逐件展示包裹与物流记录，并核对客户实际收到的商品。
+
+**技术底色 · 同一份业务证据，贯通统计、规则与建议**
+
+##### 统计由程序计算
+
+看板与经营助手共用**同一份源表快照**，数字可回溯。
+
+##### 归因依据显式规则
+
+结论绑定规则 ID 与工单行号，不靠模型猜。
+
+##### LLM 组织解释与建议
+
+结合证据生成核查建议；红蓝对抗 \+ LLM Judge 发现 Bad Case，人工审核后回归验证。
+
+**当前 Demo 边界**
+
+提供客服建议、邮件草稿和经营核查辅助；真实退款、换货及外部发送仍需审批与执行系统接入。
+
+#### 亮点是什么
+
+**01**
+
+#### 本体（Ontology）路线 —— 从“牵一发而动全身”到真正的业务敏捷
+
+**现有方案痛点 · 传统 Coding \+ Skill 路线**
+
+传统的智能客服架构把规则硬编码在代码或流程里，属于「牵一发而动全身」。一旦安克新增了品类、调整了售后政策，底层代码、API 和 Prompt 全都要跟着重写，维护成本极高。
+
+**我们的创新 · 本体论降维打击**
+
+我们彻底摒弃硬编码，采用 Service Ontology \+ Decision Ontology 双本体路线，将业务实体和售后 SOP 沉淀为一张可视化的知识图谱。
+
+**💡**
+
+##### 核心价值 · 为什么这对安克重要
+
+对于安克这种一定要越做越大的企业，**多 SKU、多国家政策是常态**。传统路线会让系统越改越臃肿，而我们的本体路线实现了**真正的业务敏捷**，让系统架构随着业务的扩张而无限延展。我们不仅保留了确定性，更赋予了系统生命力。
+
+**确定性！友好性！**
+
+可视化打消评委疑虑：演示页面将直接展示本体的可视化图谱与流程图——产品、订单、故障、政策如何通过节点与连线串联一目了然。业务变动时只需在图谱中修改节点连线或属性，完全无需改动底层代码。
+
+**02**
+
+#### 基于红蓝对抗降噪与 Bad Case 驱动的自进化飞轮
+
+现有方案痛点：售后场景的“致命伤”是幻觉——AI 容易自由发挥、产生不合规回答；传统 RAG 面对复杂多轮对话极易崩溃（多跳能力弱），且无法从错误中学习，普遍缺乏知识库精调与降噪的闭环机制。
+
+**STEP 01**
+
+##### 红蓝对抗
+
+用 Persona 模拟不同性格买家（急躁型、技术型、情绪宣泄型、利益导向型等），与客服 Agent 多轮对话，收集海量、真实、带对抗性的问答数据。
+
+**STEP 02**
+
+##### Judge 评估
+
+引入 LLM as a Judge，从事实性、安全性、相关性、合规性等维度打分；再由 Supervisor 复核，不合格的打上 Bad Case 标签并定位失败原因。
+
+**STEP 03**
+
+##### 降噪与剔除
+
+靶向修正：检索召回了错误知识就降低权重或剔除；知识不够权威就修正 FAQ 条目；规则缺失就更新 Decision Ontology。
+
+**STEP 04**
+
+##### 人工审核回流
+
+修正后的知识必须通过运营人员人工审核，通过后再写回知识库与 Ontology，形成完整的系统自进化闭环。
+
+核心价值与数据：引入学术界常用于评估 Agent 稳定性的 pass^8 指标（基于 τ\-bench 基准方法），在模拟复杂售后场景的 8 轮对话测试中发现：
+
+**≈ 50%**
+
+传统 RAG 路线
+
+对话解决率，意味着极高的对话失败率
+
+**83%**
+
+自进化飞轮优化后
+
+解决率跃升，失败率降至 10%
+
+**pass^8**
+
+评测口径
+
+基于 τ\-bench 基准方法，衡量 8 轮连续对话的一致稳定性，而非单轮通过率
+
+**📈**
+
+##### 质的飞跃
+
+8 轮连续对话测试中，解决率从 **≈50%** 提升到 **83%**，失败率降至 **10%**。
+
+**03**
+
+#### 业务经营归因 —— 从“单点工单”到“全局经营决策”
+
+行业现状与痛点：现有客服 Agent 只处理“单个工单”的问答，缺乏全局洞察。安克业务繁杂，单纯靠人工追踪海量 Bad Case 并反哺业务，几乎不可能。
+
+我们的创新：推出面向商家的归因 Agent，处理的是“工单的集合”——自动将快照数据转化为带责任归属与规则 ID 的决策建议。
+
+**典型场景举例**
+
+案例 1 · 反哺产品设计：系统自动发现 X10 Pro 报错「3212（拖布阻塞）」的客诉激增，追溯至 Excel 具体行号，直接给产品部下达建议——「该批次高频出现故障，建议专项排查传感器设计」。
+
+案例 2 · 反哺物流流程：系统发现多起「只收到配件、未收到主机」的客诉。归因分析指出是「拆单物流信息展示不清」导致，建议物流团队优化订单页面的包裹拆分展示逻辑。
+
+**系统级效果**三个创新点强强联合形成**数据飞轮**，最终达到的系统级效果，就是**抗幻觉**。
+
+### 2\.2 产品逻辑与技术架构
+
+### 产品逻辑与技术方案
+
+OntoCare 全链路技术架构与自进化机制：处理流程参考业界领先的 GraphRAG 思想，并结合安克售后场景做了深度的「本体化」改造。系统采用「图谱 \+ 向量」混合架构与严密的幻觉拦截机制，全链路分为六个步骤。
+
+**Step 1**
+
+##### 多模态输入与降维解析
+
+用户发起求助时，支持文本或图片 / 视频输入。若是图片或视频，系统先调用多模态大模型 API，提取可见现象、型号线索、错误码及不确定项，转化为结构化文字描述。这段文字与用户原输入组合，作为精准的 Query 进入主链路。
+
+多模态 API可见现象 / 型号线索 / 错误码不确定项标注Query 合成
+
+**Step 2**
+
+##### 自上而下的数据清洗与双本体图谱构建离线
+
+我们不采用自下而上让模型盲目抽取的方式（那会带来极大的图谱噪声）。我们采用预先定义 Schema 框架的本体构建模式，由售后业务专家深度参与，梳理实体、关系与规则——前期虽有人工成本，但换来了极高的数据纯净度。同时结合 HyperAuto 自动化集成理念，将安克产品、订单、SOP 映射为 Service Ontology 和 Decision Ontology，存入图数据库与向量库。
+
+预定义 Schema业务专家参与高数据纯净度HyperAuto 自动化集成图数据库 \+ 向量库
+
+**Step 3**
+
+##### 实体限定与「图谱 \+ 向量」混合召回
+
+用户 Query 进入后先进行实体消歧，将检索范围死锁在唯一产品的知识子图内，随后执行混合召回：
+
+##### 本体图谱 · 权威来源
+
+依靠本体图谱完成图推理与业务决策（如查订单、定型号、匹配置信动作），这是**结果可靠性的基石**。
+
+##### 向量检索 · 语义补充
+
+仅作为辅助，用于在子图内召回长尾的 FAQ、SOP 文本素材。两者结合，兼顾了业务规则的确切性与自然语言的泛化性。
+
+实体消歧死锁知识子图图推理 \+ 业务决策长尾 FAQ / SOP 语义召回
+
+**Step 4**
+
+##### 上下文组装、大模型生成与「二次拦截校验」
+
+系统将召回的知识、用户 Query、本体节点关系以及 Allowed / Blocked Actions 组装进 Prompt，喂给核心的 DeepSeek LLM。生成回复后，系统绝不直接输出，而是叠加幻觉检测与校验环节：对 Agent 输出的业务结论、引用来源以及工具调用动作进行服务端二次拦截校验。一旦发现无依据承诺或越权，立即强制回退，多层次抑制大模型幻觉。
+
+上下文组装DeepSeek LLM服务端二次拦截校验无依据承诺 / 越权 → 强制回退
+
+**Step 5**
+
+##### 用户反馈与 Bad Case 捕获
+
+答案输出给用户后，界面提供点赞与点踩。一旦用户点踩，该条对话轨迹、检索来源、案件状态与 Decision Trace 会被立刻打包，自动打上 Bad Case 标签进入待排查队列。
+
+点赞 / 点踩对话轨迹检索来源案件状态 \+ Decision TraceBad Case 标签
+
+**Step 6**
+
+##### 靶向归因与自进化闭环
+
+针对捕获的 Bad Case，系统沿处理链路进行根因定位与靶向修复：
+
+##### ① 长尾策略补充与安全兜底
+
+如果是超出当前知识库覆盖的长尾问题，将修复经验补充进长尾策略库，并要求人工复核校验；若毫无可靠匹配，系统诚实追问或转人工。
+
+##### ② 降噪剔除与规则更新
+
+如果是常见问题，排查是否知识错误（降权剔除 / 修正 FAQ）或规则缺失（直接更新 Decision Ontology）。
+
+##### ③ 引用校验与持续改进
+
+新失败经人工审核修复后，加入回归测试集。后续在保持产品过滤的前提下，系统将持续评估引入 HyDE 与重排（Rerank）技术，让系统越用越聪明。
+
+**🧬**
+
+##### 「图谱 \+ 向量」混合架构 · 幻觉拦截机制
+
+**本体图谱负责权威决策，向量检索只做语义补充**；生成后经服务端**二次拦截校验**，发现无依据承诺或越权立即强制回退。用户点踩即捕获 Bad Case，经根因定位、靶向修复与人工审核后回写知识库与双本体，形成越用越聪明的数据飞轮。
+
+#### 技术方案选型与对比
+
+为什么是这套架构：四个备选方案的取舍，以及最终选型的理由。
+
+### 架构图
+
+![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MjM4ZGQ5MjYxYzZmOTEzNTczZTFmMTA4MDdlZDgxZWJfNzlkNzY2ZmFkMjdhZTIwMzZmMjFhNmM3ODA2MDExNTZfSUQ6NzY5NzYwMzkwMzY3NTkxMTQzNl8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM)
+
+安克智能客服 Agent 架构 ｜ 双本体驱动 · 多路召回 · 自进化闭环 —— 点击可放大查看
+
+**Ontology\-Constrained Service Agent**
+
+#### 六层分级架构：模型负责理解，*本体组织证据*，确定性规则限定动作
+
+所有关键判断均可追踪、可解释、可升级 —— 上层负责交互与理解，下层负责事实、边界与执行。
+
+交互与感知本体层 ★ 统一业务语义决策层 ★ 限定动作空间数据与运行底座
+
+**01**
+
+用户体验层EXPERIENCE
+
+客服对话*中 / English · 多轮案件*
+
+图片与案例*故障图上传 · 黄金路径*
+
+决策追踪*阶段 · 证据 · Why*
+
+结果呈现*资料卡 · 人工交接草稿*
+
+**02**
+
+接口与会话层API \& SESSION
+
+Flask Web API*/api/chat · /api/upload*
+
+案件状态机*CONSULTATION → VERIFY → TROUBLESHOOT*
+
+案件记忆*最近 4 轮脱敏上下文*
+
+会话标识*浏览器 sessionStorage*
+
+**03**
+
+AI 证据理解层AI \& EVIDENCE
+
+OpenAI 兼容 LLM*意图理解 · 话题判断*
+
+多模态视觉模型*仅取图片可见事实*
+
+产品限定检索*TF\-IDF · 仅当前产品 KB*
+
+AI 输出边界*只生成候选理解，不授予动作*
+
+**04**
+
+服务本体层 ★SERVICE ONTOLOGY
+
+实体模型*Customer · Order · SKU · Product*
+
+关系约束*CONTAINS · SOLD\_BY · HAS\_ISSUE*
+
+证据来源*USER\_CLAIM · DEMO\_KB*
+
+来源标签*NOT\_VERIFIED · TEST\_FIXTURE*
+
+**05**
+
+决策与动作层 ★DECISION ONTOLOGY
+
+业务事实核验*resolve\_product · lookup\_order*
+
+规则前置条件*订单 · 质保 · 经销商 · 30 天*
+
+动作空间*Allowed / Forbidden*
+
+受控输出*只形成待审材料，不写真实业务*
+
+**06**
+
+数据运行底座DATA \& RUNTIME
+
+模拟业务数据*10 产品 · 20 订单 · 15 知识条目*
+
+Python 服务运行时*Python 3\.11\+ · Flask 3*
+
+外部模型接口*LLM\_BASE\_URL · VISION\_BASE\_URL*
+
+云端部署*Anker Launch 公网部署*
+
+##### Service Ontology 实体关系图
+
+同一套实体与关系，同时服务于回答、邮件、归因与评测 —— 不是各写各的规则。
+
+业务对象（客户 / 订单 / SKU / 产品）故障与证据（Issue / Evidence）政策与规则（Policy）案件（Case）
+
+当前 M0 实现边界：模拟订单 / 政策 / 知识 · 单 worker 内存会话 · 无真实退款、换货、工单写入
+
+AI proposes
+
+Rules decide
+
+Human reviews
+
+### 架构选型理由
+
+我们评估了四条可选路线，最终选择「轻量 Schema \+ 规则引擎 \+ 在线模型 API」，理由是：本赛题的关键变量是业务规则执行的确定性，而不是模型能力本身。
+
+### 局限性与领先性
+
+#### 局限性（客观边界）
+
+#### 领先性（确定性与友好性，降维打击）
+
+相比于现有的传统 Workflow 或纯 RAG 方案，我们的方案具备极强的技术先进性与企业级复用价值：
+
+01 · 业务敏捷的确定性
+
+#### 降维打击
+
+突破传统 Workflow 的「牵一发而动全身」。业务变动只需在本体图谱中修改节点连线或属性，无需修改底层代码，实现了真正的业务敏捷。大模型负责模糊理解，确定性程序负责业务边界。
+
+02 · 战略级全局资产
+
+#### 数字孪生底座
+
+系统沉淀的是企业专属业务数字孪生知识图谱，统一了业务语义、数据标准与动作边界。它独立于大模型存在，不会被模型迭代或微调所同化，是可长期复用、跨部门传承的企业固有资产。
+
+03 · 面向未来的多 Agent 协同
+
+#### MCP 适配
+
+依托统一的本体语义，系统能完美对齐未来所有智能体的上下文，原生适配 MCP 等上下文协议。随着业务拓展，长期演进仅需优化知识图谱，底层架构永久稳定，实现全域协同统一化。
+
+### 赛道标注
+
+智能服务赛道（知识数据召回的策略是什么？图片信息如何处理？）
+
+**一**
+
+#### 知识数据召回策略 · 先限定适用范围，再检索可用证据
+
+从业务对象建模，到引用校验的五步链路
+
+**1**
+
+##### 数据结构化：基于本体论先建立业务对象和处理规则
+
+将订单、客诉工单、经销商和两份 Q\&A 作为输入，**保留来源文件、Sheet、原始行号及校验信息**。知识条目依据发布状态和客户可见状态过滤，作为后续引用与核查的基础。
+
+**2**
+
+##### 先确认产品，再限定知识范围
+
+结合用户描述、SKU、订单及对话状态定位产品。同名或冲突信息未澄清时，**先展示候选选项**；确认后按产品 PN 限定检索范围，减少跨型号知识混用。
+
+**3**
+
+##### 按问题类型召回
+
+对**错误码优先精确匹配**；对一般现象使用关键词、同义词和相关度匹配，选取少量适用条目。条件明确的常见问题可命中带来源校验的**固定 FAQ**，减少重复生成。
+
+**4**
+
+##### 长尾策略补充与安全兜底
+
+常见路径不能覆盖时，检索长尾策略和 Bad Case 修复经验，结合当前证据交给模型组织建议。补充策略与官方产品知识**分别标识**；没有可靠匹配时继续补充信息或人工核查。
+
+**5**
+
+##### 引用校验与持续改进
+
+答复附带来源 ID，服务端检查引用有效性和部分业务一致性。新失败经人工审核修复后加入策略与回归测试。当前**尚未使用向量检索**；后续可在保持产品过滤与来源约束的前提下，评估语义召回、混合检索和重排。
+
+#### 自进化闭环
+
+离线构建 → 在线多路召回 → 反馈进化，三个阶段形成完整数据飞轮。
+
+**1**
+
+##### 离线数据与本体构建
+
+源系统：工单 / 订单 / Q\&A*Source Systems*
+
+▼
+
+HyperAuto 自动集成*Automated Integration*
+
+▼
+
+双本体引擎*Ontology Engine*
+
+▼
+
+Service Ontology*产品 / 订单 / 证据*
+
+Decision Ontology*SOP / 动作边界*
+
+▼
+
+业务图谱 / 知识库*Knowledge Graph \& KB*
+
+**2**
+
+##### 在线服务与多路召回
+
+用户输入：文本 / 图片 / 视频
+
+▼
+
+多模态 API 降维转译*Query \+ Evidence*
+
+▼
+
+实体消歧：锁定唯一产品
+
+▼
+
+多策略路由
+
+▼
+
+**精确**明确错误码 → 精确匹配
+
+**语义**现象口语化 → 语义 / 关键词检索
+
+**FAQ**高频标准件 → 固定 FAQ 命中
+
+**兜底**知识盲区 → 长尾策略
+
+▼
+
+上下文组装*知识 \+ 当前 Case State*
+
+▼
+
+LLM 生成*受 Decision Ontology 规则校验*
+
+▼
+
+输出给用户*带引用与 Trace*
+
+**3**
+
+##### 自进化闭环
+
+采集对话*Conversation Capture*
+
+▼
+
+Persona 红蓝对抗*Adversarial Simulation*
+
+▼
+
+LLM as a Judge 评估*事实 / 安全 / 相关性 / 合规*
+
+▼
+
+**Bad Case**降噪剔除 / 靶向修正
+
+▼
+
+人工审核*Human Review*
+
+▼
+
+修正知识 → 写回 Service Ontology
+
+修正规则 → 更新 Decision Ontology
+
+#### 针对 Bad Case 的靶向修复链路
+
+逐层判断失败发生在哪一环，再对症修复；所有修复都必须经人工审核后回写知识库与双本体。
+
+**发现 Bad Case**
+
+Q1 · Query 超出业务边界？
+
+是 → 诚实兜底追问补充信息，或转人工处理
+
+Q2 · 检索召回正确知识？
+
+否 → ③ 降噪剔除错误知识降权 / 剔除，修正 FAQ，长尾策略补全
+
+Q3 · Decision Ontology 规则计算正确？
+
+否 → ③ 更新决策本体修补前置条件，调整 Allowed / Blocked 边界
+
+Q4 · LLM 生成合规且无幻觉？
+
+否 → ② Judge 靶向纠偏强化引用校验，补充 Few\-shot 例子
+
+**✓ 正确生成 / 安全兜底**
+
+**输出符合业务边界**
+
+**④ 人工审核回流 · 写回双本体与知识库***所有修复路径统一经人工审核，通过后更新知识库与 Ontology，并加入回归测试*
+
+**二**
+
+#### 图片与视频处理 · 先生成文字证据，再进入原有业务链路
+
+多模态只做证据提取，不直接下结论
+
+**1**
+
+##### 多模态 API 转译
+
+用户上传故障图片或视频后，系统调用多模态大模型 API，提取**可见现象、型号线索、错误码及不确定项**，生成结构化文字描述。
+
+**2**
+
+##### 生成检索 Query
+
+将多模态提取的文字与用户原输入合并，作为新的 Query 注入业务检索链路，**精准触发上述分层召回策略**。
+
+**3**
+
+##### 证据状态绑定
+
+识别结果不直接作为认定产品身份或质保资格的唯一凭证，而是强制标记为**「待核验」（PROBABLE / UNKNOWN）**，参与后续与订单 SKU 的交叉核对，确保多模态处理的安全严谨。
+
+---
+
+**PART 03**
+
+## 成果展示
+
+可体验的作品、全链路录屏与路演材料。
+
+### 3\.1 交付物
+
+### 交付物链接
+
+[**WEB**](https://web-production-195cd.up.railway.app/)
+
+[体验地址 · OntoCare 智能售后工作台](https://web-production-195cd.up.railway.app/)
+
+[公网部署，打开即用、无需配置密钥，支持中英文切换 ｜ web\-production\-195cd\.up\.railway\.app](https://web-production-195cd.up.railway.app/)
+
+[**GIT**](https://github.com/dddiu030jy/anker-Intelligent-Service)
+
+[源代码仓库 · GitHub](https://github.com/dddiu030jy/anker-Intelligent-Service)
+
+[dddiu030jy/anker\-Intelligent\-Service ｜ 项目简介 / 安装步骤 / 使用方法见 README\.md](https://github.com/dddiu030jy/anker-Intelligent-Service)
+
+[**ZIP**](https://launch-hackathon.oss-cn-shenzhen.aliyuncs.com/skill-assets/13858469609/2a981474ca9f4272b11cf38915d040f7/OntoCare-%E8%AF%84%E5%A7%94%E5%85%AC%E7%BD%91%E9%83%A8%E7%BD%B2%E7%89%88.zip)
+
+[可复现代码包 · 一键下载](https://launch-hackathon.oss-cn-shenzhen.aliyuncs.com/skill-assets/13858469609/2a981474ca9f4272b11cf38915d040f7/OntoCare-%E8%AF%84%E5%A7%94%E5%85%AC%E7%BD%91%E9%83%A8%E7%BD%B2%E7%89%88.zip)
+
+[含完整源码、Mock Dataset、Golden Case 与机制断言；解压后按 README 即可本地复跑 ｜ OntoCare\-评委公网部署版\.zip（14\.4 MB）](https://launch-hackathon.oss-cn-shenzhen.aliyuncs.com/skill-assets/13858469609/2a981474ca9f4272b11cf38915d040f7/OntoCare-%E8%AF%84%E5%A7%94%E5%85%AC%E7%BD%91%E9%83%A8%E7%BD%B2%E7%89%88.zip)
+
+### 全链路体验录屏必交
+
+\[\]
+
+全链路体验录屏：覆盖用户从发起到完成核心任务的完整操作流程。点击视频可全屏播放。
+
+### 3\.2 Presentation 材料
+
+**5min**
+
+路演时长
+
+**21:9**
+
+固定画幅比例
+
+**6912×2808**
+
+分辨率（px）
+
+**4–5页**
+
+PPT 数量
+
+内容建议顺序：
+
+视频→方案设计→产品介绍→技术架构→未来规划
+
+[**PPTX**](https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#)
+
+[【项目名称】\- 总决赛路演\.pptx](https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#)
+
+[（替换为 PPT 下载链接）](https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#)
+
+---
+
+**PART 04**
+
+## 源代码
+
+提交可复现的代码仓库，并做好敏感信息自查。
+
+[**GIT**](https://github.com/dddiu030jy/anker-Intelligent-Service)
+
+[dddiu030jy/anker\-Intelligent\-Service](https://github.com/dddiu030jy/anker-Intelligent-Service)
+
+[https://github\.com/dddiu030jy/anker\-Intelligent\-Service · 项目简介 / 安装步骤 / 使用方法见 README\.md](https://github.com/dddiu030jy/anker-Intelligent-Service)
+
+**安全声明**
+
+本项目代码仓库、文档及链接中不包含明文 API Key、账号密码等敏感凭证，也不包含安克 SDK 完整源码或通信协议信息。
+
+---
+
+**PART 05**
+
+## 团队风采展示
+
+认识一下做出这个项目的人。
+
+### 团队成员
+
+#### 三所高校，三种专长。
+
+融合产品与业务、系统工程、Agent 算法与评测能力，将业务规则转化为可运行、可验证的 AI 产品。
+
+![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MmIxYTk0OTRiMTNjNTQyOWM1MTYzYWFjYWFmMjZiOTlfMGQ3N2ZlYmQ2NGY3ZTUzMjAwN2Y4MDE3Nzk2NzM1Y2VfSUQ6NzY5NzYwMzkwNTczMTAzODQ0Nl8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM)
+
+![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MGRlZmI2MzVjM2IzYWMxMGU3NDA1NzEwOTZlMGMyZDJfYjUxYTcxMGY5Zjc3Yzk0MzlhZmViNmExNTNlYzcwNDlfSUQ6NzY5NzYwMzkwMTQyMzcxNzM3Nl8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM)
+
+产品与业务
+
+#### 蒋恩晶 队长
+
+清华大学深圳国际研究生院
+
+硕士
+
+[GitHub ↗](https://github.com/jiangenjing)[小红书 ↗](https://xhslink.cn/o/Aym0oPhPO59)
+
+曾赴加州大学伯克利分校交换，具有追踪海外 GTM 实习经历，关注用户需求、AI Agent 应用与产品落地。
+
+**本次负责**
+
+整体方案架构设计、产品设计及路演答辩；Service / Decision Ontology 设计、售后规则建模与业务场景验证。
+
+**代表作品**
+
+- [ServiceMind 客服 Agent ↗](https://github.com/jiangenjing/servicemind-agent-demo)
+- [AI＋能源商业方案 ↗](https://github.com/jiangenjing/shell-hangzhou-ai-energy-brain)
+
+![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=ZTBkMzcxNTZmYzU0ODRjY2ExOTU5YzcwNGVlN2ZlNDJfZjFkNTE5ZjAwNTkyZGIyZGUwYjcyNDA3ZTQ5MzYwZGFfSUQ6NzY5NzYwMzkwNjY0MTEyMDUwNF8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM)
+
+工程集成与系统实现
+
+#### 叶品驿
+
+浙江工业大学 · 健行学院
+
+通信工程 · 本科生
+
+[GitHub ↗](https://github.com/ye056343-collab)[小红书 · 吟 ↗](https://xhslink.cn/o/2h8YnsbnMNE)
+
+小红书号：902102864
+
+研究与实践涉及无线通信、边缘计算、深度强化学习和 ROS 机器人，注重算法与工程系统的结合。
+
+**本次负责**
+
+Agent 后端开发：模型 API、案件状态管理、规则运行时、Tool Calling 与前后端联调。
+
+**代表作品**
+
+- [UAV\-MEC 仿真项目 ↗](https://github.com/ye056343-collab/yep)
+- ROS 室内服务机器人相关工程实践
+
+![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MDhhZGFlNmI3YTA4NzhlZmIzZDMwMTM1MjMwMTgwMTJfNTU3ODEwMGEyMjZhODhjYjBkNDM1OTU3MzQ3ZmU1NGNfSUQ6NzY5NzYwMzkwMzI4OTkzNzEzMV8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM)
+
+Agent 算法与数据评测
+
+#### 雷景喻
+
+南京大学
+
+管理科学与工程 · 硕士
+
+[GitHub ↗](https://github.com/dddiu030jy)
+
+本科毕业于中央民族大学应用统计学专业，曾任美团数据分析实习生，关注大模型智能体、自动建模与优化。
+
+**本次负责**
+
+Agent 评测与前端页面开发：知识检索、模拟数据集、Golden Case、规则断言与决策追踪评测。
+
+**代表作品**
+
+- [LitReview Agent ↗](https://github.com/dddiu030jy/literature-review-agent)
+
+**协作流程需求定义→本体建模→系统开发→数据评测→迭代优化**
+
+基于本体论与自进化闭环的经营归因智能客服系统 · OntoCare 本体队
+
+ANKER 首届黑客松挑战赛 · 让创造发生 · 让世界看见
+</script>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ---------- Theme ---------- */
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('theme-toggle');
+  const sunIcon = document.querySelector('.theme-icon-sun');
+  const moonIcon = document.querySelector('.theme-icon-moon');
+
+  const openSwitcherBtn = document.getElementById('open-report-switcher');
+  if (openSwitcherBtn) {
+    openSwitcherBtn.addEventListener('click', () => {
+      if (typeof window.__openReportSwitcher === 'function') window.__openReportSwitcher();
+    });
+  }
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    if (theme === 'dark') {
+      sunIcon.style.display = 'none';
+      moonIcon.style.display = '';
+      themeBtn.setAttribute('aria-label', 'Switch to light mode');
+    } else {
+      sunIcon.style.display = '';
+      moonIcon.style.display = 'none';
+      themeBtn.setAttribute('aria-label', 'Switch to dark mode');
+    }
+  }
+
+  function getInitialTheme() {
+    try {
+      const stored = localStorage.getItem('report-theme');
+      if (stored === 'light' || stored === 'dark') return stored;
+    } catch (_) { /* localStorage may be blocked */ }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  applyTheme(getInitialTheme());
+
+  themeBtn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    try { localStorage.setItem('report-theme', next); } catch (_) {}
+  });
+
+  /* ---------- Reading time ---------- */
+  const article = document.querySelector('.article');
+  if (article) {
+    const text = article.innerText || article.textContent || '';
+    const words = text.trim().split(/\s+/).length;
+    const minutes = Math.max(1, Math.round(words / 225));
+    const rt = document.getElementById('reading-time');
+    if (rt) rt.textContent = `~${minutes} min read`;
+  }
+
+  /* ---------- ToC scroll-spy ---------- */
+  const tocLinks = Array.from(document.querySelectorAll('.toc__link'));
+  const tocMap = new Map();
+  tocLinks.forEach(link => {
+    const id = link.getAttribute('href').slice(1);
+    const target = document.getElementById(id);
+    if (target) tocMap.set(target, link);
+  });
+
+  const indicatorLabel = document.querySelector('.section-indicator__label');
+
+  if ('IntersectionObserver' in window && tocMap.size > 0) {
+    let activeLink = null;
+    const observer = new IntersectionObserver((entries) => {
+      // Find the topmost intersecting heading
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible.length > 0) {
+        const link = tocMap.get(visible[0].target);
+        if (link && link !== activeLink) {
+          if (activeLink) activeLink.classList.remove('is-active');
+          link.classList.add('is-active');
+          activeLink = link;
+          if (indicatorLabel) indicatorLabel.textContent = link.textContent.trim();
+        }
+      }
+    }, {
+      rootMargin: '-10% 0px -70% 0px',
+      threshold: [0, 1]
+    });
+
+    tocMap.forEach((_link, target) => observer.observe(target));
+  }
+
+  /* ---------- Sidenote fade-in (phase 2) ---------- */
+  try {
+    const sidenotes = document.querySelectorAll('.sidenote');
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduced || !('IntersectionObserver' in window) || sidenotes.length === 0) {
+      sidenotes.forEach(sn => sn.classList.add('is-revealed'));
+    } else {
+      const sidenoteObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll('.sidenote').forEach(sn =>
+              sn.classList.add('is-revealed')
+            );
+            sidenoteObserver.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -30% 0px' });
+
+      sidenotes.forEach(sn => {
+        const para = sn.closest('p, li, blockquote') || sn.parentElement;
+        if (para) sidenoteObserver.observe(para);
+      });
+    }
+  } catch (_) {
+    document.querySelectorAll('.sidenote').forEach(sn => sn.classList.add('is-revealed'));
+  }
+
+  /* ---------- Section indicator h1-visibility observer (phase 3) ---------- */
+  const indicator = document.getElementById('section-indicator');
+  const h1 = document.querySelector('article h1');
+  const hasH2 = document.querySelector('article h2') !== null;
+
+  if (indicator && h1 && hasH2 && 'IntersectionObserver' in window) {
+    const h1Observer = new IntersectionObserver(entries => {
+      const h1Visible = entries.some(e => e.isIntersecting);
+      indicator.classList.toggle(
+        'is-visible',
+        !h1Visible && indicatorLabel && indicatorLabel.textContent.length > 0
+      );
+    }, { threshold: 0 });
+    h1Observer.observe(h1);
+  }
+
+  /* ---------- ToC mobile accordion ---------- */
+  const tocRail = document.getElementById('toc-rail');
+  const tocToggle = tocRail.querySelector('.toc-rail__toggle');
+  if (tocToggle) {
+    tocToggle.addEventListener('click', () => {
+      const open = tocRail.getAttribute('data-open') === 'true';
+      tocRail.setAttribute('data-open', String(!open));
+      tocToggle.setAttribute('aria-expanded', String(!open));
+    });
+    // Close after navigating on mobile
+    tocLinks.forEach(link => link.addEventListener('click', () => {
+      if (window.matchMedia('(max-width: 1023px)').matches) {
+        tocRail.setAttribute('data-open', 'false');
+        tocToggle.setAttribute('aria-expanded', 'false');
+      }
+    }));
+  }
+
+  /* ---------- Copy buttons on code blocks ---------- */
+  document.querySelectorAll('.codeblock').forEach(block => {
+    const btn = block.querySelector('.codeblock__copy');
+    const code = block.querySelector('pre code');
+    if (!btn || !code) return;
+
+    btn.addEventListener('click', async () => {
+      const text = code.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (_) {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (_) {}
+        document.body.removeChild(ta);
+      }
+      const label = btn.querySelector('.copy-label');
+      const originalText = label ? label.textContent : 'Copy';
+      btn.classList.add('is-copied');
+      if (label) label.textContent = 'Copied';
+      setTimeout(() => {
+        btn.classList.remove('is-copied');
+        if (label) label.textContent = originalText;
+      }, 1400);
+    });
+  });
+
+  /* ---------- Reading progress bar ---------- */
+  const progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrolled = window.scrollY;
+    const pct = docHeight > 0 ? Math.min(100, Math.max(0, (scrolled / docHeight) * 100)) : 0;
+    progressBar.style.width = pct + '%';
+  }
+  let progressFrame = null;
+  window.addEventListener('scroll', () => {
+    if (progressFrame) return;
+    progressFrame = requestAnimationFrame(() => {
+      updateProgress();
+      progressFrame = null;
+    });
+  }, { passive: true });
+  updateProgress();
+
+  /* ---------- Hover footnote popovers ---------- */
+  const fnrefs = Array.from(document.querySelectorAll('.fnref'));
+  let popover = null;
+  let hoverTimer = null;
+
+  function buildPopover() {
+    if (popover) return popover;
+    popover = document.createElement('div');
+    popover.className = 'fnref-popover';
+    popover.setAttribute('data-visible', 'false');
+    document.body.appendChild(popover);
+    return popover;
+  }
+
+  function showPopover(ref) {
+    if (window.matchMedia('(hover: none)').matches) return;
+    const id = ref.getAttribute('href').slice(1);
+    const fn = document.getElementById(id);
+    if (!fn) return;
+    const p = buildPopover();
+    // Strip the back-link
+    const html = Array.from(fn.cloneNode(true).childNodes)
+      .filter(n => !(n.nodeType === 1 && n.classList && n.classList.contains('fn-back')))
+      .map(n => n.outerHTML || n.textContent)
+      .join('');
+    p.innerHTML = html;
+    p.setAttribute('data-visible', 'true');
+    const rect = ref.getBoundingClientRect();
+    const popRect = p.getBoundingClientRect();
+    let left = rect.left + window.scrollX;
+    let top = rect.top + window.scrollY - popRect.height - 8;
+    // Clamp horizontally
+    const maxLeft = window.scrollX + document.documentElement.clientWidth - popRect.width - 12;
+    if (left > maxLeft) left = maxLeft;
+    if (left < 12) left = 12;
+    // Flip below if it would go off the top
+    if (top < window.scrollY + 8) top = rect.bottom + window.scrollY + 8;
+    p.style.left = left + 'px';
+    p.style.top = top + 'px';
+  }
+
+  function hidePopover() {
+    if (popover) popover.setAttribute('data-visible', 'false');
+  }
+
+  fnrefs.forEach(ref => {
+    ref.addEventListener('mouseenter', () => {
+      clearTimeout(hoverTimer);
+      hoverTimer = setTimeout(() => showPopover(ref), 200);
+    });
+    ref.addEventListener('mouseleave', () => {
+      clearTimeout(hoverTimer);
+      setTimeout(hidePopover, 120);
+    });
+    ref.addEventListener('focus', () => showPopover(ref));
+    ref.addEventListener('blur', hidePopover);
+  });
+  document.addEventListener('scroll', hidePopover, { passive: true });
+
+  /* ---------- Edit mode ---------- */
+  const editBtn = document.getElementById('edit-toggle');
+  let wasEdited = false;
+  let editEverEntered = false;
+
+  function setEditMode(on) {
+    document.body.setAttribute('data-edit-mode', String(!!on));
+    if (article) article.contentEditable = on ? 'true' : 'false';
+    if (editBtn) {
+      editBtn.setAttribute('aria-pressed', String(!!on));
+      editBtn.classList.toggle('is-active', !!on);
+    }
+    if (on) {
+      editEverEntered = true;
+      // Move caret into the article so typing works immediately.
+      try {
+        const firstP = article.querySelector('p');
+        if (firstP) {
+          const sel = window.getSelection();
+          const range = document.createRange();
+          range.selectNodeContents(firstP);
+          range.collapse(false);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      } catch (_) {}
+    } else {
+      // Drop selection inside article to avoid lingering caret.
+      try { window.getSelection().removeAllRanges(); } catch (_) {}
+    }
+  }
+
+  if (editBtn && article) {
+    editBtn.addEventListener('click', () => {
+      const on = document.body.getAttribute('data-edit-mode') !== 'true';
+      setEditMode(on);
+    });
+    article.addEventListener('input', () => { wasEdited = true; }, { passive: true });
+  }
+
+  /* ---------- Save as Markdown ---------- */
+  function saveMarkdown() {
+    const sourceEl = document.getElementById('source-md');
+    const titleEl = article.querySelector('h1');
+    const title = titleEl ? titleEl.textContent.trim() : 'report';
+    const slug = title.toLowerCase()
+      .replace(/['"]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 60);
+    const date = new Date().toISOString().slice(0, 10);
+    const filename = `${slug || 'report'}-${date}.md`;
+
+    // Prefer the live DOM whenever the user has edited; fall back to embedded source otherwise.
+    let md;
+    if ((wasEdited || editEverEntered) && article) {
+      md = domToMarkdown(article);
+    } else if (sourceEl && sourceEl.textContent.trim()) {
+      md = sourceEl.textContent.replace(/^\n/, '');
+    } else {
+      md = domToMarkdown(article);
+    }
+
+    // In review mode, write the edit back to the source file so any agent
+    // reading the .md sees the change — same channel as comments. Outside
+    // review mode (file:// open), fall back to a blob download.
+    if (document.documentElement.dataset.reviewMode === 'true') {
+      fetch('/api/source', {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ markdown: md }),
+      }).then(async res => {
+        if (!res.ok) throw new Error((await res.text()) || `HTTP ${res.status}`);
+        return res.json();
+      }).then(payload => {
+        // Reflect what was saved so a follow-up save isn't computed against stale
+        // embedded source. The server may have re-injected preserved comments.
+        if (sourceEl) sourceEl.textContent = '\n' + md;
+        wasEdited = false;
+        editEverEntered = false;
+        const saved = payload && payload.file ? payload.file : filename;
+        showToast(`Saved to <code>${escapeHtml(saved)}</code>`);
+      }).catch(err => {
+        showToast(`Save failed: ${escapeHtml(err.message || String(err))}`);
+      });
+      return;
+    }
+
+    const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+    showToast(`Saved as <code>${escapeHtml(filename)}</code>`);
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  /* ---------- DOM → Markdown serializer (Tier 2) ----------
+     Round-trips: frontmatter, lede, callouts (NOTE/INFO/WARNING/INSIGHT/TIP/DANGER),
+     definition lists, tables with right-aligned numeric columns, footnote refs and
+     definitions, sidenotes, figure-as-chart-anchor, code blocks with language and path.
+  */
+  function domToMarkdown(rootEl) {
+    const headerEl = rootEl.querySelector('header.article-header');
+    // Footnote defs are rendered inline at the position of section.footnotes
+    // (handled by walkBlock); only the article header is excluded from the body walk.
+    const skip = new Set();
+    if (headerEl) skip.add(headerEl);
+
+    let out = '';
+
+    // Frontmatter from header.article-header dl.meta + h1
+    const fm = collectFrontmatter(headerEl);
+    out += frontmatterToYaml(fm);
+
+    // Title
+    const h1 = headerEl ? headerEl.querySelector('h1') : null;
+    if (h1) out += `# ${stripAnchors(h1).trim()}\n\n`;
+
+    // Lede (rendered as a top-level blockquote, matching the source convention)
+    const ledeP = headerEl ? headerEl.querySelector('p.lede') : null;
+    if (ledeP) out += `> ${inlineWalk(ledeP).trim()}\n\n`;
+
+    // Body
+    for (const child of rootEl.children) {
+      if (skip.has(child)) continue;
+      out += walkBlock(child, skip);
+    }
+
+    return out.replace(/\n{3,}/g, '\n\n').trim() + '\n';
+  }
+
+  function stripAnchors(el) {
+    const clone = el.cloneNode(true);
+    clone.querySelectorAll('a.heading-anchor, a.fn-back').forEach(n => n.remove());
+    return clone.textContent;
+  }
+
+  function collectFrontmatter(headerEl) {
+    if (!headerEl) return null;
+    const meta = headerEl.querySelector('dl.meta');
+    const h1 = headerEl.querySelector('h1');
+    const fm = {};
+    if (h1) fm.title = h1.textContent.trim();
+    if (!meta) return fm;
+    let key = null;
+    for (const child of meta.children) {
+      const tag = child.tagName;
+      if (tag === 'DT') {
+        key = child.textContent.trim().toLowerCase().replace(/\s+/g, '_');
+      } else if (tag === 'DD' && key) {
+        const tags = child.querySelectorAll('.tag');
+        if (tags.length) {
+          fm[key] = Array.from(tags).map(t => t.textContent.trim());
+        } else {
+          let v = child.textContent.trim();
+          // The HTML reading-time often reads "~12 min read"; keep the friendly form trimmed.
+          if (key === 'reading_time') v = v.replace(/^~/, '').replace(/\s+read$/, '');
+          fm[key] = v;
+        }
+        key = null;
+      }
+    }
+    return fm;
+  }
+
+  function frontmatterToYaml(fm) {
+    if (!fm || !Object.keys(fm).length) return '';
+    const order = ['title', 'generated_by', 'date', 'reading_time', 'tags', 'sources', 'version'];
+    const seen = new Set();
+    const lines = ['---'];
+    function emit(k, v) {
+      if (Array.isArray(v)) lines.push(`${k}: [${v.join(', ')}]`);
+      else lines.push(`${k}: ${v}`);
+    }
+    for (const k of order) {
+      if (k in fm) { emit(k, fm[k]); seen.add(k); }
+    }
+    for (const [k, v] of Object.entries(fm)) {
+      if (!seen.has(k)) emit(k, v);
+    }
+    lines.push('---');
+    return lines.join('\n') + '\n\n';
+  }
+
+  function collectFootnoteDefs(section) {
+    if (!section) return '';
+    const items = Array.from(section.querySelectorAll('ol > li[id^="fn"]'));
+    if (!items.length) return '';
+    return items.map(li => {
+      const num = li.id.replace(/^fn/, '');
+      const clone = li.cloneNode(true);
+      clone.querySelectorAll('.fn-back').forEach(n => n.remove());
+      return `[^${num}]: ${inlineWalk(clone).trim()}`;
+    }).join('\n\n');
+  }
+
+  /* ---- Inline serializer: produces single-line markdown for cell/footnote contexts ---- */
+  function inlineWalk(el) {
+    let out = '';
+    el.childNodes.forEach(n => {
+      if (n.nodeType === 3) { out += n.textContent; return; }
+      if (n.nodeType !== 1) return;
+      const tag = n.tagName.toLowerCase();
+      if (n.classList && (n.classList.contains('heading-anchor') || n.classList.contains('fn-back'))) return;
+      if (n.classList && n.classList.contains('fnref')) {
+        const fn = n.dataset.fn || (n.textContent.match(/\d+/) || [''])[0];
+        // Glue the ref to the preceding word: strip a single trailing space
+        // (and a trailing nbsp), matching the standard `flows.[^1]` convention.
+        out = out.replace(/[  ]$/, '');
+        out += `[^${fn}]`;
+        return;
+      }
+      const inner = inlineWalk(n);
+      switch (tag) {
+        case 'em': case 'i':       out += `*${inner}*`; break;
+        case 'strong': case 'b':   out += `**${inner}**`; break;
+        case 'code':               out += `\`${inner}\``; break;
+        case 'mark':               out += `==${inner}==`; break;
+        case 'br':                 out += ' '; break;
+        case 'a': {
+          const href = n.getAttribute('href') || '';
+          out += `[${inner}](${href})`;
+          break;
+        }
+        case 'small': case 'span': case 'dfn': out += inner; break;
+        case 'p': case 'div':      out += inner; break;
+        default:                   out += inner;
+      }
+    });
+    return out.replace(/\s+/g, ' ').trim();
+  }
+
+  /* ---- Block serializer: handles the full document tree ---- */
+  function walkBlock(node, skip) {
+    if (node.nodeType === 3) return node.textContent;
+    if (node.nodeType !== 1) return '';
+    const el = node;
+    if (skip && skip.has(el)) return '';
+
+    // Hidden/decorative
+    if (el.matches('a.heading-anchor, a.fn-back, .codeblock__copy, .codeblock__header, .sidenote-rail, .end-actions')) return '';
+
+    // Review-mode overlays are painted into the article DOM but are not part
+    // of the source markdown — exclude them so an in-browser save does not
+    // leak comment text back into the .md.
+    if (el.matches('.report-comment-margin')) return '';
+
+    // Footnote definitions render inline at the section's document position,
+    // headed by their `[^N]:` markers — not by the section's "Footnotes" h2.
+    if (el.matches('section.footnotes')) {
+      const defs = collectFootnoteDefs(el);
+      return defs ? defs + '\n\n' : '';
+    }
+
+    // Class-based dispatch (most specific first)
+    if (el.matches('blockquote.callout') || el.matches('div.callout-box')) {
+      return renderCallout(el);
+    }
+    if (el.matches('aside.sidenote')) {
+      return renderSidenote(el);
+    }
+    if (el.matches('div.codeblock')) {
+      return renderCodeblock(el);
+    }
+    if (el.matches('figure.framed')) {
+      return renderFigure(el);
+    }
+    if (el.matches('div.table-wrap')) {
+      return Array.from(el.children).map(c => walkBlock(c, skip)).join('');
+    }
+    if (el.matches('table')) {
+      return renderTable(el);
+    }
+    if (el.matches('dl.meta')) {
+      return ''; // emitted as frontmatter
+    }
+    if (el.matches('dl')) {
+      return renderDl(el);
+    }
+    if (el.matches('p.eyebrow')) {
+      return ''; // not represented in source markdown
+    }
+    if (el.matches('p.section-lede')) {
+      // The HTML wraps the lede in <em>; walk into it so we don't double-wrap
+      // and produce **bold** when the source was *italic*.
+      const em = el.querySelector(':scope > em');
+      const text = em ? inlineWalk(em).trim() : inlineWalk(el).trim();
+      return `*${text}*\n\n`;
+    }
+    if (el.matches('p.dropcap')) {
+      return `${inlineWalk(el).trim()}\n\n`;
+    }
+    if (el.matches('p.pullquote')) {
+      return `> ${inlineWalk(el).trim()}\n\n`;
+    }
+    if (el.matches('p.lede')) {
+      return `> ${inlineWalk(el).trim()}\n\n`;
+    }
+    if (el.matches('section, main, article, header, .end-actions')) {
+      return Array.from(el.children).map(c => walkBlock(c, skip)).join('');
+    }
+
+    const tag = el.tagName.toLowerCase();
+    switch (tag) {
+      case 'h1': return `\n# ${inlineWalk(el).trim()}\n\n`;
+      case 'h2': return `\n## ${inlineWalk(el).trim()}\n\n`;
+      case 'h3': return `\n### ${inlineWalk(el).trim()}\n\n`;
+      case 'h4': return `\n#### ${inlineWalk(el).trim()}\n\n`;
+      case 'h5': return `\n##### ${inlineWalk(el).trim()}\n\n`;
+      case 'h6': return `\n###### ${inlineWalk(el).trim()}\n\n`;
+      case 'p':  return `${inlineWalk(el).trim()}\n\n`;
+      case 'pre': return `\n\`\`\`\n${el.textContent.trim()}\n\`\`\`\n\n`;
+      case 'ul': return Array.from(el.children).map(li => `- ${inlineWalk(li).trim()}`).join('\n') + '\n\n';
+      case 'ol': return Array.from(el.children).map((li, i) => `${i+1}. ${inlineWalk(li).trim()}`).join('\n') + '\n\n';
+      case 'blockquote': {
+        const inner = Array.from(el.childNodes).map(n => walkBlock(n, skip)).join('').trim();
+        return inner.split('\n').map(l => l.length ? `> ${l}` : '>').join('\n') + '\n\n';
+      }
+      case 'hr': return '\n---\n\n';
+      case 'aside':
+      case 'div':
+      case 'span':
+        return Array.from(el.childNodes).map(n => walkBlock(n, skip)).join('');
+      case 'figure':
+      case 'figcaption':
+      case 'svg':
+        return '';
+      default:
+        return Array.from(el.childNodes).map(n => walkBlock(n, skip)).join('');
+    }
+  }
+
+  function renderCallout(el) {
+    const type = (el.dataset.callout || 'note').toUpperCase();
+    let bodyEl = el.querySelector('.callout-box__body');
+    if (!bodyEl) {
+      bodyEl = el.cloneNode(true);
+      bodyEl.querySelectorAll('.callout__label, .callout-box__icon, svg').forEach(n => n.remove());
+    }
+    // Render body as block content, then prefix lines with `>`.
+    const parts = [];
+    for (const child of bodyEl.childNodes) {
+      const piece = walkBlock(child, null);
+      if (piece) parts.push(piece);
+    }
+    const inner = parts.join('').replace(/\n{3,}/g, '\n\n').trim();
+    if (!inner) return `> [${type}]\n\n`;
+    const lines = inner.split('\n');
+    const out = lines.map((l, i) => {
+      if (i === 0) return l.length ? `> [${type}] ${l}` : `> [${type}]`;
+      return l.length ? `> ${l}` : '>';
+    }).join('\n');
+    return out + '\n\n';
+  }
+
+  function renderSidenote(el) {
+    const numEl = el.querySelector('.sidenote__num');
+    const num = numEl ? numEl.textContent.trim() : '';
+    // If a matching footnote definition exists in the formal section, skip this — the Footnotes
+    // section is the canonical source and will be appended at the end.
+    if (num && document.getElementById(`fn${num}`)) return '';
+    const clone = el.cloneNode(true);
+    const cn = clone.querySelector('.sidenote__num');
+    if (cn) cn.remove();
+    const text = inlineWalk(clone).trim();
+    if (!text) return '';
+    return num ? `\n[^${num}]: ${text}\n\n` : `\n> ${text}\n\n`;
+  }
+
+  function renderCodeblock(el) {
+    const lang = el.dataset.lang || el.getAttribute('data-lang') || '';
+    const pathEl = el.querySelector('.codeblock__path');
+    const codeEl = el.querySelector('pre code');
+    if (!codeEl) return '';
+    let code = codeEl.textContent.replace(/\s+$/, '');
+    if (pathEl && pathEl.textContent.trim()) {
+      const path = pathEl.textContent.trim();
+      const firstLine = code.split('\n', 1)[0] || '';
+      // Don't double-prepend if the path already appears in the first line.
+      if (!firstLine.includes(path)) {
+        code = `// ${path}\n${code}`;
+      }
+    }
+    return `\n\`\`\`${lang}\n${code}\n\`\`\`\n\n`;
+  }
+
+  function renderFigure(el) {
+    const cap = el.querySelector('figcaption');
+    const caption = cap ? cap.textContent.trim() : '';
+    // Prefer the SVG <title> as the slug source — it's the chart's semantic name,
+    // typically shorter than the figcaption, and matches the convention used in
+    // the source markdown anchors. Fall back to the figcaption if absent.
+    const svgTitle = el.querySelector('svg > title, svg title');
+    const slugSource = (svgTitle ? svgTitle.textContent : caption) || 'chart';
+    const slug = slugSource.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
+    const target = slug ? `chart-${slug}` : 'chart';
+    return `\n![${caption}](#${target})\n\n`;
+  }
+
+  function renderTable(el) {
+    const headRow = el.querySelector('thead tr');
+    if (!headRow) return '';
+    const headers = Array.from(headRow.children);
+    const headerLine = '| ' + headers.map(th => inlineWalk(th).trim()).join(' | ') + ' |';
+    const sepLine = '|' + headers.map(th => th.classList.contains('num') ? '---:' : '---').join('|') + '|';
+    const bodyRows = Array.from(el.querySelectorAll('tbody tr')).map(tr =>
+      '| ' + Array.from(tr.children).map(td => inlineWalk(td).trim()).join(' | ') + ' |'
+    );
+    return [headerLine, sepLine, ...bodyRows].join('\n') + '\n\n';
+  }
+
+  function renderDl(el) {
+    const items = Array.from(el.children);
+    const blocks = [];
+    let i = 0;
+    while (i < items.length) {
+      if (items[i].tagName === 'DT') {
+        const term = inlineWalk(items[i]).trim();
+        const defs = [];
+        i++;
+        while (i < items.length && items[i].tagName === 'DD') {
+          defs.push(`: ${inlineWalk(items[i]).trim()}`);
+          i++;
+        }
+        blocks.push(term + '\n' + defs.join('\n'));
+      } else {
+        i++;
+      }
+    }
+    return blocks.join('\n\n') + '\n\n';
+  }
+
+  document.getElementById('save-md').addEventListener('click', saveMarkdown);
+  const endLink = document.getElementById('save-md-end');
+  if (endLink) endLink.addEventListener('click', (e) => { e.preventDefault(); saveMarkdown(); });
+
+  /* ---------- Server-backed review mode ---------- */
+  function initReviewMode() {
+    if (document.documentElement.dataset.reviewMode !== 'true') return;
+    const commentToggle = document.getElementById('review-comment-toggle');
+    const bannerClose = document.getElementById('review-mode-banner-close');
+    const reviewRail = document.getElementById('review-rail');
+    const reviewTray = document.getElementById('review-tray');
+    let reviewComments = [];
+    let activeFilter = 'open';
+    let activeCommentId = '';
+    let reviewTrayOpen = false;
+
+    /* ---------- popup (unified comment writing surface) ---------- */
+    const popup = (() => {
+      let current = null;
+      // current shape: { wrapper, atom, state, initialBody, originEl, mode, comment, targetBlockId }
+
+      function open({ mode, target, comment, originEl }) {
+        close({ checkDirty: false });
+        const blockId = target || comment?.target || '';
+        const targetBlock = blockId ? findBlock(blockId) : null;
+        const state = { mode, blockId, comment };
+        const atom = buildAtom(state);
+        if (!atom) return;
+        let wrapperKind = pickMode();
+        let wrapper = wrapperKind === 'rail' ? mountRail(targetBlock) : null;
+        if (!wrapper) { wrapperKind = 'float'; wrapper = mountFloat(); }
+        wrapper.appendChild(atom);
+        atom.classList.add(wrapperKind === 'float' ? 'report-comment-pop--float' : 'report-comment-pop--rail');
+        if (wrapperKind === 'float') placeFloat(originEl || targetBlock, atom);
+        const initialBody = (mode === 'edit' && comment?.body) ? comment.body : '';
+        current = { wrapper, atom, state, initialBody, originEl, mode, comment, targetBlockId: blockId };
+        bindKeys(atom);
+        const ta = atom.querySelector('.report-comment-pop__field');
+        if (mode === 'edit' && ta) ta.value = initialBody;
+        requestAnimationFrame(() => ta?.focus());
+      }
+
+      function close({ checkDirty = true } = {}) {
+        if (!current) return;
+        if (checkDirty && isDirty()) return requestDiscardConfirm();
+        const { wrapper, originEl } = current;
+        const railParent = wrapper?.parentElement?.matches('.report-comment-margin[data-report-comment-ephemeral="true"]') ? wrapper.parentElement : null;
+        wrapper?.remove();
+        if (railParent && railParent.children.length === 0) railParent.remove();
+        current = null;
+        if (originEl && typeof originEl.focus === 'function') originEl.focus();
+      }
+
+      function isDirty() {
+        if (!current) return false;
+        const ta = current.atom?.querySelector('.report-comment-pop__field');
+        return ta ? ta.value !== current.initialBody : false;
+      }
+
+      function pickMode() {
+        if (typeof window === 'undefined' || !window.matchMedia) return 'float';
+        return window.matchMedia('(min-width: 1280px)').matches ? 'rail' : 'float';
+      }
+
+      function mountRail(targetBlock) {
+        // Reuse the existing right-margin column (.report-comment-margin
+        // with data-report-comment-target="block:<id>"). report-comment-pop--rail
+        // is applied by the caller; the wrapper is structural only — no chrome.
+        const target = targetBlock?.dataset?.reportBlockId;
+        if (!target) return null;
+        const wrapper = document.createElement('div');
+        wrapper.className = 'report-comment-pop--rail-wrapper';
+        const selector = `.report-comment-margin[data-report-comment-target="${CSS.escape(target)}"]`;
+        let margin = document.querySelector(selector);
+        if (!margin) {
+          margin = document.createElement('aside');
+          margin.className = 'report-comment-margin';
+          margin.setAttribute('aria-label', `Review comments for ${target}`);
+          margin.dataset.reportCommentTarget = target;
+          margin.dataset.reportCommentEphemeral = 'true';
+          targetBlock.insertAdjacentElement('afterend', margin);
+        }
+        margin.insertBefore(wrapper, margin.firstChild);
+        return wrapper;
+      }
+
+      function mountFloat(/* originRect */) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'report-comment-pop report-comment-pop--float-wrapper';
+        document.body.appendChild(wrapper);
+        return wrapper;
+      }
+
+      function placeFloat(anchor, popupEl) {
+        if (!anchor || !popupEl) return;
+        // Pre-open: if anchor is below the fold by more than 30% of the viewport,
+        // smooth-scroll so it sits near the top.
+        const anchorRect = anchor.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (anchorRect.top > vh * 0.3) window.scrollBy({ top: anchorRect.top - vh * 0.3, behavior: 'smooth' });
+        const popupRect = popupEl.getBoundingClientRect();
+        const vw = window.innerWidth;
+        const scrollY = window.scrollY;
+        const scrollX = window.scrollX;
+        const gap = 8;
+        let top = anchorRect.bottom + scrollY + gap;
+        let left = anchorRect.left + scrollX;
+        // Right-edge clip → shift left.
+        if (left + popupRect.width > scrollX + window.innerWidth - gap) left = scrollX + window.innerWidth - popupRect.width - gap;
+        if (left < scrollX + gap) left = scrollX + gap;
+        // Bottom clip → flip above the anchor.
+        const flipUp = anchorRect.bottom + popupRect.height + gap > vh;
+        if (flipUp) top = anchorRect.top + scrollY - popupRect.height - gap;
+        popupEl.style.left = `${left}px`;
+        popupEl.style.top = `${top}px`;
+        if (flipUp) popupEl.setAttribute('data-tail-side', 'above'); else popupEl.setAttribute('data-tail-side', 'below');
+      }
+
+      function buildAtom(state) {
+        // state: { mode, blockId, comment }
+        const headingId = `report-comment-pop-head-${Math.random().toString(36).slice(2, 8)}`;
+        const isEdit = state.mode === 'edit';
+        const statusLabel = isEdit
+          ? `#${escapeText(state.comment?.id || '')}`
+          : 'New comment';
+        const pill = isEdit
+          ? `<button type="button" class="report-comment-pop__pill" data-action="toggle-status">${state.comment?.status === 'resolved' ? 'resolved' : 'unresolved'}</button>`
+          : '';
+        const deleteBtn = isEdit
+          ? `<button type="button" data-action="delete">Delete</button>`
+          : '';
+
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = `
+          <form class="report-comment-pop" role="dialog" aria-labelledby="${headingId}">
+            <div class="report-comment-pop__head" id="${headingId}">
+              <span><span class="report-comment-pop__id">${escapeText((state.blockId || state.comment?.target || '').replace(/^block:/, ''))}</span> · <span class="report-comment-pop__status">${statusLabel}</span></span>
+              ${pill}
+            </div>
+            <div class="report-comment-pop__body">
+              <textarea class="report-comment-pop__field" aria-label="Comment text">${escapeText(state.comment?.body || '')}</textarea>
+              <p class="report-comment-pop__message" aria-live="polite"></p>
+            </div>
+            <div class="report-comment-pop__hint">
+              <span class="report-comment-pop__keys"><kbd>⌘</kbd><kbd>↵</kbd> save · <kbd>Esc</kbd> close</span>
+              <span class="report-comment-pop__actions">
+                ${deleteBtn}
+                <button type="button" data-action="cancel">Cancel</button>
+                <button type="submit" data-action="save">Save</button>
+              </span>
+            </div>
+          </form>
+        `;
+        return wrapper.firstElementChild;
+      }
+
+      function bindKeys(atomEl) {
+        atomEl.querySelector('[data-action="cancel"]')?.addEventListener('click', () => close());
+        atomEl.querySelector('[data-action="delete"]')?.addEventListener('click', (event) => { event.preventDefault(); deleteCurrent(); });
+        atomEl.querySelector('[data-action="toggle-status"]')?.addEventListener('click', (event) => { event.preventDefault(); requestStatusToggleConfirm(); });
+        atomEl.addEventListener('submit', (event) => { event.preventDefault(); save(); });
+        atomEl.addEventListener('keydown', (event) => {
+          const cmd = event.metaKey || event.ctrlKey;
+          if (event.key === 'Enter' && cmd) { event.preventDefault(); save(); return; }
+          if (event.key === 'Escape') { event.preventDefault(); close(); return; }
+          if (event.key === 'Tab') trapFocus(event, atomEl);
+        });
+      }
+
+      function trapFocus(event, atomEl) {
+        const focusables = atomEl.querySelectorAll('textarea, button');
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+
+      let deleteConfirmed = false;
+
+      function requestDiscardConfirm() {
+        if (!current) return;
+        renderConfirmStrip({
+          prompt: 'Discard changes?',
+          confirmLabel: 'Discard',
+          cancelLabel: 'Keep',
+          onConfirm: () => close({ checkDirty: false }),
+        });
+      }
+
+      function requestDeleteConfirm() {
+        if (!current || current.mode !== 'edit') return;
+        renderConfirmStrip({
+          prompt: `Delete #${current.comment.id}?`,
+          confirmLabel: 'Delete',
+          cancelLabel: 'Cancel',
+          danger: true,
+          onConfirm: () => { deleteConfirmed = true; deleteCurrent(); },
+        });
+      }
+
+      function requestStatusToggleConfirm() {
+        if (!current || current.mode !== 'edit') return;
+        const next = current.comment.status === 'resolved' ? 'open' : 'resolved';
+        renderConfirmStrip({
+          prompt: next === 'resolved' ? 'Mark resolved?' : 'Reopen?',
+          confirmLabel: next === 'resolved' ? 'Resolve' : 'Reopen',
+          cancelLabel: 'Cancel',
+          onConfirm: () => doStatusToggle(next),
+        });
+      }
+
+      function renderConfirmStrip({ prompt, confirmLabel, cancelLabel, danger, onConfirm }) {
+        if (!current) return;
+        const hint = current.atom.querySelector('.report-comment-pop__hint');
+        if (!hint) return;
+        const previous = hint.innerHTML;
+        hint.innerHTML = `
+          <span class="report-comment-pop__keys">${escapeText(prompt)}</span>
+          <span class="report-comment-pop__actions">
+            <button type="button" data-confirm="cancel">${escapeText(cancelLabel)}</button>
+            <button type="button" data-confirm="ok" data-danger="${danger ? 'true' : 'false'}">${escapeText(confirmLabel)}</button>
+          </span>
+        `;
+        const restore = () => { hint.innerHTML = previous; };
+        hint.querySelector('[data-confirm="cancel"]').addEventListener('click', restore);
+        hint.querySelector('[data-confirm="ok"]').addEventListener('click', () => { restore(); onConfirm(); });
+      }
+
+      async function doStatusToggle(nextStatus) {
+        if (!current || current.mode !== 'edit') return;
+        const message = current.atom.querySelector('.report-comment-pop__message');
+        setActionsBusy(true, nextStatus === 'resolved' ? 'Resolving…' : 'Reopening…');
+        try {
+          const id = current.comment.id;
+          const noteBody = current.atom.querySelector('.report-comment-pop__field')?.value.trim() || '';
+          const updated = await request(`/api/comments/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify({ status: nextStatus, resolvedNote: nextStatus === 'resolved' ? noteBody : '' }) });
+          close({ checkDirty: false });
+          upsertComment(updated);
+          setActiveComment(updated.id, { scroll: false });
+        } catch (error) {
+          message.textContent = error?.message || 'Could not update status.';
+          setActionsBusy(false);
+        }
+      }
+
+      async function save() {
+        if (!current) return;
+        const ta = current.atom.querySelector('.report-comment-pop__field');
+        const message = current.atom.querySelector('.report-comment-pop__message');
+        const body = (ta?.value || '').trim();
+        if (!body) { message.textContent = 'Write a comment before saving.'; ta?.focus(); return; }
+        setActionsBusy(true, 'Saving…');
+        try {
+          const result = current.mode === 'new'
+            ? await request('/api/comments', { method: 'POST', body: JSON.stringify({ target: current.targetBlockId, body }) })
+            : await request(`/api/comments/${encodeURIComponent(current.comment.id)}`, { method: 'PUT', body: JSON.stringify({ body }) });
+          close({ checkDirty: false });
+          upsertComment(result);
+          setActiveComment(result.id, { scroll: false, updateHash: true });
+        } catch (error) {
+          message.textContent = error?.message || 'Could not save.';
+          setActionsBusy(false);
+        }
+      }
+
+      async function deleteCurrent() {
+        if (!current || current.mode !== 'edit') return;
+        if (!deleteConfirmed) return requestDeleteConfirm();
+        deleteConfirmed = false;
+        const message = current.atom.querySelector('.report-comment-pop__message');
+        setActionsBusy(true, 'Deleting…');
+        try {
+          const id = current.comment.id;
+          const deleted = await request(`/api/comments/${encodeURIComponent(id)}`, { method: 'DELETE' });
+          close({ checkDirty: false });
+          if (deleted?.id) { reviewComments = reviewComments.filter(c => c.id !== deleted.id); if (activeCommentId === deleted.id) activeCommentId = ''; renderInlineMarkers(); renderReviewTray(); }
+        } catch (error) {
+          message.textContent = error?.message || 'Could not delete.';
+          setActionsBusy(false);
+        }
+      }
+
+      function setActionsBusy(busy, label) {
+        if (!current) return;
+        const buttons = current.atom.querySelectorAll('.report-comment-pop__actions button');
+        buttons.forEach(b => { b.disabled = !!busy; });
+        const message = current.atom.querySelector('.report-comment-pop__message');
+        if (busy && label) message.textContent = label;
+        if (!busy && message.textContent && /…$/.test(message.textContent)) message.textContent = '';
+      }
+
+      // Close on rail/float breakpoint crossover. Dirty check still applies.
+      if (typeof window !== 'undefined' && window.matchMedia) {
+        window.matchMedia('(min-width: 1280px)').addEventListener('change', () => { if (current) close(); });
+      }
+
+      return { open, close, isDirty };
+    })();
+
+    function setReviewTrayOpen(open) {
+      reviewTrayOpen = !!open;
+      if (reviewTray) {
+        reviewTray.classList.toggle('review-tray--open', reviewTrayOpen);
+        reviewTray.setAttribute('aria-hidden', String(!reviewTrayOpen));
+      }
+      if (reviewRail) {
+        reviewRail.setAttribute('aria-expanded', String(reviewTrayOpen));
+        reviewRail.setAttribute('aria-label', reviewTrayOpen ? 'Hide review comments' : 'Open review comments');
+      }
+    }
+
+    function toggleReviewTray() {
+      setReviewTrayOpen(!reviewTrayOpen);
+    }
+
+    function closeReviewTray() {
+      setReviewTrayOpen(false);
+    }
+
+    function updateReviewRailCounts(open, total) {
+      document.querySelectorAll('[data-review-rail-open-count]').forEach(node => {
+        node.textContent = String(open);
+      });
+      document.querySelectorAll('[data-review-rail-total-count]').forEach(node => {
+        node.textContent = String(total);
+      });
+    }
+
+    function setCommentMode(on) {
+      document.body.dataset.commentMode = String(!!on);
+      if (!on) popup.close({ checkDirty: false });
+      if (!commentToggle) return;
+      commentToggle.classList.toggle('is-active', !!on);
+      commentToggle.setAttribute('aria-pressed', String(!!on));
+      commentToggle.setAttribute('aria-label', on ? 'Stop comment mode' : 'Start comment mode');
+      commentToggle.setAttribute('title', on ? 'Stop comment mode' : 'Start comment mode');
+    }
+
+    function toggleCommentMode() {
+      setCommentMode(document.body.dataset.commentMode !== 'true');
+    }
+
+    setCommentMode(false);
+    if (commentToggle) {
+      commentToggle.addEventListener('click', toggleCommentMode);
+    }
+    if (bannerClose) bannerClose.addEventListener('click', () => setCommentMode(false));
+    if (reviewRail) reviewRail.addEventListener('click', toggleReviewTray);
+
+    async function request(path, options = {}) {
+      const res = await fetch(path, {
+        headers: { 'content-type': 'application/json', ...(options.headers || {}) },
+        ...options,
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || `Request failed: ${res.status}`);
+      }
+      return res.headers.get('content-type')?.includes('application/json') ? res.json() : res.text();
+    }
+
+    function escapeText(value) {
+      return String(value || '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+    }
+    function openCommentEditor(comment) {
+      const block = comment.target ? findBlock(comment.target) : null;
+      popup.open({ mode: 'edit', comment, originEl: block });
+    }
+
+    function openResolveDialog(comment) {
+      // Resolve / reopen happen inside the popup via the status pill.
+      const block = comment.target ? findBlock(comment.target) : null;
+      popup.open({ mode: 'edit', comment, originEl: block });
+    }
+
+    async function reopenComment(comment) {
+      const updated = await request(`/api/comments/${encodeURIComponent(comment.id)}`, {
+        method: 'PUT',
+        body: JSON.stringify({ status: 'open', resolvedNote: '' }),
+      });
+      upsertComment(updated);
+      setActiveComment(updated.id, { scroll: false });
+    }
+
+    function upsertComment(comment) {
+      const index = reviewComments.findIndex(item => item.id === comment.id);
+      if (index >= 0) reviewComments[index] = comment;
+      else reviewComments.push(comment);
+      renderInlineMarkers();
+      renderReviewTray();
+    }
+
+    function filteredComments() {
+      if (activeFilter === 'open' || activeFilter === 'resolved') {
+        return reviewComments.filter(comment => (comment.status || 'open') === activeFilter);
+      }
+      return reviewComments;
+    }
+
+    function blockIdFromTarget(target) {
+      return String(target || '').replace(/^block:/u, 'block-');
+    }
+
+    function findBlock(target) {
+      return document.querySelector(`[data-report-block-id="${CSS.escape(target)}"]`);
+    }
+
+    let reportCommentLayoutFrame = 0;
+    let reportCommentResizeObserver = null;
+    function getReportCommentResizeObserver() {
+      if (reportCommentResizeObserver || typeof ResizeObserver === 'undefined') return reportCommentResizeObserver;
+      reportCommentResizeObserver = new ResizeObserver(scheduleReportCommentLayout);
+      return reportCommentResizeObserver;
+    }
+    function resetReportCommentMarginStyles(note) {
+      note.style.position = '';
+      note.style.float = '';
+      note.style.clear = '';
+      note.style.left = '';
+      note.style.top = '';
+      note.style.width = '';
+      note.style.margin = '';
+      note.style.transform = '';
+      note.style.visibility = '';
+    }
+
+    function layoutReportCommentMargins() {
+      reportCommentLayoutFrame = 0;
+      const notes = Array.from(document.querySelectorAll('.report-comment-margin'));
+      if (!notes.length) return;
+      if (!article || !window.matchMedia('(min-width: 1180px)').matches) {
+        notes.forEach(resetReportCommentMarginStyles);
+        return;
+      }
+
+      notes.forEach(note => {
+        note.style.position = 'absolute';
+        note.style.float = 'none';
+        note.style.clear = 'none';
+        note.style.left = 'calc(100% + var(--s-8))';
+        note.style.top = '0px';
+        note.style.width = '15rem';
+        note.style.margin = '0';
+        note.style.transform = 'none';
+        note.style.visibility = 'hidden';
+      });
+
+      const articleRect = article.getBoundingClientRect();
+      const placements = notes.map(note => {
+        const block = findBlock(note.dataset.reportCommentTarget);
+        const blockRect = block ? block.getBoundingClientRect() : articleRect;
+        return {
+          note,
+          top: Math.max(0, Math.round(blockRect.top - articleRect.top)),
+        };
+      }).sort((a, b) => a.top - b.top);
+
+      let nextTop = 0;
+      placements.forEach(({ note, top }) => {
+        const placedTop = Math.max(top, nextTop);
+        note.style.top = `${placedTop}px`;
+        note.style.visibility = '';
+        nextTop = placedTop + note.offsetHeight + 16;
+      });
+    }
+
+    function scheduleReportCommentLayout() {
+      if (reportCommentLayoutFrame) return;
+      reportCommentLayoutFrame = window.requestAnimationFrame(layoutReportCommentMargins);
+    }
+
+    function renderInlineMarkers() {
+      document.querySelectorAll('.report-comment-margin').forEach(node => node.remove());
+      if (article) {
+        article.querySelectorAll('.table-wrap[data-report-has-comment="true"]').forEach(tableWrap => {
+          delete tableWrap.dataset.reportHasComment;
+        });
+      }
+      const useDesktopMargin = article && window.matchMedia('(min-width: 1180px)').matches;
+      const groups = new Map();
+      reviewComments.forEach(comment => {
+        if (!comment.target) return;
+        if (!groups.has(comment.target)) groups.set(comment.target, []);
+        groups.get(comment.target).push(comment);
+      });
+      groups.forEach((comments, target) => {
+        const block = findBlock(target);
+        if (!block) return;
+        const enclosingTable = block.closest('.table-wrap');
+        if (enclosingTable) enclosingTable.dataset.reportHasComment = 'true';
+        const wrap = document.createElement('aside');
+        wrap.className = 'report-comment-margin';
+        wrap.setAttribute('aria-label', `Review comments for ${target}`);
+        wrap.dataset.reportCommentTarget = target;
+        comments.forEach(comment => {
+          const status = comment.status || 'open';
+          const card = document.createElement('article');
+          card.className = 'report-comment-note';
+          card.setAttribute('data-report-comment-note', comment.id);
+          card.dataset.reportCommentStatus = status;
+          const marker = document.createElement('a');
+          marker.className = 'report-comment-note__meta';
+          marker.id = `comment-${comment.id}`;
+          marker.href = `#comment-${comment.id}`;
+          marker.setAttribute('data-report-comment-marker', comment.id);
+          marker.dataset.reportCommentStatus = status;
+          marker.innerHTML = `<span class="report-comment-note__status">${escapeText(status)}</span><span class="report-comment-note__id">${escapeText(comment.id)}</span>`;
+          marker.setAttribute('aria-label', `${status} comment ${comment.id}`);
+          marker.addEventListener('click', event => {
+            event.preventDefault();
+            setActiveComment(comment.id, { updateHash: true });
+          });
+          const body = document.createElement('p');
+          body.className = 'report-comment-note__body';
+          body.textContent = comment.body || 'No comment text.';
+          card.appendChild(marker);
+          card.appendChild(body);
+          if (comment.resolvedNote) {
+            const resolved = document.createElement('p');
+            resolved.className = 'report-comment-note__resolved';
+            resolved.textContent = `Resolved: ${comment.resolvedNote}`;
+            card.appendChild(resolved);
+          }
+          wrap.appendChild(card);
+        });
+        if (useDesktopMargin) article.appendChild(wrap);
+        else (block.closest('.table-wrap, ul, ol, dl') || block).insertAdjacentElement('afterend', wrap);
+        const observer = getReportCommentResizeObserver();
+        if (observer) observer.observe(wrap);
+      });
+      syncActiveClasses();
+      scheduleReportCommentLayout();
+    }
+
+    let reportCommentRenderFrame = 0;
+    function scheduleRenderInlineMarkers() {
+      if (reportCommentRenderFrame) return;
+      reportCommentRenderFrame = window.requestAnimationFrame(() => {
+        reportCommentRenderFrame = 0;
+        renderInlineMarkers();
+      });
+    }
+
+    function renderReviewTray() {
+      if (!reviewTray) return;
+      const open = reviewComments.filter(comment => (comment.status || 'open') !== 'resolved').length;
+      const resolved = reviewComments.filter(comment => (comment.status || 'open') === 'resolved').length;
+      const comments = filteredComments();
+      const active = reviewComments.find(comment => comment.id === activeCommentId) || comments[0] || null;
+      if (!activeCommentId && active) activeCommentId = active.id;
+      updateReviewRailCounts(open, reviewComments.length);
+      reviewTray.innerHTML = `<div class="review-tray__header">
+          <div>
+            <h2 class="review-tray__title">Review</h2>
+            <p class="review-tray__counts">Open ${open} · Resolved ${resolved} · Total ${reviewComments.length}</p>
+          </div>
+          <button class="review-tray__close" type="button" data-action="close-tray" aria-label="Hide review comments">×</button>
+        </div>
+        <div class="review-tray__filter" role="group" aria-label="Filter review comments">
+          ${['open', 'resolved', 'all'].map(filter => `<button type="button" data-filter="${filter}" aria-pressed="${String(activeFilter === filter)}">${filter[0].toUpperCase() + filter.slice(1)}</button>`).join('')}
+        </div>
+        <div class="review-tray__list">
+          ${comments.length ? comments.map(comment => renderReviewTrayItem(comment)).join('') : '<p class="review-tray__empty">No comments in this view.</p>'}
+        </div>`;
+
+      reviewTray.querySelectorAll('[data-action="close-tray"]').forEach(button => {
+        button.addEventListener('click', closeReviewTray);
+      });
+      reviewTray.querySelectorAll('[data-filter]').forEach(button => {
+        button.addEventListener('click', () => {
+          activeFilter = button.dataset.filter || 'open';
+          activeCommentId = '';
+          renderReviewTray();
+          syncActiveClasses();
+        });
+      });
+      reviewTray.querySelectorAll('[data-comment-id]').forEach(row => {
+        row.addEventListener('click', event => {
+          if (event.target.closest('a, button')) return;
+          setActiveComment(row.dataset.commentId, { updateHash: true });
+        });
+      });
+      reviewTray.querySelectorAll('[data-action="edit"]').forEach(button => {
+        button.addEventListener('click', () => {
+          const comment = reviewComments.find(item => item.id === button.dataset.commentId);
+          if (comment) openCommentEditor(comment);
+        });
+      });
+      reviewTray.querySelectorAll('[data-action="resolve"]').forEach(button => {
+        button.addEventListener('click', () => {
+          const comment = reviewComments.find(item => item.id === button.dataset.commentId);
+          if (comment) openResolveDialog(comment);
+        });
+      });
+      reviewTray.querySelectorAll('[data-action="reopen"]').forEach(button => {
+        button.addEventListener('click', () => {
+          const comment = reviewComments.find(item => item.id === button.dataset.commentId);
+          if (comment) reopenComment(comment).catch(error => showToast(escapeText(error.message || 'Could not reopen comment.')));
+        });
+      });
+      reviewTray.querySelectorAll('[data-action="delete"]').forEach(button => {
+        button.addEventListener('click', () => {
+          const comment = reviewComments.find(item => item.id === button.dataset.commentId);
+          if (comment) openCommentEditor(comment);
+        });
+      });
+      syncActiveClasses();
+    }
+
+    function renderReviewTrayItem(comment) {
+      const status = comment.status || 'open';
+      const blockHash = `#${blockIdFromTarget(comment.target)}`;
+      const commentHash = `#comment-${comment.id}`;
+      const active = comment.id === activeCommentId ? ' is-active' : '';
+      const body = escapeText(comment.body || '').slice(0, 220);
+      const resolveAction = status === 'resolved'
+        ? `<button class="review-tray__action" type="button" data-action="reopen" data-comment-id="${escapeText(comment.id)}">Reopen</button>`
+        : `<button class="review-tray__action" type="button" data-action="resolve" data-comment-id="${escapeText(comment.id)}">Resolve</button>`;
+      return `<div class="review-tray__item${active}" data-comment-id="${escapeText(comment.id)}" tabindex="0">
+        <div class="review-tray__item-meta">
+          <span>${escapeText(comment.id)} · ${escapeText(status)}</span>
+          <span>${escapeText(comment.target || '')}</span>
+        </div>
+        <p class="review-tray__item-body">${body || 'No comment text.'}</p>
+        ${comment.resolvedNote ? `<p class="review-tray__item-body"><strong>Resolved:</strong> ${escapeText(comment.resolvedNote)}</p>` : ''}
+        <div class="review-tray__links">
+          <a href="${commentHash}">Comment link</a>
+          <a href="${blockHash}">Block link</a>
+        </div>
+        <div class="review-tray__actions">
+          <button class="review-tray__action" type="button" data-action="edit" data-comment-id="${escapeText(comment.id)}">Edit</button>
+          ${resolveAction}
+          <button class="review-tray__action" type="button" data-action="delete" data-comment-id="${escapeText(comment.id)}">Delete</button>
+        </div>
+      </div>`;
+    }
+
+    function syncActiveClasses() {
+      document.querySelectorAll('.report-comment-note__meta').forEach(marker => {
+        marker.classList.toggle('is-active', marker.dataset.reportCommentMarker === activeCommentId);
+      });
+      document.querySelectorAll('[data-report-comment-note]').forEach(card => {
+        card.classList.toggle('is-active', card.getAttribute('data-report-comment-note') === activeCommentId);
+      });
+      document.querySelectorAll('[data-report-block-id]').forEach(block => {
+        const active = reviewComments.find(comment => comment.id === activeCommentId);
+        block.classList.toggle('is-review-active', !!active && block.dataset.reportBlockId === active.target);
+      });
+    }
+
+    function setActiveComment(id, options = {}) {
+      const { scroll = true, updateHash = false } = options;
+      const comment = reviewComments.find(item => item.id === id);
+      if (!comment) return;
+      activeCommentId = comment.id;
+      renderReviewTray();
+      syncActiveClasses();
+      if (scroll) {
+        const block = findBlock(comment.target);
+        if (block) block.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      if (updateHash) history.replaceState(null, '', `#comment-${comment.id}`);
+    }
+
+    function jumpToNextOpenComment() {
+      const open = reviewComments.filter(comment => (comment.status || 'open') !== 'resolved');
+      if (!open.length) return;
+      const index = open.findIndex(comment => comment.id === activeCommentId);
+      const next = open[(index + 1) % open.length];
+      setActiveComment(next.id, { updateHash: true });
+    }
+
+    function flashReviewTarget(block) {
+      if (!block) return;
+      block.classList.remove('is-review-flash');
+      void block.offsetWidth;
+      block.classList.add('is-review-flash');
+      setTimeout(() => block.classList.remove('is-review-flash'), 1400);
+    }
+
+    function handleReviewHash() {
+      const hash = decodeURIComponent(window.location.hash || '');
+      if (hash.startsWith('#comment-')) {
+        const id = hash.replace('#comment-', '');
+        const comment = reviewComments.find(item => item.id === id);
+        if (comment) {
+          setActiveComment(id);
+          flashReviewTarget(findBlock(comment.target));
+        }
+        return;
+      }
+      if (hash.startsWith('#block-')) {
+        const target = hash.replace('#block-', 'block:');
+        const block = findBlock(target);
+        if (block) {
+          block.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          flashReviewTarget(block);
+        }
+      }
+    }
+
+    function isTypingTarget(target) {
+      return !!target.closest('input, textarea, select, [contenteditable="true"]');
+    }
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        // The popup owns its own Esc inside bindKeys; if it is open we let it
+        // handle the event. Otherwise we exit comment mode.
+        if (document.querySelector('.report-comment-pop')) return;
+        setCommentMode(false);
+        return;
+      }
+      if (isTypingTarget(event.target)) return;
+      if (event.altKey && event.code === 'KeyC') {
+        event.preventDefault();
+        toggleCommentMode();
+      }
+      if (event.key === 'n') {
+        event.preventDefault();
+        jumpToNextOpenComment();
+      }
+    });
+
+    document.querySelectorAll('[data-report-block-id]').forEach(block => {
+      block.setAttribute('title', `Turn on comment mode to comment on ${block.dataset.reportBlockId}`);
+      block.addEventListener('click', async (event) => {
+        if (event.target.closest('a, button, input, textarea, select, .report-comment-margin')) return;
+        if (document.body.dataset.commentMode !== 'true') return;
+        const target = block.dataset.reportBlockId;
+        const firstUnresolved = reviewComments.find(c => c.target === target && c.status !== 'resolved');
+        if (firstUnresolved) popup.open({ mode: 'edit', comment: firstUnresolved, originEl: block });
+        else popup.open({ mode: 'new', target, originEl: block });
+      });
+    });
+
+    window.addEventListener('resize', scheduleRenderInlineMarkers, { passive: true });
+    window.addEventListener('load', scheduleReportCommentLayout, { once: true });
+    if (document.fonts?.ready) document.fonts.ready.then(scheduleReportCommentLayout).catch(() => {});
+
+    request('/api/comments').then(comments => {
+      reviewComments = comments;
+      renderInlineMarkers();
+      renderReviewTray();
+      handleReviewHash();
+    }).catch(() => {});
+    window.addEventListener('hashchange', handleReviewHash);
+  }
+
+  initReviewMode();
+
+  /* ---------- Toast ---------- */
+  const toast = document.getElementById('toast');
+  let toastTimer = null;
+  function showToast(html) {
+    toast.innerHTML = html;
+    toast.setAttribute('data-visible', 'true');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.setAttribute('data-visible', 'false'), 2500);
+  }
+
+  /* ---------- Keyboard shortcuts ---------- */
+  // / = focus first ToC link
+  // t = toggle theme
+  // s = save as MD
+  // g 1..9 = jump to nth top-level section
+  /* ---------- Lightbox ---------- */
+  const lightbox = document.getElementById('lightbox');
+  const lightboxStage = document.getElementById('lightbox-stage');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxClose = document.getElementById('lightbox-close');
+  let lightboxLastFocus = null;
+
+  function openLightboxFor(target) {
+    const fig = target.closest('figure');
+    const cap = fig ? fig.querySelector('figcaption') : null;
+    // Clone the visible content (img or svg) into the stage.
+    const content = target.querySelector('img, svg') || (target.matches('img, svg') ? target : null);
+    if (!content) return;
+    lightboxLastFocus = document.activeElement;
+    lightboxStage.innerHTML = '';
+    const clone = content.cloneNode(true);
+    if (clone.tagName === 'IMG') {
+      clone.removeAttribute('width');
+      clone.removeAttribute('height');
+    }
+    lightboxStage.appendChild(clone);
+    lightboxCaption.textContent = cap ? cap.textContent.trim() : '';
+    lightbox.setAttribute('data-open', 'true');
+    document.documentElement.style.overflow = 'hidden';
+    requestAnimationFrame(() => lightboxClose.focus());
+  }
+
+  function closeLightbox() {
+    lightbox.setAttribute('data-open', 'false');
+    document.documentElement.style.overflow = '';
+    setTimeout(() => { lightboxStage.innerHTML = ''; }, 240);
+    if (lightboxLastFocus && typeof lightboxLastFocus.focus === 'function') {
+      lightboxLastFocus.focus();
+    }
+  }
+
+  document.querySelectorAll('figure.framed .zoomable').forEach(target => {
+    if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '0');
+    if (!target.hasAttribute('role')) target.setAttribute('role', 'button');
+    target.addEventListener('click', () => openLightboxFor(target));
+    target.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightboxFor(target); }
+    });
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox
+        || e.target.classList.contains('lightbox__inner')
+        || e.target.classList.contains('lightbox__stage')) closeLightbox();
+  });
+  lightboxClose.addEventListener('click', closeLightbox);
+
+  let gPrefix = false;
+  let gTimer = null;
+
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.getAttribute('data-open') === 'true' && e.key === 'Escape') {
+      e.preventDefault();
+      closeLightbox();
+      return;
+    }
+
+    // Alt/Option-modified shortcuts work even while typing inside the editable article,
+    // so you can save without leaving edit mode. macOS produces dead keys for Option+E
+    // (acute accent) and Option+S (ß), so match on e.code, not e.key.
+    if (e.altKey && !e.metaKey && !e.ctrlKey && !e.shiftKey) {
+      if (e.code === 'KeyE') {
+        if (editBtn) { e.preventDefault(); editBtn.click(); }
+        return;
+      }
+      if (e.code === 'KeyS') {
+        e.preventDefault();
+        saveMarkdown();
+        return;
+      }
+    }
+
+    // Unmodified shortcuts: skip when typing or when a modifier is held.
+    if (e.target.matches('input, textarea, [contenteditable="true"]')) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+    if (e.key === '/') {
+      e.preventDefault();
+      const first = document.querySelector('.toc__link');
+      if (first) first.focus();
+      return;
+    }
+    if (e.key === 't' || e.key === 'T') {
+      themeBtn.click();
+      return;
+    }
+    if (e.key === 'g' || e.key === 'G') {
+      gPrefix = true;
+      clearTimeout(gTimer);
+      gTimer = setTimeout(() => { gPrefix = false; }, 800);
+      return;
+    }
+    if (gPrefix && /^[1-9]$/.test(e.key)) {
+      gPrefix = false;
+      clearTimeout(gTimer);
+      const topLinks = Array.from(document.querySelectorAll('.toc > .toc__list > .toc__item > .toc__link'));
+      const target = topLinks[parseInt(e.key, 10) - 1];
+      if (target) target.click();
+    }
+  });
+})();
+</script>
+
+<script>
+(function () {
+  const sw = document.getElementById('report-switcher');
+  if (!sw) return;
+  const input = document.getElementById('report-switcher-input');
+  const list = document.getElementById('report-switcher-list');
+  const closeBtn = document.getElementById('report-switcher-close');
+  const countEl = document.getElementById('report-switcher-count');
+  const indexEl = document.getElementById('report-index');
+  if (!indexEl) return;
+
+  let data;
+  try { data = JSON.parse(indexEl.textContent); } catch (e) { data = { reports: [], current_slug: '' }; }
+
+  let previousFocus = null;
+  let activeIndex = 0;
+  let currentResults = [];
+
+  function escText(s) {
+    return String(s == null ? '' : s).replace(/[&<>]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[c]));
+  }
+  function escAttr(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+  }
+
+  function fuzzy(needle, hay) {
+    if (!needle) return true;
+    let i = 0;
+    for (let j = 0; j < hay.length && i < needle.length; j++) {
+      if (hay[j] === needle[i]) i++;
+    }
+    return i === needle.length;
+  }
+
+  function filterReports(q) {
+    const reports = (data.reports || []).filter(r => r.slug !== data.current_slug);
+    if (!q) return reports;
+    const needle = q.toLowerCase();
+    return reports.filter(r => {
+      const hay = (
+        (r.title || '') + ' ' +
+        ((r.tags || []).join(' ')) + ' ' +
+        (r.summary || '') + ' ' +
+        (r.eyebrow || '')
+      ).toLowerCase();
+      return hay.includes(needle) || fuzzy(needle, hay);
+    });
+  }
+
+  function renderList() {
+    const q = input.value.trim();
+    const all = filterReports(q);
+    const top = all.slice(0, 8);
+    currentResults = top;
+    activeIndex = Math.min(activeIndex, top.length - 1);
+    if (activeIndex < 0) activeIndex = 0;
+
+    if (top.length === 0) {
+      list.innerHTML = '<li class="report-switcher__empty">No reports match.</li>';
+      countEl.textContent = (data.reports || []).length + ' reports';
+      return;
+    }
+
+    list.innerHTML = top.map((r, i) => {
+      const isActive = i === activeIndex;
+      const key = isActive ? '↵' : String(i + 1);
+      return '<li role="option" data-href="' + escAttr(r.href) + '" data-index="' + i + '" ' +
+        'class="report-switcher__item' + (isActive ? ' is-active' : '') + '" ' +
+        'aria-selected="' + (isActive ? 'true' : 'false') + '">' +
+        '<span class="report-switcher__item-date">' + escText((r.date || '').slice(5)) + '</span>' +
+        '<span class="report-switcher__item-title">' + escText(r.title || '(untitled)') + '</span>' +
+        '<span class="report-switcher__item-key">' + escText(key) + '</span>' +
+      '</li>';
+    }).join('');
+
+    const more = all.length - top.length;
+    countEl.textContent = more > 0
+      ? (more + ' more · ' + all.length + ' total')
+      : (top.length + (top.length === 1 ? ' report' : ' reports'));
+  }
+
+  function openSwitcher() {
+    if (!sw.hasAttribute('hidden')) return;
+    previousFocus = document.activeElement;
+    sw.removeAttribute('hidden');
+    input.value = '';
+    activeIndex = 0;
+    renderList();
+    requestAnimationFrame(() => input.focus());
+    window.dispatchEvent(new CustomEvent('report-switcher-open'));
+  }
+  function closeSwitcher() {
+    if (sw.hasAttribute('hidden')) return;
+    sw.setAttribute('hidden', '');
+    if (previousFocus && typeof previousFocus.focus === 'function') previousFocus.focus();
+    window.dispatchEvent(new CustomEvent('report-switcher-close'));
+  }
+
+  function openActive(newTab) {
+    const r = currentResults[activeIndex];
+    if (!r) return;
+    if (newTab) window.open(r.href, '_blank', 'noopener');
+    else window.location.href = r.href;
+  }
+
+  let renderTimer = 0;
+  input.addEventListener('input', () => {
+    clearTimeout(renderTimer);
+    renderTimer = setTimeout(renderList, 50);
+  });
+
+  sw.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); closeSwitcher(); return; }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (currentResults.length === 0) return;
+      activeIndex = (activeIndex + 1) % currentResults.length;
+      renderList();
+      return;
+    }
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (currentResults.length === 0) return;
+      activeIndex = (activeIndex - 1 + currentResults.length) % currentResults.length;
+      renderList();
+      return;
+    }
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      openActive(e.metaKey || e.ctrlKey);
+      return;
+    }
+    if (/^[1-8]$/.test(e.key) && document.activeElement !== input) {
+      const i = parseInt(e.key, 10) - 1;
+      if (currentResults[i]) {
+        activeIndex = i;
+        openActive(false);
+      }
+      return;
+    }
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (/^[1-8]$/.test(e.key) && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault();
+      const i = parseInt(e.key, 10) - 1;
+      if (currentResults[i]) {
+        activeIndex = i;
+        openActive(false);
+      }
+    }
+  });
+
+  list.addEventListener('click', (e) => {
+    const li = e.target.closest('.report-switcher__item');
+    if (!li) return;
+    activeIndex = parseInt(li.getAttribute('data-index'), 10) || 0;
+    openActive(e.metaKey || e.ctrlKey);
+  });
+  closeBtn.addEventListener('click', closeSwitcher);
+  sw.addEventListener('mousedown', (e) => {
+    if (e.target === sw) closeSwitcher();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey && (e.key === 'o' || e.key === 'O')) {
+      const tag = (document.activeElement && document.activeElement.tagName) || '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || (document.activeElement && document.activeElement.isContentEditable)) {
+        return;
+      }
+      e.preventDefault();
+      openSwitcher();
+    }
+  });
+
+  window.__openReportSwitcher = openSwitcher;
+})();
+</script>
+
+</body>
+</html>

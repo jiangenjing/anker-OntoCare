@@ -1,0 +1,394 @@
+{
+  "U001": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "Anker003源表字段与订单卡片一致；提示确认订单，不冒充实时物流。",
+    "response_sha256": "aa290dfb8fb5251bb35f50fbcf687a1e06d2a80c946772ef8788f499473613a2"
+  },
+  "U002": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "Anker013订单卡片和源表字段一致。",
+    "response_sha256": "c770476a97553688757728d32c06d71e497ab440e0651d28408ca2c0f30b17cf"
+  },
+  "U003": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "Anker016订单卡片和源表字段一致。",
+    "response_sha256": "73f8ec01bd2f4709d884e3bc5c3b39dffe7d672af31c0d4d1aec61154f53b6ff"
+  },
+  "U004": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "保留拆单两次发货和快照边界，不推断每个包裹内容。",
+    "response_sha256": "6a3059de26876f7f2f51309de5db507ddcac45032f742a2948888545f1ff57ae"
+  },
+  "U005": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "识别配件已收到、机器人未收到及UPS状态冲突；有重复确认包裹内容的措辞，可继续优化简洁性。",
+    "response_sha256": "3b5b8b195760b0a3e923ed50c39741596d6d9f3a3609b8217bb19f3502a05395"
+  },
+  "U006": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "按T29C2001筛选UPS物流，不把主机记录混入。",
+    "response_sha256": "94b2e081861e2daf77037d6c15fd22d6db55bdabe0d2c7d64ab3cb7e71ea6ba5"
+  },
+  "U007": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "明确label created与Delivered快照冲突，不索取已提供的单号。",
+    "response_sha256": "f8efdb68228a8d382ef172de8889057831014a17918a413ba8410ce879fd509d"
+  },
+  "U008": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "说明预计日期已过、快照非实时；引导官方查询和人工复核，未声称已查询或执行。",
+    "response_sha256": "47cd5e9bfa7559df48e0d532d0aa894c4afb24887669bcb2fdef96c6630ab37f"
+  },
+  "U009": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "保留Return to sender状态，不编造退回原因或补寄。",
+    "response_sha256": "f1075fddd6e48efbb3655acc98d48c0732f3a867ed69ac5f2e0f54afe9c04c8a"
+  },
+  "U010": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "S1 Pro先澄清两种品类。",
+    "response_sha256": "e04e862e7504aca77062629e39603e93bd83bf71df64a89ebe6173cf19ac9613"
+  },
+  "U011": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "确认T8D04吸奶器，未继承扫地机排障。",
+    "response_sha256": "4c08972e04db44f0c75f254a755ccad17acac41ab3c0951a0d5ff01405865566"
+  },
+  "U012": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "当前聚焦C10并引用Anker009对应明细，不被X10提及覆盖。",
+    "response_sha256": "4b9d5c0f3be26ac40296a6b570cbb80138837f03950b085023a74e8bafae4857"
+  },
+  "U013": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "6011按r-24检查密封圈并保留硬件判断条件。",
+    "response_sha256": "f84d88e9f0e96b9d45037677d3837c10c97fa0d615714274a5d89d755bae283d"
+  },
+  "U014": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "2310按r-57先检查滤网，再按安装结果检查磁铁。",
+    "response_sha256": "2c70d9113c9a179368e9f3c6206f578d289b23df21d45a838607440f7f4fb0a7"
+  },
+  "U015": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "7031步骤由r-103支持，先清理基站周围障碍物。",
+    "response_sha256": "039e483cbe7f3ea0db2048628a42585626175ab5505e1b8e0f4b427e8cab96a4"
+  },
+  "U016": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "E41按r-139更新固件并重启。",
+    "response_sha256": "12af34b2cf32e3fb47071fa0fba4472d126e0879dece500052842ab29c6399cc"
+  },
+  "U017": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "E53按r-452检查擦拭传感器并重启。",
+    "response_sha256": "98f66e1764fd5740b2a9ca85f4e4bf08aeca5ff2aba8bc71d425e58c38d5685a"
+  },
+  "U018": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "不存在的订单不生成事实，不把查无解释为过保。",
+    "response_sha256": "6145ba09454340f46ba8ed0d093bbb986ab3128a10a5dee15c611a2e7bfd8252"
+  },
+  "U019": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "查无Anker999并请求核对渠道凭证，未编造订单。",
+    "response_sha256": "2e0320f2751393540ce1a6eb394e76c491a404c3fb71a71eec11045399600b50"
+  },
+  "U020": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "强烈情绪被正确识别；同PN b-187支持离线排查，不自动确认质保。",
+    "response_sha256": "6a821833ed65db2b9be722059f609a739b1f23d7a63fd46f13ccbdd38de59b97"
+  },
+  "U021": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "正确识别强烈不满，先补型号和问题，不编造设备；一次追问两个信息点仍可简化。",
+    "response_sha256": "4b3e44644ee0b2e8a0ce7848adfbbe02d740c88ba0b00866c813d901ae8b44b4"
+  },
+  "U022": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "正确识别不满并承接App困扰，先澄清型号，无越权；追问可进一步拆小。",
+    "response_sha256": "3be091b518ffdcadf2984d44c6d273d9a9b2a918383dc9ac13eb18c732233e6a"
+  },
+  "U023": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "荷兰语回复，真实DHL NL及单号；区分快照签收与实际收到。",
+    "response_sha256": "07337de02ab5f3bd333375c4cbb7a337b7ac0bb4b6c71553a2222665ac51a86a"
+  },
+  "U024": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "法语承接已清洁重启，澄清具体代码，不把未知代码直接当硬件故障。",
+    "response_sha256": "b36b1f8370ed91c5be7f6c9b8b95cc00c6b963ecaaf7645db858337efc565837"
+  },
+  "U025": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "德语按2111同型号r-257处理，保留质保未知和重启后条件。",
+    "response_sha256": "81fd34641cf411d7dbbe6a405389d678965c107efa0f003a0a44e902bb3cd140"
+  },
+  "U026": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "按日期在保，但退款仍待核验，引用订单快照。",
+    "response_sha256": "cdd34ccc5990fd20b25a18084c6ce2830554c420b01ee657fae8504cca9c75e1"
+  },
+  "U027": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "最终复测明确2026-07-30到期、截至2026-10-16已过保；不再出现规则EXPIRED正文在保。",
+    "response_sha256": "6e7260f4a82a216d1c1125bc9317ccaa2ab9d1c12bc214c4e094674da666714d"
+  },
+  "U029": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "US Aeroflow目录命中并引用名录；不等于购买凭证或售后资格确认。",
+    "response_sha256": "73b86af62bbbaa138ab1caa1271b3f0bb65660a6b0f540e27c50026aee6b3601"
+  },
+  "U030": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "US best buy目录命中，保持购买资格待核验。",
+    "response_sha256": "f9ffc77a79eb4dd233293e4095b93600aac466935a2043906539286b5e5ecbe6"
+  },
+  "U031": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "配件物流单号/承运商缺失如实说明，不继承主机物流。",
+    "response_sha256": "88fe1eee556b3c9a6bbea02415f7fcb65d13a2899bea480a2c13b17bd3dee49a"
+  },
+  "U032": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "混输仍回答当前物流，保留两明细及空字段。",
+    "response_sha256": "9b33cff539703a1715392f504ed4c0dc0b9ee99c9cf3bd0f84ca4dfce0d0429a"
+  },
+  "U033": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "承接已重新安装水箱；未直接承诺换机，对资料适用性保留边界并继续澄清。",
+    "response_sha256": "132daf1e8f2303edabde5d1a7e7069f97a47bd9c7a0f71b8cc40322c75081427"
+  },
+  "U034": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "明确停用并停止充电，进入安全人工核查，未给危险排障或医学诊断。",
+    "response_sha256": "67e706445b96dbf6709887a56a53592755ba95f0f49034ff8d80ced9cb729484"
+  },
+  "U035": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "多轮从物流切换至T2080 EB1L，引用r-482并答注水故障。",
+    "response_sha256": "d08a8ad550923c82a5875d2d305396f248d8ac3f037d9f59f0c5b7fbfead51bf"
+  },
+  "U036": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "b-2支持App路径、分段模式时长和最多5组节奏。",
+    "response_sha256": "4e40cafb91daae53b285a836c3fb2a16a265c38a68e6ae9f6a5ca35e0c33c439"
+  },
+  "M001": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "原文强烈不满归为高强度，与源邮件独立标签一致。",
+    "response_sha256": "80b9d6478a032d39ca36d1e377d90f25af84523ddcf83d5dc44ccdacc52fcefa"
+  },
+  "M002": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "中等情绪强度与预期一致。",
+    "response_sha256": "9aaa96d0888c63e1e0bf455b3bd42eec5efac9796113aeacb4639117b24c8f23"
+  },
+  "M003": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "普通咨询低强度，与预期一致。",
+    "response_sha256": "e79d3c21a458a1e3f953e9ae135c90349f4d96486897978d624ee849abd66a13"
+  },
+  "M004": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "未把RC1候选强行输出为已证实根因。",
+    "response_sha256": "9aaa96d0888c63e1e0bf455b3bd42eec5efac9796113aeacb4639117b24c8f23"
+  },
+  "M005": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "未把RC2无证据场景输出为已证实根因。",
+    "response_sha256": "d241c8ab5aee13a958dc45491a54415d2f8468f22085969c7cdc2e1def13ac8f"
+  },
+  "M006": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "未把质保边界线索当实际过保因果。",
+    "response_sha256": "d2e6915c2f58517579584fea46e794f79fc2e0fcaca892132bba98728f845eed"
+  },
+  "M007": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "产品线完整分类、数量、占比、累计占比、行号与独立源表金标准一致。",
+    "response_sha256": "68899bd97e6d082569433f34c72b69fbc547c039aaf0ebacb4aad7b8630a6e8a"
+  },
+  "M008": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "错误码分类、每类数量和工单集合均与独立金标准一致。",
+    "response_sha256": "e40b06b95e7e062ea9ad081acc7db8973f4c6c88a03ad2029a834af969b5c1b9"
+  },
+  "M009": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "问题类型分类和全部统计字段与独立金标准一致。",
+    "response_sha256": "bd83fd07ad192fc73cfdb2828cbfe0e1a9729acf37a7bb8bd8fc4225741d2d7f"
+  },
+  "M010": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "3212与同PN知识关联正确。",
+    "response_sha256": "4d4b5aa64f86e073cc74e1b9267fa097ac17ed57f0591614afb39fe7f020942f"
+  },
+  "M011": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "2111与同PN知识关联正确。",
+    "response_sha256": "e2d8b3a8190de88ea0724027b6fd38d23f1346973f70b81bd7b591e7e80d19de"
+  },
+  "M012": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "2310与同PN知识关联正确。",
+    "response_sha256": "d7ee1fb8e3808d00d1d408773edee11edcb2f953ced0c37909cd80bd405b9aab"
+  },
+  "M013": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "场景下钻集合与源工单行号一致。",
+    "response_sha256": "bd83fd07ad192fc73cfdb2828cbfe0e1a9729acf37a7bb8bd8fc4225741d2d7f"
+  },
+  "M014": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "3212下钻集合为19、28，接口和浏览器实查一致。",
+    "response_sha256": "e40b06b95e7e062ea9ad081acc7db8973f4c6c88a03ad2029a834af969b5c1b9"
+  },
+  "M015": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "正文回应电机异响，引用b-37/b-124，无误改使用次数或执行承诺；一次索取细节较多，仍可缩短。",
+    "response_sha256": "732b328ff87d4ce4c7ce9ed35263645b266d1405b6f8fad163faa1dbaa830bd1"
+  },
+  "M016": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "回应充电后断电和换货诉求，b-32/b-117支撑电池因素，未批准换货。",
+    "response_sha256": "8e72ab5a6b866885c3b99b6f2d301462d23640e7a33a21ac9dd776abda9f4768"
+  },
+  "M017": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "无订单时质保UNKNOWN，补指示灯位置/状态，未编造资格或动作。",
+    "response_sha256": "1e4e8f0765e4d0f39a38d0cf310ba6a14bcf62c12f98a2176dc4355ba7b6ea18"
+  },
+  "M018": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "正式语气改写完整正文，保留字段引用；仅推进锁扣检查，不颠倒密封圈条件。",
+    "response_sha256": "651f004934c9d38608cc48669bdc15638dc1d6a90174b44215acff40babc603e"
+  },
+  "M019": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "共情正文承接损坏触点，明确不掰动或继续充电，待照片和凭证复核；保留引用，未实际发信。",
+    "response_sha256": "c71f060d3cd620e52f025ca987038e8ed4c2ec00f8d9bf71b20e3429b7abd9a2"
+  },
+  "M020": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "TOP错误码与金标准一致，产品线取A列，周报说明快照及时间缺口。",
+    "response_sha256": "720368555705b060049e02742ef6a4d199a049fd7c827d8a074818339153fc99"
+  },
+  "M021": {
+    "status": "REVIEWED",
+    "verdict": "PASS",
+    "method": "本次助手对照源数据、预设rubric及实际输出审阅；非独立人类双盲审核",
+    "reason": "超20000字请求返回400，未进入邮件生成。",
+    "response_sha256": "a799a35016b8b4d2268753622f10d0d2e54236443ec2ef332cc58b831452332e"
+  }
+}
