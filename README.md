@@ -1,10 +1,18 @@
 # Anker · OntoCare
 
+## [点击打开：图文交互项目介绍 ↗](https://jiangenjing.github.io/anker-OntoCare/docs/%E5%8F%82%E8%B5%9B%E6%8F%90%E4%BA%A4%E8%AF%B4%E6%98%8E-%E6%96%B0%E5%A2%9E%E8%A1%A5%E5%85%85%E7%89%88%E6%9C%AC.html)
+
+**建议先看这一页：技术架构、双端截图、六步服务流程、改进闭环和经营归因，图文结合展示。**
+
+[![点击打开 OntoCare 图文交互介绍](OntoCare/docs/assets/project-overview-preview.png)](https://jiangenjing.github.io/anker-OntoCare/docs/%E5%8F%82%E8%B5%9B%E6%8F%90%E4%BA%A4%E8%AF%B4%E6%98%8E-%E6%96%B0%E5%A2%9E%E8%A1%A5%E5%85%85%E7%89%88%E6%9C%AC.html)
+
+---
+
 **基于双本体与评测改进闭环的经营归因智能客服系统**
 
 面向复杂售后，将一次零散求助串成产品消歧、证据检索、排障引导与人工审核的服务链路；再将工单集合转化为带源表行号和规则 ID 的经营核查建议。
 
-[项目介绍 · 在线阅读](https://jiangenjing.github.io/anker-OntoCare/) · [联系与实习意向](#联系与实习意向) · [赛后复盘](docs/retrospective/赛后复盘-非CS科班黑客松经历.md) · [现场演讲原文](docs/路演演讲稿-现场原文.md) · [演讲稿HTML](https://jiangenjing.github.io/anker-OntoCare/docs/%E8%B7%AF%E6%BC%94%E6%BC%94%E8%AE%B2%E7%A8%BF-%E7%8E%B0%E5%9C%BA%E5%8E%9F%E6%96%87.html) · [技术架构](#技术架构) · [快速开始](#快速开始) · [评测结果](#评测结果与口径) · [文档目录](OntoCare/docs/README.md)
+[联系与实习意向](#联系与实习意向) · [赛后复盘](docs/retrospective/赛后复盘-非CS科班黑客松经历.md) · [现场演讲原文](docs/路演演讲稿-现场原文.md) · [演讲稿HTML](https://jiangenjing.github.io/anker-OntoCare/docs/%E8%B7%AF%E6%BC%94%E6%BC%94%E8%AE%B2%E7%A8%BF-%E7%8E%B0%E5%9C%BA%E5%8E%9F%E6%96%87.html) · [技术架构](#技术架构) · [快速开始](#快速开始) · [评测结果](#评测结果与口径) · [文档目录](OntoCare/docs/README.md)
 
 > 本仓库是黑客松项目的可运行代码与材料归档。GitHub Pages 展示静态介绍；客服、邮件生成与经营助手需要 Python 后端和相应模型配置。现场演讲稿保留历史原文，当前实现与数据口径以本 README、源码和原始评测记录为准。
 
