@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-19",
+  "sections": 12,
+  "source_unchanged": true,
+  "source_sha256": "ddd1810291279a00d5c2aa959a079c7a3552147c2e177bee9e6d8620f7dcf027",
+  "architecture_embedded": true,
+  "screenshots_embedded": true,
+  "desktop_width": 1440,
+  "mobile_width": 390,
+  "horizontal_overflow": false,
+  "standalone_offline_images": true,
+  "page_errors": 0,
+  "interactions": [
+    "图片模态框",
+    "2倍放大与滚动",
+    "Escape关闭",
+    "本体节点点击",
+    "修复分支聚焦",
+    "Markdown原文下载"
+  ],
+  "markdown_export_byte_identical": true
+}

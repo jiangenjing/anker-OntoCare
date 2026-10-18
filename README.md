@@ -8,6 +8,16 @@
 
 > 本仓库是黑客松项目的可运行代码与材料归档。GitHub Pages 展示静态介绍；客服、邮件生成与经营助手需要 Python 后端和相应模型配置。现场演讲稿保留历史原文，当前实现与数据口径以本 README、源码和原始评测记录为准。
 
+## 先看核心技术架构
+
+**这是本项目的核心材料，建议先打开原图查看节点、连线与服务闭环。**
+
+![OntoCare 技术架构图](OntoCare/docs/assets/ontocare-technical-architecture.png)
+
+[放大架构原图](OntoCare/docs/assets/ontocare-technical-architecture.png) · **[打开图文交互介绍](https://jiangenjing.github.io/anker-OntoCare/docs/%E5%8F%82%E8%B5%9B%E6%8F%90%E4%BA%A4%E8%AF%B4%E6%98%8E-%E6%96%B0%E5%A2%9E%E8%A1%A5%E5%85%85%E7%89%88%E6%9C%AC.html#architecture)**
+
+图中包含路演方案设计，当前实现以以下正文与源码为准。
+
 ## 项目背景
 
 真实售后求助往往包含信息缺失、名称歧义、故障图片、情绪表达，以及不同渠道的服务规则。只召回一段 FAQ，无法覆盖后续判断与交接。
@@ -98,7 +108,7 @@
 
 ## 技术架构
 
-![OntoCare 技术架构图](OntoCare/docs/assets/ontocare-technical-architecture.png)
+[查看核心架构原图](OntoCare/docs/assets/ontocare-technical-architecture.png) · [打开可交互图解版](https://jiangenjing.github.io/anker-OntoCare/docs/%E5%8F%82%E8%B5%9B%E6%8F%90%E4%BA%A4%E8%AF%B4%E6%98%8E-%E6%96%B0%E5%A2%9E%E8%A1%A5%E5%85%85%E7%89%88%E6%9C%AC.html#architecture)
 
 上图为项目路演架构材料；当前代码的运行职责可按以下链路阅读：
 
