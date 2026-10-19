@@ -86,7 +86,7 @@
 <details>
 <summary>查看经营归因截图</summary>
 
-![Railway 当前部署的商家端分析看板](OntoCare/reports/归因看板预览.png)
+[![Railway 当前部署的商家端经营归因页面](OntoCare/reports/归因看板预览.png)](https://web-production-195cd.up.railway.app/merchant#analytics)
 
 </details>
 
