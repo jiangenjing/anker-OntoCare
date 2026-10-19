@@ -14,6 +14,12 @@
 
 [联系与实习意向](#联系与实习意向) · [赛后复盘](docs/retrospective/赛后复盘-非CS科班黑客松经历.md) · [完整开发过程](#完整参赛开发过程) · [现场演讲原文](docs/路演演讲稿-现场原文.md) · [演讲稿HTML](https://jiangenjing.github.io/anker-OntoCare/docs/%E8%B7%AF%E6%BC%94%E6%BC%94%E8%AE%B2%E7%A8%BF-%E7%8E%B0%E5%9C%BA%E5%8E%9F%E6%96%87.html) · [技术架构](#技术架构) · [快速开始](#快速开始) · [评测结果](#评测结果与口径) · [文档目录](OntoCare/docs/README.md)
 
+## 两分钟演示视频
+
+- [中文配音版（2 分钟）](https://github.com/jiangenjing/anker-OntoCare/releases/download/v1.1-hackathon-demo/OntoCare-2%E5%88%86%E9%92%9F%E6%BC%94%E7%A4%BA-%E4%B8%AD%E6%96%87%E9%85%8D%E9%9F%B3%E7%89%88.mp4)
+- [现场讲解版（2 分钟，无配音）](https://github.com/jiangenjing/anker-OntoCare/releases/download/v1.1-hackathon-demo/OntoCare-2%E5%88%86%E9%92%9F%E6%BC%94%E7%A4%BA-%E7%8E%B0%E5%9C%BA%E8%AE%B2%E8%A7%A3%E7%89%88.mp4)
+- [下载全部视频素材](https://github.com/jiangenjing/anker-OntoCare/releases/tag/v1.1-hackathon-demo)
+
 > 本仓库是黑客松项目的可运行代码与材料归档。GitHub Pages 展示静态介绍；客服、邮件生成与经营助手需要 Python 后端和相应模型配置。现场演讲稿保留历史原文，当前实现与数据口径以本 README、源码和原始评测记录为准。
 
 ## 先看核心技术架构
@@ -164,6 +170,16 @@ flowchart TD
 | 评测 | Persona、轨迹、断言与模型裁判 | `benchmark/`、`tests/` |
 
 当前主链路未接入 ChromaDB、Redis 或 Embedding 向量召回。“图谱＋向量混合检索”是历史演讲中的方案方向；现有检索和缓存应以上表及源码为准。多个确定性检查用于降低错误风险，不意味着能够消除全部幻觉。
+
+### 用于讲解的七层视角
+
+1. **多模态输入**：文本、图片和视频采样画面提取为可检索的文字证据。
+2. **产品与订单理解**：结合会话上下文消歧，并提供候选订单供用户选择。
+3. **Service Ontology**：统一产品、订单、渠道、知识和证据实体。
+4. **知识检索**：按产品范围检索 FAQ、SOP、错误码与长尾知识。
+5. **Decision Ontology**：计算质保、渠道、升级与允许动作等业务边界。
+6. **经营归因**：从工单集合形成带源表行号、规则 ID 与核查建议的分析结果。
+7. **评测改进闭环**：Persona 对抗、断言与 LLM-as-Judge 发现问题，经人工审核后修正并回归测试。
 
 ## 快速开始
 
