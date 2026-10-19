@@ -16,9 +16,9 @@
 
 ## 两分钟演示视频
 
-- [中文配音版（2 分钟）](https://github.com/jiangenjing/anker-OntoCare/releases/download/v1.1-hackathon-demo/OntoCare-2min-Chinese-narrated.mp4)
-- [现场讲解版（2 分钟，无配音）](https://github.com/jiangenjing/anker-OntoCare/releases/download/v1.1-hackathon-demo/OntoCare-2min-live-commentary.mp4)
-- [下载全部视频素材](https://github.com/jiangenjing/anker-OntoCare/releases/tag/v1.1-hackathon-demo)
+[在线播放：中文配音版与现场讲解版](https://jiangenjing.github.io/anker-OntoCare/docs/%E8%A7%86%E9%A2%91%E6%BC%94%E7%A4%BA.html)
+
+两支视频均可在播放页直接观看，无需下载。需要保存本地文件时，可前往 [GitHub Release 下载页](https://github.com/jiangenjing/anker-OntoCare/releases/tag/v1.1-hackathon-demo)。
 
 > 本仓库是黑客松项目的可运行代码与材料归档。GitHub Pages 展示静态介绍；客服、邮件生成与经营助手需要 Python 后端和相应模型配置。现场演讲稿保留历史原文，当前实现与数据口径以本 README、源码和原始评测记录为准。
 

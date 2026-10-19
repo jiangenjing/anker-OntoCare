@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OntoCare｜两分钟路演演示</title>
+    <style>
+      :root { color-scheme: dark; font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif; }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-height: 100vh; background: #08090d; color: #f7f8fa; }
+      main { width: min(1180px, calc(100% - 40px)); margin: 0 auto; padding: 56px 0 72px; }
+      .brand { color: #00b4ff; font-size: 14px; font-weight: 800; letter-spacing: .14em; }
+      h1 { margin: 12px 0 10px; font-size: clamp(32px, 5vw, 58px); letter-spacing: -.04em; }
+      .lead { max-width: 720px; color: #a9b0be; font-size: 18px; line-height: 1.7; }
+      .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 38px; }
+      article { overflow: hidden; border: 1px solid #29303d; border-radius: 18px; background: #11151d; }
+      video { display: block; width: 100%; background: #000; aspect-ratio: 16 / 9; }
+      .copy { padding: 22px 24px 26px; }
+      h2 { margin: 0 0 8px; font-size: 22px; }
+      p { margin: 0; color: #a9b0be; line-height: 1.65; }
+      a { color: #67caff; }
+      footer { margin-top: 36px; color: #737c8d; font-size: 14px; }
+      @media (max-width: 760px) { main { width: min(100% - 28px, 1180px); padding-top: 32px; } .cards { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="brand">ANKER · ONTOCARE</div>
+      <h1>两分钟路演演示</h1>
+      <p class="lead">选择配音版快速了解项目，或选择无配音版配合现场讲解播放。视频在本页面直接播放。</p>
+      <section class="cards">
+        <article>
+          <video controls preload="metadata" poster="../OntoCare/docs/assets/project-overview-preview.png">
+            <source src="assets/video/OntoCare-2min-Chinese-narrated.mp4" type="video/mp4" />
+            当前浏览器不支持 HTML5 视频播放。
+          </video>
+          <div class="copy"><h2>中文配音版</h2><p>适合独立观看，包含完整中文旁白。</p></div>
+        </article>
+        <article>
+          <video controls preload="metadata" poster="../OntoCare/docs/assets/project-overview-preview.png">
+            <source src="assets/video/OntoCare-2min-live-commentary.mp4" type="video/mp4" />
+            当前浏览器不支持 HTML5 视频播放。
+          </video>
+          <div class="copy"><h2>现场讲解版</h2><p>无旁白，适合路演时由讲解人同步说明。</p></div>
+        </article>
+      </section>
+      <footer><a href="../README.md">返回项目 README</a> · <a href="参赛提交说明-新增补充版本.html">查看图文项目介绍</a></footer>
+    </main>
+  </body>
+</html>
