@@ -14,6 +14,12 @@
 
 [联系与实习意向](#联系与实习意向) · [赛后复盘](docs/retrospective/赛后复盘-非CS科班黑客松经历.md) · [完整开发过程](#完整参赛开发过程) · [现场演讲原文](docs/路演演讲稿-现场原文.md) · [演讲稿HTML](https://jiangenjing.github.io/anker-OntoCare/docs/%E8%B7%AF%E6%BC%94%E6%BC%94%E8%AE%B2%E7%A8%BF-%E7%8E%B0%E5%9C%BA%E5%8E%9F%E6%96%87.html) · [技术架构](#技术架构) · [快速开始](#快速开始) · [评测结果](#评测结果与口径) · [文档目录](OntoCare/docs/README.md)
 
+## 获奖记录｜智能服务赛道冠军
+
+蒋恩晶获 Anker 首届黑客松挑战赛「智能服务赛道冠军」。以下为本人提供并授权公开的获奖证书原图。
+
+[![蒋恩晶 · Anker 首届黑客松挑战赛智能服务赛道冠军证书](docs/assets/awards/anker-intelligent-service-champion.jpg)](docs/assets/awards/anker-intelligent-service-champion.jpg)
+
 ## 两分钟演示视频
 
 [在线播放：中文配音版与现场讲解版](https://jiangenjing.github.io/anker-OntoCare/docs/%E8%A7%86%E9%A2%91%E6%BC%94%E7%A4%BA.html)
