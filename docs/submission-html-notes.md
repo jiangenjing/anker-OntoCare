@@ -12,7 +12,7 @@
 
 - [团队风采](https://static-hackathon.anker-launch.com/api/edit/v2/sessions/dd394ef58f6745a6aaa8545d5706c448/preview/index.html#s5)
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=OWQ1YjI1ODdjMjA4NzdkYWNlYmFmOWMzMTk5ZGE3ZDlfMDIxYmRjNTY4OTJhNjY4MTkwNjc0NzI1NDZiZmJjYTNfSUQ6NzY5NzYwMzkwNDc4MzE0MTkyMF8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM)
+（历史临时图片链接已移除，架构图见项目资料。）
 
 决赛作品 · ANKER 首届黑客松挑战赛
 
@@ -64,7 +64,7 @@ PART 02
 
 OntoCare 面向安克复杂 L3 售后，用 Service Ontology 统一业务语义、用 Decision Ontology 约束动作空间， 让 AI 从“能调用工具”升级为“能在明确业务规则边界内安全办事”——把客户问题转化为有依据的答复、可追溯的经营核查与可复用的改进策略。
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=ZDViYTk5YzJlYThjYjhjNDliOTM5OWZmNGM1ODU3YzlfYTFlZDMwNGRhZmVhMzAyN2VhZjU0YjIyOTI3ZWQ0MDNfSUQ6NzY5NzYwMzkwMzAzNDE0OTg4MV8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM)
+（历史临时图片链接已移除，架构图见项目资料。）
 
 **立即体验 · LIVE DEMO**
 
@@ -354,7 +354,7 @@ OntoCare 全链路技术架构与自进化机制：处理流程参考业界领�
 
 ### 架构图
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MjM4ZGQ5MjYxYzZmOTEzNTczZTFmMTA4MDdlZDgxZWJfNzlkNzY2ZmFkMjdhZTIwMzZmMjFhNmM3ODA2MDExNTZfSUQ6NzY5NzYwMzkwMzY3NTkxMTQzNl8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM)
+（历史临时图片链接已移除，架构图见项目资料。）
 
 安克智能客服 Agent 架构 ｜ 双本体驱动 · 多路召回 · 自进化闭环 —— 点击可放大查看
 
@@ -760,9 +760,9 @@ PART 05
 
 融合产品与业务、系统工程、Agent 算法与评测能力，将业务规则转化为可运行、可验证的 AI 产品。
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MmIxYTk0OTRiMTNjNTQyOWM1MTYzYWFjYWFmMjZiOTlfMGQ3N2ZlYmQ2NGY3ZTUzMjAwN2Y4MDE3Nzk2NzM1Y2VfSUQ6NzY5NzYwMzkwNTczMTAzODQ0Nl8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM)
+（历史临时图片链接已移除，架构图见项目资料。）
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MGRlZmI2MzVjM2IzYWMxMGU3NDA1NzEwOTZlMGMyZDJfYjUxYTcxMGY5Zjc3Yzk0MzlhZmViNmExNTNlYzcwNDlfSUQ6NzY5NzYwMzkwMTQyMzcxNzM3Nl8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM)
+（历史临时图片链接已移除，架构图见项目资料。）
 
 产品与业务
 
@@ -786,7 +786,7 @@ PART 05
 
 - [AI＋能源商业方案 ↗](https://github.com/jiangenjing/shell-hangzhou-ai-energy-brain)
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=ZTBkMzcxNTZmYzU0ODRjY2ExOTU5YzcwNGVlN2ZlNDJfZjFkNTE5ZjAwNTkyZGIyZGUwYjcyNDA3ZTQ5MzYwZGFfSUQ6NzY5NzYwMzkwNjY0MTEyMDUwNF8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM)
+（历史临时图片链接已移除，架构图见项目资料。）
 
 工程集成与系统实现
 
@@ -812,7 +812,7 @@ Agent 后端开发：模型 API、案件状态管理、规则运行时、Tool Ca
 
 - ROS 室内服务机器人相关工程实践
 
-![Image](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/authcode/?code=MDhhZGFlNmI3YTA4NzhlZmIzZDMwMTM1MjMwMTgwMTJfNTU3ODEwMGEyMjZhODhjYjBkNDM1OTU3MzQ3ZmU1NGNfSUQ6NzY5NzYwMzkwMzI4OTkzNzEzMV8xNzkyMzU0MjY5OjE3OTI0NDA2NjlfVjM)
+（历史临时图片链接已移除，架构图见项目资料。）
 
 Agent 算法与数据评测
 
