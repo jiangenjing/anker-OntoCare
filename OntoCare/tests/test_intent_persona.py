@@ -76,3 +76,25 @@ class IntentPersonaTests(unittest.TestCase):
         result = self.ask('我不想退货，我要查 Anker002 物流')
         self.assertEqual(result['trace']['intent_router']['intent'], 'shipping')
         self.assertIn('物流', result['reply'])
+
+    def test_policy_and_compensation_are_answered_without_fabrication(self):
+        result = self.ask('请解释退货政策的依据')
+        self.assertEqual(result['trace']['intent_router']['intent'], 'return_policy')
+        self.assertIn('没有足够依据', result['reply'])
+        result = self.ask('退款有什么补偿，费用多少？')
+        self.assertEqual(result['trace']['intent_router']['intent'], 'compensation')
+        self.assertIn('补偿', result['reply'])
+        self.assertNotIn('已退款', result['reply'])
+
+    def test_error_code_without_model_does_not_ask_for_symptom_again(self):
+        result = self.ask('故障码 6011 是什么意思')
+        self.assertIn('错误码', result['reply'])
+        self.assertIn('型号', result['reply'])
+        self.assertNotIn('具体产品型号和问题', result['reply'])
+
+    def test_found_shipping_snapshot_does_not_wait_for_model(self):
+        with patch.object(m, 'LLM_KEY', 'test'), patch.object(m, 'LLM_MODEL', 'test'), \
+             patch.object(m, 'call_llm') as model:
+            result = self.ask('请尽快帮我查订单 Anker002 发货了吗')
+        self.assertIn('物流', result['reply'])
+        model.assert_not_called()

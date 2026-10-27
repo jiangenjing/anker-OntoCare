@@ -25,9 +25,13 @@ def identify(text, previous_intent=None):
         ('capabilities', r'你(?:能|可以)怎么帮我|你能(?:做什么|帮我什么)|你能提供什么帮助|what can you (?:do|help)'),
         ('model_help', r'(?:不知道|不清楚|找不到).{0,10}型号|型号.{0,10}(?:怎么看|怎么找|哪里看)|don.t know.{0,10}model'),
         ('troubleshooting', r'故障|错误码|故障码|无法开机|不能开机|充不上|无法充电|漏水|吸力|不工作|motor.{0,30}noise|not working|error code|charging'),
+        ('compensation', r'赔偿|补偿|差价|优惠|discount|compensat'),
+        ('return_policy', r'(?:退货|退款|换货).{0,12}(?:政策|条款|规则|依据)|(?:政策|条款|规则).{0,12}(?:退货|退款|换货)|return policy|refund policy'),
         ('return', r'退货|退款|换货|退钱|退回|refund|return|replace(?:ment)?'),
     )
     def matches(name, pattern):
+        if name == 'compensation' and re.search(r'(?:我要|我想|请|要求|尽快|申请).{0,8}(?:退货|退款|换货|退钱)', text):
+            return False
         if name != 'return':
             return bool(re.search(pattern, text, re.I))
         if re.search(r'退款.{0,12}(?:到账|到帐|多久)|(?:refund).{0,25}(?:arrive|received|when)', text, re.I):

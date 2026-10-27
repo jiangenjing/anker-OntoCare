@@ -806,14 +806,27 @@ def chat():
         conversation_repair = model_intent == 'feedback'
         emotional_only = model_intent == 'emotion'
         uncertain = model_intent not in ('feedback', 'emotion', 'continue')
-    if turn_intent['intent'] in ('return', 'return_proof', 'model_help', 'capabilities') and scope == 'IN_SCOPE' and not re.search(qa.RISK, text, re.I):
+    needs_fault_model = (turn_intent['intent'] == 'troubleshooting' and not case.get('product')
+                         and bool(re.search(r'(?:错误码|故障码|error code)\s*[:：]?\s*[A-Za-z0-9]+', text, re.I)))
+    if (turn_intent['intent'] in ('return', 'return_proof', 'return_policy', 'compensation', 'model_help', 'capabilities') or needs_fault_model) and scope == 'IN_SCOPE' and not re.search(qa.RISK, text, re.I):
         zh = lang == 'zh'
         if turn_intent['intent'] == 'return':
             reply = ('我明白你希望办理退货、退款或换货。需要核对购买记录、购买渠道和售后原因，是否符合条件仍需审核；目前没有发起退货、退款或换货。请先告诉我具体原因。' if zh else
                      'I understand you want a return, refund or replacement. Purchase records, seller and the reason need review; eligibility is not confirmed and no request has been submitted. What is the reason?')
+            if re.search(r'补偿|赔偿|compensat', text, re.I):
+                reply += (' 补偿是否适用及金额也需要核验，目前不能承诺。' if zh else ' Compensation and any amount also require verification; I cannot promise it.')
         elif turn_intent['intent'] == 'return_proof':
             reply = ('通常可以先准备订单详情、购买凭证，以及商品和问题的照片（如有）。具体材料与是否符合退货条件，仍需根据购买渠道和政策核验；目前尚未办理退货或退款。' if zh else
                      'Please have the order details, proof of purchase and photos of the item or issue if available. The required materials and eligibility depend on the seller and policy; no return or refund has been processed.')
+        elif turn_intent['intent'] == 'return_policy':
+            reply = ('退换货政策需要按购买地区、渠道、购买日期和商品情况核对。我目前没有足够依据确认适用条款或期限，不会替你判断已获批准。请问你是在哪个平台或店铺购买的？' if zh else
+                     'Return rules depend on your purchase region, seller, date and item condition. I cannot confirm the applicable terms or deadline without that evidence. Which platform or store did you buy it from?')
+        elif turn_intent['intent'] == 'compensation':
+            reply = ('我理解你关心补偿或费用。目前没有足够依据确认是否提供补偿、金额或费用，也不能承诺优惠。请说明你遇到的具体情况，我可以帮你整理需要核查的信息。' if zh else
+                     'I understand you are asking about compensation or cost. I cannot confirm eligibility, an amount or a discount without supporting information. Please describe what happened so I can help identify what needs review.')
+        elif needs_fault_model:
+            reply = ('我看到了你提供的错误码。不同产品的相同代码可能含义不同；请告诉我产品型号，我再核对对应资料。' if zh else
+                     'I can see the error code. The same code may mean different things on different products; please share the product model so I can check the matching information.')
         elif turn_intent['intent'] == 'model_help':
             reply = ('可以先查看购买平台的订单详情、产品机身标签或产品包装，寻找型号或 SKU。如果方便，请告诉我看到的型号，我再帮你核对。' if zh else
                      'You can check your order details, the label on the product or its packaging for the model or SKU. Share what you find and I can help check it.')
@@ -914,7 +927,7 @@ def chat():
         candidate_orders = []
     direct_routes = {'INTENT_GUIDANCE','CONVERSATION_REPAIR','GENERAL_SUPPORT_CACHE','ORDER_CANDIDATES','ORDER_NOT_FOUND','ORDER_SELECTION','FAQ_CACHE','LONG_TAIL_CACHE','PRODUCT_CLARIFICATION','WARRANTY_CHECK','WORKFLOW_FOLLOWUP','ERROR_CODE_WORKFLOW','DEPENDENCY_FALLBACK'}
     g.pre_model_route = g.answer_route
-    if (GROUNDED_MODE or use_longtail) and LLM_KEY and LLM_MODEL and g.answer_route not in direct_routes:
+    if (GROUNDED_MODE or use_longtail) and LLM_KEY and LLM_MODEL and g.answer_route not in direct_routes and not (case.get('service_intent') == 'shipping' and order['status'] == 'FOUND'):
         evidence=[]
         for c in citations:
             if c['id'] in longtail.ENTRIES:
