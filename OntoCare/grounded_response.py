@@ -2,6 +2,7 @@
 import customer_signals
 import json
 import re
+import customer_reply_skill
 
 PROMPT = '''你是安克 eufy 智能客服，中文名“安小克”，英文名“Anka”。中文自我介绍使用“安小克”，英文使用“Anka”；只在开场或用户询问身份时介绍自己，不在每轮重复名字，不冒充人工客服。根据本轮证据、案件状态和规则结果回复当前客户。
 
@@ -38,7 +39,8 @@ def generate(call, question, lang, case, baseline, citations, evidence, allowed,
                'workflow':case.get('active_workflow'),
                'rule_result':{'scope':'决策约束；可能有重复步骤，不要照抄，结合客户已尝试的内容跳过已完成检查','content':baseline},'allowed_actions':allowed,'forbidden_actions':forbidden,
                'evidence':evidence}
-    raw = call(PROMPT,json.dumps(payload,ensure_ascii=False),timeout=60)
+    raw = call(PROMPT + '\n\n' + customer_reply_skill.INSTRUCTIONS,
+               json.dumps(payload,ensure_ascii=False),timeout=60)
     if not raw:
         return reject("empty_or_connection_error")
     try:

@@ -19,6 +19,7 @@ import mail_workflow as mail
 import handoffs
 import grounded_response
 import customer_signals
+import customer_reply_skill
 import long_tail_knowledge as longtail
 import order_cards
 import proactive_orders
@@ -652,7 +653,7 @@ def chat():
     if tracking_match:
         case['selected_tracking'] = tracking_match.group(1)
         case.pop('selected_sku', None)
-    shipping = re.search(r'物流|发货|包裹|快递|到货|没收到|未收到|没到|只收到|订单到哪|shipping|shipped|shipment|tracking|arriv|deliver|package|not received|label (?:has been )?created|where is my order|bestelling|verzonden|niet binnen|livraison|livré|lieferung|versand|pedido|envío|llegado', text, re.I)
+    shipping = re.search(r'物流|发货|包裹|快递|到货|没收到|未收到|没到|只收到|订单.{0,24}到哪|shipping|shipped|shipment|tracking|arriv|deliver|package|not received|label (?:has been )?created|where is my order|bestelling|verzonden|niet binnen|livraison|livré|lieferung|versand|pedido|envío|llegado', text, re.I)
     fault_report = re.search(r'Problem Type:\s*ERROR|Problem (?:Code|Push):|Fehlercode:|Probleemcode:|capteur laser|code d.erreur|motor.*noise|won.t hold the battery|cutting off|water tray will not empty|pins? is jammed|no longer charge|错误码|故障码|加水异常|注水异常|(?<![A-Z0-9])E[B0-9][A-Z0-9]{1,3}(?![A-Z0-9])', text, re.I)
     if fault_report:
         shipping = None
@@ -760,11 +761,63 @@ def chat():
         r'(?:听不懂|没听懂|不理解|理解错|答非所问|没回答我的问题|没有回答我的问题|'
         r'听懂我说|理解我说|doesn.t understand|don.t you understand|not listening|'
         r'not answering my question|you misunderstood)', text, re.I))
-    if conversation_repair and scope == 'IN_SCOPE':
-        reply = ('抱歉，我可能误解了你的意思。请告诉我刚才哪一部分理解错了，'
-                 '或重新说一下你现在想解决的问题，我会先确认需求再继续。' if lang == 'zh' else
-                 "I'm sorry I may have misunderstood. Please tell me what I got wrong "
-                 "or what you need help with now, and I'll clarify before continuing.")
+    business_request = bool(shipping or fault_report or mentioned.get('product') or sku_match or tracking_match
+                            or re.search(qa.RISK, text, re.I) or re.search(
+        r'订单|产品|型号|售后|退款|退货|换货|保修|质保|故障|充电|漏水|安全|'
+        r'order|product|refund|return|warranty|replacement|broken|charging', text, re.I))
+    if re.search(r'第.{0,3}步|步骤|step\s*\d', text, re.I):
+        conversation_repair = False
+        business_request = True
+    if business_request:
+        conversation_repair = False
+    emotional_only = not business_request and bool(re.search(
+        r'生气|气死|失望|愤怒|难过|难受|委屈|很烦|furious|angry|frustrat|upset|disappointed', text, re.I))
+    # Do not classify ordinary short answers, workflow controls or identifiers as
+    # new topics. For other vague turns, ask the model for an intent only; it
+    # never decides eligibility or executes actions.
+    continuation = bool(re.fullmatch(
+        r'(?:[\W_]*|下一步|继续|是|不是|好的?|谢谢|再说一遍|'
+        r'yes|no|ok|thanks|next|continue|[A-Za-z0-9-]+)[\W_]*', text, re.I))
+    vague = (not business_request and not conversation_repair and not emotional_only and not continuation
+             and bool(re.search(r'你刚才|你的回答|你说的|你是不是|你怎么|'
+                                r'your (?:answer|response)|you (?:just|said|are)', text, re.I)))
+    uncertain = False
+    if vague and scope == 'IN_SCOPE':
+        model_intent = None
+        if LLM_KEY and LLM_MODEL:
+            history = [{'role': t['role'], 'text': public_data(t.get('text', '')[:400], SOURCE_ADDRESSES)}
+                       for t in case.get('transcript', [])[-4:] if t.get('role') in ('user', 'assistant')]
+            g.llm_max_tokens = 100
+            raw = call_llm(
+                '只判断客服对话中用户当前话语的意图，返回 JSON：intent 为 feedback、emotion、continue 或 unclear。'
+                'feedback 表示用户质疑客服理解或答复；emotion 表示单独表达情绪；continue 表示明确延续上一个业务；'
+                'unclear 表示无法确定。不要生成业务结论或编造事实。',
+                json.dumps({'current_message': text[:600], 'recent_turns': history}, ensure_ascii=False), timeout=5)
+            g.llm_max_tokens = 1800
+            try:
+                model_intent = json.loads(raw or '{}').get('intent')
+            except (ValueError, TypeError):
+                pass
+        conversation_repair = model_intent == 'feedback'
+        emotional_only = model_intent == 'emotion'
+        uncertain = model_intent not in ('feedback', 'emotion', 'continue')
+    if (conversation_repair or emotional_only or uncertain) and scope == 'IN_SCOPE':
+        if emotional_only:
+            reply = ('听起来这件事让你很生气或失望，抱歉让你有这样的体验。\n\n'
+                     '我还不清楚具体发生了什么，不想随便猜测你的问题。\n\n'
+                     '你愿意告诉我是什么让你最不满意吗？我会先听清楚，再帮你处理。' if lang == 'zh' else
+                     "I'm sorry this has been frustrating.\n\nI don't yet know what happened, "
+                     "so I don't want to guess.\n\nWhat has upset you most? I'll listen and help.")
+        elif uncertain:
+            reply = ('我想先确认一下你的意思：你是在补充刚才的问题，还是遇到了新的情况？'
+                     '请告诉我你现在最想解决什么。' if lang == 'zh' else
+                     "I want to make sure I understand. Is this about your previous issue or something new? "
+                     "Please tell me what you need help with now.")
+        else:
+            reply = ('抱歉，我可能误解了你的意思。请告诉我刚才哪一部分理解错了，'
+                     '或重新说一下你现在想解决的问题，我会先确认需求再继续。' if lang == 'zh' else
+                     "I'm sorry I may have misunderstood. Please tell me what I got wrong "
+                     "or what you need help with now, and I'll clarify before continuing.")
         cards = []
         g.answer_route = 'CONVERSATION_REPAIR'
     elif general:
@@ -882,6 +935,7 @@ def chat():
         case['last_order_card'] = order_snapshot['order_id']
     elif not order_snapshot:
         case.pop('last_order_card', None)
+    reply=customer_reply_skill.format_reply(reply, lang, emotion, g.answer_route, case.get('service_intent'))
     reply=public_data(reply,SOURCE_ADDRESSES)
     case['emotion']=emotion
     case['recommended_next_action']='Review the cited evidence and attempted steps; verify ownership and channel before any after-sales approval.'

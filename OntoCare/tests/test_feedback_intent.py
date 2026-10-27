@@ -41,3 +41,57 @@ class FeedbackIntentTests(unittest.TestCase):
         self.assertIn('物流', result['reply'])
         self.assertNotEqual(result['trace']['answer_route'], 'CONVERSATION_REPAIR')
 
+    def test_emotion_in_new_conversation_is_acknowledged(self):
+        result = self.ask('我生气了')
+        self.assertNotIn('具体产品型号', result['reply'])
+        self.assertTrue(any(word in result['reply'] for word in ('生气', '心情', '难受')))
+        self.assertEqual(result['trace']['answer_route'], 'CONVERSATION_REPAIR')
+        self.assertEqual(len(result['reply'].split('\n\n')), 3)
+
+    def test_emotion_after_shipping_does_not_repeat_shipping(self):
+        self.ask('Anker002发货了吗')
+        result = self.ask('真的太让人失望了')
+        self.assertNotIn('物流记录', result['reply'])
+        self.assertIn('失望', result['reply'])
+        self.assertIn('物流记录', self.ask('再看看物流')['reply'])
+
+    def test_ambiguous_feedback_uses_model_classification(self):
+        self.ask('Anker002发货了吗')
+        with patch.object(m, 'LLM_KEY', 'test'), patch.object(m, 'LLM_MODEL', 'test'), \
+             patch.object(m, 'call_llm', return_value='{"intent":"feedback"}') as model:
+            result = self.ask('你刚才是不是搞错重点了')
+        self.assertTrue(model.called)
+        self.assertNotIn('物流记录', result['reply'])
+        self.assertEqual(result['trace']['answer_route'], 'CONVERSATION_REPAIR')
+
+    def test_model_failure_does_not_guess_old_intent(self):
+        self.ask('Anker002发货了吗')
+        with patch.object(m, 'LLM_KEY', 'test'), patch.object(m, 'LLM_MODEL', 'test'), \
+             patch.object(m, 'call_llm', return_value=None):
+            result = self.ask('你刚才是不是搞错重点了')
+        self.assertNotIn('物流记录', result['reply'])
+        self.assertIn('请', result['reply'])
+
+    def test_business_question_with_emotion_still_uses_business_route(self):
+        result = self.ask('我生气了，我的订单 Anker002 到哪了？')
+        self.assertIn('物流', result['reply'])
+        self.assertNotEqual(result['trace']['answer_route'], 'CONVERSATION_REPAIR')
+        self.assertEqual(len(result['reply'].split('\n\n')), 3)
+
+    def test_feedback_with_new_business_request_is_not_ignored(self):
+        self.ask('Anker002发货了吗')
+        result = self.ask('你没听懂，我现在想退货')
+        self.assertNotEqual(result['trace']['answer_route'], 'CONVERSATION_REPAIR')
+        self.assertEqual(m.SESSIONS['feedback']['service_intent'], 'return')
+
+    def test_reply_skill_is_part_of_model_prompt(self):
+        import customer_reply_skill
+        import grounded_response
+        self.assertIn('三个部分', customer_reply_skill.INSTRUCTIONS)
+        seen = []
+        def fake(system, user, timeout=60):
+            seen.append(system)
+            return None
+        grounded_response.generate(fake, '问题', 'zh', {}, '', [], [], [], [], 'chat')
+        self.assertIn(customer_reply_skill.INSTRUCTIONS, seen[0])
+
