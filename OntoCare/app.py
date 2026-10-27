@@ -20,6 +20,7 @@ import handoffs
 import grounded_response
 import customer_signals
 import customer_reply_skill
+import intent_router
 import long_tail_knowledge as longtail
 import order_cards
 import proactive_orders
@@ -632,6 +633,8 @@ def chat():
     g.evidence_excerpts = {}
     g.answer_route = "WORKFLOW"
     model_status = g.model_status
+    turn_intent = intent_router.identify(text, previous_intent)
+    case['_current_response_style'] = turn_intent['style']
 
     m = re.search(r"(?<![A-Za-z0-9])(?:Anker\d{3}|ORD-\d{4}|DEMO-O-\d+)(?![A-Za-z0-9-])", text, re.I)
     explicit_order = (m.group(0).upper() if m else str(body.get("order_id") or "").upper())
@@ -668,7 +671,7 @@ def chat():
         case.pop('last_issue', None)
     elif re.search(r'保修|质保|warranty', text, re.I):
         case['service_intent'] = 'warranty'
-    elif re.search(r'退货|退款|换货|refund|return|replace', text, re.I):
+    elif turn_intent['intent'] == 'return':
         case['service_intent'] = 'return'
 
     if text.strip() in quick_replies.CHANNELS:
@@ -733,6 +736,8 @@ def chat():
         case["last_issue"] = text
     if not shipping and case.get('product') and (qa.topics(text, case['product']['id']) or re.search(r'固件|地图|重置|序列号|serial number|firmware|reset|噪音|清洗|消毒|自定义|吸乳节奏', text, re.I)):
         case['service_intent'] = 'troubleshooting'
+    if turn_intent['intent'] == 'return':
+        case['service_intent'] = 'return'
     active = case.get('active_workflow')
     if active:
         new_topics = qa.topics(text, case['product']['id']) if case.get('product') else set()
@@ -801,7 +806,24 @@ def chat():
         conversation_repair = model_intent == 'feedback'
         emotional_only = model_intent == 'emotion'
         uncertain = model_intent not in ('feedback', 'emotion', 'continue')
-    if (conversation_repair or emotional_only or uncertain) and scope == 'IN_SCOPE':
+    if turn_intent['intent'] in ('return', 'return_proof', 'model_help', 'capabilities') and scope == 'IN_SCOPE' and not re.search(qa.RISK, text, re.I):
+        zh = lang == 'zh'
+        if turn_intent['intent'] == 'return':
+            reply = ('我明白你希望办理退货、退款或换货。需要核对购买记录、购买渠道和售后原因，是否符合条件仍需审核；目前没有发起退货、退款或换货。请先告诉我具体原因。' if zh else
+                     'I understand you want a return, refund or replacement. Purchase records, seller and the reason need review; eligibility is not confirmed and no request has been submitted. What is the reason?')
+        elif turn_intent['intent'] == 'return_proof':
+            reply = ('通常可以先准备订单详情、购买凭证，以及商品和问题的照片（如有）。具体材料与是否符合退货条件，仍需根据购买渠道和政策核验；目前尚未办理退货或退款。' if zh else
+                     'Please have the order details, proof of purchase and photos of the item or issue if available. The required materials and eligibility depend on the seller and policy; no return or refund has been processed.')
+        elif turn_intent['intent'] == 'model_help':
+            reply = ('可以先查看购买平台的订单详情、产品机身标签或产品包装，寻找型号或 SKU。如果方便，请告诉我看到的型号，我再帮你核对。' if zh else
+                     'You can check your order details, the label on the product or its packaging for the model or SKU. Share what you find and I can help check it.')
+        else:
+            reply = ('我可以帮助你查看已有订单资料、查找对应产品的排查知识，并说明退换货或保修需要核对的信息。涉及实际退款、实时物流或人工转接时，我不能假称已经办理。你现在最想解决哪一件事？' if zh else
+                     'I can help check available order records, find product troubleshooting guidance and explain what information a return or warranty review may need. I cannot claim a refund, live tracking or transfer was completed. What would you like help with first?')
+        cards = []
+        g.answer_route = 'INTENT_GUIDANCE'
+        g.reply_sources = [{'id': 'service-rules', 'kind': 'context', 'label': '本轮信息与服务规则', 'url': '/api/sources/service-rules'}]
+    elif (conversation_repair or emotional_only or uncertain) and scope == 'IN_SCOPE':
         if emotional_only:
             reply = ('听起来这件事让你很生气或失望，抱歉让你有这样的体验。\n\n'
                      '我还不清楚具体发生了什么，不想随便猜测你的问题。\n\n'
@@ -859,7 +881,7 @@ def chat():
     if not citations:
         citations = [{'id': 'service-rules', 'kind': 'context', 'label': '依据：本轮信息与服务规则（无产品知识引用）', 'url': '/api/sources/service-rules'}]
     long_tail_matches = longtail.retrieve(text, pn=(case.get("product") or {}).get("id"))
-    protected_routes = {'CONVERSATION_REPAIR','GENERAL_SUPPORT_CACHE','ORDER_NOT_FOUND','LONG_TAIL_CACHE','PRODUCT_CLARIFICATION','DEPENDENCY_FALLBACK','FAQ_CACHE','ERROR_CODE_WORKFLOW','ERROR_CODE_SOURCE','ERROR_CODE_CLARIFICATION',
+    protected_routes = {'INTENT_GUIDANCE','CONVERSATION_REPAIR','GENERAL_SUPPORT_CACHE','ORDER_NOT_FOUND','LONG_TAIL_CACHE','PRODUCT_CLARIFICATION','DEPENDENCY_FALLBACK','FAQ_CACHE','ERROR_CODE_WORKFLOW','ERROR_CODE_SOURCE','ERROR_CODE_CLARIFICATION',
                         'WORKFLOW_FOLLOWUP','ATTEMPTED_STEPS_REVIEW','SOURCE_CONFLICT','HUMAN_REVIEW','SOURCE_FALLBACK','DEALER_LOOKUP','WARRANTY_CHECK'}
     if g.reply_sources and all(longtail.product_guide(i) for i in long_tail_matches):
         long_tail_matches = []
@@ -872,7 +894,7 @@ def chat():
         citations += [longtail.citation(item) for item in long_tail_matches]
         g.answer_route = 'LONG_TAIL_STRATEGY'
     wants_order = bool(case.get('order_conflict') or case.get('service_intent') in ('shipping','return','warranty') or re.search(r'订单号|order number',text,re.I) or (not g.reply_sources and not long_tail_matches and case.get('service_intent') != 'troubleshooting'))
-    candidate_orders = proactive_orders.candidates(case, ORDERS) if wants_order and g.answer_route != 'CONVERSATION_REPAIR' else []
+    candidate_orders = proactive_orders.candidates(case, ORDERS) if wants_order and g.answer_route not in ('CONVERSATION_REPAIR', 'INTENT_GUIDANCE') else []
     if candidate_orders and scope == 'IN_SCOPE' and g.answer_route not in {'GENERAL_SUPPORT_CACHE','HUMAN_REVIEW','DEPENDENCY_FALLBACK','ORDER_NOT_FOUND','FAQ_CACHE','ERROR_CODE_WORKFLOW','ERROR_CODE_SOURCE','ERROR_CODE_CLARIFICATION','WORKFLOW_FOLLOWUP','ATTEMPTED_STEPS_REVIEW','SOURCE_CONFLICT'} and not re.search(qa.RISK,text,re.I):
         report_progress('正在按产品型号匹配候选订单，等待您点选确认', 'Matching order candidates by product model for your confirmation', 'order', 'product')
         conflict = case.get('order_conflict')
@@ -890,7 +912,7 @@ def chat():
         g.answer_route = 'ORDER_CANDIDATES'
     else:
         candidate_orders = []
-    direct_routes = {'CONVERSATION_REPAIR','GENERAL_SUPPORT_CACHE','ORDER_CANDIDATES','ORDER_NOT_FOUND','ORDER_SELECTION','FAQ_CACHE','LONG_TAIL_CACHE','PRODUCT_CLARIFICATION','WARRANTY_CHECK','WORKFLOW_FOLLOWUP','ERROR_CODE_WORKFLOW','DEPENDENCY_FALLBACK'}
+    direct_routes = {'INTENT_GUIDANCE','CONVERSATION_REPAIR','GENERAL_SUPPORT_CACHE','ORDER_CANDIDATES','ORDER_NOT_FOUND','ORDER_SELECTION','FAQ_CACHE','LONG_TAIL_CACHE','PRODUCT_CLARIFICATION','WARRANTY_CHECK','WORKFLOW_FOLLOWUP','ERROR_CODE_WORKFLOW','DEPENDENCY_FALLBACK'}
     g.pre_model_route = g.answer_route
     if (GROUNDED_MODE or use_longtail) and LLM_KEY and LLM_MODEL and g.answer_route not in direct_routes:
         evidence=[]
@@ -935,7 +957,7 @@ def chat():
         case['last_order_card'] = order_snapshot['order_id']
     elif not order_snapshot:
         case.pop('last_order_card', None)
-    reply=customer_reply_skill.format_reply(reply, lang, emotion, g.answer_route, case.get('service_intent'))
+    reply=customer_reply_skill.format_reply(reply, lang, emotion, g.answer_route, case.get('service_intent'), turn_intent['style'])
     reply=public_data(reply,SOURCE_ADDRESSES)
     case['emotion']=emotion
     case['recommended_next_action']='Review the cited evidence and attempted steps; verify ownership and channel before any after-sales approval.'
@@ -948,7 +970,7 @@ def chat():
         case['followups']=general_support.followups(case,case['followups'])
     case['followups']['quick_replies'] = quick_replies.choices(case,reply,order)
     case['followups']['language'] = lang
-    trace = {"degraded_reason":g.degraded_reason,"pre_model_route":g.pre_model_route,"cache_hit":g.pre_model_route in {"GENERAL_SUPPORT_CACHE","FAQ_CACHE","LONG_TAIL_CACHE"},"long_tail": {'classification':'long_tail_candidate' if use_longtail else ('existing_workflow' if long_tail_matches else 'no_match'),
+    trace = {"intent_router":turn_intent, "degraded_reason":g.degraded_reason,"pre_model_route":g.pre_model_route,"cache_hit":g.pre_model_route in {"GENERAL_SUPPORT_CACHE","FAQ_CACHE","LONG_TAIL_CACHE"},"long_tail": {'classification':'long_tail_candidate' if use_longtail else ('existing_workflow' if long_tail_matches else 'no_match'),
                            'source_ids':[i['id'] for i in long_tail_matches] if use_longtail else [],
                            'basis':'curated phrase match; not an empirical frequency estimate'}, "emotion": emotion, "product": case["product"]["name"] if case.get("product") else "未确定",
              "product_state": case.get("product_state", "UNKNOWN"),

@@ -31,7 +31,7 @@ def generate(call, question, lang, case, baseline, citations, evidence, allowed,
     def reject(reason):
         diagnostics['reason'] = reason
         return None
-    payload = {'emotion_level':emotion, 'executed_actions':[], 'sla':None, 'language':lang,'channel':channel,'current_question':question,
+    payload = {'emotion_level':emotion, 'current_expression_style':case.get('_current_response_style', 'neutral'), 'executed_actions':[], 'sla':None, 'language':lang,'channel':channel,'current_question':question,
                'recent_conversation':case.get('transcript',[])[-8:],
                'purchase_channel_claim_unverified':case.get('purchase_channel_claim'),
                'product':case.get('product'), 'order_id':case.get('order_id'),
