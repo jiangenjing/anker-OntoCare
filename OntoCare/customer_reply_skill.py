@@ -10,7 +10,9 @@ def format_reply(reply, lang, emotion, route, service_intent):
     if lang not in ('zh', 'en') or len(re.split(r'\n\s*\n', reply.strip())) >= 3:
         return reply
     if lang == 'zh':
-        if emotion in ('ANGRY', 'COMPLAINT_RISK', 'ANXIOUS'):
+        if route == 'CONVERSATION_REPAIR':
+            opening = '谢谢你提醒我，我会重新确认你的意思。'
+        elif emotion in ('ANGRY', 'COMPLAINT_RISK', 'ANXIOUS'):
             opening = '听到你的不满，我很抱歉让你有这样的体验。'
         elif service_intent == 'shipping':
             opening = '我先帮你核对这次的物流问题。'
@@ -19,7 +21,9 @@ def format_reply(reply, lang, emotion, route, service_intent):
         closing = ('你可以直接回复上面的问题，我会接着帮你确认。' if '？' in reply or '?' in reply
                    else '如果还有没解决的地方，请告诉我，我会继续帮你核对。')
     else:
-        if emotion in ('ANGRY', 'COMPLAINT_RISK', 'ANXIOUS'):
+        if route == 'CONVERSATION_REPAIR':
+            opening = "Thank you for pointing that out. I'll check that I understand."
+        elif emotion in ('ANGRY', 'COMPLAINT_RISK', 'ANXIOUS'):
             opening = "I'm sorry this has been frustrating."
         elif service_intent == 'shipping':
             opening = "I'll help check your shipping question."

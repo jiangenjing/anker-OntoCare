@@ -21,6 +21,7 @@ class FeedbackIntentTests(unittest.TestCase):
         self.ask('Anker002发货了吗')
         reply = self.ask('你为什么不能听懂我说的话？？')
         self.assertNotIn('物流记录', reply['reply'])
+        self.assertNotIn('核对这次的物流问题', reply['reply'])
         self.assertNotIn('Anker1234567', reply['reply'])
         self.assertEqual(reply['trace']['answer_route'], 'CONVERSATION_REPAIR')
         self.assertFalse(any(c['kind'] == 'order' for c in reply['citations']))
