@@ -754,7 +754,20 @@ def chat():
     order_selection = not previous_intent and order['status'] == 'FOUND' and bool(re.fullmatch(r'(?:Anker\d{3}|是这笔订单，我要查询 Anker\d{3}|Yes, I am asking about order Anker\d{3})[。.! ]*', text, re.I))
     direct = longtail.direct_answer(candidates, case, lang) if not re.search(qa.RISK,text,re.I) else None
     general = general_support.answer(case,text,lang) if scope == 'IN_SCOPE' and not re.search(qa.RISK,text,re.I) else None
-    if general:
+    # Feedback about the assistant is a new conversational act, not a request
+    # to repeat the last business workflow. Preserve that workflow for later.
+    conversation_repair = bool(re.search(
+        r'(?:听不懂|没听懂|不理解|理解错|答非所问|没回答我的问题|没有回答我的问题|'
+        r'听懂我说|理解我说|doesn.t understand|don.t you understand|not listening|'
+        r'not answering my question|you misunderstood)', text, re.I))
+    if conversation_repair and scope == 'IN_SCOPE':
+        reply = ('抱歉，我可能误解了你的意思。请告诉我刚才哪一部分理解错了，'
+                 '或重新说一下你现在想解决的问题，我会先确认需求再继续。' if lang == 'zh' else
+                 "I'm sorry I may have misunderstood. Please tell me what I got wrong "
+                 "or what you need help with now, and I'll clarify before continuing.")
+        cards = []
+        g.answer_route = 'CONVERSATION_REPAIR'
+    elif general:
         reply,cards=general['reply'],[]
         g.reply_sources=[general['source']]
         g.answer_route='GENERAL_SUPPORT_CACHE'
@@ -782,7 +795,7 @@ def chat():
     citations = list(g.reply_sources)
     if g.answer_route == 'DEALER_LOOKUP':
         citations = [{'id':'dealer-directory','kind':'dealer','label':'赛题经销商名录 · '+case['dealer_evidence']['country']+' · '+case['dealer_evidence']['seller'],'url':'/api/sources/dealer-directory'}]
-    if not citations and order['status'] == 'FOUND':
+    if not citations and order['status'] == 'FOUND' and g.answer_route != 'CONVERSATION_REPAIR':
         for item in order['order']['items']:
             if case.get('selected_sku') and item.get('SKU') != case['selected_sku']:
                 continue
@@ -793,7 +806,7 @@ def chat():
     if not citations:
         citations = [{'id': 'service-rules', 'kind': 'context', 'label': '依据：本轮信息与服务规则（无产品知识引用）', 'url': '/api/sources/service-rules'}]
     long_tail_matches = longtail.retrieve(text, pn=(case.get("product") or {}).get("id"))
-    protected_routes = {'GENERAL_SUPPORT_CACHE','ORDER_NOT_FOUND','LONG_TAIL_CACHE','PRODUCT_CLARIFICATION','DEPENDENCY_FALLBACK','FAQ_CACHE','ERROR_CODE_WORKFLOW','ERROR_CODE_SOURCE','ERROR_CODE_CLARIFICATION',
+    protected_routes = {'CONVERSATION_REPAIR','GENERAL_SUPPORT_CACHE','ORDER_NOT_FOUND','LONG_TAIL_CACHE','PRODUCT_CLARIFICATION','DEPENDENCY_FALLBACK','FAQ_CACHE','ERROR_CODE_WORKFLOW','ERROR_CODE_SOURCE','ERROR_CODE_CLARIFICATION',
                         'WORKFLOW_FOLLOWUP','ATTEMPTED_STEPS_REVIEW','SOURCE_CONFLICT','HUMAN_REVIEW','SOURCE_FALLBACK','DEALER_LOOKUP','WARRANTY_CHECK'}
     if g.reply_sources and all(longtail.product_guide(i) for i in long_tail_matches):
         long_tail_matches = []
@@ -806,7 +819,7 @@ def chat():
         citations += [longtail.citation(item) for item in long_tail_matches]
         g.answer_route = 'LONG_TAIL_STRATEGY'
     wants_order = bool(case.get('order_conflict') or case.get('service_intent') in ('shipping','return','warranty') or re.search(r'订单号|order number',text,re.I) or (not g.reply_sources and not long_tail_matches and case.get('service_intent') != 'troubleshooting'))
-    candidate_orders = proactive_orders.candidates(case, ORDERS) if wants_order else []
+    candidate_orders = proactive_orders.candidates(case, ORDERS) if wants_order and g.answer_route != 'CONVERSATION_REPAIR' else []
     if candidate_orders and scope == 'IN_SCOPE' and g.answer_route not in {'GENERAL_SUPPORT_CACHE','HUMAN_REVIEW','DEPENDENCY_FALLBACK','ORDER_NOT_FOUND','FAQ_CACHE','ERROR_CODE_WORKFLOW','ERROR_CODE_SOURCE','ERROR_CODE_CLARIFICATION','WORKFLOW_FOLLOWUP','ATTEMPTED_STEPS_REVIEW','SOURCE_CONFLICT'} and not re.search(qa.RISK,text,re.I):
         report_progress('正在按产品型号匹配候选订单，等待您点选确认', 'Matching order candidates by product model for your confirmation', 'order', 'product')
         conflict = case.get('order_conflict')
@@ -824,7 +837,7 @@ def chat():
         g.answer_route = 'ORDER_CANDIDATES'
     else:
         candidate_orders = []
-    direct_routes = {'GENERAL_SUPPORT_CACHE','ORDER_CANDIDATES','ORDER_NOT_FOUND','ORDER_SELECTION','FAQ_CACHE','LONG_TAIL_CACHE','PRODUCT_CLARIFICATION','WARRANTY_CHECK','WORKFLOW_FOLLOWUP','ERROR_CODE_WORKFLOW','DEPENDENCY_FALLBACK'}
+    direct_routes = {'CONVERSATION_REPAIR','GENERAL_SUPPORT_CACHE','ORDER_CANDIDATES','ORDER_NOT_FOUND','ORDER_SELECTION','FAQ_CACHE','LONG_TAIL_CACHE','PRODUCT_CLARIFICATION','WARRANTY_CHECK','WORKFLOW_FOLLOWUP','ERROR_CODE_WORKFLOW','DEPENDENCY_FALLBACK'}
     g.pre_model_route = g.answer_route
     if (GROUNDED_MODE or use_longtail) and LLM_KEY and LLM_MODEL and g.answer_route not in direct_routes:
         evidence=[]
@@ -854,11 +867,11 @@ def chat():
             g.degraded_reason = g.degraded_reason or 'model_validation_failed'
             report_progress('模型回复未通过检查或连接失败，保留有依据的回复', 'Model unavailable or response failed checks; using evidence-based fallback')
         model_status=g.model_status
-    if lang == 'es' and not getattr(g,'three_segment_reply',False) and case.get('service_intent') == 'shipping':
+    if lang == 'es' and g.answer_route != 'CONVERSATION_REPAIR' and not getattr(g,'three_segment_reply',False) and case.get('service_intent') == 'shipping':
         items=order.get('order',{}).get('items',[])
         lines=['SKU '+str(i.get('SKU',''))+'; transportista: '+str(i.get('物流承运商') or 'no disponible')+'; seguimiento: '+str(i.get('物流单号') or 'no disponible')+'; estado registrado: '+str(i.get('物流状态') or 'no disponible') for i in items]
         reply='Entiendo que su pedido todavía no ha llegado.\n\n'+'\n'.join(lines)+'\nSon registros guardados, no una consulta de seguimiento en tiempo real.\n\nContacte con el transportista o solicite una revisión humana para verificar la diferencia. No se ha realizado ninguna gestión.'
-    if lang == 'nl' and not getattr(g,'three_segment_reply',False) and case.get('service_intent') == 'shipping' and order['status']=='FOUND':
+    if lang == 'nl' and g.answer_route != 'CONVERSATION_REPAIR' and not getattr(g,'three_segment_reply',False) and case.get('service_intent') == 'shipping' and order['status']=='FOUND':
         items=order['order']['items']
         reply='U meldt dat uw bestelling '+order['order']['order_id']+' nog niet is aangekomen.\n\nVolgens de opgeslagen gegevens: ' + '; '.join(str(i.get('SKU','niet opgegeven'))+' — '+str(i.get('物流承运商') or 'niet opgegeven')+' — '+str(i.get('物流单号') or 'niet opgegeven')+' — '+str(i.get('物流状态') or 'niet opgegeven') for i in items) + '\n\nDit zijn opgeslagen gegevens, geen actuele tracking. Een afleverregistratie bevestigt niet dat u het pakket hebt ontvangen. Laat de vervoerder het verschil onderzoeken met het bovenstaande trackingnummer.'
     if any(c['kind'] != 'context' for c in citations) and not getattr(g,'three_segment_reply',False):
